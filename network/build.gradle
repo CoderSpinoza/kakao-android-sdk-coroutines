@@ -1,0 +1,6 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+}
+
+apply from: "$rootDir/libraries.gradle"
