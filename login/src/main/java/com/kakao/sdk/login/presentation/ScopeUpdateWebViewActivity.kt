@@ -2,12 +2,10 @@ package com.kakao.sdk.login.presentation
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.ResultReceiver
 import android.support.annotation.RequiresApi
-import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -40,9 +38,9 @@ class ScopeUpdateWebViewActivity : Activity() {
     }
 
     companion object {
-        val KEY_URL = "key.url"
-        val KEY_HEADERS = "key.extra.headers"
-        val KEY_RESULT_RECEIVER = "key.result.receiver"
+        const val KEY_URL = "key.url"
+        const val KEY_HEADERS = "key.extra.headers"
+        const val KEY_RESULT_RECEIVER = "key.result.receiver"
     }
 
     inner class ScopeUpdateWebViewClient: WebViewClient() {

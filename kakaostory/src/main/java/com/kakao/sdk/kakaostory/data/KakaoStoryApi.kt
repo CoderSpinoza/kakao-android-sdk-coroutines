@@ -3,7 +3,6 @@ package com.kakao.sdk.kakaostory.data
 import android.net.Uri
 import com.kakao.sdk.kakaostory.entity.*
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import retrofit2.http.*

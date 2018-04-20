@@ -7,7 +7,6 @@ import com.kakao.sdk.login.entity.AccessTokenResponse
 import com.kakao.sdk.network.ApplicationProvider
 import com.kakao.sdk.network.StringSet
 import com.kakao.sdk.network.Utility
-import io.reactivex.Observable
 
 /**
  * @author kevin.kang. Created on 2018. 3. 24..

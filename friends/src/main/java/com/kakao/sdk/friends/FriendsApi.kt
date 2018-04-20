@@ -1,7 +1,6 @@
 package com.kakao.sdk.friends
 
 import com.kakao.sdk.friends.entity.*
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

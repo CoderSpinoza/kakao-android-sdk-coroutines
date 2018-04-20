@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.ResultReceiver
-import android.util.Log
 import com.google.gson.Gson
 import com.kakao.sdk.login.data.AuthApiClient
 import com.kakao.sdk.login.data.MissingScopesError
@@ -17,9 +16,10 @@ import com.kakao.sdk.login.presentation.AuthCodeCustomTabsActivity
 import com.kakao.sdk.login.presentation.ScopeUpdateWebViewActivity
 import com.kakao.sdk.network.StringSet
 import com.kakao.sdk.network.Utility
-import io.reactivex.*
+import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.SingleEmitter
 import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Publisher
 import retrofit2.HttpException
 
 /**

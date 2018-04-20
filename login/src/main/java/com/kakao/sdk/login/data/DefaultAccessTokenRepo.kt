@@ -1,7 +1,6 @@
 package com.kakao.sdk.login.data
 
 import android.content.SharedPreferences
-import android.util.Log
 import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.login.entity.AccessToken
 import com.kakao.sdk.login.entity.AccessTokenResponse
@@ -38,9 +37,9 @@ class DefaultAccessTokenRepo(val appCache: SharedPreferences) : AccessTokenRepo 
     }
 
     companion object {
-        val atKey = "com.kakao.token.AccessToken"
-        val rtKey = "com.kakao.token.RefreshToken"
-        val atExpiresAtKey = "com.kakao.token.AccessToken.ExpiresAt"
-        val rtExpiresAtKey = "com.kakao.token.RefreshToken.ExpiresAt"
+        const val atKey = "com.kakao.token.AccessToken"
+        const val rtKey = "com.kakao.token.RefreshToken"
+        const val atExpiresAtKey = "com.kakao.token.AccessToken.ExpiresAt"
+        const val rtExpiresAtKey = "com.kakao.token.RefreshToken.ExpiresAt"
     }
 }

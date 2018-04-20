@@ -1,17 +1,13 @@
 package com.kakao.sdk.login.presentation
 
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.customtabs.CustomTabsClient
 import android.support.customtabs.CustomTabsIntent
 import android.support.customtabs.CustomTabsService
-import android.support.customtabs.CustomTabsServiceConnection
 import android.util.Log
 import com.kakao.sdk.network.StringSet
 import com.kakao.sdk.network.Utility
@@ -24,10 +20,6 @@ class AuthCodeCustomTabsActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         openChromeCustomTab()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
     }
 
     fun openChromeCustomTab() {

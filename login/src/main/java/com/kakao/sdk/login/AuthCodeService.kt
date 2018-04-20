@@ -4,7 +4,6 @@ import android.content.Context
 import com.kakao.sdk.login.domain.AccessTokenRepo
 import io.reactivex.Observable
 import io.reactivex.Single
-import org.reactivestreams.Publisher
 
 /**
  * @author kevin.kang. Created on 2018. 3. 20..

@@ -1,16 +1,13 @@
 package com.kakao.sdk.login.data
 
-import android.util.Log
 import com.kakao.sdk.login.ApiService
 import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.login.entity.AccessTokenResponse
 import com.kakao.sdk.network.ApplicationProvider
 import com.kakao.sdk.network.StringSet
 import com.kakao.sdk.network.Utility
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
-import org.reactivestreams.Publisher
 import retrofit2.HttpException
 
 /**

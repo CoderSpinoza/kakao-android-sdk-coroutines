@@ -1,7 +1,6 @@
 package com.kakao.sdk.login.data
 
 import com.kakao.sdk.login.domain.AccessTokenRepo
-import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

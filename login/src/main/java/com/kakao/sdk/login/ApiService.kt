@@ -1,7 +1,6 @@
 package com.kakao.sdk.login
 
 import com.kakao.sdk.login.data.AccessTokenInterceptor
-import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.network.AppKeyInterceptor
 import com.kakao.sdk.network.KakaoAgentInterceptor
 import com.kakao.sdk.network.KakaoConverterFactory

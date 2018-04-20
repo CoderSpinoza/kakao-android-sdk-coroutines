@@ -61,7 +61,7 @@ public class FileHelper {
         return outputFileName;
     }
 
-    public static String getExtension(String fileName) {
+    private static String getExtension(String fileName) {
         String ext = null;
         int i = fileName.lastIndexOf('.');
         int endIndex = fileName.lastIndexOf("?");

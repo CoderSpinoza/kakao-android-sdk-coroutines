@@ -1,7 +1,6 @@
 package com.kakao.sdk.login.data
 
 import com.kakao.sdk.login.entity.AccessTokenResponse
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

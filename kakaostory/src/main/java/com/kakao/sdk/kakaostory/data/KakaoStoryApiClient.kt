@@ -1,7 +1,5 @@
 package com.kakao.sdk.kakaostory.data
 
-import com.kakao.sdk.kakaostory.data.KakaoStoryApi
-
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */

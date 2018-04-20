@@ -1,7 +1,6 @@
 package com.kakao.sdk.s2
 
 import com.kakao.sdk.s2.entity.S2Response
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

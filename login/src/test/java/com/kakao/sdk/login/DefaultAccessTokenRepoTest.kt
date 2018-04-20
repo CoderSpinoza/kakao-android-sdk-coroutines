@@ -3,9 +3,7 @@ package com.kakao.sdk.login
 import android.content.Context
 import android.content.SharedPreferences
 import com.kakao.sdk.login.data.DefaultAccessTokenRepo
-import com.kakao.sdk.login.entity.AccessToken
 import com.kakao.sdk.login.entity.AccessTokenResponse
-import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,8 +11,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadows.ShadowLog
 import java.util.*
-
-import org.junit.Assert.*;
 
 /**
  * @author kevin.kang. Created on 2018. 3. 28..

@@ -1,6 +1,5 @@
 package com.kakao.sdk.kakaolink
 
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

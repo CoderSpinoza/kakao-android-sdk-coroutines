@@ -21,6 +21,6 @@ interface ApiService {
                         return mutableListOf(AppKeyInterceptor(), KakaoAgentInterceptor(), HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     }
                 })
-                .build()
+                .build() as Retrofit
     }
 }

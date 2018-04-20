@@ -6,4 +6,9 @@
     <string name="kakao_client_secret" translatable="false">50LxgHsF3Q3ayNa3nJpTTMEfBR8KkY7X</string>
 
     <string name="login_with_kakao">Login with Kakao</string>
+
+    <string name="kakaotalk">KakaoTalk</string>
+    <string name="kakaostory">KakaoStory</string>
+    <string name="kakaolink">KakaoLink</string>
+    <string name="user">User</string>
 </resources>

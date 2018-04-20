@@ -2,7 +2,6 @@ package com.kakao.sdk.friends
 
 import com.kakao.sdk.friends.entity.*
 import com.kakao.sdk.login.ApiService
-import io.reactivex.Observable
 import io.reactivex.Single
 
 /**

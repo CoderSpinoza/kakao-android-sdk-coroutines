@@ -32,7 +32,7 @@ class UserApiTest {
                     ShadowLog.e("success", me.toString())
                 }, { error ->
                     if (error is HttpException) {
-                        ShadowLog.e("error", error.response().errorBody()?.string())
+                        ShadowLog.e("error", error.response().errorBody().string())
                     } else {
                         ShadowLog.e("other", "exception")
                     }

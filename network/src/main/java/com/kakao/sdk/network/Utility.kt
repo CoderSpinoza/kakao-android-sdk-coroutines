@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Base64
-import android.util.Log
 import java.security.MessageDigest
 import java.util.*
 
@@ -27,7 +26,7 @@ class Utility {
             return String.format("%s/%s %s/android-%s %s/%s-%s %s/%s %s/%s %s/%s %s/%s",
                     StringSet.KA_KEY_SDK, BuildConfig.VERSION_NAME,
                     StringSet.KA_KEY_OS, Build.VERSION.SDK_INT,
-                    StringSet.KA_KEY_LANG, Locale.getDefault().getLanguage().toLowerCase(), Locale.getDefault().country.toUpperCase(),
+                    StringSet.KA_KEY_LANG, Locale.getDefault().language.toLowerCase(), Locale.getDefault().country.toUpperCase(),
                     StringSet.KA_KEY_ORIGIN, Utility.getKeyHash(context),
                     StringSet.KA_KEY_DEVICE, Build.MODEL.replace("\\s".toRegex(), "-").toUpperCase(),
                     StringSet.KA_KEY_PACKAGE, context.packageName,

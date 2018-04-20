@@ -50,7 +50,7 @@ class PushApiTest {
                 .map { fcmMessage -> PushMessage(fcmMessage = fcmMessage) }
                 .flatMap { pushMessage ->
                     ShadowLog.e("pushMessage", pushMessage.toString())
-                    return@flatMap  api.sendPushMessage("6b307f8a-4105-3e3c-aec1-dac013985c4d", pushMessage) }
+                    return@flatMap  api.sendPushMessage("6b307f8a-4105-3e3c-aec1-dac013985c4d", pushMessage).toObservable<Void>() }
                 .subscribe {
                     ShadowLog.e("void", "void")
                 }

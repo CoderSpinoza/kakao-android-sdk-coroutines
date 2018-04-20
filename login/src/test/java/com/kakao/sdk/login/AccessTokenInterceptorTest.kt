@@ -1,8 +1,8 @@
 package com.kakao.sdk.login
 
 import com.kakao.sdk.login.data.AccessTokenInterceptor
+import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.network.StringSet
-import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.mockwebserver.MockResponse
@@ -25,7 +25,7 @@ class AccessTokenInterceptorTest {
     @Before
     fun setup() {
         ShadowLog.stream = System.out
-        interceptor = AccessTokenInterceptor(Observable.just("access_token"))
+        interceptor = AccessTokenInterceptor(AccessTokenRepo.instance)
     }
 
     @Test

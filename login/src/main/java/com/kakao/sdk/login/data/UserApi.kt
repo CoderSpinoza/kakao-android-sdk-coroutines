@@ -1,9 +1,8 @@
 package com.kakao.sdk.login.data
 
 import com.kakao.sdk.login.entity.AccessTokenInfo
-import com.kakao.sdk.login.entity.UserIdResponse
 import com.kakao.sdk.login.entity.User
-import io.reactivex.Observable
+import com.kakao.sdk.login.entity.UserIdResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.POST
