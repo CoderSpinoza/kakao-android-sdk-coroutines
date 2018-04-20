@@ -1,17 +1,31 @@
 package com.kakao.sdk.friends
 
-import com.kakao.sdk.friends.data.FriendsResponse
+import com.kakao.sdk.friends.entity.*
 import io.reactivex.Observable
 import retrofit2.http.GET
-import retrofit2.http.QueryMap
+import retrofit2.http.Query
 
 /**
  * @author kevin.kang. Created on 2018. 3. 22..
  */
 interface FriendsApi {
     @GET("v1/friends")
-    fun getFriends(@QueryMap friendsRequest: Map<String, String>): Observable<FriendsResponse>
+    fun getFriends(@Query("friend_type") friendType: FriendType? = null,
+                   @Query("friend_filter") friendFilter: FriendFilter? = null,
+                   @Query("friend_order") friendOrder: FriendOrder? = null,
+                   @Query("secure_resource") secureResource: Boolean? = null,
+                   @Query("offset") offset: Int? = null,
+                   @Query("limit") limit: Int? = null,
+                   @Query("order") order: String? = null,
+                   @Query("url") url: String? = null): Observable<FriendsResponse>
 
     @GET("v1/friends/operation")
-    fun friendsOperation(@QueryMap friendsOperationRequest: Map<String, String>): Observable<FriendsResponse>
+    fun friendsOperation(@Query("first_id") firstId: String,
+                         @Query("second_id") secondId: String,
+                         @Query("operator") operator: FriendsOperator,
+                         @Query("secure_resource") secureResource: Boolean? = null,
+                         @Query("offset") offset: Int? = null,
+                         @Query("limit") limit: Int? = null,
+                         @Query("order") order: String? = null,
+                         @Query("url") url: String? = null): Observable<FriendsResponse>
 }

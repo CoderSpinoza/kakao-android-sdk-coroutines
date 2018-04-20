@@ -1,5 +1,6 @@
 package com.kakao.sdk.kakaotalk
 
+import com.kakao.sdk.kakaotalk.entity.TalkProfile
 import io.reactivex.Observable
 import retrofit2.http.*
 

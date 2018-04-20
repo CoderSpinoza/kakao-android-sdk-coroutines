@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">KakaoAndroidSdk</string>
+    <string name="app_name">Kakao SDK Sample</string>
+
+    <string name="kakao_app_key" translatable="false">dd4e9cb75815cbdf7d87ed721a659baf</string>
+    <string name="kakao_scheme" translatable="false">kakaodd4e9cb75815cbdf7d87ed721a659baf</string>
+    <string name="kakao_client_secret" translatable="false">50LxgHsF3Q3ayNa3nJpTTMEfBR8KkY7X</string>
+
+    <string name="login_with_kakao">Login with Kakao</string>
 </resources>

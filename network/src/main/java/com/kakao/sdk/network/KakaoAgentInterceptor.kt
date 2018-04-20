@@ -10,8 +10,10 @@ import okhttp3.Response
 class KakaoAgentInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response {
         var request = chain?.request() as Request
+
+        val header = Utility.getKAHeader(ApplicationProvider.application)
         request = request.newBuilder()
-                .addHeader("KA", "sdk/1.10.0-SNAPSHOT os/android-27 lang/ko-KR origin/lMXltzn4zSwq0EhwLKAo+k0zhqI= device/PIXEL-2 android_pkg/com.kakao.sdk.sample app_ver/1.0")
+                .addHeader(StringSet.HEADER_KEY_KA, header)
                 .build()
         return chain.proceed(request)
     }

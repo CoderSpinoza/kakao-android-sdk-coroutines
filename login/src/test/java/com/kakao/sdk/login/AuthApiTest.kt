@@ -1,7 +1,6 @@
 package com.kakao.sdk.login
 
-import com.kakao.sdk.login.data.AccessTokenRequest
-import io.reactivex.Observable
+import com.kakao.sdk.login.data.AuthApi
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.shadows.ShadowLog
@@ -20,16 +19,15 @@ class AuthApiTest {
 
     @Test
     fun refreshToken() {
-        Observable.just(AccessTokenRequest("dd4e9cb75815cbdf7d87ed721a659baf",
-                "kakaodd4e9cb75815cbdf7d87ed721a659baf://oauth",
+        api.issueAccessToken("ec09748675bf7cc01d638d8c40a79c85",
+                "kakaoec09748675bf7cc01d638d8c40a79c85://oauth",
                 androidKeyHash = "lMXltzn4zSwq0EhwLKAo+k0zhqI=",
                 clientSecret = "50LxgHsF3Q3ayNa3nJpTTMEfBR8KkY7X",
-                refreshToken = "VOpbs755iCxiklXV-kgF8H3Lxse45UIe9ftMEQo8BRIAAAFiU581Rw",
-                grantType = "refresh_token"))
-                .map { req -> req.toMap() }
-                .flatMap { reqMap -> api.issueAccessToken(reqMap) }
+                refreshToken = "ea3TO8YU8yO9wXsb8IhTkhrzGJwUX_VTH-K21grDFE4AAAFiZx56Fg",
+                grantType = "refresh_token")
                 .subscribe { response ->
                     ShadowLog.e("response", response.toString())
                 }
+
     }
 }

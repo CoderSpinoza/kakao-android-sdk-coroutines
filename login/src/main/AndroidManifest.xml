@@ -1,2 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.kakao.sdk.login"/>
+          package="com.kakao.sdk.login">
+
+    <application>
+        <activity android:name=".presentation.AuthCodeCustomTabsActivity"/>
+        <activity android:name=".presentation.ScopeUpdateWebViewActivity"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation|screenSize"
+                  android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

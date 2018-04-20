@@ -1,7 +1,7 @@
 package com.kakao.sdk.push
 
-import com.kakao.sdk.push.data.PushMessage
-import com.kakao.sdk.push.data.PushToken
+import com.kakao.sdk.push.entity.PushMessage
+import com.kakao.sdk.push.entity.PushToken
 import io.reactivex.Observable
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

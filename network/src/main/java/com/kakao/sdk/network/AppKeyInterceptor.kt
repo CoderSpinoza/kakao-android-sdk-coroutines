@@ -11,7 +11,7 @@ class AppKeyInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response {
         var request = chain?.request() as Request
         request = request.newBuilder()
-                .addHeader("Authorization", "KakaoAK da4271119e69b289aace2bca05735d26")
+                .addHeader(StringSet.HEADER_KEY_AUTH, String.format("KakaoAK %s", Utility.getMetadata(ApplicationProvider.application, StringSet.META_APP_KEY)))
                 .build()
         return chain.proceed(request)
     }

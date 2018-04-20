@@ -1,8 +1,8 @@
 package com.kakao.sdk.push
 
 import com.kakao.sdk.login.ApiService
-import com.kakao.sdk.push.data.FcmMessage
-import com.kakao.sdk.push.data.PushMessage
+import com.kakao.sdk.push.entity.FcmMessage
+import com.kakao.sdk.push.entity.PushMessage
 import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test

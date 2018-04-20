@@ -2,12 +2,14 @@ package com.kakao.sdk.kakaostory
 
 import android.net.Uri
 import com.google.gson.Gson
-import com.kakao.sdk.kakaostory.data.Story
-import com.kakao.sdk.kakaostory.data.StoryPostResponse
-import com.kakao.sdk.login.AccessTokenInterceptor
+import com.kakao.sdk.kakaostory.data.KakaoStoryApi
+import com.kakao.sdk.kakaostory.entity.Story
+import com.kakao.sdk.kakaostory.entity.StoryPostResponse
+import com.kakao.sdk.login.data.AccessTokenInterceptor
 import com.kakao.sdk.network.KakaoAgentInterceptor
 import com.kakao.sdk.network.KakaoConverterFactory
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.toObservable
 import okhttp3.*
 import org.junit.Before
 import org.junit.Test
@@ -35,7 +37,7 @@ class KakaoStoryApiTest {
                 .addConverterFactory(KakaoConverterFactory())
                 .client(object : OkHttpClient() {
                     override fun interceptors(): MutableList<Interceptor> {
-                        return mutableListOf(AccessTokenInterceptor(), KakaoAgentInterceptor())
+                        return mutableListOf(AccessTokenInterceptor(Observable.just("test_access_token")), KakaoAgentInterceptor())
                     }
                 })
                 .build()
@@ -57,17 +59,14 @@ class KakaoStoryApiTest {
 
     @Test
     fun getMyStories() {
-//        val observable = api.getMyStories(authorization)
-//        observable.subscribe { stories ->
-//            stories.forEach { story ->
-//                ShadowLog.e("story", story.toString())
-//            }
-//        }
-
-        val observable2 = api.getMyStory("_GQz4o8.jGzBnVak9HA")
-        observable2.subscribe { story ->
-            ShadowLog.e("story", story.toString())
-        }
+        api.getMyStories()
+                .doOnNext { onNext -> ShadowLog.e("stories", onNext.toString()) }
+                .flatMap { stories -> stories.toObservable() }
+                .firstOrError()
+                .flatMap { story -> story.let { api.getMyStory(story.id).singleOrError() }}
+                .subscribe { story ->
+                    ShadowLog.e("single story", story.toString())
+                }
     }
 
     @Test
@@ -79,7 +78,7 @@ class KakaoStoryApiTest {
                 .flatMap { storyId -> api.deleteStory(storyId) } as Observable<Void>
 
         observable.subscribe({ response ->
-            ShadowLog.e("result", response.toString())
+            ShadowLog.e("result", "delete")
         }, { error ->
             ShadowLog.e("error", error.toString())
         })

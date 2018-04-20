@@ -1,10 +1,13 @@
 package com.kakao.sdk.login
 
+import com.kakao.sdk.login.data.AccessTokenInterceptor
+import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.network.AppKeyInterceptor
 import com.kakao.sdk.network.KakaoAgentInterceptor
 import com.kakao.sdk.network.KakaoConverterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,7 +23,7 @@ class ApiService {
                 .addConverterFactory(KakaoConverterFactory())
                 .client(object : OkHttpClient() {
                     override fun interceptors(): MutableList<Interceptor> {
-                        return mutableListOf(AccessTokenInterceptor(), KakaoAgentInterceptor())
+                        return mutableListOf(AccessTokenInterceptor(), KakaoAgentInterceptor(), HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     }
                 })
                 .build()
@@ -30,7 +33,7 @@ class ApiService {
                 .addConverterFactory(KakaoConverterFactory())
                 .client(object : OkHttpClient() {
                     override fun interceptors(): MutableList<Interceptor> {
-                        return mutableListOf(AppKeyInterceptor(), KakaoAgentInterceptor())
+                        return mutableListOf(AppKeyInterceptor(), KakaoAgentInterceptor(), HttpLoggingInterceptor(), HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     }
                 })
                 .build()

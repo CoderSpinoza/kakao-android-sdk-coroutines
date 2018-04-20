@@ -1,8 +1,7 @@
 package com.kakao.sdk.friends
 
-import com.kakao.sdk.friends.data.*
+import com.kakao.sdk.friends.entity.*
 import com.kakao.sdk.login.ApiService
-import io.reactivex.Observable
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.shadows.ShadowLog
@@ -20,12 +19,8 @@ class FriendsApiTest {
     }
     @Test
     fun getFriends() {
-        val request = FriendsRequest(offset = 0, limit = 100, friendType = FriendType.KAKAO_TALK_AND_STORY, friendOrder = FriendOrder.AGE, secureResource = true, order = "desc")
-
-        Observable.just(request).map { req -> req.toMap() }
-                .flatMap { requestMap -> api.getFriends(requestMap) }
-                .map { friendsResponse -> FriendsOperationRequest(friendsResponse.resultId, friendsResponse.resultId, FriendsOperator.UNION, secureResource = true, offset = 0, limit = 100, order = "desc") }
-                .flatMap { operationRequest -> api.friendsOperation(operationRequest.toMap()) }
+        api.getFriends(offset =  0, limit = 100, friendOrder = FriendOrder.NICKNAME, secureResource = true, order = "desc")
+                .flatMap { friends -> api.friendsOperation(friends.resultId, friends.resultId, FriendsOperator.UNION, secureResource = true, offset = 0, limit = 100, order = "desc") }
                 .subscribe({ response ->
                     ShadowLog.e("friends", response.toString())
                 }, { error ->
