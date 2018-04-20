@@ -11,11 +11,11 @@ data class AccessToken(val accessToken: String?,
                        val accessTokenExpiresAt: Date?,
                        val refreshTokenExpiresAt: Date?) {
     fun hasValidAccessToken(): Boolean {
-        return Date().before(accessTokenExpiresAt)
+        return accessToken != null && Date().before(accessTokenExpiresAt)
     }
 
     fun hasValidRefreshToken(): Boolean {
-        return Date().before(refreshTokenExpiresAt)
+        return refreshToken != null && Date().before(refreshTokenExpiresAt)
     }
 
     override fun toString(): String {

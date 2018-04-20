@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Log.e("Token on MainActivity", AccessTokenRepo.instance.fromCache().toString())
-        FriendsApiClient.instance.getFriends()
-                .retryWhen { AuthApiClient.instance.refreshTokenObservable(it) }
+        FriendsApiClient.instance.getFriends().toObservable()
+                .retryWhen { attempts -> AuthApiClient.instance.refreshTokenObservable(attempts) }
                 .retryWhen { AuthCodeService.instance.updateScopesObservable(this@MainActivity, it) }
                 .subscribeOn(Schedulers.io())
                 .subscribe(

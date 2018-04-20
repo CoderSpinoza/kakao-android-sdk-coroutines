@@ -28,9 +28,9 @@ class LoginActivity : AppCompatActivity() {
         val code = intent?.data?.getQueryParameter("code") ?: return
 
         val disposable = AuthApiClient.instance.issueAccessToken(code = code, redirectUri = String.format("kakao%s://oauth", Utility.getMetadata(this, StringSet.META_APP_KEY)))
-                .doOnNext { response -> AccessTokenRepo.instance.toCache(response) }
+                .doOnSuccess { response -> AccessTokenRepo.instance.toCache(response) }
                 .subscribeOn(Schedulers.io())
-                .subscribe {
+                .subscribe { _ ->
                     val mainIntent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(mainIntent)

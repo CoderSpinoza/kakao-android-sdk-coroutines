@@ -17,26 +17,26 @@ import com.kakao.sdk.login.presentation.AuthCodeCustomTabsActivity
 import com.kakao.sdk.login.presentation.ScopeUpdateWebViewActivity
 import com.kakao.sdk.network.StringSet
 import com.kakao.sdk.network.Utility
-import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
+import io.reactivex.*
 import io.reactivex.schedulers.Schedulers
+import org.reactivestreams.Publisher
 import retrofit2.HttpException
 
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 class DefaultAuthCodeService(private val accessTokenRepo: AccessTokenRepo) : AuthCodeService {
-    override fun requestAuthCode(context: Context): Observable<String> {
+    override fun requestAuthCode(context: Context): Single<String> {
 
 //        return Observable.create { emitter ->
             context.startActivity(Intent(context, AuthCodeCustomTabsActivity::class.java))
 //        }
-        return Observable.just("dummy")
+        return Single.just("dummy")
 
     }
 
-    override fun requestAuthCode(context: Context, scopes: List<String>, approvalType: String): Observable<String> {
-        return Observable.create<String> { emitter ->
+    override fun requestAuthCode(context: Context, scopes: List<String>, approvalType: String): Single<String> {
+        return Single.create<String> { emitter ->
             val intent = Intent(context, ScopeUpdateWebViewActivity::class.java)
             val appKey = Utility.getMetadata(context, StringSet.META_APP_KEY)
             val uri = updateScopeUri(appKey, String.format("kakao%s://oauth", appKey), approvalType, scopes)
@@ -56,14 +56,13 @@ class DefaultAuthCodeService(private val accessTokenRepo: AccessTokenRepo) : Aut
         }
     }
 
-    fun onReceivedResult(emitter: ObservableEmitter<String>, resultCode: Int, resultData: Bundle?) {
+    fun onReceivedResult(emitter: SingleEmitter<String>, resultCode: Int, resultData: Bundle?) {
         if (resultCode == Activity.RESULT_OK) {
             val redirectUri = resultData?.getString(ScopeUpdateWebViewActivity.KEY_URL)
             val uri = Uri.parse(redirectUri)
             val code = uri.getQueryParameter("code")
             if (code != null) {
-                emitter.onNext(code)
-                emitter.onComplete()
+                emitter.onSuccess(code)
             } else {
                 emitter.onError(Throwable("Error"))
             }
@@ -80,7 +79,8 @@ class DefaultAuthCodeService(private val accessTokenRepo: AccessTokenRepo) : Aut
                 if (error.code == -402) {
                     return@flatMap requestAuthCode(context, error.requiredScopes, "individual")
                             .observeOn(Schedulers.io())
-                            .flatMap { code -> AuthApiClient.instance.issueAccessToken(code = code) }
+                            .toObservable()
+                            .flatMap { code -> AuthApiClient.instance.issueAccessToken(code = code).toObservable() }
                             .doOnNext { response ->
                                 AccessTokenRepo.instance.toCache(response)
                             }

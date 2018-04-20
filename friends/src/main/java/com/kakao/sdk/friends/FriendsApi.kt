@@ -2,6 +2,7 @@ package com.kakao.sdk.friends
 
 import com.kakao.sdk.friends.entity.*
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -17,7 +18,7 @@ interface FriendsApi {
                    @Query("offset") offset: Int? = null,
                    @Query("limit") limit: Int? = null,
                    @Query("order") order: String? = null,
-                   @Query("url") url: String? = null): Observable<FriendsResponse>
+                   @Query("url") url: String? = null): Single<FriendsResponse>
 
     @GET("v1/friends/operation")
     fun friendsOperation(@Query("first_id") firstId: String,
@@ -27,5 +28,5 @@ interface FriendsApi {
                          @Query("offset") offset: Int? = null,
                          @Query("limit") limit: Int? = null,
                          @Query("order") order: String? = null,
-                         @Query("url") url: String? = null): Observable<FriendsResponse>
+                         @Query("url") url: String? = null): Single<FriendsResponse>
 }

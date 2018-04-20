@@ -6,9 +6,11 @@ import com.kakao.sdk.kakaostory.data.KakaoStoryApi
 import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.kakaostory.entity.StoryPostResponse
 import com.kakao.sdk.login.data.AccessTokenInterceptor
+import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.network.KakaoAgentInterceptor
 import com.kakao.sdk.network.KakaoConverterFactory
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.rxkotlin.toObservable
 import okhttp3.*
 import org.junit.Before
@@ -37,7 +39,7 @@ class KakaoStoryApiTest {
                 .addConverterFactory(KakaoConverterFactory())
                 .client(object : OkHttpClient() {
                     override fun interceptors(): MutableList<Interceptor> {
-                        return mutableListOf(AccessTokenInterceptor(Observable.just("test_access_token")), KakaoAgentInterceptor())
+                        return mutableListOf(AccessTokenInterceptor(AccessTokenRepo.instance), KakaoAgentInterceptor())
                     }
                 })
                 .build()
@@ -60,10 +62,9 @@ class KakaoStoryApiTest {
     @Test
     fun getMyStories() {
         api.getMyStories()
-                .doOnNext { onNext -> ShadowLog.e("stories", onNext.toString()) }
-                .flatMap { stories -> stories.toObservable() }
-                .firstOrError()
-                .flatMap { story -> story.let { api.getMyStory(story.id).singleOrError() }}
+                .doOnSuccess { onNext -> ShadowLog.e("stories", onNext.toString()) }
+                .flatMap { stories -> stories.toObservable().singleOrError() }
+                .flatMap { story -> story.let { api.getMyStory(story.id) }}
                 .subscribe { story ->
                     ShadowLog.e("single story", story.toString())
                 }
@@ -72,16 +73,10 @@ class KakaoStoryApiTest {
     @Test
     fun postNote() {
         val uri = Uri.Builder().appendQueryParameter("key1", "value1").build()
-        val observable = api.postNote("content", Story.Permission.PUBLIC, true,
+        api.postNote("content", Story.Permission.PUBLIC, true,
                 uri, uri, uri, uri)
                 .map { response -> response.id }
-                .flatMap { storyId -> api.deleteStory(storyId) } as Observable<Void>
-
-        observable.subscribe({ response ->
-            ShadowLog.e("result", "delete")
-        }, { error ->
-            ShadowLog.e("error", error.toString())
-        })
+                .flatMap { storyId -> api.deleteStory(storyId).toSingle {  } }
     }
 
     @Test
@@ -101,7 +96,7 @@ class KakaoStoryApiTest {
     @Test
     fun postPhoto() {
         val uri = Uri.Builder().appendQueryParameter("key1", "value1").build()
-        val observable = Observable.just(R.drawable.kakaostory_animated)
+        val observable = Single.just(R.drawable.kakaostory_animated)
                  .map { resId ->
                     File(FileHelper.writeStoryImage(RuntimeEnvironment.application, resId)) }
                  .map { file ->
@@ -109,7 +104,7 @@ class KakaoStoryApiTest {
                     return@map listOf(MultipartBody.Part.createFormData("file", file.name, requestBody)) }
                  .flatMap { images -> api.scrapImages(images) }
                 .map { urls -> Gson().toJson(urls) }
-                 .flatMap { urls -> api.postPhoto(urls, "content", Story.Permission.PUBLIC, true, uri, uri, uri, uri) } as Observable<StoryPostResponse>
+                 .flatMap { urls -> api.postPhoto(urls, "content", Story.Permission.PUBLIC, true, uri, uri, uri, uri) }
 
         observable.subscribe { response -> ShadowLog.e("imageUrls", response.toString())}
     }

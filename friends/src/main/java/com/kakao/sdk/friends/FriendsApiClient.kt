@@ -3,6 +3,7 @@ package com.kakao.sdk.friends
 import com.kakao.sdk.friends.entity.*
 import com.kakao.sdk.login.ApiService
 import io.reactivex.Observable
+import io.reactivex.Single
 
 /**
  * @author kevin.kang. Created on 2018. 3. 30..
@@ -15,7 +16,7 @@ class FriendsApiClient(val api: FriendsApi = ApiService.kapi.create(FriendsApi::
                    offset: Int? = null,
                    limit: Int? = null,
                    order: String? = null,
-                   url: String? = null): Observable<FriendsResponse> {
+                   url: String? = null): Single<FriendsResponse> {
         return api.getFriends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url)
     }
 
@@ -26,7 +27,7 @@ class FriendsApiClient(val api: FriendsApi = ApiService.kapi.create(FriendsApi::
                    offset: Int? = null,
                    limit: Int? = null,
                    order: String? = null,
-                   url: String? = null): Observable<FriendsResponse> {
+                   url: String? = null): Single<FriendsResponse> {
         return api.friendsOperation(firstId, secondId, operator, secureResource, offset, limit, order, url)
     }
 

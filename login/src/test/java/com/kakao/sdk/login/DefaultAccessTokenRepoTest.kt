@@ -22,7 +22,6 @@ import org.junit.Assert.*;
 @RunWith(RobolectricTestRunner::class)
 class DefaultAccessTokenRepoTest {
     lateinit var accessTokenRepo: DefaultAccessTokenRepo
-    lateinit var observable: Observable<AccessToken>
 
     @Before
     fun setup() {
@@ -34,33 +33,21 @@ class DefaultAccessTokenRepoTest {
         accessTokenRepo = DefaultAccessTokenRepo(getEmptyPreferences())
         var response = AccessTokenResponse(accessToken = "new_test_access_token", refreshToken = "new_test_refresh_token",
                 accessTokenExpiresIn = 60 * 60, refreshTokenExpiresIn = 60 * 60 * 12, tokenType = "bearer", scope = "")
-        accessTokenRepo.toCache(response).subscribe{ token ->
-            ShadowLog.e("updated token", token.toString())
-        }
+        accessTokenRepo.toCache(response)
         response = AccessTokenResponse(accessToken = "new_test_access_token_2", accessTokenExpiresIn = 60 * 60 * 2,
-                tokenType = "bearer", scope = "")
-        accessTokenRepo.toCache(response).subscribe{ token ->
-            ShadowLog.e("updated token", token.toString())
-        }
+                tokenType = "bearer", scope = "", refreshTokenExpiresIn =  60L * 60 * 24 * 30)
+        accessTokenRepo.toCache(response)
 //        val token = accessTokenRepo.toCache(response).subscribe()
     }
 
     @Test
     fun fromEmptyCache() {
         accessTokenRepo = DefaultAccessTokenRepo(getEmptyPreferences())
-        observable = accessTokenRepo.getTokenObservable()
-        val token = accessTokenRepo.fromCache().subscribe { token ->
-            ShadowLog.e("token from empty cache", token.toString())
-        }
     }
 
     @Test
     fun fromFullCache() {
         accessTokenRepo = DefaultAccessTokenRepo(getFullPreferences())
-        observable = accessTokenRepo.getTokenObservable()
-        accessTokenRepo.fromCache().subscribe { token ->
-            ShadowLog.e("token from full cache", token.toString())
-        }
     }
 
     fun getEmptyPreferences(): SharedPreferences {

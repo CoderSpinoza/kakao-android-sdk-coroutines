@@ -1,7 +1,9 @@
 package com.kakao.sdk.kakaostory.domain
 
 import com.kakao.sdk.kakaostory.entity.*
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.*
 import java.io.File
 
@@ -11,34 +13,34 @@ import java.io.File
 interface KakaoStoryUseCases {
     fun isStoryUser(): Observable<Boolean>
 
-    fun getProfile(secureResource: Boolean? = true): Observable<StoryProfile>
+    fun getProfile(secureResource: Boolean? = true): Single<StoryProfile>
 
-    fun getMyStory(id: String): Observable<Story>
+    fun getMyStory(id: String): Single<Story>
 
-    fun getMyStories(): Observable<List<Story>>
+    fun getMyStories(): Single<List<Story>>
 
-    fun getMyStories(@Query("last_id") lastId: String): Observable<Story>
+    fun getMyStories(@Query("last_id") lastId: String): Single<Story>
 
     fun postNote(content: String,
                  permission: Story.Permission,
                  enableShare: Boolean,
-                 linkParams: LinkParams): Observable<String>
+                 linkParams: LinkParams): Single<String>
 
     fun postPhoto(images: List<String>,
                   content: String,
                   permission: Story.Permission,
                   enableShare: Boolean,
-                  linkParams: LinkParams): Observable<StoryPostResponse>
+                  linkParams: LinkParams): Single<StoryPostResponse>
 
     fun postLink(@Field("link_info") linkInfo: LinkInfo,
                  content: String,
                  permission: Story.Permission,
                  enableShare: Boolean,
-                 linkParams: LinkParams): Observable<StoryPostResponse>
+                 linkParams: LinkParams): Single<StoryPostResponse>
 
-    fun deleteStory(id: String): Observable<Void>
+    fun deleteStory(id: String): Completable
 
-    fun scrapLink(url: String): Observable<LinkInfo>
+    fun scrapLink(url: String): Single<LinkInfo>
 
-    fun scrapImages(images: List<File>): Observable<List<String>>
+    fun scrapImages(images: List<File>): Single<List<String>>
 }

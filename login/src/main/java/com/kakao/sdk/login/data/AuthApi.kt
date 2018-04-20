@@ -2,6 +2,7 @@ package com.kakao.sdk.login.data
 
 import com.kakao.sdk.login.entity.AccessTokenResponse
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -20,5 +21,5 @@ interface AuthApi {
                          @Field("refresh_token") refreshToken: String? = null,
                          @Field("client_secret") clientSecret: String? = null,
                          @Field("grant_type") grantType: String = "authorization_code"
-                         ): Observable<AccessTokenResponse>
+                         ): Single<AccessTokenResponse>
 }
