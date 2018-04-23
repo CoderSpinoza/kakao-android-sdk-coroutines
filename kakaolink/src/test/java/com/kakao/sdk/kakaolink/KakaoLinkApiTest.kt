@@ -1,6 +1,7 @@
 package com.kakao.sdk.kakaolink
 
-import com.kakao.sdk.network.ApiService
+import com.kakao.sdk.kakaolink.domain.KakaoLinkApi
+import com.kakao.sdk.network.data.ApiService
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

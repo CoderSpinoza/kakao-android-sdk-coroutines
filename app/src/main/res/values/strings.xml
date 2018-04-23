@@ -11,4 +11,12 @@
     <string name="kakaostory">KakaoStory</string>
     <string name="kakaolink">KakaoLink</string>
     <string name="user">User</string>
+
+    <string name="logout">Log out</string>
+    <string name="unlink">Unlink</string>
+
+    <string name="email">Email</string>
+    <string name="app_user_id">App User ID</string>
+    <string name="nickname">Nickname</string>
+
 </resources>

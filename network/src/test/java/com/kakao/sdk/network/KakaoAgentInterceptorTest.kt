@@ -3,6 +3,7 @@ package com.kakao.sdk.network
 import android.content.pm.PackageInfo
 import android.content.pm.Signature
 import android.os.Build
+import com.kakao.sdk.network.data.KakaoAgentInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.mockwebserver.MockResponse

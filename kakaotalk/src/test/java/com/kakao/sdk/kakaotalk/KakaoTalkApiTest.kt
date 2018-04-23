@@ -1,5 +1,6 @@
 package com.kakao.sdk.kakaotalk
 
+import com.kakao.sdk.kakaotalk.domain.KakaoTalkApi
 import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith

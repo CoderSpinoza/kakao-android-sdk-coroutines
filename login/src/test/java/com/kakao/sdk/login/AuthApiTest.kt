@@ -1,6 +1,7 @@
 package com.kakao.sdk.login
 
-import com.kakao.sdk.login.data.AuthApi
+import com.kakao.sdk.login.data.ApiService
+import com.kakao.sdk.login.domain.AuthApi
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.shadows.ShadowLog

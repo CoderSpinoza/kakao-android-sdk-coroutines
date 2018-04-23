@@ -1,13 +1,14 @@
 package com.kakao.sdk.login.data
 
-import com.kakao.sdk.login.ApiService
 import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.login.entity.AccessTokenResponse
+import com.kakao.sdk.login.domain.AuthApi
 import com.kakao.sdk.network.ApplicationProvider
 import com.kakao.sdk.network.StringSet
 import com.kakao.sdk.network.Utility
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 
 /**
@@ -22,7 +23,7 @@ class AuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::clas
                 clientSecret = Utility.getMetadata(ApplicationProvider.application, StringSet.META_CLIENT_SECRET),
                 authCode = code,
                 approvalType = approvalType
-        )
+        ).subscribeOn(Schedulers.io())
     }
 
     fun refreshAccessToken(approvalType: String = "individual", refreshToken: String,
@@ -34,12 +35,11 @@ class AuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::clas
                 refreshToken = refreshToken,
                 approvalType = approvalType,
                 grantType = "refresh_token"
-        )
+        ).subscribeOn(Schedulers.io())
     }
 
 
     fun refreshTokenObservable(throwableObservable: Observable<Throwable>): Observable<Any> {
-        val publisher =
         return throwableObservable.flatMap { t ->
             val rt = accessTokenRepo.fromCache().refreshToken
             if (rt != null && t is HttpException && t.code() == 401) {

@@ -31,7 +31,7 @@ class DefaultAccessTokenRepoTest {
                 accessTokenExpiresIn = 60 * 60, refreshTokenExpiresIn = 60 * 60 * 12, tokenType = "bearer", scope = "")
         accessTokenRepo.toCache(response)
         response = AccessTokenResponse(accessToken = "new_test_access_token_2", accessTokenExpiresIn = 60 * 60 * 2,
-                tokenType = "bearer", scope = "", refreshTokenExpiresIn =  60L * 60 * 24 * 30)
+                tokenType = "bearer", scope = "", refreshTokenExpiresIn = 60L * 60 * 24 * 30)
         accessTokenRepo.toCache(response)
 //        val token = accessTokenRepo.toCache(response).subscribe()
     }

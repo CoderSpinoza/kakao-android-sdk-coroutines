@@ -1,0 +1,73 @@
+package com.kakao.sdk.sample.user
+
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
+import android.databinding.ObservableField
+import android.util.Log
+import com.kakao.sdk.login.data.AuthApiClient
+import com.kakao.sdk.login.data.UserApiClient
+import com.kakao.sdk.login.domain.AuthApi
+import com.kakao.sdk.login.entity.User
+import io.reactivex.Observer
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+
+@Suppress("UNUSED_VARIABLE")
+/**
+ * @author kevin.kang. Created on 2018. 4. 20..
+ */
+class UserViewModel(val userApiClient: UserApiClient) : ViewModel() {
+    var user = MutableLiveData<User>()
+
+    val email = MutableLiveData<String>()
+    val nickname = MutableLiveData<User>()
+
+    val userId = MutableLiveData<String>()
+    val appId = MutableLiveData<Long>()
+    val expiresIn = MutableLiveData<Long>()
+
+    val logoutEvent = MutableLiveData<Void>()
+
+//    fun onCreate() {}
+//    fun onResume() {}
+//    fun onPause() {}
+//    fun onDestroy() {}
+
+    fun loadProfile() {
+        val disposable =userApiClient.me(true).toObservable()
+                .retryWhen { AuthApiClient.instance.refreshTokenObservable(it) }
+                .subscribeOn(Schedulers.io())
+                .subscribe {
+                    user.postValue(it)
+                    email.postValue(it.email)
+                }
+    }
+
+    fun loadTokenInfo() {
+        val disposable = userApiClient.accessTokenInfo().subscribeOn(Schedulers.io()).subscribe { tokenInfo ->
+            userId.postValue(tokenInfo.userId)
+            appId.postValue(tokenInfo.appId)
+            expiresIn.postValue(tokenInfo.expiresInMillis)
+        }
+    }
+
+    fun logout() {
+        val disposable = userApiClient.logout()
+                .subscribeOn(Schedulers.io())
+                .subscribe { _ ->
+                    logoutEvent.postValue(null)
+                }
+    }
+
+    fun unlink() {
+        val disposable = userApiClient.unlink()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _ ->
+                    logoutEvent.postValue(null)
+                }
+    }
+
+
+}

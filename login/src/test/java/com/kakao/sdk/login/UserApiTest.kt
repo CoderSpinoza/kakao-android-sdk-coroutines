@@ -1,7 +1,8 @@
 package com.kakao.sdk.login
 
 import com.google.gson.Gson
-import com.kakao.sdk.login.data.UserApi
+import com.kakao.sdk.login.data.ApiService
+import com.kakao.sdk.login.domain.UserApi
 import com.kakao.sdk.network.ApplicationProvider
 import io.reactivex.Observable
 import org.junit.Before

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="user"
+            type="com.kakao.sdk.login.entity.User" />
+    </data>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageUrl="@{user.properties[`profile_image`]}"/>
+        <TextView
+            android:id="@+id/email_label_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintLeft_toRightOf="@+id/profile_image_view"/>
+
+        <EditText
+            android:id="@+id/email_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:inputType="none"
+            android:editable="false"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/profile_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/email_label_text_view"
+            android:text="@{user.email}"
+            android:textSize="@dimen/edit_text_size"
+            tools:ignore="TextFields"/>
+        <TextView
+            android:id="@+id/app_user_id_label_text_View"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/app_user_id"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintTop_toBottomOf="@+id/email_edit_text"
+            app:layout_constraintLeft_toRightOf="@+id/profile_image_view"/>
+        <EditText
+            android:id="@+id/app_user_id_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:inputType="none"
+            android:editable="false"
+            android:text="@{`` + user.id}"
+            android:textSize="@dimen/edit_text_size"
+            android:layout_marginStart="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/profile_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/app_user_id_label_text_View"/>
+
+        <TextView
+            android:id="@+id/nickname_label_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nickname"
+            app:layout_constraintTop_toBottomOf="@+id/app_user_id_edit_text"/>
+        <EditText
+            android:id="@+id/nickname_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:editable="false"
+            android:text="@{user.properties[`nickname`]}"
+            android:textSize="@dimen/edit_text_size"
+            app:layout_constraintTop_toBottomOf="@+id/nickname_label_text_view"
+            />
+
+        <!--<TextView-->
+            <!--android:id="@+id/name_label_text_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/label_name"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/nickname_edit_text"/>-->
+        <!--<EditText-->
+            <!--android:id="@+id/name_edit_text"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="@dimen/edit_text_size"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/name_label_text_view"-->
+            <!--/>-->
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

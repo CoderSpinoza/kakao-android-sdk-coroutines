@@ -2,13 +2,13 @@ package com.kakao.sdk.kakaostory
 
 import android.net.Uri
 import com.google.gson.Gson
-import com.kakao.sdk.kakaostory.data.KakaoStoryApi
+import com.kakao.sdk.kakaostory.domain.KakaoStoryApi
 import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.kakaostory.entity.StoryPostResponse
 import com.kakao.sdk.login.data.AccessTokenInterceptor
 import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.network.KakaoAgentInterceptor
-import com.kakao.sdk.network.KakaoConverterFactory
+import com.kakao.sdk.network.data.KakaoAgentInterceptor
+import com.kakao.sdk.network.data.KakaoConverterFactory
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.toObservable

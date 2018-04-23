@@ -1,7 +1,8 @@
 package com.kakao.sdk.friends
 
+import com.kakao.sdk.friends.domain.FriendsApi
 import com.kakao.sdk.friends.entity.*
-import com.kakao.sdk.login.ApiService
+import com.kakao.sdk.login.data.ApiService
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.shadows.ShadowLog

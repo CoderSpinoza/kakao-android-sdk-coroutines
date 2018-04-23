@@ -2,6 +2,7 @@ package com.kakao.sdk.sample
 
 import android.content.Intent
 import android.support.v4.app.Fragment
+import com.kakao.sdk.sample.login.LoginActivity
 
 /**
  * @author kevin.kang. Created on 2018. 4. 20..

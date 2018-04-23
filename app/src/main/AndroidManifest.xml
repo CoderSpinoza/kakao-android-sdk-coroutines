@@ -23,9 +23,9 @@
 
         <activity android:name=".MainActivity"
                   android:label="Main"
-                  android:launchMode="singleTop">
+                  android:launchMode="singleTask">
         </activity>
-        <activity android:name=".LoginActivity"
+        <activity android:name=".login.LoginActivity"
                   android:label="Login"
             android:launchMode="singleTask">
             <intent-filter>

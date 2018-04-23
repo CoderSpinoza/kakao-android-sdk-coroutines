@@ -9,18 +9,19 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.sample.databinding.ActivityMainBinding
+import com.kakao.sdk.sample.link.LinkFragment
+import com.kakao.sdk.sample.story.StoryFragment
+import com.kakao.sdk.sample.talk.TalkFragment
+import com.kakao.sdk.sample.user.UserFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
-
     val menuIds = arrayOf(R.id.menu_talk, R.id.menu_story, R.id.menu_link, R.id.menu_user)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         Log.e("Token on MainActivity", AccessTokenRepo.instance.fromCache().toString())
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
         bottom_nav.setOnNavigationItemSelectedListener { menu ->
             when (menu.itemId) {
@@ -73,7 +74,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                Log.e("onPageSelected", "" + position)
                 bottom_nav.selectedItemId = menuIds[position]
             }
 

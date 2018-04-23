@@ -1,6 +1,7 @@
 package com.kakao.sdk.push
 
-import com.kakao.sdk.login.ApiService
+import com.kakao.sdk.login.data.ApiService
+import com.kakao.sdk.push.domain.PushApi
 import com.kakao.sdk.push.entity.FcmMessage
 import com.kakao.sdk.push.entity.PushMessage
 import io.reactivex.Observable
