@@ -9,8 +9,7 @@ import com.kakao.sdk.friends.entity.Friend
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-class TalkViewModel(val friendsApiClient: FriendsApiClient) : ViewModel() {
-
+class TalkViewModel(private val friendsApiClient: FriendsApiClient) : ViewModel() {
     val friends = MutableLiveData<List<Friend>>()
 
     fun onCreate() {}
@@ -19,7 +18,7 @@ class TalkViewModel(val friendsApiClient: FriendsApiClient) : ViewModel() {
     fun onDestroy() {}
 
     fun loadFriends() {
-        val disposable = friendsApiClient.getFriends()
+        val disposable = friendsApiClient.getFriends(limit = 100)
                 .subscribe(
                         { response -> friends.postValue(response.friends)},
                         { error -> Log.e("error", error.toString())}

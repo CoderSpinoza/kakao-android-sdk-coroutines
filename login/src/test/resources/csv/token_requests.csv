@@ -1,0 +1,4 @@
+client_id, redirect_uri, approval_type, android_key_hash, code, refresh_token, client_secret, grant_type
+test_client_id, test_redirect_uri, individual, test_key_hash, test_auth_code, , test_client_secret, authorization_code
+test_client_id, test_redirect_uri, individual, test_key_hash, test_auth_code, , , authorization_code
+test_client_id, test_redirect_uri, individual, test_key_hash, , test_refresh_token, , authorization_code

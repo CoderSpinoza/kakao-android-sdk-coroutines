@@ -1,0 +1,19 @@
+{
+  "id": 1376016924426814086,
+  "has_signed_up": true,
+  "properties":{
+    "nickname":"mj_alpha_g2",
+    "thumbnail_image": "http://~~~~~/o.jpg",
+    "profile_image": "http://~~~~~/o.jpg"
+  },
+  "for_partner": {
+    "uuid":"YVNjU2pZbkJ6T3xLfVFjVm9aaloO"
+  },
+  "kakao_account": {
+    "has_email": false,
+    "is_kakaotalk_user": true,
+    "has_phone_number": true,
+    "phone_number": "+82 10-1234-1234",
+    "display_id": "+82 10-1234-1234"
+  }
+}

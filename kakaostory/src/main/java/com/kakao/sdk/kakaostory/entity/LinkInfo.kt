@@ -2,18 +2,19 @@ package com.kakao.sdk.kakaostory.entity
 
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
+import com.kakao.sdk.kakaostory.Constants
 
 /**
  * @author kevin.kang. Created on 2018. 3. 22..
  */
-data class LinkInfo(val url: String,
-                    @SerializedName("requested_url") val requestedUrl: String,
-                    val host: String,
-                    val title: String,
-                    val description: String,
-                    val section: String,
-                    val type: String,
-                    @SerializedName("image") val images: List<String>) {
+data class LinkInfo(@SerializedName(Constants.URL) val url: String?,
+                    @SerializedName(Constants.REQUESTED_URL) val requestedUrl: String?,
+                    @SerializedName(Constants.HOST) val host: String?,
+                    @SerializedName(Constants.TITLE) val title: String?,
+                    @SerializedName(Constants.DESCRIPTION) val description: String?,
+                    @SerializedName(Constants.SECTION) val section: String?,
+                    @SerializedName(Constants.TYPE) val type: String?,
+                    @SerializedName(Constants.IMAGE) val images: List<String>?) {
     override fun toString(): String {
         return GsonBuilder().setPrettyPrinting().create().toJson(this)
     }

@@ -15,6 +15,6 @@ interface AuthCodeService {
     fun updateScopesObservable(context: Context, observable: Observable<Throwable>): Observable<Any>
 
     companion object {
-        val instance = DefaultAuthCodeService(AccessTokenRepo.instance)
+        val instance = DefaultAuthCodeService(AccessTokenRepo.instance) as AuthCodeService
     }
 }

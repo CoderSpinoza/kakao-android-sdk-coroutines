@@ -1,0 +1,17 @@
+{
+  "id":1376016924426814086,
+  "uuid":"YVNjU2pZbkJ6T3xLfVFjVm9aaloO",
+  "service_user_id":90853482654331184,
+  "remaining_invite_count":20,
+  "remaining_group_msg_count":5,
+  "properties":{
+    "nickname":"mj_alpha_g2",
+    "thumbnail_image": "http://mud-kage.kakao.co.kr/14/dn/btqb0pOIwX3/ACIUHOQ0yh9SSz67RzUzCK/o.jpg",
+    "profile_image": "http://mud-kage.kakao.co.kr/14/dn/btqb0p2eCdE/L89kqEkpOQCbYk5drpJJFK/o.jpg"
+  },
+  "kaccount_id":200937,
+  "kaccount_email":"kevin.kang@kakaocorp.com",
+  "kaccount_talk_user_id":123435,
+  "kaccount_birthday": "01/15/1990",
+  "kaccount_email_verified" : true
+}

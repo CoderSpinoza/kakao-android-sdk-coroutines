@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.customtabs.CustomTabsService
 import android.util.Log
-import com.kakao.sdk.network.StringSet
+import com.kakao.sdk.login.Constants
 import com.kakao.sdk.network.Utility
 import java.util.*
 
@@ -23,12 +23,12 @@ class AuthCodeCustomTabsActivity : Activity() {
     }
 
     fun openChromeCustomTab() {
-        val continueUri = Uri.Builder().scheme("https").authority("kauth.kakao.com")
-                .path("oauth/authorize")
-                .appendQueryParameter("client_id", Utility.getMetadata(this, StringSet.META_APP_KEY))
-                .appendQueryParameter("redirect_uri", String.format("kakao%s://oauth", Utility.getMetadata(this, StringSet.META_APP_KEY)))
-                .appendQueryParameter("response_type", "code")
-                .appendQueryParameter("approval_type", "individual")
+        val continueUri = Uri.Builder().scheme(com.kakao.sdk.network.Constants.SCHEME).authority(com.kakao.sdk.network.Constants.KAUTH)
+                .path(Constants.AUTHORIZE_PATH)
+                .appendQueryParameter(Constants.CLIENT_ID, Utility.getMetadata(this, com.kakao.sdk.network.Constants.META_APP_KEY))
+                .appendQueryParameter(Constants.REDIRECT_URI, String.format("kakao%s://oauth", Utility.getMetadata(this, com.kakao.sdk.network.Constants.META_APP_KEY)))
+                .appendQueryParameter(Constants.RESPONSE_TYPE, Constants.CODE)
+                .appendQueryParameter(Constants.APPROVAL_TYPE, "individual")
                 .build()
         CustomTabsIntent.Builder().enableUrlBarHiding().setShowTitle(true).build().launchUrl(this, continueUri)
 //        val packageName = resolveCustomTabsPackageName(this, continueUri)

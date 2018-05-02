@@ -1,5 +1,5 @@
-apply plugin: 'kotlin-android'
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -31,6 +31,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+    }
 }
 
 dependencies {
@@ -47,7 +51,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
-    testImplementation 'junit:junit:4.12'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.1.1'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.1.1'
     testImplementation 'org.robolectric:robolectric:3.7.1'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
 }

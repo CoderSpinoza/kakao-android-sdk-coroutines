@@ -1,0 +1,99 @@
+{
+  "template_id": 17888,
+  "template_args": {
+    "${IMAGE_WIDTH}": "400",
+    "${IOS_EXECUTION_URL}": "",
+    "${IMAGE_URL}": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png",
+    "${IMAGE_COUNT}": "1",
+    "${FIRST_BUTTON_TITLE}": "바로 확인",
+    "${DESCRIPTION}": "디폴트 템플릿 FEED",
+    "${SHARED_COUNT}": "0",
+    "${ANDROID_EXECUTION_URL}": "",
+    "${FIRST_BUTTON_IOS_EXECUTION_URL}": "",
+    "${FIRST_BUTTON_MOBILE_WEB_URL}": "http://dev.kakao.com",
+    "${COMMENT_COUNT}": "200",
+    "${SUBSCRIBER_COUNT}": "0",
+    "${IMAGE_HEIGHT}": "400",
+    "${TITLE}": "카카오톡 링크 4.0",
+    "${MOBILE_WEB_URL}": "http://dev.kakao.com",
+    "${FIRST_BUTTON_ANDROID_EXECUTION_URL}": "",
+    "${VIEW_COUNT}": "0",
+    "${WEB_URL}": "http://dev.kakao.com",
+    "${LIKE_COUNT}": "100",
+    "${FIRST_BUTTON_WEB_URL}": "http://dev.kakao.com"
+  },
+  "template_json": {
+    "P": {
+      "TP": "Feed",
+      "ME": "${ME}",
+      "SID": "capri_543354",
+      "DID": "http://dev.kakao.com",
+      "SNM": "Jini Default App",
+      "SIC": "http://alpha-api1-kage.kakao.com/14/dn/ZSb17blV2e/O0rkMy11Q3sGfcwaayAoM1/o.jpg",
+      "L": {
+        "LCA": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LCI": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LPC": "http://dev.kakao.com",
+        "LMO": "http://dev.kakao.com",
+        "LCP": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LCM": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LA": "market://details?id=com.elevenst",
+        "LI": "https://itunes.apple.com/app/id397938216"
+      },
+      "LA": "market://details?id=com.elevenst",
+      "LI": "https://itunes.apple.com/app/id397938216",
+      "VA": "6.0.0",
+      "VI": "5.9.8",
+      "VW": "2.5.1",
+      "VM": "2.2.0",
+      "FW": true,
+      "RF": "out-client"
+    },
+    "C": {
+      "THC": 1,
+      "THL": [
+        {
+          "TH": {
+            "THU": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png",
+            "W": 400,
+            "H": 400
+          },
+          "L": {
+            "LPC": "http://dev.kakao.com",
+            "LMO": "http://dev.kakao.com"
+          }
+        }
+      ],
+      "TI": {
+        "TD": {
+          "T": "카카오톡 링크 4.0",
+          "D": "디폴트 템플릿 FEED"
+        },
+        "L": {
+          "LPC": "http://dev.kakao.com",
+          "LMO": "http://dev.kakao.com"
+        }
+      },
+      "SO": {
+        "LK": 100,
+        "CM": 200,
+        "SH": 0,
+        "VC": 0,
+        "SB": 0
+      },
+      "BUL": [
+        {
+          "BU": {
+            "T": "바로 확인"
+          },
+          "L": {
+            "LPC": "http://dev.kakao.com",
+            "LMO": "http://dev.kakao.com"
+          }
+        }
+      ]
+    }
+  },
+  "warning_msg": {},
+  "argument_msg": {}
+}

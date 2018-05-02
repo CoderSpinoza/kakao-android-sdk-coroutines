@@ -6,13 +6,14 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadows.ShadowLog
+
+import org.junit.jupiter.api.Assertions.*
 
 /**
  * @author kevin.kang. Created on 2018. 3. 30..
@@ -25,7 +26,7 @@ class AppKeyInterceptorTest {
         ShadowLog.stream = System.out
 
         val bundle = Bundle()
-        bundle.putString(StringSet.META_APP_KEY, "test_app_key")
+        bundle.putString(Constants.META_APP_KEY, "test_app_key")
         RuntimeEnvironment.application.applicationInfo.metaData = bundle
         ApplicationProvider.application = RuntimeEnvironment.application
         interceptor = AppKeyInterceptor()
@@ -41,7 +42,7 @@ class AppKeyInterceptorTest {
         client.newCall(Request.Builder().url(server.url("/")).build()).execute()
         val request = server.takeRequest()
 
-        Assert.assertEquals(String.format("%s %s", StringSet.HEADER_PREFIX_APP_KEY, "test_app_key"), request.getHeader(StringSet.HEADER_KEY_AUTH))
+        assertEquals(String.format("%s %s", Constants.KAKAO_AK, "test_app_key"), request.getHeader(Constants.AUTHORIZATION))
         server.shutdown()
     }
 }

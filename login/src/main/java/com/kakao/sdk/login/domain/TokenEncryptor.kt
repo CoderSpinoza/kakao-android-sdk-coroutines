@@ -1,6 +1,6 @@
 package com.kakao.sdk.login.domain
 
-import com.kakao.sdk.login.entity.AccessToken
+import com.kakao.sdk.login.entity.token.AccessToken
 import io.reactivex.Observable
 
 /**

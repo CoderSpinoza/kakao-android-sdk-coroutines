@@ -3,7 +3,6 @@ package com.kakao.sdk.kakaostory.data
 import com.kakao.sdk.kakaostory.domain.KakaoStoryApi
 import com.kakao.sdk.kakaostory.entity.IsStoryUserResponse
 import com.kakao.sdk.kakaostory.entity.Story
-import com.kakao.sdk.kakaostory.entity.StoryPostResponse
 import com.kakao.sdk.login.data.ApiService
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -17,7 +16,7 @@ class KakaoStoryApiClient(val api: KakaoStoryApi = ApiService.kapi.create(KakaoS
     }
 
     fun getMyStories(): Single<List<Story>> {
-        return api.getMyStories().subscribeOn(Schedulers.io())
+        return api.myStories().subscribeOn(Schedulers.io())
     }
 
 //    fun postNote(content: String,

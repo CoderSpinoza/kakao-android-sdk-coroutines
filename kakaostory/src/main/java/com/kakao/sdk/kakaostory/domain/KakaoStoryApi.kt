@@ -1,6 +1,6 @@
 package com.kakao.sdk.kakaostory.domain
 
-import android.net.Uri
+import com.kakao.sdk.kakaostory.Constants
 import com.kakao.sdk.kakaostory.entity.*
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -11,60 +11,57 @@ import retrofit2.http.*
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 interface KakaoStoryApi {
-    @GET("v1/api/story/isstoryuser")
+    @GET(Constants.IS_STORY_USER_PATH)
     fun isStoryUser(): Single<IsStoryUserResponse>
 
-    @GET("v1/api/story/profile")
-    fun getProfile(@Query("secure_resource") secureResource: Boolean): Single<StoryProfile>
+    @GET(Constants.STORY_PROFILE_PATH)
+    fun profile(@Query(Constants.SECURE_RESOURCE) secureResource: Boolean? = null): Single<StoryProfile>
 
-    @GET("v1/api/story/mystory")
-    fun getMyStory(@Query("id") id: String): Single<Story>
+    @GET(Constants.GET_STORY_PATH)
+    fun myStory(@Query(Constants.ID) id: String): Single<Story>
 
-    @GET("v1/api/story/mystories")
-    fun getMyStories(): Single<List<Story>>
-
-    @GET("v1/api/story/mystories")
-    fun getMyStories(@Query("last_id") lastId: String): Single<List<Story>>
+    @GET(Constants.GET_STORIES_PATH)
+    fun myStories(@Query(Constants.LAST_ID) lastId: String? = null): Single<List<Story>>
 
     @FormUrlEncoded
-    @POST("v1/api/story/post/note")
-    fun postNote(@Field("content") content: String,
-                 @Field("permission") permission: Story.Permission,
-                 @Field("enable_share") enableShare: Boolean,
-                 @Field("android_exec_param") androidExecParams: Uri,
-                 @Field("ios_exec_param") iosExecParams: Uri,
-                 @Field("android_market_param") androidMarketParams: Uri,
-                 @Field("ios_market_param") iosMarketParams: Uri): Single<StoryPostResponse>
+    @POST(Constants.POST_NOTE_PATH)
+    fun postNote(@Field(Constants.CONTENT) content: String,
+                 @Field(Constants.PERMISSION) permission: Story.Permission,
+                 @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
+                 @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
+                 @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
+                 @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
+                 @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Single<StoryPostResponse>
 
     @FormUrlEncoded
-    @POST("v1/api/story/post/photo")
-    fun postPhoto(@Query("image_url_list") images: String,
-                  @Field("content") content: String,
-                  @Field("permission") permission: Story.Permission,
-                  @Field("enable_share") enableShare: Boolean,
-                  @Field("android_exec_param") androidExecParams: Uri,
-                  @Field("ios_exec_param") iosExecParams: Uri,
-                  @Field("android_market_param") androidMarketParams: Uri,
-                  @Field("ios_market_param") iosMarketParams: Uri): Single<StoryPostResponse>
+    @POST(Constants.POST_PHOTO_PATH)
+    fun postPhoto(@Query(Constants.IMAGE_URL_LIST) images: String,
+                  @Field(Constants.CONTENT) content: String,
+                  @Field(Constants.PERMISSION) permission: Story.Permission,
+                  @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
+                  @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
+                  @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
+                  @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
+                  @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Single<StoryPostResponse>
 
     @FormUrlEncoded
-    @POST("v1/api/story/post/link")
-    fun postLink(@Field("link_info") linkInfo: LinkInfo,
-                 @Field("content") content: String,
-                 @Field("permission") permission: Story.Permission,
-                 @Field("enable_share") enableShare: Boolean,
-                 @Field("android_exec_param") androidExecParams: Uri,
-                 @Field("ios_exec_param") iosExecParams: Uri,
-                 @Field("android_market_param") androidMarketParams: Uri,
-                 @Field("ios_market_param") iosMarketParams: Uri): Single<StoryPostResponse>
+    @POST(Constants.POST_LINK_PATH)
+    fun postLink(@Field(Constants.LINK_INFO) linkInfo: LinkInfo,
+                 @Field(Constants.CONTENT) content: String,
+                 @Field(Constants.PERMISSION) permission: Story.Permission,
+                 @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
+                 @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
+                 @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
+                 @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
+                 @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Single<StoryPostResponse>
 
-    @DELETE("v1/api/story/delete/mystory")
-    fun deleteStory(@Query("id") id: String): Completable
+    @DELETE(Constants.DELETE_STORY_PATH)
+    fun deleteStory(@Query(Constants.ID) id: String): Completable
 
-    @GET("v1/api/story/linkinfo")
-    fun scrapLink(@Query("url") url: String): Single<LinkInfo>
+    @GET(Constants.SCRAP_LINK_PATH)
+    fun scrapLink(@Query(Constants.URL) url: String): Single<LinkInfo>
 
     @Multipart
-    @POST("v1/api/story/upload/multi")
+    @POST(Constants.SCRAP_IMAGES_PATH)
     fun scrapImages(@Part images: List<MultipartBody.Part>): Single<List<String>>
 }

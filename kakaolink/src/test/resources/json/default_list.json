@@ -1,0 +1,129 @@
+{
+  "template_id": 17314,
+  "template_args": {
+    "${THIRD_ANDROID_EXECUTION_URL}": "",
+    "${HEADER_ANDROID_EXECUTION_URL}": "",
+    "${SECOND_WEB_URL}": "https://dev.kakao.com/docs",
+    "${FIRST_BUTTON_TITLE}": "웹에서 보기",
+    "${THIRD_IMAGE_URL}": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png",
+    "${FIRST_DESCRIPTION}": "",
+    "${FIRST_IMAGE_URL}": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png",
+    "${THIRD_MOBILE_WEB_URL}": "https://devtalk.kakao.com",
+    "${FIRST_WEB_URL}": "https://dev.kakao.com/features/platform",
+    "${FIRST_BUTTON_IOS_EXECUTION_URL}": "",
+    "${FIRST_ANDROID_EXECUTION_URL}": "",
+    "${SECOND_TITLE}": "개발자 가이드",
+    "${FIRST_TITLE}": "API 소개",
+    "${SECOND_MOBILE_WEB_URL}": "https://dev.kakao.com/docs",
+    "${FIRST_BUTTON_MOBILE_WEB_URL}": "https://dev.kakao.com",
+    "${FIRST_IOS_EXECUTION_URL}": "",
+    "${HEADER_IOS_EXECUTION_URL}": "",
+    "${SECOND_DESCRIPTION}": "",
+    "${FIRST_BUTTON_WEB_URL}": "https://dev.kakao.com",
+    "${HEADER_WEB_URL}": "https://dev.kakao.com",
+    "${THIRD_IOS_EXECUTION_URL}": "",
+    "${SECOND_IOS_EXECUTION_URL}": "",
+    "${FIRST_MOBILE_WEB_URL}": "https://dev.kakao.com/features/platform",
+    "${SECOND_IMAGE_URL}": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png",
+    "${THIRD_TITLE}": "개발자 포럼",
+    "${THIRD_DESCRIPTION}": "",
+    "${FIRST_BUTTON_ANDROID_EXECUTION_URL}": "",
+    "${SECOND_ANDROID_EXECUTION_URL}": "",
+    "${HEADER_MOBILE_WEB_URL}": "https://dev.kakao.com",
+    "${THIRD_WEB_URL}": "https://devtalk.kakao.com",
+    "${HEADER_TITLE}": "카카오 디벨로퍼"
+  },
+  "template_json": {
+    "P": {
+      "TP": "List",
+      "ME": "${ME}",
+      "SID": "capri_543354",
+      "DID": "https://dev.kakao.com",
+      "SNM": "Jini Default App",
+      "SIC": "http://alpha-api1-kage.kakao.com/14/dn/ZSb17blV2e/O0rkMy11Q3sGfcwaayAoM1/o.jpg",
+      "L": {
+        "LCA": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LCI": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LPC": "http://dev.kakao.com",
+        "LMO": "http://dev.kakao.com",
+        "LCP": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LCM": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LA": "market://details?id=com.elevenst",
+        "LI": "https://itunes.apple.com/app/id397938216"
+      },
+      "LA": "market://details?id=com.elevenst",
+      "LI": "https://itunes.apple.com/app/id397938216",
+      "VA": "6.0.0",
+      "VI": "5.9.8",
+      "VW": "2.5.1",
+      "VM": "2.2.0",
+      "FW": true,
+      "RF": "out-client"
+    },
+    "C": {
+      "HD": {
+        "TD": {
+          "T": "카카오 디벨로퍼"
+        },
+        "L": {
+          "LPC": "https://dev.kakao.com",
+          "LMO": "https://dev.kakao.com"
+        }
+      },
+      "ITL": [
+        {
+          "TD": {
+            "T": "API 소개"
+          },
+          "L": {
+            "LPC": "https://dev.kakao.com/features/platform",
+            "LMO": "https://dev.kakao.com/features/platform"
+          },
+          "TH": {
+            "THU": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png"
+          },
+          "UA": {}
+        },
+        {
+          "TD": {
+            "T": "개발자 가이드"
+          },
+          "L": {
+            "LPC": "https://dev.kakao.com/docs",
+            "LMO": "https://dev.kakao.com/docs"
+          },
+          "TH": {
+            "THU": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png"
+          },
+          "UA": {}
+        },
+        {
+          "TD": {
+            "T": "개발자 포럼"
+          },
+          "L": {
+            "LPC": "https://devtalk.kakao.com",
+            "LMO": "https://devtalk.kakao.com"
+          },
+          "TH": {
+            "THU": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png"
+          },
+          "UA": {}
+        }
+      ],
+      "BUL": [
+        {
+          "BU": {
+            "T": "웹에서 보기"
+          },
+          "L": {
+            "LPC": "https://dev.kakao.com",
+            "LMO": "https://dev.kakao.com"
+          }
+        }
+      ]
+    }
+  },
+  "warning_msg": {},
+  "argument_msg": {}
+}

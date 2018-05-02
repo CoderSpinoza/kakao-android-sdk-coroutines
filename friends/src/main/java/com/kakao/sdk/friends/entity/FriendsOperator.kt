@@ -3,7 +3,7 @@ package com.kakao.sdk.friends.entity
 /**
  * @author kevin.kang. Created on 2018. 3. 23..
  */
-enum class FriendsOperator(val enumName: String, value: Int) {
+enum class FriendsOperator(val enumName: String, @Suppress("UNUSED_PARAMETER") value: Int) {
     UNDEFINED("undefined", -1),
     INTERSECTION("i", 0),
     UNION("u", 1),

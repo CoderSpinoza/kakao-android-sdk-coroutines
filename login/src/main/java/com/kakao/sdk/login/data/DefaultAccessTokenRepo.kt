@@ -2,8 +2,8 @@ package com.kakao.sdk.login.data
 
 import android.content.SharedPreferences
 import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.login.entity.AccessToken
-import com.kakao.sdk.login.entity.AccessTokenResponse
+import com.kakao.sdk.login.entity.token.AccessToken
+import com.kakao.sdk.login.entity.token.AccessTokenResponse
 import java.util.*
 
 /**
@@ -23,7 +23,9 @@ class DefaultAccessTokenRepo(val appCache: SharedPreferences) : AccessTokenRepo 
             appCache.edit().putString(rtKey, accessTokenResponse.refreshToken).apply()
         }
         appCache.edit().putLong(atExpiresAtKey, Date().time + 1000L * accessTokenResponse.accessTokenExpiresIn).apply()
-        appCache.edit().putLong(rtExpiresAtKey, Date().time + 1000L * accessTokenResponse.refreshTokenExpiresIn).apply()
+        if (accessTokenResponse.refreshTokenExpiresIn != null) {
+            appCache.edit().putLong(rtExpiresAtKey, Date().time + 1000L * accessTokenResponse.refreshTokenExpiresIn).apply()
+        }
         return fromCache()
     }
 

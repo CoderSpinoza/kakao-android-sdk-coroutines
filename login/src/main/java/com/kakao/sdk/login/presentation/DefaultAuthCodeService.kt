@@ -9,10 +9,10 @@ import android.os.Handler
 import android.os.Looper
 import android.os.ResultReceiver
 import com.google.gson.Gson
+import com.kakao.sdk.login.Constants
 import com.kakao.sdk.login.data.AuthApiClient
 import com.kakao.sdk.login.data.MissingScopesError
 import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.network.StringSet
 import com.kakao.sdk.network.Utility
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -36,11 +36,11 @@ class DefaultAuthCodeService(private val accessTokenRepo: AccessTokenRepo) : Aut
     override fun requestAuthCode(context: Context, scopes: List<String>, approvalType: String): Single<String> {
         return Single.create<String> { emitter ->
             val intent = Intent(context, ScopeUpdateWebViewActivity::class.java)
-            val appKey = Utility.getMetadata(context, StringSet.META_APP_KEY)
+            val appKey = Utility.getMetadata(context, com.kakao.sdk.network.Constants.META_APP_KEY)
             val uri = updateScopeUri(appKey, String.format("kakao%s://oauth", appKey), approvalType, scopes)
             val headers = Bundle()
-            headers.putString("RT", accessTokenRepo.fromCache().refreshToken)
-            headers.putString("KA", Utility.getKAHeader(context))
+            headers.putString(Constants.RT, accessTokenRepo.fromCache().refreshToken)
+            headers.putString(com.kakao.sdk.network.Constants.KA, Utility.getKAHeader(context))
             intent.putExtra(ScopeUpdateWebViewActivity.KEY_URL, uri)
             intent.putExtra(ScopeUpdateWebViewActivity.KEY_HEADERS, headers)
             val resultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
@@ -80,7 +80,7 @@ class DefaultAuthCodeService(private val accessTokenRepo: AccessTokenRepo) : Aut
                             .toObservable()
                             .flatMap { code -> AuthApiClient.instance.issueAccessToken(code = code).toObservable() }
                             .doOnNext { response ->
-                                AccessTokenRepo.instance.toCache(response)
+                                accessTokenRepo.toCache(response)
                             }
                 }
             }
@@ -89,12 +89,12 @@ class DefaultAuthCodeService(private val accessTokenRepo: AccessTokenRepo) : Aut
     }
 
     fun updateScopeUri(clientId: String, redirectUri: String, approvalType: String, scopes: List<String>): String {
-        val builder = Uri.Builder().scheme("https").authority("kauth.kakao.com").path("oauth/authorize")
-                .appendQueryParameter("client_id", clientId)
-                .appendQueryParameter("redirect_uri", redirectUri)
-                .appendQueryParameter("response_type", "code")
-                .appendQueryParameter("approval_type", approvalType)
-                .appendQueryParameter("scope", scopes.joinToString(","))
+        val builder = Uri.Builder().scheme(com.kakao.sdk.network.Constants.SCHEME).authority(com.kakao.sdk.network.Constants.KAUTH).path(Constants.AUTHORIZE_PATH)
+                .appendQueryParameter(Constants.CLIENT_ID, clientId)
+                .appendQueryParameter(Constants.REDIRECT_URI, redirectUri)
+                .appendQueryParameter(Constants.RESPONSE_TYPE, Constants.CODE)
+                .appendQueryParameter(Constants.APPROVAL_TYPE, approvalType)
+                .appendQueryParameter(Constants.SCOPE, scopes.joinToString(","))
         return builder.build().toString()
     }
 }

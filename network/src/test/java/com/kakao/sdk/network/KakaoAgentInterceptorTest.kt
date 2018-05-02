@@ -17,7 +17,7 @@ import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowPackageManager
 
 import org.robolectric.Shadows.*
-import org.junit.Assert.*
+import org.junit.jupiter.api.Assertions.*
 import java.util.*
 
 /**
@@ -25,8 +25,10 @@ import java.util.*
  */
 @RunWith(RobolectricTestRunner::class)
 class KakaoAgentInterceptorTest {
+
     lateinit var interceptor: KakaoAgentInterceptor
     lateinit var shadowPackageManger: ShadowPackageManager
+
     @Before
     fun setup() {
         ShadowLog.stream = System.out
@@ -55,14 +57,14 @@ class KakaoAgentInterceptorTest {
         val request = server.takeRequest()
         server.shutdown()
 
-        val headerMap = parseKAHeader(request.getHeader(StringSet.HEADER_KEY_KA))
-        assertEquals(BuildConfig.VERSION_NAME, headerMap[StringSet.KA_KEY_SDK])
-        assertEquals(String.format("android-%s", Build.VERSION.SDK_INT), headerMap[StringSet.KA_KEY_OS])
-        assertEquals(Locale.getDefault().country.toUpperCase(), headerMap[StringSet.KA_KEY_LANG])
-        assertTrue(headerMap.containsKey(StringSet.KA_KEY_ORIGIN))
-        assertTrue(headerMap.containsKey(StringSet.KA_KEY_DEVICE))
-        assertEquals(RuntimeEnvironment.application.packageName, headerMap[StringSet.KA_KEY_PACKAGE])
-        assertEquals("1.0.0", headerMap[StringSet.KA_KEY_APP_VER])
+        val headerMap = parseKAHeader(request.getHeader(Constants.KA))
+        assertEquals(BuildConfig.VERSION_NAME, headerMap[Constants.SDK])
+        assertEquals(String.format("android-%s", Build.VERSION.SDK_INT), headerMap[Constants.OS])
+        assertEquals(String.format("%s-%s", Locale.getDefault().language.toLowerCase(), Locale.getDefault().country.toUpperCase()), headerMap[Constants.LANG])
+        assertTrue(headerMap.containsKey(Constants.ORIGIN))
+        assertTrue(headerMap.containsKey(Constants.DEVICE))
+        assertEquals(RuntimeEnvironment.application.packageName, headerMap[Constants.ANDROID_PKG])
+        assertEquals("1.0.0", headerMap[Constants.APP_VER])
     }
 
     fun parseKAHeader(header: String): Map<String, String> {

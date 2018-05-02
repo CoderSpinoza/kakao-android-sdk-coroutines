@@ -1,0 +1,92 @@
+{
+  "template_id": 23072,
+  "template_args": {
+    "${IMAGE_WIDTH}": "400",
+    "${IOS_EXECUTION_URL}": "",
+    "${IMAGE_URL}": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png",
+    "${IMAGE_COUNT}": "1",
+    "${CURRENCY_UNIT_POSITION}": "",
+    "${FIRST_BUTTON_TITLE}": "바로 확인",
+    "${DESCRIPTION}": "디폴트 템플릿 Commerce",
+    "${DISCOUNT_RATE}": "",
+    "${ANDROID_EXECUTION_URL}": "",
+    "${FIRST_BUTTON_IOS_EXECUTION_URL}": "",
+    "${FLAT_DISCOUNT}": "",
+    "${CURRENCY_UNIT}": "원",
+    "${FIRST_BUTTON_MOBILE_WEB_URL}": "http://dev.kakao.com",
+    "${IMAGE_HEIGHT}": "400",
+    "${TITLE}": "카카오톡 링크 4.0",
+    "${PROMOTION}": "",
+    "${REGULAR_PRICE}": "10000",
+    "${MOBILE_WEB_URL}": "http://dev.kakao.com",
+    "${FIRST_BUTTON_ANDROID_EXECUTION_URL}": "",
+    "${WEB_URL}": "http://dev.kakao.com",
+    "${FIRST_BUTTON_WEB_URL}": "http://dev.kakao.com",
+    "${DISCOUNT_PRICE}": ""
+  },
+  "template_msg": {
+    "P": {
+      "TP": "Commerce",
+      "ME": "${ME}",
+      "SID": "capri_543354",
+      "DID": "http://dev.kakao.com",
+      "SNM": "11번가 - Jini Default App",
+      "SIC": "http://alpha-api1-kage.kakao.com/14/dn/ZSb4YSY49i/Im6f6wugsDOpgfk8ID8Kok/o.jpg",
+      "L": {
+        "LPC": "http://www.11st.co.kr",
+        "LMO": "http://www.11st.co.kr",
+        "LCP": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LCM": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink"
+      },
+      "VA": "6.0.0",
+      "VI": "5.9.8",
+      "VW": "2.5.1",
+      "VM": "2.2.0",
+      "FW": true,
+      "RF": "out-client"
+    },
+    "C": {
+      "THC": 1,
+      "THL": [
+        {
+          "TH": {
+            "THU": "http://alpha-api1-kage.kakao.com/dn/cerDB5/ZSb2iRugKx/M4nuZxX823tnK1Mk5yVcv0/kakaolink40_original.png",
+            "W": 400,
+            "H": 400
+          },
+          "L": {
+            "LPC": "http://dev.kakao.com",
+            "LMO": "http://dev.kakao.com"
+          }
+        }
+      ],
+      "TI": {
+        "TD": {
+          "T": "카카오톡 링크 4.0",
+          "D": "디폴트 템플릿 Commerce"
+        },
+        "L": {
+          "LPC": "http://dev.kakao.com",
+          "LMO": "http://dev.kakao.com"
+        }
+      },
+      "CMC": {
+        "RP": 10000,
+        "CU": "원"
+      },
+      "BUL": [
+        {
+          "BU": {
+            "T": "바로 확인"
+          },
+          "L": {
+            "LPC": "http://dev.kakao.com",
+            "LMO": "http://dev.kakao.com"
+          }
+        }
+      ]
+    }
+  },
+  "warning_msg": {},
+  "argument_msg": {}
+}

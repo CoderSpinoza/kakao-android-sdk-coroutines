@@ -1,7 +1,7 @@
 package com.kakao.sdk.network.data
 
 import com.kakao.sdk.network.ApplicationProvider
-import com.kakao.sdk.network.StringSet
+import com.kakao.sdk.network.Constants
 import com.kakao.sdk.network.Utility
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -16,7 +16,7 @@ class KakaoAgentInterceptor : Interceptor {
 
         val header = Utility.getKAHeader(ApplicationProvider.application)
         request = request.newBuilder()
-                .addHeader(StringSet.HEADER_KEY_KA, header)
+                .addHeader(Constants.KA, header)
                 .build()
         return chain.proceed(request)
     }

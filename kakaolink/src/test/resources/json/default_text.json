@@ -1,0 +1,68 @@
+{
+  "template_id": 35445,
+  "template_args": {
+    "${IOS_EXECUTION_URL}": "",
+    "${FIRST_BUTTON_MOBILE_WEB_URL}": "http://dev.kakao.com",
+    "${FIRST_BUTTON_TITLE}": "바로 확인",
+    "${TITLE}": "카카오링크는 카카오 플랫폼 서비스의 대표 기능으로써 사용자의 모바일 기기에 설치된 카카오 플랫폼과 연동하여 다양한 기능을 실행할 수 있습니다.\n\n현재 이용할 수 있는 카카오링크는 다음과 같습니다.\n카카오톡링크\n카카오톡을 실행하여 사용자가 선택한 채팅방으로 메시지를 전송합니다.\n카카오스토리링크\n카카오스토리 글쓰기 화면으로 연결합니다.",
+    "${MOBILE_WEB_URL}": "http://dev.kakao.com",
+    "${FIRST_BUTTON_ANDROID_EXECUTION_URL}": "",
+    "${WEB_URL}": "http://dev.kakao.com",
+    "${ANDROID_EXECUTION_URL}": "",
+    "${FIRST_BUTTON_WEB_URL}": "http://dev.kakao.com",
+    "${FIRST_BUTTON_IOS_EXECUTION_URL}": ""
+  },
+  "template_msg": {
+    "P": {
+      "TP": "Feed",
+      "ME": "${ME}",
+      "SID": "capri_543354",
+      "DID": "http://dev.kakao.com",
+      "SNM": "11번가 - Jini Default App",
+      "SIC": "http://alpha-api1-kage.kakao.com/14/dn/ZSb4YSY49i/Im6f6wugsDOpgfk8ID8Kok/o.jpg",
+      "L": {
+        "LCA": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LCI": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LPC": "http://www.11st.co.kr",
+        "LMO": "http://www.11st.co.kr",
+        "LCP": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LCM": "kakaof0832290fb7a308b2d35d554c67b993e://kakaolink",
+        "LA": "market://details?id=co.kr.11st",
+        "LI": "https://itunes.apple.com/app/id1234"
+      },
+      "LA": "market://details?id=co.kr.11st",
+      "LI": "https://itunes.apple.com/app/id1234",
+      "VA": "6.0.0",
+      "VI": "5.9.8",
+      "VW": "2.5.1",
+      "VM": "2.2.0",
+      "FW": true,
+      "RF": "out-client"
+    },
+    "C": {
+      "TI": {
+        "TD": {
+          "T": "카카오링크는 카카오 플랫폼 서비스의 대표 기능으로써 사용자의 모바일 기기에 설치된 카카오 플랫폼과 연동하여 다양한 기능을 실행할 수 있습니다.\n\n현재 이용할 수 있는 카카오링크는 다음과 같습니다.\n카카오톡링크\n카카오톡을 실행하여 사용자가 선택한 채팅방으로 메시지를 전송합니다.\n카카오스토리링크\n카카오스토리 글쓰기 화면으로 연결합니다."
+        },
+        "L": {
+          "LPC": "http://dev.kakao.com",
+          "LMO": "http://dev.kakao.com"
+        },
+        "FT": true
+      },
+      "BUL": [
+        {
+          "BU": {
+            "T": "바로 확인"
+          },
+          "L": {
+            "LPC": "http://dev.kakao.com",
+            "LMO": "http://dev.kakao.com"
+          }
+        }
+      ]
+    }
+  },
+  "warning_msg": {},
+  "argument_msg": {}
+}

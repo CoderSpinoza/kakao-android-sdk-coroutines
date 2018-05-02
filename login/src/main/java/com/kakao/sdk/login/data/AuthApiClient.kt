@@ -1,10 +1,10 @@
 package com.kakao.sdk.login.data
 
 import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.login.entity.AccessTokenResponse
+import com.kakao.sdk.login.entity.token.AccessTokenResponse
 import com.kakao.sdk.login.domain.AuthApi
 import com.kakao.sdk.network.ApplicationProvider
-import com.kakao.sdk.network.StringSet
+import com.kakao.sdk.network.Constants
 import com.kakao.sdk.network.Utility
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -15,23 +15,27 @@ import retrofit2.HttpException
  * @author kevin.kang. Created on 2018. 3. 28..
  */
 class AuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::class.java), val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance) {
-    fun issueAccessToken(approvalType: String = "individual", code: String,
-                         redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, StringSet.META_APP_KEY))): Single<AccessTokenResponse> {
-        return authApi.issueAccessToken(Utility.getMetadata(ApplicationProvider.application, StringSet.META_APP_KEY),
+    fun issueAccessToken(approvalType: String = "individual",
+                         code: String,
+                         redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY))
+    ): Single<AccessTokenResponse> {
+        return authApi.issueAccessToken(Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
                 redirectUri = redirectUri,
                 androidKeyHash = Utility.getKeyHash(ApplicationProvider.application)!!,
-                clientSecret = Utility.getMetadata(ApplicationProvider.application, StringSet.META_CLIENT_SECRET),
+                clientSecret = Utility.getMetadata(ApplicationProvider.application, Constants.META_CLIENT_SECRET),
                 authCode = code,
                 approvalType = approvalType
         ).subscribeOn(Schedulers.io())
     }
 
-    fun refreshAccessToken(approvalType: String = "individual", refreshToken: String,
-                           redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, StringSet.META_APP_KEY))): Single<AccessTokenResponse> {
-        return authApi.issueAccessToken(Utility.getMetadata(ApplicationProvider.application, StringSet.META_APP_KEY),
+    fun refreshAccessToken(refreshToken: String,
+                           approvalType: String = "individual",
+                           redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY))
+    ): Single<AccessTokenResponse> {
+        return authApi.issueAccessToken(Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
                 redirectUri = redirectUri,
                 androidKeyHash = Utility.getKeyHash(ApplicationProvider.application)!!,
-                clientSecret = Utility.getMetadata(ApplicationProvider.application, StringSet.META_CLIENT_SECRET),
+                clientSecret = Utility.getMetadata(ApplicationProvider.application, Constants.META_CLIENT_SECRET),
                 refreshToken = refreshToken,
                 approvalType = approvalType,
                 grantType = "refresh_token"

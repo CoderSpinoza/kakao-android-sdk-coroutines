@@ -1,10 +1,9 @@
 package com.kakao.sdk.login.data
 
-import android.util.Log
 import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.login.domain.UserApi
-import com.kakao.sdk.login.entity.AccessTokenInfo
-import com.kakao.sdk.login.entity.User
+import com.kakao.sdk.login.entity.user.AccessTokenInfo
+import com.kakao.sdk.login.entity.user.User
 import com.kakao.sdk.login.entity.UserIdResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -22,7 +21,6 @@ class UserApiClient(val userApi: UserApi = ApiService.kapi.create(UserApi::class
     }
 
     fun logout(): Single<UserIdResponse> {
-        Log.e("?out", "out")
         return userApi.logout().subscribeOn(Schedulers.io()).doOnSuccess { AccessTokenRepo.instance.clearCache() }
     }
 

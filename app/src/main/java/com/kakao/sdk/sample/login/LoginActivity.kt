@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.login.data.AuthApiClient
 import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.network.StringSet
+import com.kakao.sdk.network.Constants
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.sample.MainActivity
 import com.kakao.sdk.sample.R
@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         val code = intent?.data?.getQueryParameter("code") ?: return
 
-        val disposable = AuthApiClient.instance.issueAccessToken(code = code, redirectUri = String.format("kakao%s://oauth", Utility.getMetadata(this, StringSet.META_APP_KEY)))
+        val disposable = AuthApiClient.instance.issueAccessToken(code = code, redirectUri = String.format("kakao%s://oauth", Utility.getMetadata(this, Constants.META_APP_KEY)))
                 .doOnSuccess { response -> AccessTokenRepo.instance.toCache(response) }
                 .subscribeOn(Schedulers.io())
                 .subscribe { _ ->

@@ -1,0 +1,13 @@
+{
+  "site_name":"서울우유",
+  "image":[
+    "https://scrap.kakaocdn.net/dn/bmW4Nw/hyvOs6ltnw/7ChmvNK9KEsgRAK0OFDOAK/img.jpg?width=580&height=280&face=68_64_507_124"
+  ],
+  "host":"promotion.seoulmilk.co.kr",
+  "description":"체세포수 1등급 나100% 출시 2주년 기념 이벤트에 참여하고, 즉석당첨을 확인하세요!",
+  "requested_url":"http://promotion.seoulmilk.co.kr/event/20180411_na100/?sh=kas",
+  "section":"",
+  "title":"좋은 우유만 골라 담았다!",
+  "type":"website",
+  "url":"https://promotion.seoulmilk.co.kr:446/event/20180411_na100/"
+}

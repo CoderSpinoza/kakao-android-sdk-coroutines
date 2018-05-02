@@ -2,16 +2,11 @@ package com.kakao.sdk.sample.user
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableField
-import android.util.Log
 import com.kakao.sdk.login.data.AuthApiClient
 import com.kakao.sdk.login.data.UserApiClient
-import com.kakao.sdk.login.domain.AuthApi
-import com.kakao.sdk.login.entity.User
-import io.reactivex.Observer
+import com.kakao.sdk.login.entity.user.User
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 
 @Suppress("UNUSED_VARIABLE")
 /**
@@ -23,7 +18,7 @@ class UserViewModel(val userApiClient: UserApiClient) : ViewModel() {
     val email = MutableLiveData<String>()
     val nickname = MutableLiveData<User>()
 
-    val userId = MutableLiveData<String>()
+    val userId = MutableLiveData<Long>()
     val appId = MutableLiveData<Long>()
     val expiresIn = MutableLiveData<Long>()
 
@@ -40,13 +35,13 @@ class UserViewModel(val userApiClient: UserApiClient) : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .subscribe {
                     user.postValue(it)
-                    email.postValue(it.email)
+                    email.postValue(it.kakaoAccount.email)
                 }
     }
 
     fun loadTokenInfo() {
         val disposable = userApiClient.accessTokenInfo().subscribeOn(Schedulers.io()).subscribe { tokenInfo ->
-            userId.postValue(tokenInfo.userId)
+            userId.postValue(tokenInfo.id)
             appId.postValue(tokenInfo.appId)
             expiresIn.postValue(tokenInfo.expiresInMillis)
         }

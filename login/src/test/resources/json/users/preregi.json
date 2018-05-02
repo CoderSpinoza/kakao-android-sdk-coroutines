@@ -1,0 +1,20 @@
+{
+  "id": 1376016924426814086,
+  "has_signed_up": false,
+  "properties":{
+    "nickname":"mj_alpha_g2",
+    "thumbnail_image": "http://~~~~~/o.jpg",
+    "profile_image": "http://~~~~~~/o.jpg"
+  },
+  "for_partner": {
+    "uuid":"YVNjU2pZbkJ6T3xLfVFjVm9aaloO"
+  },
+  "kakao_account": {
+    "has_email": true,
+    "is_email_verified": true,
+    "email": "mj_alpha@gmail.com",
+    "is_kakaotalk_user": true,
+    "has_phone_number": false,
+    "service_user_id":90853482654331184
+  }
+}

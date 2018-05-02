@@ -18,7 +18,7 @@ class FriendsApiClient(val api: FriendsApi = ApiService.kapi.create(FriendsApi::
                    limit: Int? = null,
                    order: String? = null,
                    url: String? = null): Single<FriendsResponse> {
-        return api.getFriends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url)
+        return api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url)
                 .subscribeOn(Schedulers.io())
     }
 

@@ -1,6 +1,7 @@
 package com.kakao.sdk.login.domain
 
-import com.kakao.sdk.login.entity.AccessTokenResponse
+import com.kakao.sdk.login.Constants
+import com.kakao.sdk.login.entity.token.AccessTokenResponse
 import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -10,15 +11,15 @@ import retrofit2.http.POST
  * @author kevin.kang. Created on 2018. 3. 23..
  */
 interface AuthApi {
-    @POST("/oauth/token")
+    @POST(Constants.TOKEN_PATH)
     @FormUrlEncoded
-    fun issueAccessToken(@Field("client_id") clientId: String,
-                         @Field("redirect_uri") redirectUri: String,
-                         @Field("approval_type") approvalType: String = "individual",
-                         @Field("android_key_hash") androidKeyHash: String,
-                         @Field("code") authCode: String? = null,
-                         @Field("refresh_token") refreshToken: String? = null,
-                         @Field("client_secret") clientSecret: String? = null,
-                         @Field("grant_type") grantType: String = "authorization_code"
+    fun issueAccessToken(@Field(Constants.CLIENT_ID) clientId: String,
+                         @Field(Constants.REDIRECT_URI) redirectUri: String,
+                         @Field(Constants.APPROVAL_TYPE) approvalType: String = Constants.INDIVIDUAL,
+                         @Field(Constants.ANDROID_KEY_HASH) androidKeyHash: String,
+                         @Field(Constants.CODE) authCode: String? = null,
+                         @Field(Constants.REFRESH_TOKEN) refreshToken: String? = null,
+                         @Field(Constants.CLIENT_SECRET) clientSecret: String? = null,
+                         @Field(Constants.GRANT_TYPE) grantType: String = Constants.AUTHORIZATION_CODE
                          ): Single<AccessTokenResponse>
 }

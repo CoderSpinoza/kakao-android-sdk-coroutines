@@ -1,0 +1,29 @@
+{
+  "elements": [
+    {
+      "id": 89613112512119604,
+      "title": "우리팀",
+      "image_url": "http://th-gp.talk.kakao.com/th/talkp/wkislpHYlg/kLyxKPKmDeCMcuigHqPN70/1p1vfb_110x110_c.jpg",
+      "member_count": 16,
+      "chat_type" : "regular"
+    },
+    {
+      "id": 88604424245226298,
+      "title": "잡담방",
+      "member_count": 26,
+      "image_url": "http://th-gp.talk.kakao.com/th/talkp/wkislpHYlg/kLyxKPKmDeCMcuigHqPN70/1p1vfb_110x110_c.jpg",
+      "display_member_images":["http://th-gp.talk.kakao.com/th/talkp/wkislpHYlg/CCCXXX.jpg","http://th-gp.talk.kakao.com/th/talkp/wkislpHYlg/DDDXXX.jpg", ...],
+      "chat_type" : "regular"
+    },
+    {
+      "id": 8824612356722704,
+      "title": "김 춘호_Glen, 예지_alisha, 박성진_Patrick.P, Vayne 차민창, 박우영_Pierre",
+      "member_count": 8,
+      "display_member_images":["http://th-gp.talk.kakao.com/th/talkp/wkislpHYlg/EEEXXX.jpg","http://th-gp.talk.kakao.com/th/talkp/wkislpHYlg/FFFXXX.jpg", ...],
+      "chat_type" : "regular"
+    }
+  ],
+  "total_count": 30,
+  "before_url":null,
+  "after_url":"http://alpha-kapi.kakao.com/v1/internal/talk/chats?limit=5&target_id_type=user_id&page_order=asc&offset=5&chat_type=multi&target_id=1376016924426684995"
+}
