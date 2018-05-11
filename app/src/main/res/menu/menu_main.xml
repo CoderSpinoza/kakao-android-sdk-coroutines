@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_friends"
+          android:icon="@drawable/icon_user"
+          android:title="@string/friends"
+          android:enabled="true"
+          app:showAsAction="ifRoom" />
     <item android:title="@string/kakaotalk"
           android:icon="@drawable/icon_talk"
           android:id="@+id/menu_talk"

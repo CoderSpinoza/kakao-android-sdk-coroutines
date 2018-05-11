@@ -1,18 +1,27 @@
 package com.kakao.sdk.sample.story
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.transition.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.kakao.sdk.kakaostory.domain.StoryApiClient
+import com.kakao.sdk.kakaostory.entity.StoryImage
 import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.sample.BaseFragment
 import com.kakao.sdk.sample.R
+import com.kakao.sdk.sample.ViewModelFactory
 import com.kakao.sdk.sample.databinding.FragmentStoryBinding
+import com.kakao.sdk.sample.friends.FriendsViewModel
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -29,7 +38,9 @@ class StoryFragment : BaseFragment() {
         val view = binding.root
 
         binding.setLifecycleOwner(this)
-        binding.storyViewModel = StoryViewModel(StoryApiClient.instance)
+
+        binding.storyViewModel = ViewModelProviders.of(this, ViewModelFactory()).get(StoryViewModel::class.java)
+
         binding.storyViewModel?.isStoryUser?.observe(this, Observer {
             if (it != null && it) {
                 binding.storyViewModel?.getMyStories()
@@ -40,6 +51,9 @@ class StoryFragment : BaseFragment() {
 
         storiesAdapter = StoriesAdapter(listOf())
         binding.storiesList.adapter = storiesAdapter
+
+        binding.storiesList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
         binding.storyViewModel?.stories?.observe(this, Observer { stories ->
             storiesAdapter.stories = stories!!
             storiesAdapter.notifyDataSetChanged()
@@ -47,7 +61,6 @@ class StoryFragment : BaseFragment() {
 
         binding.storyViewModel?.requiredScopes?.observe(this, Observer { scopes ->
             if (scopes == null) return@Observer
-            Log.e(",missing scopes^^", scopes.toString())
             requestStoryPermission(scopes)
         })
 
@@ -71,3 +84,14 @@ class StoryFragment : BaseFragment() {
                         { error -> Log.e("update scope", "failed")})
     }
 }
+
+@BindingAdapter("bind:storyImage")
+fun loadImage(imageView: ImageView, imageUrls: List<StoryImage>?) {
+    if (imageUrls != null && imageUrls.isNotEmpty()) {
+        imageView.visibility = View.VISIBLE
+        Glide.with(imageView.context).load(imageUrls[0].small).into(imageView)
+    } else {
+        imageView.visibility = View.GONE
+    }
+}
+

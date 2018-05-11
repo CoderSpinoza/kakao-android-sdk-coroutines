@@ -1,5 +1,6 @@
 package com.kakao.sdk.kakaotalk.domain
 
+import com.kakao.sdk.kakaotalk.data.DefaultTalkApiClient
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
 import com.kakao.sdk.kakaotalk.entity.ChatListResponse
 import com.kakao.sdk.kakaotalk.entity.ChatOrder
@@ -26,4 +27,8 @@ interface TalkApiClient {
                     receiverId: String,
                     templateId: String,
                     templateArgs: Map<String, String>? = null): Completable
+
+    companion object {
+        val instance by lazy { DefaultTalkApiClient() as TalkApiClient }
+    }
 }

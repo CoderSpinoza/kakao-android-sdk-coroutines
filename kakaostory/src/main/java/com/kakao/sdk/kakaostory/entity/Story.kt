@@ -14,7 +14,7 @@ data class Story(val id: String,
                  @SerializedName("like_count") val likeCount: String,
                  val content: String,
                  val permission: String,
-                 @SerializedName("media") val imageInfos: List<StoryImage>,
+                 @SerializedName("media") val imageInfos: List<StoryImage>?,
                  val likes: List<StoryLike>,
                  val comments: List<StoryComment>) {
     override fun toString(): String {

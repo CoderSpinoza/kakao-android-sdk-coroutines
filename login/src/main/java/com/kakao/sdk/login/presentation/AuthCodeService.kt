@@ -10,7 +10,7 @@ import io.reactivex.Single
  */
 interface AuthCodeService {
     fun requestAuthCode(context: Context): Single<String>
-    fun requestAuthCode(context: Context, scopes: List<String>, approvalType: String): Single<String>
+    fun requestAuthCode(context: Context, scopes: List<String>, approvalType: String = "individual"): Single<String>
 
     companion object {
         val instance by lazy {

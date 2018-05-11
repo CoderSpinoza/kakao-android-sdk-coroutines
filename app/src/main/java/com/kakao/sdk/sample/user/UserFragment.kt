@@ -1,6 +1,7 @@
 package com.kakao.sdk.sample.user
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -13,6 +14,7 @@ import com.kakao.sdk.login.domain.UserApiClient
 import com.kakao.sdk.sample.BaseFragment
 import com.kakao.sdk.sample.LogoutNavigator
 import com.kakao.sdk.sample.R
+import com.kakao.sdk.sample.ViewModelFactory
 import com.kakao.sdk.sample.databinding.FragmentUserBinding
 import com.kakao.sdk.sample.databinding.ViewUserBinding
 
@@ -35,8 +37,9 @@ class UserFragment : BaseFragment(), LogoutNavigator {
 
         binding.setLifecycleOwner(this)
 
-        binding.userViewModel = UserViewModel(UserApiClient.instance)
-        binding.tokenViewModel = TokenViewModel(AccessTokenRepo.instance)
+
+        binding.userViewModel = ViewModelProviders.of(this, ViewModelFactory()).get(UserViewModel::class.java)
+        binding.tokenViewModel = ViewModelProviders.of(this, ViewModelFactory()).get(TokenViewModel::class.java)
 
         binding.userViewModel?.logoutEvent?.observe(this, Observer {
             this@UserFragment.onLogout()
@@ -70,8 +73,9 @@ class UserFragment : BaseFragment(), LogoutNavigator {
 
 @BindingAdapter("bind:imageUrl")
 fun loadImage(imageView: ImageView, imageUrl: String?) {
-    Log.e("loadImage", "called")
     if (imageUrl != null) {
         Glide.with(imageView.context).load(imageUrl).into(imageView)
+        return
     }
+    Glide.with(imageView.context).load(R.drawable.thumb_talk).into(imageView)
 }

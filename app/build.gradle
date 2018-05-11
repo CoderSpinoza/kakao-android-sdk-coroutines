@@ -12,7 +12,7 @@ android {
     compileSdkVersion project.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.kakao.sdk.sample"
+        applicationId "com.kakao.sdk.sample.new"
 
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
@@ -58,20 +58,22 @@ dependencies {
     implementation 'android.arch.lifecycle:common-java8:1.1.1'
 
     implementation 'com.google.dagger:dagger:2.11'
+    implementation 'com.android.support:support-v4:27.1.1'
     kapt 'com.google.dagger:dagger-compiler:2.11'
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     api project(':login')
     api project(':friends')
+    api project(':kakaotalk')
     api project(':kakaostory')
 
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 

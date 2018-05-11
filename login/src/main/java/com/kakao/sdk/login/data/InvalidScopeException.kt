@@ -7,4 +7,7 @@ import com.kakao.sdk.network.data.ApiException
  */
 class InvalidScopeException(override val httpStatus: Int, val errorResponse: MissingScopesErrorResponse) :
         ApiException(httpStatus, errorResponse.code, errorResponse.message) {
+    override fun toString(): String {
+        return "${httpStatus}: ${errorResponse}"
+    }
 }
