@@ -8,8 +8,8 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.kakao.sdk.login.data.UserApiClient
 import com.kakao.sdk.login.domain.AccessTokenRepo
+import com.kakao.sdk.login.domain.UserApiClient
 import com.kakao.sdk.sample.BaseFragment
 import com.kakao.sdk.sample.LogoutNavigator
 import com.kakao.sdk.sample.R

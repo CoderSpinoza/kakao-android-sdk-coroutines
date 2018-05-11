@@ -31,7 +31,7 @@ object ApiService {
             .addConverterFactory(KakaoConverterFactory())
             .client(object : OkHttpClient() {
                 override fun interceptors(): MutableList<Interceptor> {
-                    return mutableListOf(AppKeyInterceptor(), KakaoAgentInterceptor(), HttpLoggingInterceptor(), HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                    return mutableListOf(AppKeyInterceptor(), KakaoAgentInterceptor(), HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 }
             })
             .build()

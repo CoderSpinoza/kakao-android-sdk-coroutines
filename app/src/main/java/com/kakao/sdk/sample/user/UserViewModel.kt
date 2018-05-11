@@ -2,10 +2,8 @@ package com.kakao.sdk.sample.user
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.kakao.sdk.login.data.AuthApiClient
-import com.kakao.sdk.login.data.UserApiClient
+import com.kakao.sdk.login.domain.UserApiClient
 import com.kakao.sdk.login.entity.user.User
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 @Suppress("UNUSED_VARIABLE")
@@ -30,26 +28,24 @@ class UserViewModel(val userApiClient: UserApiClient) : ViewModel() {
 //    fun onDestroy() {}
 
     fun loadProfile() {
-        val disposable =userApiClient.me(true).toObservable()
-                .retryWhen { AuthApiClient.instance.refreshTokenObservable(it) }
-                .subscribeOn(Schedulers.io())
-                .subscribe {
+        val disposable = userApiClient.me(true)
+                .subscribe({
                     user.postValue(it)
                     email.postValue(it.kakaoAccount.email)
-                }
+                }, {})
     }
 
     fun loadTokenInfo() {
-        val disposable = userApiClient.accessTokenInfo().subscribeOn(Schedulers.io()).subscribe { tokenInfo ->
-            userId.postValue(tokenInfo.id)
-            appId.postValue(tokenInfo.appId)
-            expiresIn.postValue(tokenInfo.expiresInMillis)
+        val disposable = userApiClient.accessTokenInfo()
+                .subscribe { tokenInfo ->
+                    userId.postValue(tokenInfo.id)
+                    appId.postValue(tokenInfo.appId)
+                    expiresIn.postValue(tokenInfo.expiresInMillis)
         }
     }
 
     fun logout() {
         val disposable = userApiClient.logout()
-                .subscribeOn(Schedulers.io())
                 .subscribe { _ ->
                     logoutEvent.postValue(null)
                 }
@@ -57,7 +53,6 @@ class UserViewModel(val userApiClient: UserApiClient) : ViewModel() {
 
     fun unlink() {
         val disposable = userApiClient.unlink()
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ ->
                     logoutEvent.postValue(null)

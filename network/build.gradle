@@ -1,7 +1,11 @@
-apply plugin: 'com.android.library'
+apply from: "$rootDir/libraries.gradle"
 
 dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 }
 
-apply from: "$rootDir/libraries.gradle"
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}

@@ -11,7 +11,7 @@ import retrofit2.http.*
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */
-interface KakaoTalkApi {
+interface TalkApi {
     @GET(Constants.PROFILE_PATH)
     fun profile(@Query(Constants.SECURE_RESOURCE) secureResource: Boolean? = null): Single<TalkProfile>
 
@@ -25,14 +25,14 @@ interface KakaoTalkApi {
     @FormUrlEncoded
     fun sendMemo(
                  @Field(Constants.TEMPLATE_ID) templateId: String,
-                 @Field(Constants.TEMPLATE_ARGS) templateArgs: Map<String, String>?): Completable
+                 @Field(Constants.TEMPLATE_ARGS) templateArgs: Map<String, String>? = null): Completable
 
     @POST(Constants.MESSAGE_PATH)
     @FormUrlEncoded
     fun sendMessage(@Field(Constants.RECEIVER_ID_TYPE) receiverIdType: String,
                     @Field(Constants.RECEIVER_ID) receiverId: String,
                     @Field(Constants.TEMPLATE_ID) templateId: String,
-                    @Field(Constants.TEMPLATE_ARGS) templateArgs: Map<String, String>?): Completable
+                    @Field(Constants.TEMPLATE_ARGS) templateArgs: Map<String, String>? = null): Completable
 
 //    @POST("v2/api/talk/memo/scrap/send")
 //    fun sendMemo(): Completable

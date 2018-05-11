@@ -39,4 +39,5 @@ object Constants {
     const val SECTION = "section"
     const val TYPE = "type"
     const val IMAGE = "image"
+    const val FILE = "file"
 }

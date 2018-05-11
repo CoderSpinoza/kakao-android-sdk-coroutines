@@ -23,14 +23,14 @@ import java.util.stream.Stream
 /**
  * @author kevin.kang. Created on 2018. 4. 30..
  */
-class KakaoTalkApiTest {
+class TalkApiTest {
     private lateinit var server: MockWebServer
-    private lateinit var api: KakaoTalkApi
+    private lateinit var api: TalkApi
 
     @BeforeEach fun setup() {
         server = MockWebServer()
         server.start()
-        api = ApiService.createApi(server.url("/"), KakaoTalkApi::class.java)
+        api = ApiService.createApi(server.url("/"), TalkApi::class.java)
         val response = MockResponse().setResponseCode(200)
         server.enqueue(response)
     }
@@ -40,7 +40,7 @@ class KakaoTalkApiTest {
         api.profile(secureResource = secureResource)
                 .subscribe(TestObserver<TalkProfile>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         if (secureResource == null) {
             assertFalse(params.containsKey(Constants.SECURE_RESOURCE))
@@ -57,7 +57,7 @@ class KakaoTalkApiTest {
         api.chatList(fromId, limit, order, filter)
                 .subscribe(TestObserver<ChatListResponse>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals(fromId, params[Constants.FROM_ID]?.toInt())
         assertEquals(limit, params[Constants.LIMIT]?.toInt())
@@ -69,7 +69,7 @@ class KakaoTalkApiTest {
     @ParameterizedTest fun sendMemo(templateId: String, templateArgs: Map<String, String>?) {
         api.sendMemo(templateId, templateArgs).subscribe(TestObserver<Void>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.body.readUtf8())
+        val params = Utility.parseQuery(request.body.readUtf8())
 
         assertEquals(templateId, params[Constants.TEMPLATE_ID])
         if (templateArgs == null) {
@@ -94,7 +94,7 @@ class KakaoTalkApiTest {
         api.sendMessage(receiverIdType, receiverId, templateId, templateArgs)
                 .subscribe(TestObserver<Void>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.body.readUtf8())
+        val params = Utility.parseQuery(request.body.readUtf8())
 
         assertEquals(receiverIdType, params[Constants.RECEIVER_ID_TYPE])
         assertEquals(receiverId, params[Constants.RECEIVER_ID])

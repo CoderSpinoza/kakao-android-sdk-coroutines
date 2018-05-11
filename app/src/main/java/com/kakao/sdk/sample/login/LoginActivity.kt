@@ -4,15 +4,11 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
-import com.kakao.sdk.login.data.AuthApiClient
-import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.network.Constants
-import com.kakao.sdk.network.Utility
 import com.kakao.sdk.sample.MainActivity
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.ActivityLoginBinding
-import io.reactivex.schedulers.Schedulers
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -29,12 +25,12 @@ class LoginActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         val code = intent?.data?.getQueryParameter("code") ?: return
 
-        val disposable = AuthApiClient.instance.issueAccessToken(code = code, redirectUri = String.format("kakao%s://oauth", Utility.getMetadata(this, Constants.META_APP_KEY)))
-                .doOnSuccess { response -> AccessTokenRepo.instance.toCache(response) }
-                .subscribeOn(Schedulers.io())
+        val disposable = AuthApiClient.instance.issueAccessToken(authCode = code)
                 .subscribe { _ ->
                     val mainIntent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(mainIntent)
                 }
     }

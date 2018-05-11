@@ -1,0 +1,11 @@
+{
+  "code" : -402,
+  "msg" : "insufficient scopes.",
+  "api_type":"FRIENDS",
+  "required_scopes":["friends"],
+  "allowed_scopes": [
+    "profile",
+    "story_read",
+    "story_publish"
+  ]
+}

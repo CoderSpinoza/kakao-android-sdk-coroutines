@@ -3,7 +3,7 @@ package com.kakao.sdk.sample.talk
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.kakao.sdk.friends.data.FriendsApiClient
+import com.kakao.sdk.friends.domain.FriendsApiClient
 import com.kakao.sdk.friends.entity.Friend
 
 /**
@@ -18,7 +18,7 @@ class TalkViewModel(private val friendsApiClient: FriendsApiClient) : ViewModel(
     fun onDestroy() {}
 
     fun loadFriends() {
-        val disposable = friendsApiClient.getFriends(limit = 100)
+        val disposable = friendsApiClient.friends(limit = 100)
                 .subscribe(
                         { response -> friends.postValue(response.friends)},
                         { error -> Log.e("error", error.toString())}

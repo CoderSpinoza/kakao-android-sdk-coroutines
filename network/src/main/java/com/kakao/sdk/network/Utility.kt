@@ -15,14 +15,14 @@ import java.util.*
  * @author kevin.kang. Created on 2018. 3. 30..
  */
 object Utility {
-    fun getKeyHash(context: Context): String? {
+    fun getKeyHash(context: Context): String {
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES)
         for (signature in packageInfo.signatures) {
             val md = MessageDigest.getInstance("SHA")
             md.update(signature.toByteArray())
             return Base64.encodeToString(md.digest(), Base64.NO_WRAP)
         }
-        return null
+        throw RuntimeException()
     }
 
     fun getKAHeader(context: Context): String {
@@ -40,13 +40,13 @@ object Utility {
     fun getMetadata(context: Context, key: String): String {
         val ai = context.packageManager.getApplicationInfo(
                 context.packageName, PackageManager.GET_META_DATA)
-        return ai.metaData.getString(key)
+        return ai.metaData.getString(key) ?: throw RuntimeException()
     }
 
     /**
      * Below methods are needed for tests.
      */
-    fun parseQueryParams(queries: String?): Map<String, String> {
+    fun parseQuery(queries: String?): Map<String, String> {
         if (queries == null) return mapOf()
         val kvList = queries.split("&").map { it.split("=") }.filter { it.size > 1 }.map { Pair(it[0], it[1]) }
         val map = mutableMapOf<String, String>()
@@ -55,6 +55,12 @@ object Utility {
         }
         return map
     }
+
+    fun buildQuery(params: Map<String, String>?): String? {
+        if (params == null || params.isEmpty()) return null
+        return params.map { (k, v) -> "$k=$v" }.reduce { acc, s -> "$acc&$s" }
+    }
+
 
     fun getJson(path: String): String {
         val uri = javaClass.classLoader.getResource(path)

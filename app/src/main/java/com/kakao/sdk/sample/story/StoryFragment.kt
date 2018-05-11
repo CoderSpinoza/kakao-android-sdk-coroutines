@@ -7,9 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kakao.sdk.kakaostory.data.KakaoStoryApiClient
-import com.kakao.sdk.login.data.AuthApiClient
-import com.kakao.sdk.login.domain.AccessTokenRepo
+import com.kakao.sdk.kakaostory.domain.StoryApiClient
+import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.sample.BaseFragment
 import com.kakao.sdk.sample.R
@@ -30,7 +29,7 @@ class StoryFragment : BaseFragment() {
         val view = binding.root
 
         binding.setLifecycleOwner(this)
-        binding.storyViewModel = StoryViewModel(KakaoStoryApiClient.instance, AuthApiClient.instance)
+        binding.storyViewModel = StoryViewModel(StoryApiClient.instance)
         binding.storyViewModel?.isStoryUser?.observe(this, Observer {
             if (it != null && it) {
                 binding.storyViewModel?.getMyStories()
@@ -48,7 +47,7 @@ class StoryFragment : BaseFragment() {
 
         binding.storyViewModel?.requiredScopes?.observe(this, Observer { scopes ->
             if (scopes == null) return@Observer
-            Log.e("has required scopes^^", scopes.toString())
+            Log.e(",missing scopes^^", scopes.toString())
             requestStoryPermission(scopes)
         })
 
@@ -66,8 +65,7 @@ class StoryFragment : BaseFragment() {
     fun requestStoryPermission(scopes: List<String>) {
         val disposable = AuthCodeService.instance.requestAuthCode(activity!!, scopes, "individual")
                 .observeOn(Schedulers.io())
-                .flatMap { AuthApiClient.instance.issueAccessToken(code = it) }
-                .doOnSuccess { response -> AccessTokenRepo.instance.toCache(response) }
+                .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
                 .subscribe(
                         { response -> binding.storyViewModel?.getMyStories() },
                         { error -> Log.e("update scope", "failed")})

@@ -37,7 +37,7 @@ class KakaoLinkApiTest {
     @ParameterizedTest fun validate(templateId: String, templateArgs: Map<String, String>?) {
         api.validateCustom(templateId, templateArgs).subscribe(TestObserver<KakaoLinkResponse>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("4.0", params[Constants.LINK_VER])
         assertEquals(templateId, params[Constants.TEMPLATE_ID])
@@ -59,7 +59,7 @@ class KakaoLinkApiTest {
     @ParameterizedTest fun scrap(url: String, templateId: String, templateArgs: Map<String, String>?) {
         api.validateScrap(url, templateId, templateArgs).subscribe(TestObserver<KakaoLinkResponse>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("4.0", params[Constants.LINK_VER])
         assertEquals(url, params[Constants.REQUEST_URL])

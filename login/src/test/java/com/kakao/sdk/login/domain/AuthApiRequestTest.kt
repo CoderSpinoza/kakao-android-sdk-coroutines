@@ -43,7 +43,7 @@ class AuthApiRequestTest {
                 .subscribe(TestObserver<AccessTokenResponse>())
 
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.body.readUtf8())
+        val params = Utility.parseQuery(request.body.readUtf8())
 
         assertEquals("POST", request.method)
         assertEquals(clientId, params[Constants.CLIENT_ID])

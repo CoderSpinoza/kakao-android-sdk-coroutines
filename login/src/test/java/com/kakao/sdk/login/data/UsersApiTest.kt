@@ -129,43 +129,12 @@ class UsersApiTest {
             observer.assertValueCount(1)
 
             val request = server.takeRequest()
-            val requestBody = Utility.parseQueryParams(request.body.readUtf8())
+            val requestBody = Utility.parseQuery(request.body.readUtf8())
 
             assertEquals("POST", request.method)
             val requestProperties = Gson().fromJson<JsonObject>(URLDecoder.decode(requestBody["properties"], "UTF-8"), JsonObject::class.java)
             assertEquals("value1", requestProperties["key1"].asString)
             assertEquals("value2", requestProperties["key2"].asString)
-            observer.assertValue {
-                expected["id"].asLong == it.id
-            }
-        }
-    }
-
-    @Nested
-    @DisplayName(Constants.V1_AGE_AUTH_INFO_PATH)
-    inner class AgeAuth {
-        @BeforeEach fun setup() {
-            val uri = javaClass.classLoader.getResource("json/age_auth/success.json")
-            val file = File(uri.path)
-            body = String(file.readBytes())
-            expected = Gson().fromJson(body, JsonObject::class.java)
-            val response = MockResponse().setResponseCode(200).setBody(body)
-            server.enqueue(response)
-        }
-
-        @Test fun ageAuth() {
-            val observer = TestObserver<AgeAuthResponse>()
-            api.ageAuthInfo().subscribe(observer)
-            observer.awaitTerminalEvent(1, TimeUnit.SECONDS)
-            observer.assertNoErrors()
-            observer.assertValueCount(1)
-
-            // test request parameters
-            val request = server.takeRequest()
-            assertEquals("GET", request.method)
-            assertEquals(Constants.V1_AGE_AUTH_INFO_PATH, request.path.substring(1))
-
-            // test response
             observer.assertValue {
                 expected["id"].asLong == it.id
             }

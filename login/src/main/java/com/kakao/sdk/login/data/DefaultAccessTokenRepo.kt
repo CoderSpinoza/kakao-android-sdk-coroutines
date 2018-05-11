@@ -1,15 +1,29 @@
 package com.kakao.sdk.login.data
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.login.entity.token.AccessToken
 import com.kakao.sdk.login.entity.token.AccessTokenResponse
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 
 /**
  * @author kevin.kang. Created on 2018. 3. 27..
  */
 class DefaultAccessTokenRepo(val appCache: SharedPreferences) : AccessTokenRepo {
+    private val tokenSubject = BehaviorSubject.create<AccessToken>()
+    val tokenUpdates = tokenSubject.hide()
+
+    init {
+        tokenSubject.onNext(fromCache())
+    }
+
+    override fun observe(): Observable<AccessToken> {
+        return tokenUpdates
+    }
+
     override fun clearCache() {
         appCache.edit().remove(atKey).apply()
         appCache.edit().remove(rtKey).apply()
@@ -26,7 +40,9 @@ class DefaultAccessTokenRepo(val appCache: SharedPreferences) : AccessTokenRepo 
         if (accessTokenResponse.refreshTokenExpiresIn != null) {
             appCache.edit().putLong(rtExpiresAtKey, Date().time + 1000L * accessTokenResponse.refreshTokenExpiresIn).apply()
         }
-        return fromCache()
+        val token = fromCache()
+        tokenSubject.onNext(token)
+        return token
     }
 
     override fun fromCache(): AccessToken {
@@ -35,7 +51,7 @@ class DefaultAccessTokenRepo(val appCache: SharedPreferences) : AccessTokenRepo 
         val rt = appCache.getString(rtKey, null)
         val rtExpiresAt = Date(appCache.getLong(rtExpiresAtKey, Long.MAX_VALUE))
 
-        return AccessToken(at, rt, atExpiresAt, rtExpiresAt)
+        return AccessToken(at, atExpiresAt, rt, rtExpiresAt)
     }
 
     companion object {

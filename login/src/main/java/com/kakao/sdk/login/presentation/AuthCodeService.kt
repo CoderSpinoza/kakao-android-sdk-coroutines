@@ -12,9 +12,9 @@ interface AuthCodeService {
     fun requestAuthCode(context: Context): Single<String>
     fun requestAuthCode(context: Context, scopes: List<String>, approvalType: String): Single<String>
 
-    fun updateScopesObservable(context: Context, observable: Observable<Throwable>): Observable<Any>
-
     companion object {
-        val instance = DefaultAuthCodeService(AccessTokenRepo.instance) as AuthCodeService
+        val instance by lazy {
+            DefaultAuthCodeService(AccessTokenRepo.instance.observe()) as AuthCodeService
+        }
     }
 }

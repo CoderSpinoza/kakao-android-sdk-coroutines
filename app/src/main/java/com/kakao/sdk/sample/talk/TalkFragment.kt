@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kakao.sdk.friends.data.FriendsApiClient
+import com.kakao.sdk.friends.domain.FriendsApiClient
 import com.kakao.sdk.sample.BaseFragment
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.FragmentTalkBinding

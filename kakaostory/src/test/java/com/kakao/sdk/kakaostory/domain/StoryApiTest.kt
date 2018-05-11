@@ -21,13 +21,13 @@ import java.util.stream.Stream
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */
-class KakaoStoryApiTest {
+class StoryApiTest {
     private lateinit var server: MockWebServer
-    private lateinit var api: KakaoStoryApi
+    private lateinit var api: StoryApi
 
     @BeforeEach fun setup() {
         server = MockWebServer()
-        api = ApiService.createApi(server.url("/"), KakaoStoryApi::class.java)
+        api = ApiService.createApi(server.url("/"), StoryApi::class.java)
         server.enqueue(MockResponse().setResponseCode(200))
     }
 
@@ -47,7 +47,7 @@ class KakaoStoryApiTest {
     @ParameterizedTest fun profile(secureResource: Boolean?) {
         api.profile(secureResource).subscribe(TestObserver<StoryProfile>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("GET", request.method)
         assertEquals(Constants.STORY_PROFILE_PATH, request.requestUrl.encodedPath())
@@ -63,7 +63,7 @@ class KakaoStoryApiTest {
         api.myStory(id).subscribe(TestObserver<Story>())
         val request = server.takeRequest()
 
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("GET", request.method)
         assertEquals(Constants.GET_STORY_PATH, request.requestUrl.encodedPath())
@@ -74,7 +74,7 @@ class KakaoStoryApiTest {
     @ParameterizedTest fun myStories(id: String?) {
         api.myStories(id).subscribe(TestObserver<List<Story>>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("GET", request.method)
         assertEquals(Constants.GET_STORIES_PATH, request.requestUrl.encodedPath())
@@ -92,7 +92,7 @@ class KakaoStoryApiTest {
         api.postNote(content, permission, enableShare, params1, params2, params3, params4)
                 .subscribe(TestObserver<StoryPostResponse>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.body.readUtf8())
+        val params = Utility.parseQuery(request.body.readUtf8())
 
         assertEquals("POST", request.method)
         assertEquals(Constants.POST_NOTE_PATH, request.requestUrl.encodedPath())
@@ -118,7 +118,7 @@ class KakaoStoryApiTest {
         api.postPhoto(images, content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
                 .subscribe(TestObserver<StoryPostResponse>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.body.readUtf8())
+        val params = Utility.parseQuery(request.body.readUtf8())
 
         assertEquals("POST", request.method)
         assertEquals(Constants.POST_PHOTO_PATH, request.requestUrl.encodedPath())
@@ -139,7 +139,7 @@ class KakaoStoryApiTest {
     @ParameterizedTest fun deleteStory(id: String) {
         api.deleteStory(id).subscribe(TestObserver<Void>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("DELETE", request.method)
         assertEquals(Constants.DELETE_STORY_PATH, request.requestUrl.encodedPath())
@@ -150,7 +150,7 @@ class KakaoStoryApiTest {
     @ParameterizedTest fun scrapLink(url: String) {
         api.scrapLink(url).subscribe(TestObserver<LinkInfo>())
         val request = server.takeRequest()
-        val params = Utility.parseQueryParams(request.requestUrl.query())
+        val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("GET", request.method)
         assertEquals(Constants.SCRAP_LINK_PATH, request.requestUrl.encodedPath())
@@ -207,88 +207,4 @@ class KakaoStoryApiTest {
 //
 //        }
     }
-//    private lateinit var api: KakaoStoryApi
-//    private lateinit var retrofit: Retrofit
-//    private lateinit var server: MockWebServer
-//
-//    @BeforeEach
-//    fun setup() {
-//        server = MockWebServer()
-//        server.start()
-//        ShadowLog.stream = System.out
-//        val retrofit = Retrofit.Builder().baseUrl(String.format("%s://%s", Constants.SCHEME, Constants.KAPI))
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .addConverterFactory(KakaoConverterFactory())
-//                .client(object : OkHttpClient() {
-//                    override fun interceptors(): MutableList<Interceptor> {
-//                        return mutableListOf(AccessTokenInterceptor(AccessTokenRepo.instance), KakaoAgentInterceptor())
-//                    }
-//                })
-//                .build()
-//        api = retrofit.create(KakaoStoryApi::class.java)
-//    }
-//
-//    @Test
-//    fun isStoryUser() {
-//        val observable = api.isStoryUser().subscribe { response ->
-//            ShadowLog.e("isUser", "" + response.isStoryUser)
-//        }
-//    }
-//    @Test
-//    fun getProfile() {
-//        val observable = api.getProfile(true).subscribe { profile ->
-//            ShadowLog.e("profile", profile.toString())
-//        }
-//    }
-//
-//    @Test
-//    fun myStories() {
-//        api.myStories()
-//                .doOnSuccess { onNext -> ShadowLog.e("stories", onNext.toString()) }
-//                .flatMap { stories -> stories.toObservable().singleOrError() }
-//                .flatMap { story -> story.let { api.getMyStory(story.id) }}
-//                .subscribe { story ->
-//                    ShadowLog.e("single story", story.toString())
-//                }
-//    }
-//
-//    @Test
-//    fun postNote() {
-//        val uri = Uri.Builder().appendQueryParameter("key1", "value1").build()
-//        api.postNote("content", Story.Permission.PUBLIC, true,
-//                uri.query, uri.query, uri.query, uri.query)
-//                .map { response -> response.id }
-//                .flatMap { storyId -> api.deleteStory(storyId).toSingle {  } }
-//    }
-//
-//    @Test
-//    fun postLink() {
-//        val url = "https://www.daum.net"
-//        val uri = Uri.Builder().appendQueryParameter("key1", "value1").build()
-//        val observable = api.scrapLink(url).flatMap { linkInfo ->
-//            ShadowLog.e("linkInfo", linkInfo.toString())
-//            return@flatMap api.postLink(linkInfo, "content", Story.Permission.PUBLIC, true, uri.query, uri.query, uri.query, uri.query)
-//        } as Observable<StoryPostResponse>
-//
-//        observable.subscribe { response ->
-//            ShadowLog.e("result", response.toString())
-//        }
-//    }
-//
-//    @Test
-//    fun postPhoto() {
-//        val uri = Uri.Builder().appendQueryParameter("key1", "value1").build()
-//        val observable = Single.just(R.drawable.kakaostory_animated)
-//                 .map { resId ->
-//                    File(FileHelper.writeStoryImage(RuntimeEnvironment.application, resId)) }
-//                 .map { file ->
-//                    val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
-//                    return@map listOf(MultipartBody.Part.createFormData("file", file.name, requestBody)) }
-//                 .flatMap { images -> api.scrapImages(images) }
-//                .map { urls -> Gson().toJson(urls) }
-//                 .flatMap { urls -> api.postPhoto(urls, "content", Story.Permission.PUBLIC, true, uri.query, uri.query, uri.query, uri.query) }
-//
-//        observable.subscribe { response -> ShadowLog.e("imageUrls", response.toString())}
-//    }
 }

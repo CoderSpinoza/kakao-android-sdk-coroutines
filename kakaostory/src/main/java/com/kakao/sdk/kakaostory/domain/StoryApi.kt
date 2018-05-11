@@ -10,7 +10,7 @@ import retrofit2.http.*
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */
-interface KakaoStoryApi {
+interface StoryApi {
     @GET(Constants.IS_STORY_USER_PATH)
     fun isStoryUser(): Single<IsStoryUserResponse>
 
@@ -35,7 +35,7 @@ interface KakaoStoryApi {
 
     @FormUrlEncoded
     @POST(Constants.POST_PHOTO_PATH)
-    fun postPhoto(@Query(Constants.IMAGE_URL_LIST) images: String,
+    fun postPhoto(@Field(Constants.IMAGE_URL_LIST) images: String,
                   @Field(Constants.CONTENT) content: String,
                   @Field(Constants.PERMISSION) permission: Story.Permission,
                   @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
