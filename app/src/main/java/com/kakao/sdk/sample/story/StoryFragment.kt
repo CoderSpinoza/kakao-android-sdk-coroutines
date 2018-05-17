@@ -1,7 +1,9 @@
 package com.kakao.sdk.sample.story
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
@@ -20,14 +22,22 @@ import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.sample.*
 import com.kakao.sdk.sample.databinding.FragmentStoryBinding
+import dagger.android.support.AndroidSupportInjection
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  *
  */
 class StoryFragment : Fragment() {
+
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var binding: FragmentStoryBinding
     private lateinit var storyAdapter: StoryAdapter
+    private lateinit var storyViewModel: StoryViewModel
+
     private val navigator = Navigator.instance
 
     val selectedStoryObserver = Observer<Story> {
@@ -35,6 +45,8 @@ class StoryFragment : Fragment() {
     }
 
     val storiesObserver = Observer<List<Story>> {
+        binding.storiesList.visibility = View.VISIBLE
+        binding.scopeErrorBinding.scopeErrorLayout.visibility = View.GONE
         storyAdapter.stories = it!!
         storyAdapter.notifyDataSetChanged()
     }
@@ -47,29 +59,41 @@ class StoryFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
     val scopesObserver = Observer<List<String>> {
         if (it == null) return@Observer
-        requestStoryPermission(it)
+        binding.storiesList.visibility = View.GONE
+        binding.scopeErrorBinding.scopeErrorLayout.visibility = View.VISIBLE
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         storyAdapter = StoryAdapter(listOf())
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story, container, false)
         binding.setLifecycleOwner(this)
 
         val activity = activity as MainActivity
-        val storyViewModel = ViewModelProviders.of(activity, ViewModelFactory()).get(StoryViewModel::class.java)
+        storyViewModel = ViewModelProviders.of(activity, viewModelFactory)[StoryViewModel::class.java]
         binding.storyViewModel = storyViewModel
         binding.storiesList.adapter = storyAdapter
         binding.storiesList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         storyViewModel.clearSelectedStory()
-        initObservers()
 
         binding.addStoryButton.setOnClickListener {
             goToAddStory()
+        }
+
+        binding.scopeErrorBinding.updateScopeButton.setOnClickListener {
+            val requiredScopes = storyViewModel.requiredScopes.value
+            if (requiredScopes != null) {
+                requestStoryPermission(requiredScopes)
+            }
         }
 
         val disposed = storyAdapter.clickEvents.subscribe { storyViewModel.selectStory(it) }
@@ -81,22 +105,19 @@ class StoryFragment : Fragment() {
         return binding.root
     }
 
-    fun initObservers() {
-        val storyViewModel = binding.storyViewModel!!
+    override fun onResume() {
+        super.onResume()
         storyViewModel.isStoryUser.observe(this, isStoryUserObserver)
         storyViewModel.stories.observe(this, storiesObserver)
         storyViewModel.requiredScopes.observe(this, scopesObserver)
         storyViewModel.selectedStory.observe(this, selectedStoryObserver)
     }
-
     override fun onPause() {
         super.onPause()
-        val viewModel = binding.storyViewModel!!
-
-        viewModel.isStoryUser.removeObserver(isStoryUserObserver)
-        viewModel.stories.removeObserver(storiesObserver)
-        viewModel.requiredScopes.removeObserver(scopesObserver)
-        viewModel.selectedStory.removeObserver(selectedStoryObserver)
+        storyViewModel.isStoryUser.removeObserver(isStoryUserObserver)
+        storyViewModel.stories.removeObserver(storiesObserver)
+        storyViewModel.requiredScopes.removeObserver(scopesObserver)
+        storyViewModel.selectedStory.removeObserver(selectedStoryObserver)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -113,6 +134,7 @@ class StoryFragment : Fragment() {
         val disposable = AuthCodeService.instance.requestAuthCode(activity!!, scopes, "individual")
                 .observeOn(Schedulers.io())
                 .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { response ->
                             binding.storyViewModel?.clearRequiredScopes()

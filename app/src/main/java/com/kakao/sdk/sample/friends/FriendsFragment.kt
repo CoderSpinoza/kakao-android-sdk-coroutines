@@ -1,7 +1,9 @@
 package com.kakao.sdk.sample.friends
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -10,23 +12,32 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.kakao.sdk.kakaotalk.entity.Chat
 import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.sample.HostFragment
 
 import com.kakao.sdk.sample.R
-import com.kakao.sdk.sample.ViewModelFactory
 import com.kakao.sdk.sample.databinding.FriendsFragmentBinding
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class FriendsFragment : Fragment() {
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var binding: FriendsFragmentBinding
+    private lateinit var viewModel: FriendsViewModel
     private lateinit var friendsAdapter: FriendsAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(false)
+    }
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,23 +48,34 @@ class FriendsFragment : Fragment() {
 
         friendsAdapter = FriendsAdapter(listOf())
 
-        binding.viewModel = ViewModelProviders.of(this, ViewModelFactory()).get(FriendsViewModel::class.java)
-
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsViewModel::class.java)
+        binding.friendsViewModel = viewModel
         binding.friendsList.adapter = friendsAdapter
-        binding.viewModel?.friends?.observe(this, Observer {
+        viewModel.friends.observe(this, Observer {
+            binding.friendsList.visibility = View.VISIBLE
+            binding.scopeErrorBinding.scopeErrorLayout.visibility = View.GONE
             friendsAdapter.friends = it!!
             friendsAdapter.notifyDataSetChanged()
         })
 
-        binding.viewModel?.missingScopes?.observe(this, Observer {
-            requestFriendPermission(it!!)
+        viewModel.missingScopes.observe(this, Observer {
+            if (it == null || it.isEmpty()) return@Observer
+            binding.friendsList.visibility = View.GONE
+            binding.scopeErrorBinding.scopeErrorLayout.visibility = View.VISIBLE
         })
-        binding.viewModel?.friendsError?.observe(this, Observer {
+
+        binding.scopeErrorBinding.updateScopeButton.setOnClickListener {
+            val scopes = viewModel.missingScopes.value
+            if (scopes != null && scopes.isNotEmpty()) {
+                requestFriendPermission(scopes)
+            }
+        }
+        viewModel.friendsError.observe(this, Observer {
             Log.e("FriendsFragment", it.toString())
         })
 
         if (userVisibleHint) {
-            binding.viewModel?.loadFriends()
+            viewModel.loadFriends()
             (parentFragment as HostFragment).title = getString(R.string.friends)
         }
         return binding.root
@@ -61,11 +83,11 @@ class FriendsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-//        inflater?.inflate(R.menu.)
     }
+
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         if (isVisibleToUser and isResumed) {
-            binding.viewModel?.loadFriends()
+            viewModel.loadFriends()
         }
         super.setUserVisibleHint(isVisibleToUser)
     }
@@ -74,7 +96,7 @@ class FriendsFragment : Fragment() {
         val disposable = AuthCodeService.instance.requestAuthCode(context!!, scopes)
                 .observeOn(Schedulers.io())
                 .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
-                .subscribe({ binding.viewModel?.loadFriends() }, { Log.e("FriendsFragment", "No agree")})
+                .subscribe({ viewModel.loadFriends() }, { Log.e("FriendsFragment", "No agree")})
     }
 }
 

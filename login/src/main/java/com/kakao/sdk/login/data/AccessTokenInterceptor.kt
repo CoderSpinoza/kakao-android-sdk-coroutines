@@ -15,7 +15,7 @@ class AccessTokenInterceptor(private val recentToken: Observable<AccessToken> = 
         var request = chain?.request() as Request
         val token = recentToken.blockingFirst().accessToken
         request = request.newBuilder()
-                .addHeader("Authorization", "Bearer ${recentToken.blockingFirst().accessToken}")
+                .addHeader("Authorization", "Bearer $token")
                 .build()
         return  chain.proceed(request)
     }

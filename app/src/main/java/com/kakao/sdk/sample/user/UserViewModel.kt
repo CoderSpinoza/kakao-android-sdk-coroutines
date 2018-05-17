@@ -5,12 +5,13 @@ import android.arch.lifecycle.ViewModel
 import com.kakao.sdk.login.domain.UserApiClient
 import com.kakao.sdk.login.entity.user.User
 import io.reactivex.android.schedulers.AndroidSchedulers
+import javax.inject.Inject
 
 @Suppress("UNUSED_VARIABLE")
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-class UserViewModel(val userApiClient: UserApiClient) : ViewModel() {
+class UserViewModel @Inject constructor(val userApiClient: UserApiClient) : ViewModel() {
     var user = MutableLiveData<User>()
 
     val email = MutableLiveData<String>()

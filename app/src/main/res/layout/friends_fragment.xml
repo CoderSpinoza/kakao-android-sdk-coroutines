@@ -3,7 +3,7 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="viewModel"
+            name="friendsViewModel"
             type="com.kakao.sdk.sample.friends.FriendsViewModel" />
     </data>
     <android.support.constraint.ConstraintLayout
@@ -16,5 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"/>
+        <include
+            android:id="@+id/scope_error_binding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/view_scope_error"
+            app:scopes="@{friendsViewModel.missingScopes.toString()}"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

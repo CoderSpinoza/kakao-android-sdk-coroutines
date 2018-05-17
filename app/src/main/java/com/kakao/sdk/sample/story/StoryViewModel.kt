@@ -7,24 +7,16 @@ import com.kakao.sdk.kakaostory.domain.StoryApiClient
 import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.login.data.InvalidScopeException
 import io.reactivex.Single
+import javax.inject.Inject
 
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-class StoryViewModel(private val storyApiClient: StoryApiClient) : ViewModel() {
+class StoryViewModel @Inject constructor(private val storyApiClient: StoryApiClient) : ViewModel() {
     val isStoryUser = MutableLiveData<Boolean>()
     val stories = MutableLiveData<List<Story>>()
     val requiredScopes = MutableLiveData<List<String>>()
     val selectedStory = MutableLiveData<Story>()
-
-    fun isStoryUser() {
-        val disposable = storyApiClient.isStoryUser()
-                .subscribe(
-                        { response ->
-                            isStoryUser.postValue(response.isStoryUser)
-                        },
-                        { error -> Log.e("isStoryUser", error.toString())})
-    }
 
     fun getMyStories() {
         val disposable = storyApiClient.isStoryUser()
@@ -37,17 +29,14 @@ class StoryViewModel(private val storyApiClient: StoryApiClient) : ViewModel() {
                     }
                 }
                 .flatMap { storyApiClient.myStories() }
-                .doOnError {
-                    if (it is InvalidScopeException) {
-                        requiredScopes.postValue(it.errorResponse.requiredScopes)
-                    }
-                }
                 .subscribe(
                         { response ->
                             stories.postValue(response)
                         },
                         { t ->
-                            Log.e("StoryViewModel", t.toString())
+                            if (t is InvalidScopeException) {
+                                requiredScopes.postValue(t.errorResponse.requiredScopes)
+                            }
                         }
                 )
     }

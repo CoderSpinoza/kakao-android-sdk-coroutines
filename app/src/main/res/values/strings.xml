@@ -20,6 +20,7 @@
     <string name="app_user_id">App User ID</string>
     <string name="nickname">Nickname</string>
 
+    <string name="update_scope">Update scopes</string>
     <string name="add_story">Add a story</string>
 
 

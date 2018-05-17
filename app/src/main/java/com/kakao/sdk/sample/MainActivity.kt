@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
         viewPager.adapter = tabAdapter
         val tabViews = Observable.fromIterable(drawables)
                 .map { Pair(it, LayoutInflater.from(this@MainActivity).inflate(R.layout.item_tab, null)) }
-                .doOnNext { it.second.findViewById<ImageView>(R.id.tab_icon).setImageDrawable(getDrawable(it.first)) }
+                .doOnNext { it.second.findViewById<ImageView>(R.id.tab_icon).setImageDrawable(resources.getDrawable(it.first)) }
                 .map { it.second }
 
         val tabs = Observable.fromIterable(tabAdapter.hostFragments)

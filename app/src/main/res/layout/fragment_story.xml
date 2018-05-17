@@ -17,6 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"/>
+        <include
+            android:id="@+id/scope_error_binding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/view_scope_error"
+            android:visibility="gone"
+            app:scopes="@{storyViewModel.requiredScopes.toString()}"/>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_story_button"
             android:layout_width="60dp"

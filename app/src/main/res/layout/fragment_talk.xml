@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+<layout>
     <data>
         <import type="android.view.View" />
         <variable
@@ -10,12 +7,20 @@
             type="com.kakao.sdk.sample.talk.TalkViewModel" />
     </data>
     <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/chats_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"/>
+        <include
+            android:id="@+id/scope_error_binding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/view_scope_error"
+            app:scopes="@{talkViewModel.requiredScopes.toString()}"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -1,6 +1,7 @@
 package com.kakao.sdk.sample.story
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -15,6 +16,9 @@ import com.kakao.sdk.sample.MainActivity
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.ViewModelFactory
 import com.kakao.sdk.sample.databinding.FragmentStoryDetailBinding
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,11 +34,15 @@ private const val STORY_ID = "storyId"
  *
  */
 class StoryDetailFragment : Fragment() {
+
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var storyId: String
     private var listener: OnFragmentInteractionListener? = null
 
     private lateinit var binding: FragmentStoryDetailBinding
     private lateinit var viewModel: StoryViewModel
+
 
     private val storyObserver = Observer<Story> {
         updateStoryView(it!!)
@@ -47,13 +55,23 @@ class StoryDetailFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story_detail, container, false)
         binding.setLifecycleOwner(this)
-        viewModel = ViewModelProviders.of(activity!!, ViewModelFactory()).get(StoryViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(StoryViewModel::class.java)
         binding.storyViewModel = viewModel
 
         viewModel.selectedStory.observe(this, storyObserver)
@@ -68,15 +86,6 @@ class StoryDetailFragment : Fragment() {
 
     private fun updateStoryView(story: Story) {
         (parentFragment as HostFragment).title = story.content.substring(0, 10)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
     }
 
     override fun onDetach() {

@@ -16,6 +16,7 @@
     <string name="app_user_id">App User ID</string>
     <string name="nickname">별명</string>
 
+    <string name="update_scope">동의 받기</string>
     <string name="add_story">스토리 추가</string>
 
     <string name="all">모든</string>
