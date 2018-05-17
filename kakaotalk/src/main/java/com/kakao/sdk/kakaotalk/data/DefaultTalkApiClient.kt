@@ -17,6 +17,14 @@ import io.reactivex.schedulers.Schedulers
  */
 class DefaultTalkApiClient(val api: TalkApi = ApiService.kapi.create(TalkApi::class.java),
                            private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance): TalkApiClient {
+    override fun sendMemo(): Completable {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun sendMessage(receiverType: String, receiverId: String): Completable {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun profile(secureResource: Boolean?): Single<TalkProfile> {
         return api.profile(secureResource)
                 .compose(apiErrorInterceptor.handleApiError())

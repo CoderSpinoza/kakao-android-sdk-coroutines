@@ -11,7 +11,7 @@ import com.kakao.sdk.sample.databinding.ItemFriendBinding
 /**
  * @author kevin.kang. Created on 2018. 4. 23..
  */
-class ChatHolder(private val binding: ItemChatBinding) : RecyclerView.ViewHolder(binding.root) {
+class ChatHolder(val binding: ItemChatBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(chat: Chat) {
         binding.chat = chat
         binding.executePendingBindings()

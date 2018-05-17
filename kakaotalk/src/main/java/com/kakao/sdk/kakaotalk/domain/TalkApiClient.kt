@@ -23,10 +23,15 @@ interface TalkApiClient {
     fun sendMemo(templateId: String,
                  templateArgs: Map<String, String>? = null): Completable
 
+    fun sendMemo(): Completable
+
     fun sendMessage(receiverType: String,
                     receiverId: String,
                     templateId: String,
                     templateArgs: Map<String, String>? = null): Completable
+
+    fun sendMessage(receiverType: String,
+                    receiverId: String): Completable
 
     companion object {
         val instance by lazy { DefaultTalkApiClient() as TalkApiClient }

@@ -5,14 +5,12 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.BindingAdapter
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.login.domain.UserApiClient
-import com.kakao.sdk.sample.BaseFragment
-import com.kakao.sdk.sample.LogoutNavigator
+import com.kakao.sdk.sample.Navigator
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.ViewModelFactory
 import com.kakao.sdk.sample.databinding.FragmentUserBinding
@@ -21,15 +19,16 @@ import com.kakao.sdk.sample.databinding.ViewUserBinding
 /**
  *
  */
-class UserFragment : BaseFragment(), LogoutNavigator {
-    override fun onLogout() {
-        redirectToLogin()
-    }
+class UserFragment : Fragment() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
     private lateinit var binding: FragmentUserBinding
+    private lateinit var navigator: Navigator
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, container, false)
         val view = binding.root
@@ -37,12 +36,13 @@ class UserFragment : BaseFragment(), LogoutNavigator {
 
         binding.setLifecycleOwner(this)
 
+        navigator = Navigator.instance
 
         binding.userViewModel = ViewModelProviders.of(this, ViewModelFactory()).get(UserViewModel::class.java)
         binding.tokenViewModel = ViewModelProviders.of(this, ViewModelFactory()).get(TokenViewModel::class.java)
 
         binding.userViewModel?.logoutEvent?.observe(this, Observer {
-            this@UserFragment.onLogout()
+            navigator.redirectToLogin(context!!)
         })
 
         return view
@@ -58,7 +58,7 @@ class UserFragment : BaseFragment(), LogoutNavigator {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_talk, menu)
+        inflater?.inflate(R.menu.menu_user, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -66,7 +66,7 @@ class UserFragment : BaseFragment(), LogoutNavigator {
             R.id.menu_logout -> binding.userViewModel?.logout()
             R.id.menu_unlink -> binding.userViewModel?.unlink()
         }
-        return true
+        return super.onOptionsItemSelected(item)
     }
 
 }

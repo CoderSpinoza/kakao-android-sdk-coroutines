@@ -15,4 +15,10 @@
     <string name="email">이메일</string>
     <string name="app_user_id">App User ID</string>
     <string name="nickname">별명</string>
+
+    <string name="add_story">스토리 추가</string>
+
+    <string name="all">모든</string>
+    <string name="direct">1대1</string>
+    <string name="group">그룹</string>
 </resources>

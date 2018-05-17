@@ -20,4 +20,16 @@
     <string name="app_user_id">App User ID</string>
     <string name="nickname">Nickname</string>
 
+    <string name="add_story">Add a story</string>
+
+
+    <string name="all">All</string>
+    <string name="direct">Direct</string>
+    <string name="group">Group</string>
+
+    <string-array name="chat_filters">
+        <item>@string/all</item>
+        <item>@string/direct</item>
+        <item>@string/group</item>
+    </string-array>
 </resources>

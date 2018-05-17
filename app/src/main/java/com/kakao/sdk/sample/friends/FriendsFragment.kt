@@ -7,14 +7,13 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.kakao.sdk.kakaotalk.entity.Chat
 import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
+import com.kakao.sdk.sample.HostFragment
 
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.ViewModelFactory
@@ -24,6 +23,11 @@ import io.reactivex.schedulers.Schedulers
 class FriendsFragment : Fragment() {
     private lateinit var binding: FriendsFragmentBinding
     private lateinit var friendsAdapter: FriendsAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(false)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,14 +51,23 @@ class FriendsFragment : Fragment() {
         binding.viewModel?.friendsError?.observe(this, Observer {
             Log.e("FriendsFragment", it.toString())
         })
+
+        if (userVisibleHint) {
+            binding.viewModel?.loadFriends()
+            (parentFragment as HostFragment).title = getString(R.string.friends)
+        }
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+//        inflater?.inflate(R.menu.)
+    }
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisible and isVisibleToUser) {
+        if (isVisibleToUser and isResumed) {
             binding.viewModel?.loadFriends()
         }
+        super.setUserVisibleHint(isVisibleToUser)
     }
 
     fun requestFriendPermission(scopes: List<String>) {
