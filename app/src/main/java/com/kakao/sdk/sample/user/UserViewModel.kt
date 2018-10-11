@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-class UserViewModel @Inject constructor(val userApiClient: UserApiClient) : ViewModel() {
+open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) : ViewModel() {
     var user = MutableLiveData<User>()
 
     val email = MutableLiveData<String>()

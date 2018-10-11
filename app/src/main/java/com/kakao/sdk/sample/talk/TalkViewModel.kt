@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-class TalkViewModel @Inject constructor(private val apiClient: TalkApiClient) : ViewModel() {
+open class TalkViewModel @Inject constructor(private val apiClient: TalkApiClient) : ViewModel() {
     val chats = MutableLiveData<List<Chat>>()
     val requiredScopes = MutableLiveData<List<String>>()
     val chatsError = MutableLiveData<Throwable>()

@@ -2,6 +2,7 @@ package com.kakao.sdk.sample
 
 import com.kakao.sdk.sample.friends.FriendsFragment
 import com.kakao.sdk.sample.link.LinkFragment
+import com.kakao.sdk.sample.story.AddStoryActivity
 import com.kakao.sdk.sample.story.StoryFragment
 import com.kakao.sdk.sample.talk.TalkFragment
 import com.kakao.sdk.sample.user.UserFragment
@@ -27,4 +28,7 @@ abstract class ApplicationModule {
 
     @ContributesAndroidInjector
     abstract fun userFragmentInjector(): UserFragment
+
+    @ContributesAndroidInjector
+    abstract fun addStoryActivityInjector(): AddStoryActivity
 }

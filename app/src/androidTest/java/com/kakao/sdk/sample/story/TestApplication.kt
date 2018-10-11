@@ -1,4 +1,4 @@
-package com.kakao.sdk.sample
+package com.kakao.sdk.sample.story
 
 import android.app.Activity
 import android.app.Application
@@ -12,19 +12,24 @@ import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
 /**
- * @author kevin.kang. Created on 2018. 3. 27..
+ * @author kevin.kang. Created on 2018. 5. 24..
  */
-class KakaoApplication : Application(), HasActivityInjector, HasSupportFragmentInjector {
-
+class TestApplication : Application(), HasActivityInjector, HasSupportFragmentInjector {
     @Inject lateinit var dispatchingSupportFragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
+
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingSupportFragmentInjector
 
+    lateinit var component: TestApplicationComponent
+    fun component(): TestApplicationComponent {
+        return component
+    }
     override fun onCreate() {
         super.onCreate()
         ApplicationProvider.application = this
-        DaggerApplicationComponent.create().inject(this)
+        component = DaggerTestApplicationComponent.create()
+        component.inject(this)
     }
 }

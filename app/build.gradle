@@ -9,14 +9,13 @@ android {
     compileSdkVersion project.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.kakao.sdk.sample.new"
-
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
         versionName project.ext.versionName
 
-//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'com.kakao.sdk.sample.MockTestRunner'
+//        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
 
     }
 
@@ -65,7 +64,16 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
+
+//    androidTestImplementation 'org.mockito:mockito-core:2.9.0'
+//    androidTestImplementation 'org.mockito:mockito-inline:2.9.0'
+    androidTestImplementation 'org.mockito:mockito-android:2.9.0'
+
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.13'
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:2.13"
 
     api project(':login')
     api project(':friends')
