@@ -1,6 +1,6 @@
 package com.kakao.sdk.sample.link
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 /**
  * @author kevin.kang. Created on 2018. 4. 20..

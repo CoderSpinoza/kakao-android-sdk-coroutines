@@ -1,10 +1,10 @@
 package com.kakao.sdk.sample
 
-import com.kakao.sdk.friends.domain.FriendsApiClient
-import com.kakao.sdk.kakaostory.domain.StoryApiClient
-import com.kakao.sdk.kakaotalk.domain.TalkApiClient
+import com.kakao.sdk.friends.data.FriendsApiClient
+import com.kakao.sdk.kakaostory.data.StoryApiClient
+import com.kakao.sdk.kakaotalk.data.TalkApiClient
 import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.login.domain.UserApiClient
+import com.kakao.sdk.user.data.UserApiClient
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -1,20 +1,18 @@
 package com.kakao.sdk.sample.user
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
-import android.databinding.BindingAdapter
-import android.databinding.DataBindingUtil
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.kakao.sdk.sample.Navigator
 import com.kakao.sdk.sample.R
-import com.kakao.sdk.sample.ViewModelFactory
 import com.kakao.sdk.sample.databinding.FragmentUserBinding
 import com.kakao.sdk.sample.databinding.ViewUserBinding
 import dagger.android.support.AndroidSupportInjection

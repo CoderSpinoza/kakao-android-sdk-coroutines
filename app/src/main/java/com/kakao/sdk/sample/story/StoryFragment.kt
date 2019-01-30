@@ -1,23 +1,24 @@
 package com.kakao.sdk.sample.story
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.databinding.BindingAdapter
-import android.databinding.DataBindingUtil
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
-import com.kakao.sdk.kakaostory.entity.Story
-import com.kakao.sdk.kakaostory.entity.StoryImage
+import com.kakao.sdk.kakaostory.data.Story
+import com.kakao.sdk.kakaostory.data.StoryImage
 import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.sample.*
@@ -30,7 +31,7 @@ import javax.inject.Inject
 /**
  *
  */
-class StoryFragment : Fragment() {
+class StoryFragment : Fragment(), LifecycleOwner {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -77,8 +78,7 @@ class StoryFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story, container, false)
         binding.setLifecycleOwner(this)
 
-        val activity = activity as MainActivity
-        storyViewModel = ViewModelProviders.of(activity, viewModelFactory)[StoryViewModel::class.java]
+        storyViewModel = ViewModelProviders.of(this, viewModelFactory)[StoryViewModel::class.java]
         binding.storyViewModel = storyViewModel
         binding.storiesList.adapter = storyAdapter
         binding.storiesList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))

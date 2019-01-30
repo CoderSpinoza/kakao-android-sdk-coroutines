@@ -1,7 +1,7 @@
 apply from: "$rootDir/libraries.gradle"
 
 dependencies {
-    implementation project(':login')
+    implementation project(':auth')
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

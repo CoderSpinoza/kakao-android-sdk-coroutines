@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 object ApiService {
-    val kapi = Retrofit.Builder().baseUrl("${Constants.SCHEME}://${Constants.KAPI}")
+    val kapi: Retrofit = Retrofit.Builder().baseUrl("${Constants.SCHEME}://${Constants.KAPI}")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .addConverterFactory(KakaoConverterFactory())
@@ -22,7 +22,7 @@ object ApiService {
                     return mutableListOf(AppKeyInterceptor(), KakaoAgentInterceptor(), HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 }
             })
-            .build() as Retrofit
+            .build()
 
     fun <T> createApi(url: HttpUrl, clazz: Class<T>): T {
         return Retrofit.Builder().baseUrl(url)

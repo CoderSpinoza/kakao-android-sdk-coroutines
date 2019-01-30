@@ -2,11 +2,11 @@ package com.kakao.sdk.sample
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.login.domain.UserApiClient
 import com.kakao.sdk.sample.login.LoginActivity
+import com.kakao.sdk.user.data.UserApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class SplashActivity : AppCompatActivity() {

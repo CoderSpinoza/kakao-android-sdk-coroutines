@@ -1,8 +1,8 @@
 project.ext {
     supportLibraryVersion = '27.1.1'
     minSdkVersion = 19
-    targetSdkVersion = 27
-    compileSdkVersion = 27
+    targetSdkVersion = 28
+    compileSdkVersion = 28
     versionCode = 1000
     versionName = '2.0.0'
 

@@ -1,9 +1,9 @@
 package com.kakao.sdk.sample
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
@@ -78,11 +78,9 @@ open class HostFragment: Fragment() {
         }
 
         fun handleBackPressed(fm: FragmentManager): Boolean {
-            if (fm.fragments != null) {
-                for (frag in fm.fragments) {
-                    if (frag.userVisibleHint && frag is HostFragment) {
-                        return frag.onBackPressed()
-                    }
+            for (frag in fm.fragments) {
+                if (frag.userVisibleHint && frag is HostFragment) {
+                    return frag.onBackPressed()
                 }
             }
             return false

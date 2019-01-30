@@ -5,9 +5,9 @@
     <data>
         <variable
             name="user"
-            type="com.kakao.sdk.login.entity.user.User" />
+            type="com.kakao.sdk.user.data.User" />
     </data>
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
@@ -92,5 +92,5 @@
             <!--/>-->
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,14 +1,12 @@
 package com.kakao.sdk.sample.story
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.ActivityAddStoryBinding
 import dagger.android.AndroidInjection

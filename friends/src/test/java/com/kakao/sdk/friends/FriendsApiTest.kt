@@ -2,9 +2,9 @@ package com.kakao.sdk.friends
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.kakao.sdk.friends.domain.FriendsApi
+import com.kakao.sdk.friends.data.FriendsApi
 import com.kakao.sdk.friends.entity.FriendsOperator
-import com.kakao.sdk.friends.entity.FriendsResponse
+import com.kakao.sdk.friends.data.FriendsResponse
 import com.kakao.sdk.network.data.KakaoConverterFactory
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient

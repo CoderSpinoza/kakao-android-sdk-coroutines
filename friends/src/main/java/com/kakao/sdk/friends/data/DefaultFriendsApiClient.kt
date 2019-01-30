@@ -1,7 +1,5 @@
 package com.kakao.sdk.friends.data
 
-import com.kakao.sdk.friends.domain.FriendsApi
-import com.kakao.sdk.friends.domain.FriendsApiClient
 import com.kakao.sdk.friends.entity.*
 import com.kakao.sdk.login.data.ApiService
 import com.kakao.sdk.login.data.ApiErrorInterceptor
@@ -22,19 +20,6 @@ class DefaultFriendsApiClient(val api: FriendsApi = ApiService.kapi.create(Frien
                          order: String?,
                          url: String?): Single<FriendsResponse> {
         return api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url)
-                .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
-    }
-
-    override fun friendsSet(firstId: String,
-                            secondId: String,
-                            operator: FriendsOperator,
-                            secureResource: Boolean?,
-                            offset: Int?,
-                            limit: Int?,
-                            order: String?,
-                            url: String?): Single<FriendsResponse> {
-        return api.friendsOperation(firstId, secondId, operator, secureResource, offset, limit, order, url)
                 .compose(apiErrorInterceptor.handleApiError())
                 .subscribeOn(Schedulers.io())
     }

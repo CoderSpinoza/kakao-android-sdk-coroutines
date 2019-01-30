@@ -1,11 +1,11 @@
 package com.kakao.sdk.sample.story
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.kakao.sdk.kakaostory.domain.StoryApiClient
-import com.kakao.sdk.kakaostory.entity.Story
-import com.kakao.sdk.login.data.InvalidScopeException
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.kakao.sdk.kakaostory.data.StoryApiClient
+import com.kakao.sdk.kakaostory.data.Story
+import com.kakao.sdk.login.exception.InvalidScopeException
 import io.reactivex.Single
 import javax.inject.Inject
 

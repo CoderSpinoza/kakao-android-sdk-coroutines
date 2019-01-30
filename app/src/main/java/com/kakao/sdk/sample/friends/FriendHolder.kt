@@ -1,7 +1,7 @@
 package com.kakao.sdk.sample.friends
 
-import android.support.v7.widget.RecyclerView
-import com.kakao.sdk.friends.entity.Friend
+import androidx.recyclerview.widget.RecyclerView
+import com.kakao.sdk.friends.data.Friend
 import com.kakao.sdk.sample.databinding.ItemFriendBinding
 
 /**

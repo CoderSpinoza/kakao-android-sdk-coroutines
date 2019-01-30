@@ -1,10 +1,10 @@
 package com.kakao.sdk.sample.friends
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import com.kakao.sdk.friends.domain.FriendsApiClient
-import com.kakao.sdk.friends.entity.Friend
-import com.kakao.sdk.login.data.InvalidScopeException
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.kakao.sdk.friends.data.FriendsApiClient
+import com.kakao.sdk.friends.data.Friend
+import com.kakao.sdk.login.exception.InvalidScopeException
 import javax.inject.Inject
 
 open class FriendsViewModel @Inject constructor(private val apiClient: FriendsApiClient) : ViewModel() {

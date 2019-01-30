@@ -1,20 +1,21 @@
 package com.kakao.sdk.sample.talk
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.databinding.BindingAdapter
-import android.databinding.DataBindingUtil
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.Spinner
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import com.kakao.sdk.kakaotalk.entity.Chat
+import com.kakao.sdk.kakaotalk.data.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
 import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
@@ -28,7 +29,7 @@ import javax.inject.Inject
 /**
  *
  */
-class TalkFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class TalkFragment : Fragment(), AdapterView.OnItemSelectedListener, LifecycleOwner {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 

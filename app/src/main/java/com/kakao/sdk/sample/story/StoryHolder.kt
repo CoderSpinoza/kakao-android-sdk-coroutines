@@ -1,7 +1,7 @@
 package com.kakao.sdk.sample.story
 
-import android.support.v7.widget.RecyclerView
-import com.kakao.sdk.kakaostory.entity.Story
+import androidx.recyclerview.widget.RecyclerView
+import com.kakao.sdk.kakaostory.data.Story
 import com.kakao.sdk.sample.databinding.ItemStoryBinding
 
 /**

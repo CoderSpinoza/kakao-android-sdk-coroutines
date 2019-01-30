@@ -1,10 +1,6 @@
 package com.kakao.sdk.kakaostory.data
 
 import com.google.gson.Gson
-import com.kakao.sdk.kakaostory.Constants
-import com.kakao.sdk.kakaostory.domain.StoryApi
-import com.kakao.sdk.kakaostory.domain.StoryApiClient
-import com.kakao.sdk.kakaostory.entity.*
 import com.kakao.sdk.login.data.ApiErrorInterceptor
 import com.kakao.sdk.network.Utility
 import io.reactivex.Completable

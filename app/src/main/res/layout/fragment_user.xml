@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:user="@{userViewModel.user}" />
-    <!--<android.support.constraint.ConstraintLayout-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content">-->
 
@@ -42,6 +42,6 @@
             <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
             <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
             <!--&lt;!&ndash;app:layoutManager="LinearLayoutManager"/>&ndash;&gt;-->
-    <!--</android.support.constraint.ConstraintLayout>-->
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
     </ScrollView>
 </layout>

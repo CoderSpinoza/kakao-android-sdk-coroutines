@@ -1,9 +1,9 @@
 package com.kakao.sdk.sample.talk
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.kakao.sdk.kakaotalk.entity.Chat
+import androidx.recyclerview.widget.RecyclerView
+import com.kakao.sdk.kakaotalk.data.Chat
 import com.kakao.sdk.sample.databinding.ItemChatBinding
 import io.reactivex.subjects.PublishSubject
 

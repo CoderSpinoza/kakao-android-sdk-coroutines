@@ -1,9 +1,9 @@
 package com.kakao.sdk.sample
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.kakao.sdk.sample.friends.FriendsFragment
 import com.kakao.sdk.sample.link.LinkFragment
 import com.kakao.sdk.sample.story.StoryFragment

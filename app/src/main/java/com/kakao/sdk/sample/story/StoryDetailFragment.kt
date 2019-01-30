@@ -1,27 +1,23 @@
 package com.kakao.sdk.sample.story
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import android.content.Context
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.*
-import com.kakao.sdk.kakaostory.entity.Story
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.kakao.sdk.kakaostory.data.Story
 import com.kakao.sdk.sample.HostFragment
 import com.kakao.sdk.sample.MainActivity
 
 import com.kakao.sdk.sample.R
-import com.kakao.sdk.sample.ViewModelFactory
 import com.kakao.sdk.sample.databinding.FragmentStoryDetailBinding
-import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val STORY_ID = "storyId"
 
 /**
@@ -33,7 +29,7 @@ private const val STORY_ID = "storyId"
  * create an instance of this fragment.
  *
  */
-class StoryDetailFragment : Fragment() {
+class StoryDetailFragment : Fragment(), LifecycleOwner {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 

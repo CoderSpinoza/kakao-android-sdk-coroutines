@@ -1,17 +1,7 @@
 package com.kakao.sdk.sample
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import com.kakao.sdk.friends.domain.FriendsApiClient
-import com.kakao.sdk.kakaostory.domain.StoryApiClient
-import com.kakao.sdk.kakaotalk.domain.TalkApiClient
-import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.login.domain.UserApiClient
-import com.kakao.sdk.sample.friends.FriendsViewModel
-import com.kakao.sdk.sample.story.StoryViewModel
-import com.kakao.sdk.sample.talk.TalkViewModel
-import com.kakao.sdk.sample.user.TokenViewModel
-import com.kakao.sdk.sample.user.UserViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton

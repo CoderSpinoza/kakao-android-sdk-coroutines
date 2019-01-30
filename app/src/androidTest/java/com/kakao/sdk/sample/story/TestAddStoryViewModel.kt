@@ -1,7 +1,7 @@
 package com.kakao.sdk.sample.story
 
-import android.arch.lifecycle.MutableLiveData
-import com.kakao.sdk.kakaostory.domain.StoryApiClient
+import androidx.lifecycle.MutableLiveData
+import com.kakao.sdk.kakaostory.data.StoryApiClient
 
 /**
  * @author kevin.kang. Created on 2018. 5. 25..

@@ -1,9 +1,9 @@
 package com.kakao.sdk.sample.story
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.os.SystemClock
 import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule

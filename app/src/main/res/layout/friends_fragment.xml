@@ -6,12 +6,12 @@
             name="friendsViewModel"
             type="com.kakao.sdk.sample.friends.FriendsViewModel" />
     </data>
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/friends_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,5 +22,5 @@
             android:layout_height="match_parent"
             layout="@layout/view_scope_error"
             app:scopes="@{friendsViewModel.missingScopes.toString()}"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

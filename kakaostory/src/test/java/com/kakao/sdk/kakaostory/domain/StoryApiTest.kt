@@ -1,7 +1,8 @@
 package com.kakao.sdk.kakaostory.domain
 
-import com.kakao.sdk.kakaostory.Constants
-import com.kakao.sdk.kakaostory.entity.*
+import com.kakao.sdk.kakaostory.data.Constants
+import com.kakao.sdk.kakaostory.data.StoryApi
+import com.kakao.sdk.kakaostory.data.*
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.ApiService
 import io.reactivex.observers.TestObserver
@@ -108,13 +109,13 @@ class StoryApiTest {
 
     @MethodSource("postPhotoProvider")
     @ParameterizedTest fun postPhoto(images: String,
-                                    content: String,
-                                    permission: Story.Permission,
-                                    enableShare: Boolean,
-                                    androidExecParams: String?,
-                                    iosExecParams: String?,
-                                    androidMarketParams: String?,
-                                    iosMarketParams: String?) {
+                                     content: String,
+                                     permission: Story.Permission,
+                                     enableShare: Boolean,
+                                     androidExecParams: String?,
+                                     iosExecParams: String?,
+                                     androidMarketParams: String?,
+                                     iosMarketParams: String?) {
         api.postPhoto(images, content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
                 .subscribe(TestObserver<StoryPostResponse>())
         val request = server.takeRequest()

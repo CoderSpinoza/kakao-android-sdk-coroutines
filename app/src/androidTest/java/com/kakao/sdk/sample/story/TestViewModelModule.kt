@@ -1,7 +1,7 @@
 package com.kakao.sdk.sample.story
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import android.util.Log
 import com.kakao.sdk.sample.ViewModelFactory
 import com.kakao.sdk.sample.ViewModelKey

@@ -1,25 +1,19 @@
 package com.kakao.sdk.sample
 
-import android.databinding.DataBindingUtil
-import android.net.Uri
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.sample.databinding.ActivityMainBinding
-import com.kakao.sdk.sample.friends.FriendsFragment
-import com.kakao.sdk.sample.link.LinkFragment
+
 import com.kakao.sdk.sample.story.StoryDetailFragment
-import com.kakao.sdk.sample.story.StoryFragment
-import com.kakao.sdk.sample.talk.TalkFragment
-import com.kakao.sdk.sample.user.UserFragment
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_main.*

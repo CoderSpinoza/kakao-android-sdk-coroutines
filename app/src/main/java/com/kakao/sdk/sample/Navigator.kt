@@ -2,7 +2,7 @@ package com.kakao.sdk.sample
 
 import android.content.Context
 import android.content.Intent
-import com.kakao.sdk.kakaostory.entity.Story
+import com.kakao.sdk.kakaostory.data.Story
 import com.kakao.sdk.sample.login.LoginActivity
 
 /**
