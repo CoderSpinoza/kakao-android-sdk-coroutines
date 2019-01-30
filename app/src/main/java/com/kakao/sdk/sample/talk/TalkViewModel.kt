@@ -6,6 +6,7 @@ import com.kakao.sdk.kakaotalk.data.TalkApiClient
 import com.kakao.sdk.kakaotalk.data.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
 import com.kakao.sdk.login.exception.InvalidScopeException
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -24,6 +25,7 @@ open class TalkViewModel @Inject constructor(private val apiClient: TalkApiClien
 
     fun loadChats(filter: ChatFilter) {
         val disposable = apiClient.chatList(filter = filter)
+                .subscribeOn(Schedulers.io())
                 .subscribe(
                         { response -> chats.postValue(response.chatList)},
                         {

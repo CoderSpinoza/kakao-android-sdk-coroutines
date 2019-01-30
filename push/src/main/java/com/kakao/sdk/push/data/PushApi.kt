@@ -1,7 +1,5 @@
 package com.kakao.sdk.push.data
 
-import com.kakao.sdk.push.data.PushMessage
-import com.kakao.sdk.push.data.PushToken
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.Field

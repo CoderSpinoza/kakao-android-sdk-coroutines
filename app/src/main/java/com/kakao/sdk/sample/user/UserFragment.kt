@@ -38,7 +38,7 @@ class UserFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, container, false)
         val view = binding.root
-        val userBinding = DataBindingUtil.inflate(inflater, R.layout.view_user, container, false) as ViewUserBinding
+        DataBindingUtil.inflate(inflater, R.layout.view_user, container, false) as ViewUserBinding
 
         binding.setLifecycleOwner(this)
 

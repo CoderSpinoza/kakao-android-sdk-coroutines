@@ -1,7 +1,9 @@
 package com.kakao.sdk.login.data
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.test.core.app.ApplicationProvider
 import com.kakao.sdk.login.accesstoken.DefaultAccessTokenRepo
 import com.kakao.sdk.login.entity.AccessTokenResponse
 import org.junit.Before
@@ -47,11 +49,11 @@ class DefaultAccessTokenRepoTest {
     }
 
     fun getEmptyPreferences(): SharedPreferences {
-        return RuntimeEnvironment.application.getSharedPreferences("test_app_key", Context.MODE_PRIVATE)
+        return ApplicationProvider.getApplicationContext<Application>().getSharedPreferences("test_app_key", Context.MODE_PRIVATE)
     }
 
     fun getFullPreferences(): SharedPreferences {
-        val preferences = RuntimeEnvironment.application.getSharedPreferences("test_app_key", Context.MODE_PRIVATE)
+        val preferences = ApplicationProvider.getApplicationContext<Application>().getSharedPreferences("test_app_key", Context.MODE_PRIVATE)
         preferences.edit().putString(DefaultAccessTokenRepo.atKey, "test_access_token").commit()
         preferences.edit().putString(DefaultAccessTokenRepo.rtKey, "test_refresh_token").commit()
         preferences.edit().putLong(DefaultAccessTokenRepo.atExpiresAtKey, Date().time + 1000L * 60 * 60 * 12).commit()

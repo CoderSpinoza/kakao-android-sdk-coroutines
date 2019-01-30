@@ -1,5 +1,6 @@
 package com.kakao.sdk.sample
 
+import android.util.Log
 import com.kakao.sdk.friends.data.FriendsApiClient
 import com.kakao.sdk.kakaostory.data.StoryApiClient
 import com.kakao.sdk.kakaotalk.data.TalkApiClient
@@ -7,6 +8,7 @@ import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.user.data.UserApiClient
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 /**
@@ -30,7 +32,10 @@ class ApiClientModule {
 
     @Provides @Singleton
     fun userApiClient(): UserApiClient {
-        return UserApiClient.instance
+        return UserApiClient.withClient(OkHttpClient.Builder().addInterceptor {
+            Log.e("UserApiClient", "custom log")
+            return@addInterceptor it.proceed(it.request())
+        })
     }
 
     @Provides @Singleton

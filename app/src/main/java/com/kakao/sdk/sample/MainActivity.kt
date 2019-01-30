@@ -3,14 +3,12 @@ package com.kakao.sdk.sample
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.kakao.sdk.login.domain.AccessTokenRepo
 import com.kakao.sdk.sample.databinding.ActivityMainBinding
 
 import com.kakao.sdk.sample.story.StoryDetailFragment
@@ -27,8 +25,7 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.e("Token on MainActivity", AccessTokenRepo.instance.fromCache().toString())
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         view_pager.offscreenPageLimit = 4
         setupViewPager(view_pager)
     }
@@ -47,7 +44,7 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
 
 
 
-        val disposable = Observable.zip(tabViews, tabs, BiFunction<View, TabLayout.Tab, TabLayout.Tab> { view, tab ->
+        Observable.zip(tabViews, tabs, BiFunction<View, TabLayout.Tab, TabLayout.Tab> { view, tab ->
             tab.customView = view
             return@BiFunction tab
         }).subscribe()

@@ -7,6 +7,7 @@ import com.kakao.sdk.kakaostory.data.StoryApiClient
 import com.kakao.sdk.kakaostory.data.Story
 import com.kakao.sdk.login.exception.InvalidScopeException
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -29,6 +30,7 @@ open class StoryViewModel @Inject constructor(private val storyApiClient: StoryA
                     }
                 }
                 .flatMap { storyApiClient.myStories() }
+                .subscribeOn(Schedulers.io())
                 .subscribe(
                         { response ->
                             stories.postValue(response)
@@ -43,6 +45,7 @@ open class StoryViewModel @Inject constructor(private val storyApiClient: StoryA
 
     fun getStory(storyId: String) {
         val disposable = storyApiClient.myStory(storyId)
+                .subscribeOn(Schedulers.io())
                 .subscribe({ story -> selectedStory.postValue(story) },
                         { error -> Log.e("getStory", error.toString())})
     }

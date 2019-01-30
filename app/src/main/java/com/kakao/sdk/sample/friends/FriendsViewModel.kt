@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.kakao.sdk.friends.data.FriendsApiClient
 import com.kakao.sdk.friends.data.Friend
 import com.kakao.sdk.login.exception.InvalidScopeException
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 open class FriendsViewModel @Inject constructor(private val apiClient: FriendsApiClient) : ViewModel() {
@@ -15,6 +16,7 @@ open class FriendsViewModel @Inject constructor(private val apiClient: FriendsAp
 
     fun loadFriends() {
         val disposable = apiClient.friends(limit = 100)
+                .subscribeOn(Schedulers.io())
                 .subscribe(
                         { friends.postValue(it.friends) },
                         {

@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         val code = intent?.data?.getQueryParameter("code") ?: return
 
-        val disposable = AuthApiClient.instance.issueAccessToken(authCode = code)
+        AuthApiClient.instance.issueAccessToken(authCode = code)
                 .subscribe { _ ->
                     val mainIntent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or

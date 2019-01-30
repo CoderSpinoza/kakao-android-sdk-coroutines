@@ -24,7 +24,6 @@ class DefaultTalkApiClient(val api: TalkApi = ApiService.kapi.create(TalkApi::cl
     override fun profile(secureResource: Boolean?): Single<TalkProfile> {
         return api.profile(secureResource)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun chatList(fromId: Int?,
@@ -34,14 +33,12 @@ class DefaultTalkApiClient(val api: TalkApi = ApiService.kapi.create(TalkApi::cl
                  ): Single<ChatListResponse> {
         return api.chatList(fromId, limit, order?.value, filter?.value)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun sendMemo(templateId: String,
                           templateArgs: Map<String, String>?): Completable {
         return api.sendMemo(templateId, templateArgs)
                 .compose(apiErrorInterceptor.handleCompletableError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun sendMessage(receiverType: String,
@@ -50,6 +47,5 @@ class DefaultTalkApiClient(val api: TalkApi = ApiService.kapi.create(TalkApi::cl
                              templateArgs: Map<String, String>?): Completable {
         return api.sendMessage(receiverType, receiverId, templateId, templateArgs)
                 .compose(apiErrorInterceptor.handleCompletableError())
-                .subscribeOn(Schedulers.io())
     }
 }

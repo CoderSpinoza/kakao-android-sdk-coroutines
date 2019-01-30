@@ -93,7 +93,7 @@ class FriendsFragment : Fragment() {
     }
 
     fun requestFriendPermission(scopes: List<String>) {
-        val disposable = AuthCodeService.instance.requestAuthCode(context!!, scopes)
+        AuthCodeService.instance.requestAuthCode(context!!, scopes)
                 .observeOn(Schedulers.io())
                 .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
                 .subscribe({ viewModel.loadFriends() }, { Log.e("FriendsFragment", "No agree")})

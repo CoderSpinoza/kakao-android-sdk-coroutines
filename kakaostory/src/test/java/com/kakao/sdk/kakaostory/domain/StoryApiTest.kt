@@ -199,7 +199,7 @@ class StoryApiTest {
 //                    .map { Arguments.of(it.first, it.second, it.third) }
         }
 //
-//        @Suppress("ununs")
+//        @Suppress("unused")
 //        @JvmStatic fun postLinkProvider(): Stream<Arguments> {
 //
 //        }

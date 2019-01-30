@@ -96,7 +96,7 @@ class StoryFragment : Fragment(), LifecycleOwner {
             }
         }
 
-        val disposed = storyAdapter.clickEvents.subscribe { storyViewModel.selectStory(it) }
+        storyAdapter.clickEvents.subscribe { storyViewModel.selectStory(it) }
 
         if (userVisibleHint) {
             binding.storyViewModel?.getMyStories()
@@ -136,11 +136,11 @@ class StoryFragment : Fragment(), LifecycleOwner {
                 .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { response ->
+                        {
                             binding.storyViewModel?.clearRequiredScopes()
                             binding.storyViewModel?.getMyStories()
                         },
-                        { error -> Log.e("update scope", "failed")})
+                        { Log.e("update scope", "failed")})
     }
 
     fun goToAddStory() {

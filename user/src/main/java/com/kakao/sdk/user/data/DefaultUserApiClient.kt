@@ -16,26 +16,22 @@ class DefaultUserApiClient(val userApi: UserApi = ApiService.kapi.create(UserApi
 
     override fun me(secureReSource: Boolean): Single<User> {
         return userApi.me(secureReSource)
-                .subscribeOn(Schedulers.io())
                 .compose(apiErrorInterceptor.handleApiError())
     }
 
     override fun accessTokenInfo(): Single<AccessTokenInfo> {
         return userApi.accessTokenInfo()
-                .subscribeOn(Schedulers.io())
                 .compose(apiErrorInterceptor.handleApiError())
     }
 
     override fun logout(): Single<UserIdResponse> {
         return userApi.logout()
-                .subscribeOn(Schedulers.io())
                 .compose(apiErrorInterceptor.handleApiError())
                 .doOnEvent { _, _ -> shouldCloseSubject.onNext(true) }
     }
 
     override fun unlink(): Single<UserIdResponse> {
         return userApi.unlink()
-                .subscribeOn(Schedulers.io())
                 .compose(apiErrorInterceptor.handleApiError())
                 .doOnEvent { _, _ -> shouldCloseSubject.onNext(true) }
     }

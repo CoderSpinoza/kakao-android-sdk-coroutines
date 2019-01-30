@@ -55,7 +55,9 @@ class ScopeUpdateWebViewActivity : Activity() {
                 return false
             }
             val uri = request.url
-            if (uri.scheme.startsWith("kakao")  && uri.host.startsWith("oauth")) {
+            val scheme = uri.scheme ?: return true
+            val host = uri.host ?: return true
+            if (scheme.startsWith("kakao")  && host.startsWith("oauth")) {
                 val bundle = Bundle()
                 bundle.putString(KEY_URL, uri.toString())
                 resultReeiver.send(Activity.RESULT_OK, bundle)

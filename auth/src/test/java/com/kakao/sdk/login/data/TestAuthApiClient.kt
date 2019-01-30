@@ -8,7 +8,7 @@ import java.util.*
 /**
  * @author kevin.kang. Created on 2018. 5. 10..
  */
-class TestAuthApiClient : AuthApiClient {
+open class TestAuthApiClient : AuthApiClient {
     override fun issueAccessToken(clientId: String, redirectUri: String, approvalType: String, androidKeyHash: String, clientSecret: String?, authCode: String): Single<AccessTokenResponse> {
         return success()
     }

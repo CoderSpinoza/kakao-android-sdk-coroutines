@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.kakao.sdk.user.data.User
 import com.kakao.sdk.user.data.UserApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @Suppress("UNUSED_VARIABLE")
@@ -30,6 +31,7 @@ open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) :
 
     fun loadProfile() {
         val disposable = userApiClient.me(true)
+                .subscribeOn(Schedulers.io())
                 .subscribe({
                     user.postValue(it)
                     email.postValue(it.kakaoAccount.email)
@@ -38,6 +40,7 @@ open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) :
 
     fun loadTokenInfo() {
         val disposable = userApiClient.accessTokenInfo()
+                .subscribeOn(Schedulers.io())
                 .subscribe { tokenInfo ->
                     userId.postValue(tokenInfo.id)
                     appId.postValue(tokenInfo.appId)
@@ -47,6 +50,7 @@ open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) :
 
     fun logout() {
         val disposable = userApiClient.logout()
+                .subscribeOn(Schedulers.io())
                 .subscribe { _ ->
                     logoutEvent.postValue(null)
                 }
@@ -54,11 +58,10 @@ open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) :
 
     fun unlink() {
         val disposable = userApiClient.unlink()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _ ->
                     logoutEvent.postValue(null)
                 }
     }
-
-
 }

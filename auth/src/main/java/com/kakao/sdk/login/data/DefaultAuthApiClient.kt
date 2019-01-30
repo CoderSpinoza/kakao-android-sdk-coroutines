@@ -6,9 +6,9 @@ import com.kakao.sdk.login.domain.AuthApi
 import com.kakao.sdk.login.domain.AuthApiClient
 import com.kakao.sdk.login.entity.AuthErrorResponse
 import com.kakao.sdk.login.exception.AuthException
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleTransformer
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import retrofit2.HttpException
 
@@ -16,8 +16,8 @@ import retrofit2.HttpException
  * @author kevin.kang. Created on 2018. 3. 28..
  */
 class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::class.java)): AuthApiClient {
-    val responseSubject = PublishSubject.create<AccessTokenResponse>()
-    val responseUpdates = responseSubject.hide()
+    private val responseSubject = PublishSubject.create<AccessTokenResponse>()
+    val responseUpdates: Observable<AccessTokenResponse> = responseSubject.hide()
 
     override fun issueAccessToken(clientId: String,
                                   redirectUri: String,
@@ -33,9 +33,7 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
                 authCode = authCode,
                 approvalType = approvalType,
                 clientSecret = clientSecret
-        ).subscribeOn(Schedulers.io())
-                .compose(handleAuthError())
-                .doOnSuccess { responseSubject.onNext(it) }
+        ).compose(handleAuthError()).doOnSuccess { responseSubject.onNext(it) }
     }
 
     override fun refreshAccessToken(clientId: String,
@@ -53,9 +51,7 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
                 refreshToken = refreshToken,
                 clientSecret = clientSecret,
                 grantType = com.kakao.sdk.login.Constants.REFRESH_TOKEN
-        ).subscribeOn(Schedulers.io())
-                .compose(handleAuthError())
-                .doOnSuccess { responseSubject.onNext(it) }
+        ).compose(handleAuthError()).doOnSuccess { responseSubject.onNext(it) }
     }
 
     fun <T> handleAuthError(): SingleTransformer<T ,T> {

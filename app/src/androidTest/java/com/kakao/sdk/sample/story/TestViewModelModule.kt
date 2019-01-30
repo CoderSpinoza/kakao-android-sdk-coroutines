@@ -1,20 +1,13 @@
 package com.kakao.sdk.sample.story
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import android.util.Log
-import com.kakao.sdk.sample.ViewModelFactory
-import com.kakao.sdk.sample.ViewModelKey
-import com.kakao.sdk.sample.ViewModelModule
 import com.kakao.sdk.sample.friends.FriendsViewModel
 import com.kakao.sdk.sample.talk.TalkViewModel
 import com.kakao.sdk.sample.user.UserViewModel
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoMap
 import org.mockito.Mockito.*
-import javax.inject.Inject
 import javax.inject.Singleton
 
 /**

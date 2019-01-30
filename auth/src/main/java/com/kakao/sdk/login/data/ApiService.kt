@@ -36,4 +36,23 @@ object ApiService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(KakaoConverterFactory())
     }
+
+    fun kapiWithClient(clientBuilder: OkHttpClient.Builder): Retrofit {
+        return createRetrofitBuilder(Constants.KAPI).client(
+                clientBuilder
+                        .addInterceptor(AccessTokenInterceptor())
+                        .addInterceptor(KakaoAgentInterceptor())
+                        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build())
+                .build()
+    }
+
+    fun kauthWithClient(clientBuilder: OkHttpClient.Builder): Retrofit {
+        return createRetrofitBuilder(Constants.KAUTH).client(
+                clientBuilder
+                        .addInterceptor(AppKeyInterceptor())
+                        .addInterceptor(KakaoAgentInterceptor())
+                        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                        .build()
+        ).build()
+    }
 }

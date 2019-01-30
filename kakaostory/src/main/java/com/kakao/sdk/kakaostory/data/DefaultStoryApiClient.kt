@@ -19,25 +19,21 @@ class DefaultStoryApiClient(val api: StoryApi,
     override fun isStoryUser(): Single<IsStoryUserResponse> {
         return api.isStoryUser()
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun profile(secureResource: Boolean?): Single<StoryProfile> {
         return api.profile(secureResource)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun myStory(id: String): Single<Story> {
         return api.myStory(id)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun myStories(lastId: String?): Single<List<Story>> {
         return api.myStories()
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun postNote(content: String,
@@ -53,8 +49,6 @@ class DefaultStoryApiClient(val api: StoryApi,
                 Utility.buildQuery(androidMarketParams),
                 Utility.buildQuery(iosMarketParams))
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
-
     }
 
     override fun postLink(linkInfo: LinkInfo,
@@ -72,7 +66,6 @@ class DefaultStoryApiClient(val api: StoryApi,
                 Utility.buildQuery(androidMarketParams),
                 Utility.buildQuery(iosMarketParams))
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun postPhoto(images: List<String>,
@@ -89,7 +82,6 @@ class DefaultStoryApiClient(val api: StoryApi,
                 Utility.buildQuery(androidMarketParams),
                 Utility.buildQuery(iosMarketParams))
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
 
@@ -103,7 +95,6 @@ class DefaultStoryApiClient(val api: StoryApi,
                           iosMarketParams: String?): Single<StoryPostResponse> {
         return api.postNote(content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun postPhoto(images: List<String>,
@@ -116,7 +107,6 @@ class DefaultStoryApiClient(val api: StoryApi,
                            iosMarketParams: String?): Single<StoryPostResponse> {
         return api.postPhoto(Gson().toJson(images), content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun postLink(linkInfo: LinkInfo,
@@ -129,19 +119,16 @@ class DefaultStoryApiClient(val api: StoryApi,
                           iosMarketParams: String?): Single<StoryPostResponse> {
         return api.postLink(linkInfo, content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun deleteStory(id: String): Completable {
         return api.deleteStory(id)
                 .compose(apiErrorInterceptor.handleCompletableError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun scrapLink(url: String): Single<LinkInfo> {
         return api.scrapLink(url)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 
     override fun scrapImages(images: List<File>): Single<List<String>> {
@@ -149,6 +136,5 @@ class DefaultStoryApiClient(val api: StoryApi,
                 .mapIndexed { index, pair ->  MultipartBody.Part.createFormData("${Constants.FILE}_$index", pair.first, pair.second)})
                 .flatMap { api.scrapImages(it) }
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 }

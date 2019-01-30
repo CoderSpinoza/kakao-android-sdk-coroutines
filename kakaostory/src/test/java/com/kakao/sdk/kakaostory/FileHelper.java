@@ -1,7 +1,6 @@
 package com.kakao.sdk.kakaostory;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.TypedValue;
 
@@ -10,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 /**
  * @author kevin.kang. Created on 2018. 3. 22..

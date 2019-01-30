@@ -47,7 +47,7 @@ class StoryDetailFragment : Fragment(), LifecycleOwner {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         arguments?.let {
-            storyId = it.getString(STORY_ID)
+            storyId = it.getString(STORY_ID)!!
         }
     }
 

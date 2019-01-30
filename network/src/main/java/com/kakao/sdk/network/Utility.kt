@@ -1,5 +1,6 @@
 package com.kakao.sdk.network
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -7,6 +8,7 @@ import android.util.Base64
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import java.io.File
+import java.lang.NullPointerException
 import java.net.URLDecoder
 import java.security.MessageDigest
 import java.util.*
@@ -16,6 +18,24 @@ import java.util.*
  */
 object Utility {
     fun getKeyHash(context: Context): String {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            val packageInfo = context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNING_CERTIFICATES)
+//            val signatures = packageInfo.signingInfo.signingCertificateHistory
+//            for (signature in signatures) {
+//                val md = MessageDigest.getInstance("SHA")
+//                md.update(signature.toByteArray())
+//                return Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+//            }
+//            throw RuntimeException()
+//        } else {
+//            return  getKeyHashDeprecated(context)
+//        }
+        return  getKeyHashDeprecated(context)
+    }
+
+    @Suppress("DEPRECATION")
+    @SuppressLint("PackageManagerGetSignatures")
+    fun getKeyHashDeprecated(context: Context): String {
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES)
         for (signature in packageInfo.signatures) {
             val md = MessageDigest.getInstance("SHA")
@@ -63,7 +83,8 @@ object Utility {
 
 
     fun getJson(path: String): String {
-        val uri = javaClass.classLoader.getResource(path)
+        val classLoader = javaClass.classLoader ?: throw NullPointerException()
+        val uri = classLoader.getResource(path)
         val file = File(uri.path)
         return String(file.readBytes())
     }

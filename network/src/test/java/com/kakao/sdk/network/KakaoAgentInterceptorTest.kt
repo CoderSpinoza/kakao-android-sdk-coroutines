@@ -1,5 +1,6 @@
 package com.kakao.sdk.network
 
+import android.app.Application
 import android.content.pm.PackageInfo
 import android.content.pm.Signature
 import android.os.Build
@@ -12,7 +13,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowPackageManager
 
@@ -28,21 +28,22 @@ class KakaoAgentInterceptorTest {
 
     lateinit var interceptor: KakaoAgentInterceptor
     lateinit var shadowPackageManger: ShadowPackageManager
-
+    lateinit var application: Application
+    @Suppress("DEPRECATION")
     @Before
     fun setup() {
         ShadowLog.stream = System.out
-
-        val packageManager = RuntimeEnvironment.application.packageManager
+        application = androidx.test.core.app.ApplicationProvider.getApplicationContext()
+        val packageManager = application.packageManager
         shadowPackageManger = shadowOf(packageManager)
 
         val info = PackageInfo()
-        info.packageName = RuntimeEnvironment.application.packageName
+        info.packageName = application.packageName
         info.versionName = "1.0.0"
         info.signatures = arrayOf(Signature("00000000"))
         shadowPackageManger.addPackage(info)
 
-        ApplicationProvider.application = RuntimeEnvironment.application
+        ApplicationProvider.application = application
         interceptor = KakaoAgentInterceptor()
     }
 
@@ -63,7 +64,7 @@ class KakaoAgentInterceptorTest {
         assertEquals(String.format("%s-%s", Locale.getDefault().language.toLowerCase(), Locale.getDefault().country.toUpperCase()), headerMap[Constants.LANG])
         assertTrue(headerMap.containsKey(Constants.ORIGIN))
         assertTrue(headerMap.containsKey(Constants.DEVICE))
-        assertEquals(RuntimeEnvironment.application.packageName, headerMap[Constants.ANDROID_PKG])
+        assertEquals(application.packageName, headerMap[Constants.ANDROID_PKG])
         assertEquals("1.0.0", headerMap[Constants.APP_VER])
     }
 

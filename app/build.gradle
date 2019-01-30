@@ -42,9 +42,9 @@ android {
     }
 }
 
-kapt {
-    generateStubs = true
-}
+//kapt {
+//    generateStubs = true
+//}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -78,12 +78,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
 
-//    androidTestImplementation 'org.mockito:mockito-core:2.9.0'
-//    androidTestImplementation 'org.mockito:mockito-inline:2.9.0'
+    androidTestImplementation 'org.mockito:mockito-core:2.23.0'
+    androidTestImplementation 'org.mockito:mockito-inline:2.9.0'
     androidTestImplementation 'org.mockito:mockito-android:2.9.0'
 
-    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.16'
-    kaptAndroidTest "com.google.dagger:dagger-android-processor:2.16"
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.21'
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:2.21"
 
     api project(':auth')
     api project(':user')

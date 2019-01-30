@@ -1,5 +1,6 @@
 package com.kakao.sdk.network
 
+import android.app.Application
 import android.os.Bundle
 import com.kakao.sdk.network.data.AppKeyInterceptor
 import okhttp3.OkHttpClient
@@ -27,8 +28,9 @@ class AppKeyInterceptorTest {
 
         val bundle = Bundle()
         bundle.putString(Constants.META_APP_KEY, "test_app_key")
-        RuntimeEnvironment.application.applicationInfo.metaData = bundle
-        ApplicationProvider.application = RuntimeEnvironment.application
+        val application = androidx.test.core.app.ApplicationProvider.getApplicationContext<Application>()
+        application.applicationInfo.metaData = bundle
+        ApplicationProvider.application = application
         interceptor = AppKeyInterceptor()
     }
 

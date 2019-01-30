@@ -22,8 +22,9 @@
 1.  모바일 환경과 SDK의 특성상 테스팅이 고려되지 않은 설계이다.
 
 # 세부 개선 사항
-1. 암호화는 필수 옵션. 단방향 마이그레이션만 제공하면 된다.
+1. 암호화는 필수 옵션. 단방향 마이그레이션만 제공하면 된다. V1에 있는 불필요한 옵션들 다 제거.
 1. Retrofit.Builder를 통하여 OkHttpClient를 override 할 수 있도록 한다.
+    1. 개발자가 직접 LoggingInterceptor를 넣을 수 있도록 반드시 열어야 한다.
 1. Clean Architecture 개념을 최소한으로 도입한다.
 
 # 세부 설계
@@ -68,7 +69,7 @@ fun onLoginButtonClick() {
         super.onNewIntent(intent)
         val code = intent?.data?.getQueryParameter("code") ?: return
 
-        val disposable = AuthApiClient.instance.issueAccessToken(authCode = code)
+        AuthApiClient.instance.issueAccessToken(authCode = code)
                 .subscribe { _ ->
                     val mainIntent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
@@ -95,7 +96,15 @@ TalkApiClient -> ApiService -> ApiErrorInterceptor -> AccessTokenRepo
 AccessTokenRepo -> ApplicationProvider.application -> UserApiClient -> ApiService
 
 ## Questions
-1. DI 시에 Observable을 constructor injection해도 되나?
+1. DI 시에 Observable 을 constructor injection 해도 되나?
 1. 인터페이스 굳이 필요한가? 필요하다면 어느 경우에 필요한가? 인터페이스는 메소드가 최대한 적게 설계.
-1. RxJava와 Retrofit 외부 라이브러리 쓰는 것이 괜찮을까?
+1. RxJava 와 Retrofit 외부 라이브러리 쓰는 것이 괜찮을까?
 1. 파라미터 클래스화?
+
+
+AccessTokenRepo 를 업데이트 하는 Client들
+- AuthApiClient
+    - 토큰 업데이트
+- ApiErrorInterceptor
+    - InvalidTokenException 시
+- UserApiClient

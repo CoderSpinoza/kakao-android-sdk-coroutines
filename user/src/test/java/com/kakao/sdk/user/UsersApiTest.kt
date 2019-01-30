@@ -1,14 +1,14 @@
-package com.kakao.sdk.login.data
+package com.kakao.sdk.user
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.login.Constants
-import com.kakao.sdk.user.UserApi
-import com.kakao.sdk.user.entity.AccessTokenInfo
-import com.kakao.sdk.user.entity.User
-import com.kakao.sdk.user.entity.UserIdResponse
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.KakaoConverterFactory
+import com.kakao.sdk.user.data.AccessTokenInfo
+import com.kakao.sdk.user.data.User
+import com.kakao.sdk.user.data.UserApi
+import com.kakao.sdk.user.data.UserIdResponse
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit
  * @author kevin.kang. Created on 2018. 4. 24..
  */
 class UsersApiTest {
-    private lateinit var api: com.kakao.sdk.user.UserApi
+    private lateinit var api: UserApi
     private lateinit var retrofit: Retrofit
     private lateinit var server: MockWebServer
 
@@ -45,18 +45,18 @@ class UsersApiTest {
                 .addConverterFactory(KakaoConverterFactory())
                 .client(client)
                 .build()
-        api = retrofit.create(com.kakao.sdk.user.UserApi::class.java)
+        api = retrofit.create(UserApi::class.java)
     }
 
     @Test fun me() {
         val body = Utility.getJson("json/users/deprecated.json")
 
-        val expected = Gson().fromJson(body, JsonObject::class.java)
+//        val expected = Gson().fromJson(body, JsonObject::class.java)
 
         val response = MockResponse().setResponseCode(200).setBody(body)
         server.enqueue(response)
 
-        val observer = TestObserver<com.kakao.sdk.user.entity.User>()
+        val observer = TestObserver<User>()
         api.me(true).subscribe(observer)
 
         observer.awaitTerminalEvent(1, TimeUnit.SECONDS)
@@ -84,7 +84,8 @@ class UsersApiTest {
     @DisplayName(Constants.V1_ACCESS_TOKEN_INFO_PATH)
     inner class TokenInfo {
         @BeforeEach fun setup() {
-            val uri = javaClass.classLoader.getResource("json/token_info/internal.json")
+            val classloader = javaClass.classLoader ?: throw NullPointerException()
+            val uri = classloader.getResource("json/token_info/internal.json")
             val file = File(uri.path)
             body = String(file.readBytes())
             expected = Gson().fromJson<JsonObject>(body, JsonObject::class.java)
@@ -93,7 +94,7 @@ class UsersApiTest {
         }
 
         @Test fun accessTokenInfo() {
-            val observer = TestObserver<com.kakao.sdk.user.entity.AccessTokenInfo>()
+            val observer = TestObserver<AccessTokenInfo>()
             api.accessTokenInfo().subscribe(observer)
             observer.awaitTerminalEvent(1, TimeUnit.SECONDS)
             observer.assertNoErrors()
@@ -111,7 +112,8 @@ class UsersApiTest {
     @DisplayName(Constants.V1_UPDATE_PROFILE_PATH)
     inner class UpdateProfile {
         @BeforeEach fun setup() {
-            val uri = javaClass.classLoader.getResource("json/user_id.json")
+            val classloader = javaClass.classLoader ?: throw NullPointerException()
+            val uri = classloader.getResource("json/user_id.json")
             val file = File(uri.path)
             body = String(file.readBytes())
             expected = Gson().fromJson<JsonObject>(body, JsonObject::class.java)
@@ -120,7 +122,7 @@ class UsersApiTest {
         }
 
         @Test fun updateProfile() {
-            val observer = TestObserver<com.kakao.sdk.user.entity.UserIdResponse>()
+            val observer = TestObserver<UserIdResponse>()
             val properties = mapOf(Pair("key1", "value1"), Pair("key2", "value2"))
             api.updateProfile(properties = properties).subscribe(observer)
             observer.awaitTerminalEvent(1, TimeUnit.SECONDS)
@@ -144,7 +146,8 @@ class UsersApiTest {
     @DisplayName("/v1/user/logout and /v1/user/unlink")
     inner class LogoutAndUnlink {
         @BeforeEach fun setup() {
-            val uri = javaClass.classLoader.getResource("json/user_id.json")
+            val classloader = javaClass.classLoader ?: throw NullPointerException()
+            val uri = classloader.getResource("json/user_id.json")
             val file = File(uri.path)
             body = String(file.readBytes())
             expected = Gson().fromJson(body, JsonObject::class.java)
@@ -153,7 +156,7 @@ class UsersApiTest {
         }
 
         @Test fun logout() {
-            val observer = TestObserver<com.kakao.sdk.user.entity.UserIdResponse>()
+            val observer = TestObserver<UserIdResponse>()
             api.logout().subscribe(observer)
             observer.awaitTerminalEvent(1, TimeUnit.SECONDS)
             observer.assertNoErrors()
@@ -165,7 +168,7 @@ class UsersApiTest {
         }
 
         @Test fun unlink() {
-            val observer = TestObserver<com.kakao.sdk.user.entity.UserIdResponse>()
+            val observer = TestObserver<UserIdResponse>()
             api.unlink().subscribe(observer)
             observer.awaitTerminalEvent(1, TimeUnit.SECONDS)
             observer.assertNoErrors()

@@ -21,6 +21,5 @@ class DefaultFriendsApiClient(val api: FriendsApi = ApiService.kapi.create(Frien
                          url: String?): Single<FriendsResponse> {
         return api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url)
                 .compose(apiErrorInterceptor.handleApiError())
-                .subscribeOn(Schedulers.io())
     }
 }
