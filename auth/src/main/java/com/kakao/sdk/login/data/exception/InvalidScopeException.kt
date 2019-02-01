@@ -1,4 +1,4 @@
-package com.kakao.sdk.login.exception
+package com.kakao.sdk.login.data.exception
 
 import com.kakao.sdk.login.data.MissingScopesErrorResponse
 import com.kakao.sdk.network.data.ApiException

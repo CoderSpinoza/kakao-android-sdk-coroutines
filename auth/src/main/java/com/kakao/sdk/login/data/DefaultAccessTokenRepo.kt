@@ -1,8 +1,6 @@
-package com.kakao.sdk.login.accesstoken
+package com.kakao.sdk.login.data
 
 import android.content.SharedPreferences
-import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.login.entity.AccessTokenResponse
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*

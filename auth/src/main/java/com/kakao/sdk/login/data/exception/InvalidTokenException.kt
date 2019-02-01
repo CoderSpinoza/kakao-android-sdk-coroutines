@@ -1,11 +1,11 @@
-package com.kakao.sdk.login.exception
+package com.kakao.sdk.login.data.exception
 
 import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
 
 /**
- * @author kevin.kang. Created on 2018. 5. 9..
+ * @author kevin.kang. Created on 2018. 5. 2..
  */
-class AgeVerificationException(httpStatus: Int, errorResponse: ApiErrorResponse):
+class InvalidTokenException(httpStatus: Int, errorResponse: ApiErrorResponse) :
         ApiException(httpStatus, errorResponse.code, errorResponse.message) {
 }

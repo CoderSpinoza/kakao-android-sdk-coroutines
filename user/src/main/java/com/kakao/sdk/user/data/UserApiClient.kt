@@ -1,7 +1,6 @@
 package com.kakao.sdk.user.data
 
 import com.kakao.sdk.login.data.ApiService
-import com.kakao.sdk.login.domain.AccessTokenRepo
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 
@@ -19,15 +18,11 @@ interface UserApiClient {
 
     companion object {
         val instance by lazy {
-            val temp = DefaultUserApiClient()
-            temp.shouldClose.subscribe { AccessTokenRepo.instance.clearCache() }
-            return@lazy temp as UserApiClient
+            return@lazy DefaultUserApiClient()
         }
 
         fun withClient(clientBuilder: OkHttpClient.Builder): UserApiClient {
-            val temp = DefaultUserApiClient(userApi = ApiService.kapiWithClient(clientBuilder).create(UserApi::class.java))
-            temp.shouldClose.subscribe { AccessTokenRepo.instance.clearCache() }
-            return temp
+            return DefaultUserApiClient(userApi = ApiService.kapiWithClient(clientBuilder).create(UserApi::class.java))
         }
     }
 }

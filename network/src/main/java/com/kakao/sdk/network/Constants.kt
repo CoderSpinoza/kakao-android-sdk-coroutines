@@ -9,8 +9,8 @@ object Constants {
 
     const val SCHEME = "https"
 
-    const val KAUTH = "beta-kauth.kakao.com"
-    const val KAPI = "beta-kapi.kakao.com"
+    const val KAUTH = "kauth.kakao.com"
+    const val KAPI = "kapi.kakao.com"
 
     const val AUTHORIZATION = "Authorization"
     const val KA = "KA"

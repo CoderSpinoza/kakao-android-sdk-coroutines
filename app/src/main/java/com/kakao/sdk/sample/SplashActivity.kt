@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.kakao.sdk.login.domain.AccessTokenRepo
+import com.kakao.sdk.login.data.AccessTokenRepo
 import com.kakao.sdk.sample.login.LoginActivity
 import com.kakao.sdk.user.data.UserApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers

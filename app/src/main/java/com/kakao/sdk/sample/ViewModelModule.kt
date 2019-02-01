@@ -6,6 +6,7 @@ import com.kakao.sdk.sample.friends.FriendsViewModel
 import com.kakao.sdk.sample.story.AddStoryViewModel
 import com.kakao.sdk.sample.story.StoryViewModel
 import com.kakao.sdk.sample.talk.TalkViewModel
+import com.kakao.sdk.sample.user.TokenViewModel
 import com.kakao.sdk.sample.user.UserViewModel
 import dagger.Binds
 import dagger.Module
@@ -32,4 +33,7 @@ abstract class ViewModelModule {
 
     @Binds @IntoMap @ViewModelKey(UserViewModel::class)
     internal abstract fun userViewModel(viewModel: UserViewModel): ViewModel
+
+    @Binds @IntoMap @ViewModelKey(TokenViewModel::class)
+    internal abstract fun  tokenViewModel(viewModel: TokenViewModel): ViewModel
 }

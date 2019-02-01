@@ -1,16 +1,29 @@
 package com.kakao.sdk.login.presentation
 
 import android.content.Context
-import com.kakao.sdk.login.domain.AccessTokenRepo
-import io.reactivex.Observable
+import com.kakao.sdk.login.data.AccessTokenRepo
+import com.kakao.sdk.network.ApplicationProvider
+import com.kakao.sdk.network.Constants
+import com.kakao.sdk.network.Utility
 import io.reactivex.Single
 
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 interface AuthCodeService {
-    fun requestAuthCode(context: Context): Single<String>
-    fun requestAuthCode(context: Context, scopes: List<String>, approvalType: String = "individual"): Single<String>
+    fun requestAuthCode(context: Context,
+                        clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
+                        redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)),
+                        approvalType: String = "individual",
+                        kaHeader: String = Utility.getKAHeader(ApplicationProvider.application)
+    )
+    fun requestAuthCode(context: Context,
+                        scopes: List<String>,
+                        clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
+                        redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)),
+                        approvalType: String = "individual",
+                        kaHeader: String = Utility.getKAHeader(ApplicationProvider.application)
+    ): Single<String>
 
     companion object {
         val instance by lazy {

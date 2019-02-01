@@ -9,7 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.ResultReceiver
 import com.kakao.sdk.login.Constants
-import com.kakao.sdk.login.accesstoken.AccessToken
+import com.kakao.sdk.login.data.AccessToken
 import com.kakao.sdk.network.Utility
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -19,32 +19,41 @@ import io.reactivex.SingleEmitter
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 class DefaultAuthCodeService(private val tokenObservable: Observable<AccessToken>) : AuthCodeService {
-    override fun requestAuthCode(context: Context): Single<String> {
-
-//        return Observable.create { emitter ->
-            context.startActivity(Intent(context, AuthCodeCustomTabsActivity::class.java))
-//        }
-        return Single.just("dummy")
-
+    override fun requestAuthCode(context: Context,
+                                 clientId: String,
+                                 redirectUri: String,
+                                 approvalType: String,
+                                 kaHeader: String) {
+        context.startActivity(Intent(context, AuthCodeCustomTabsActivity::class.java))
     }
 
-    override fun requestAuthCode(context: Context, scopes: List<String>, approvalType: String): Single<String> {
+    override fun requestAuthCode(context: Context,
+                                 scopes: List<String>,
+                                 clientId: String,
+                                 redirectUri: String,
+                                 approvalType: String,
+                                 kaHeader: String
+    ): Single<String> {
         return Single.create<String> { emitter ->
-            val intent = Intent(context, ScopeUpdateWebViewActivity::class.java)
-            val appKey = Utility.getMetadata(context, com.kakao.sdk.network.Constants.META_APP_KEY)
-            val uri = updateScopeUri(appKey, String.format("kakao%s://oauth", appKey), approvalType, scopes)
+            val uri = updateScopeUri(clientId, redirectUri, approvalType, scopes)
+
             val headers = Bundle()
             headers.putString(Constants.RT, tokenObservable.blockingFirst().refreshToken)
-            headers.putString(com.kakao.sdk.network.Constants.KA, Utility.getKAHeader(context))
+            headers.putString(com.kakao.sdk.network.Constants.KA, kaHeader)
+
+            val intent = Intent(context, ScopeUpdateWebViewActivity::class.java)
             intent.putExtra(ScopeUpdateWebViewActivity.KEY_URL, uri)
             intent.putExtra(ScopeUpdateWebViewActivity.KEY_HEADERS, headers)
+
             val resultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
                 override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
                     this@DefaultAuthCodeService.onReceivedResult(emitter, resultCode, resultData)
                 }
             }
+
             intent.putExtra(ScopeUpdateWebViewActivity.KEY_RESULT_RECEIVER, resultReceiver)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
             context.startActivity(intent)
         }
     }

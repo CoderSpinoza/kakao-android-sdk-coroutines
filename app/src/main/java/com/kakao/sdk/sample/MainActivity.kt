@@ -2,6 +2,7 @@ package com.kakao.sdk.sample
 
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
+import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
@@ -98,5 +99,10 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
         if (!HostFragment.handleBackPressed(supportFragmentManager)) {
             super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        Log.e("viewModelStore", viewModelStore.toString())
+        super.onDestroy()
     }
 }

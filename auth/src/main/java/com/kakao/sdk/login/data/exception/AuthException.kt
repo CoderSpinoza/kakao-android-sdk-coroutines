@@ -1,6 +1,6 @@
-package com.kakao.sdk.login.exception
+package com.kakao.sdk.login.data.exception
 
-import com.kakao.sdk.login.entity.AuthErrorResponse
+import com.kakao.sdk.login.data.AuthErrorResponse
 
 /**
  * @author kevin.kang. Created on 2018. 5. 5..

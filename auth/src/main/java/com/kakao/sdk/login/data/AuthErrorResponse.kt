@@ -1,4 +1,4 @@
-package com.kakao.sdk.login.entity
+package com.kakao.sdk.login.data
 
 import com.google.gson.annotations.SerializedName
 

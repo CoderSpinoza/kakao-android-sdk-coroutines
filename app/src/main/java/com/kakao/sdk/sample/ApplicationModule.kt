@@ -13,6 +13,7 @@ import dagger.android.ContributesAndroidInjector
 /**
  * @author kevin.kang. Created on 2018. 5. 17..
  */
+@Suppress("unused")
 @Module
 abstract class ApplicationModule {
     @ContributesAndroidInjector

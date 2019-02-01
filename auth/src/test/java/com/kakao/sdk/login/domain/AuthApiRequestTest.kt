@@ -1,7 +1,8 @@
 package com.kakao.sdk.login.domain
 
 import com.kakao.sdk.login.Constants
-import com.kakao.sdk.login.entity.AccessTokenResponse
+import com.kakao.sdk.login.data.AccessTokenResponse
+import com.kakao.sdk.login.data.AuthApi
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.ApiService
 import io.reactivex.observers.TestObserver

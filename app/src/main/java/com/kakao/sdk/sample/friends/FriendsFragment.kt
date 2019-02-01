@@ -12,7 +12,7 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.kakao.sdk.login.domain.AuthApiClient
+import com.kakao.sdk.login.data.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.sample.HostFragment
 
@@ -48,7 +48,7 @@ class FriendsFragment : Fragment() {
 
         friendsAdapter = FriendsAdapter(listOf())
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FriendsViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(FriendsViewModel::class.java)
         binding.friendsViewModel = viewModel
         binding.friendsList.adapter = friendsAdapter
         viewModel.friends.observe(this, Observer {

@@ -1,6 +1,6 @@
-package com.kakao.sdk.login.domain
+package com.kakao.sdk.login.data
 
-import com.kakao.sdk.login.accesstoken.AccessToken
+import com.kakao.sdk.login.data.AccessToken
 import io.reactivex.Observable
 
 /**

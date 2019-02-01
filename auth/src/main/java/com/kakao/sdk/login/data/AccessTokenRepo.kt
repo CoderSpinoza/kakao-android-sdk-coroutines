@@ -1,9 +1,6 @@
-package com.kakao.sdk.login.domain
+package com.kakao.sdk.login.data
 
 import android.content.Context
-import com.kakao.sdk.login.accesstoken.DefaultAccessTokenRepo
-import com.kakao.sdk.login.accesstoken.AccessToken
-import com.kakao.sdk.login.entity.AccessTokenResponse
 import com.kakao.sdk.network.ApplicationProvider
 import com.kakao.sdk.network.Constants
 import com.kakao.sdk.network.Utility

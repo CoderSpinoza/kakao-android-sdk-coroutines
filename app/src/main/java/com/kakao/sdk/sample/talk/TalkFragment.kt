@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.kakao.sdk.kakaotalk.data.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
-import com.kakao.sdk.login.domain.AuthApiClient
+import com.kakao.sdk.login.data.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.sample.*
 import com.kakao.sdk.sample.databinding.FragmentTalkBinding
@@ -50,7 +50,7 @@ class TalkFragment : Fragment(), AdapterView.OnItemSelectedListener, LifecycleOw
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_talk, container, false)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TalkViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(TalkViewModel::class.java)
 
         chatAdapter = ChatAdapter(emptyList())
         binding.chatsList.adapter = chatAdapter

@@ -1,7 +1,7 @@
-package com.kakao.sdk.login.domain
+package com.kakao.sdk.login.data
 
 import com.kakao.sdk.login.Constants
-import com.kakao.sdk.login.entity.AccessTokenResponse
+import com.kakao.sdk.login.data.AccessTokenResponse
 import io.reactivex.Single
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

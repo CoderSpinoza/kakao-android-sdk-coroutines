@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.kakao.sdk.kakaostory.data.Story
 import com.kakao.sdk.kakaostory.data.StoryImage
-import com.kakao.sdk.login.domain.AuthApiClient
+import com.kakao.sdk.login.data.AuthApiClient
 import com.kakao.sdk.login.presentation.AuthCodeService
 import com.kakao.sdk.sample.*
 import com.kakao.sdk.sample.databinding.FragmentStoryBinding
@@ -78,7 +78,7 @@ class StoryFragment : Fragment(), LifecycleOwner {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story, container, false)
         binding.setLifecycleOwner(this)
 
-        storyViewModel = ViewModelProviders.of(this, viewModelFactory)[StoryViewModel::class.java]
+        storyViewModel = ViewModelProviders.of(activity!!, viewModelFactory)[StoryViewModel::class.java]
         binding.storyViewModel = storyViewModel
         binding.storiesList.adapter = storyAdapter
         binding.storiesList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))

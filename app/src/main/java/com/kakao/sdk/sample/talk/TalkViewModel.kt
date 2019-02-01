@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.kakao.sdk.kakaotalk.data.TalkApiClient
 import com.kakao.sdk.kakaotalk.data.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
-import com.kakao.sdk.login.exception.InvalidScopeException
+import com.kakao.sdk.login.data.exception.InvalidScopeException
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 

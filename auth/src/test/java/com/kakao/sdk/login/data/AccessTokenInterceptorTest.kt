@@ -1,6 +1,5 @@
 package com.kakao.sdk.login.data
 
-import com.kakao.sdk.login.accesstoken.AccessToken
 import com.kakao.sdk.network.Constants
 import io.reactivex.Observable
 import okhttp3.OkHttpClient

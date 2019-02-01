@@ -45,7 +45,7 @@ class ChatDetailFragment : Fragment() {
         setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_detail, container, false)
         binding.setLifecycleOwner(this)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TalkViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(TalkViewModel::class.java)
         binding.talkViewModel = viewModel
         return binding.root
     }

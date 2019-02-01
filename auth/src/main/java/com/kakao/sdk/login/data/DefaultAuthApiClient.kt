@@ -1,11 +1,7 @@
 package com.kakao.sdk.login.data
 
 import com.google.gson.Gson
-import com.kakao.sdk.login.entity.AccessTokenResponse
-import com.kakao.sdk.login.domain.AuthApi
-import com.kakao.sdk.login.domain.AuthApiClient
-import com.kakao.sdk.login.entity.AuthErrorResponse
-import com.kakao.sdk.login.exception.AuthException
+import com.kakao.sdk.login.data.exception.AuthException
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleTransformer
@@ -15,7 +11,8 @@ import retrofit2.HttpException
 /**
  * @author kevin.kang. Created on 2018. 3. 28..
  */
-class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::class.java)): AuthApiClient {
+class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::class.java),
+                           val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance): AuthApiClient {
     private val responseSubject = PublishSubject.create<AccessTokenResponse>()
     val responseUpdates: Observable<AccessTokenResponse> = responseSubject.hide()
 
@@ -33,7 +30,9 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
                 authCode = authCode,
                 approvalType = approvalType,
                 clientSecret = clientSecret
-        ).compose(handleAuthError()).doOnSuccess { responseSubject.onNext(it) }
+        ).compose(handleAuthError()).doOnSuccess {
+            accessTokenRepo.toCache(it)
+            responseSubject.onNext(it) }
     }
 
     override fun refreshAccessToken(clientId: String,
@@ -51,7 +50,9 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
                 refreshToken = refreshToken,
                 clientSecret = clientSecret,
                 grantType = com.kakao.sdk.login.Constants.REFRESH_TOKEN
-        ).compose(handleAuthError()).doOnSuccess { responseSubject.onNext(it) }
+        ).compose(handleAuthError()).doOnSuccess {
+            accessTokenRepo.toCache(it)
+            responseSubject.onNext(it) }
     }
 
     fun <T> handleAuthError(): SingleTransformer<T ,T> {

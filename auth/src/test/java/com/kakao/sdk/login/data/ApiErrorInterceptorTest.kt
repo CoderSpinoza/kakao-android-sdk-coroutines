@@ -1,9 +1,7 @@
 package com.kakao.sdk.login.data
 
-import com.kakao.sdk.login.domain.AuthApiClient
-import com.kakao.sdk.login.accesstoken.AccessToken
-import com.kakao.sdk.login.exception.AgeVerificationException
-import com.kakao.sdk.login.exception.InvalidScopeException
+import com.kakao.sdk.login.data.exception.AgeVerificationException
+import com.kakao.sdk.login.data.exception.InvalidScopeException
 import com.kakao.sdk.network.ApiErrorCode
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.ApiException

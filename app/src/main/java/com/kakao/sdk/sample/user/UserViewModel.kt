@@ -1,5 +1,6 @@
 package com.kakao.sdk.sample.user
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kakao.sdk.user.data.User
@@ -52,6 +53,7 @@ open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) :
         val disposable = userApiClient.logout()
                 .subscribeOn(Schedulers.io())
                 .subscribe { _ ->
+                    Log.e("UserViewModel", "log out")
                     logoutEvent.postValue(null)
                 }
     }

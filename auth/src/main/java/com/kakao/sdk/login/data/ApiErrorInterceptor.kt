@@ -1,13 +1,9 @@
 package com.kakao.sdk.login.data
 
 import com.google.gson.Gson
-import com.kakao.sdk.login.domain.AccessTokenRepo
-import com.kakao.sdk.login.domain.AuthApiClient
-import com.kakao.sdk.login.accesstoken.AccessToken
-import com.kakao.sdk.login.entity.AccessTokenResponse
-import com.kakao.sdk.login.exception.AgeVerificationException
-import com.kakao.sdk.login.exception.InvalidScopeException
-import com.kakao.sdk.login.exception.InvalidTokenException
+import com.kakao.sdk.login.data.exception.AgeVerificationException
+import com.kakao.sdk.login.data.exception.InvalidScopeException
+import com.kakao.sdk.login.data.exception.InvalidTokenException
 import com.kakao.sdk.network.ApiErrorCode
 import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
