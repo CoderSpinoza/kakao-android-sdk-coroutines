@@ -95,11 +95,49 @@ TalkApiClient -> ApiService -> ApiErrorInterceptor -> AccessTokenRepo
 ### 로그인 화면
 AccessTokenRepo -> ApplicationProvider.application -> UserApiClient -> ApiService
 
+
+### 테스팅
+
+크게 로그인 쪽 모듈과 네트워크 모듈, 개별 API 모듈, 그리고 통합 테스트 정도로 나눌 수 있다.
+
+더 간단한 API 모듈부터 먼저 얘기해보면,
+
+1. Request test
+1. Response test (Json -> Model 변환)
+1. Error response test
+
+위 테스트들은 Retrofit 과 OkHttp 라이브러리들이 내부적으로 정상 동작한다는 가정하에 실행한다.
+
+위 테스트들은 어떻게 보면 self-declarative 한 코드들을 테스트하는 것일 수 있지만 그래도 최소한의 영역이라고 결정.
+
+네트워크 모듈의 경우 AppKeyInterceptor 또는 KakaoAgentInterceptor 등 인터셉터 위주의 테스트를 진행한다.
+KakaoConverterFactory 같은 경우는 custom converter인데 테스트 하면 좋을 것 같다.
+KakaoConverterFactory 같은 경우는 내부에 안드로이드 컨텍스트 관련 디펜던시가 없기 때문에 isolation 해서 테스팅할 필요가 없다.
+파라미터 중 Map -> Json으로 바꿔주는 역할인데, 그냥 각 API 사용처에서 테스트해도 될 듯 하다.
+그에 반면 AppKeyInterceptor 와 KakaoAgentInterceptor 는 컨텍스트를 내부적으로 스태틱하게 참조하고 있으므로 Robolectric 테스트로 진행한다.
+
+API 모듈과 네트워크 모듈의 플로우를 살펴 보면
+
+1. ApiClient -> Api
+    1. Client 쪽은 AccessTokenRepo, ApiErrorInterceptor 와의 관계만 테스트해보면 될 것 같다.
+    1. 기본 메인 쓰레드에서 동작하는지 확인
+1. Retrofit -> OkHttp
+    1. OkHttp layer 에 테스팅 모듈에서 테스트 가능 (MockWebServer)
+1. OkHttp -> (Server) -> OkHttp
+    1. 실제 구현은 믿고 간다. Integration testing 할 때 간단히 체크
+1. OkHttp -> Retrofit (Response)
+    1. Json -> Model 변환 테스트 with Gson
+
+로그인 쪽 모듈은
+
+1. AccessTokenRepo
+1.
 ## Questions
 1. DI 시에 Observable 을 constructor injection 해도 되나?
 1. 인터페이스 굳이 필요한가? 필요하다면 어느 경우에 필요한가? 인터페이스는 메소드가 최대한 적게 설계.
-1. RxJava 와 Retrofit 외부 라이브러리 쓰는 것이 괜찮을까?
+1. RxJava 와 Retrofit 외부 라이브러리 쓸 때 주의해야할 점?
 1. 파라미터 클래스화?
+1. Blocking interface가 필요할까?
 
 
 AccessTokenRepo 를 업데이트 하는 Client들
