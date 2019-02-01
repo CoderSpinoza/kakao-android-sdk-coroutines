@@ -1,4 +1,4 @@
-package data
+package com.kakao.sdk.ageauth.data
 
 import com.google.gson.annotations.SerializedName
 
