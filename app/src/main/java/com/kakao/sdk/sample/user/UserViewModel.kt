@@ -53,7 +53,6 @@ open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) :
         val disposable = userApiClient.logout()
                 .subscribeOn(Schedulers.io())
                 .subscribe { _ ->
-                    Log.e("UserViewModel", "log out")
                     logoutEvent.postValue(null)
                 }
     }

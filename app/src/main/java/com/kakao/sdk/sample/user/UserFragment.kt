@@ -7,7 +7,6 @@ import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
@@ -18,7 +17,6 @@ import com.kakao.sdk.sample.databinding.FragmentUserBinding
 import com.kakao.sdk.sample.databinding.ViewUserBinding
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
-import kotlin.math.log
 
 /**
  *
@@ -57,22 +55,6 @@ class UserFragment : Fragment() {
         return view
     }
 
-    override fun onDestroyView() {
-        if (binding.userViewModel == null) {
-            Log.e("onDestroyView", "userViewModel is null.")
-        } else {
-            Log.e("onDestroyView", "userViewModel is not null")
-        }
-        Log.e("viewModelStore", viewModelStore.toString())
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        if (binding.userViewModel == null) {
-            Log.e("onDestroy", "userViewModel is null.")
-        }
-        super.onDestroy()
-    }
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)

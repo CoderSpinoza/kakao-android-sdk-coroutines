@@ -100,9 +100,4 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
             super.onBackPressed()
         }
     }
-
-    override fun onDestroy() {
-        Log.e("viewModelStore", viewModelStore.toString())
-        super.onDestroy()
-    }
 }
