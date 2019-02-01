@@ -107,29 +107,29 @@ class StoryApiTest {
         assertEquals(params4, params[Constants.IOS_MARKET_PARAM])
     }
 
-    @MethodSource("postPhotoProvider")
-    @ParameterizedTest fun postPhoto(images: String,
-                                     content: String,
-                                     permission: Story.Permission,
-                                     enableShare: Boolean,
-                                     androidExecParams: String?,
-                                     iosExecParams: String?,
-                                     androidMarketParams: String?,
-                                     iosMarketParams: String?) {
-        api.postPhoto(images, content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
-                .subscribe(TestObserver<StoryPostResponse>())
-        val request = server.takeRequest()
-        val params = Utility.parseQuery(request.body.readUtf8())
-
-        assertEquals("POST", request.method)
-        assertEquals(Constants.POST_PHOTO_PATH, request.requestUrl.encodedPath())
-        assertEquals(images, params[Constants.IMAGE_URL_LIST])
-        assertEquals(content, params[Constants.CONTENT])
-        assertEquals(permission.value, params[Constants.PERMISSION])
-        assertEquals(enableShare.toString(), params[Constants.ENABLE_SHARE])
-        assertEquals(androidExecParams, params[Constants.ANDROID_EXEC_PARAM])
-        assertEquals(iosExecParams, params[Constants.IOS_EXEC_PARAM])
-    }
+//    @MethodSource("postPhotoProvider")
+//    @ParameterizedTest fun postPhoto(images: String,
+//                                     content: String,
+//                                     permission: Story.Permission,
+//                                     enableShare: Boolean,
+//                                     androidExecParams: String?,
+//                                     iosExecParams: String?,
+//                                     androidMarketParams: String?,
+//                                     iosMarketParams: String?) {
+//        api.postPhoto(images, content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
+//                .subscribe(TestObserver<StoryPostResponse>())
+//        val request = server.takeRequest()
+//        val params = Utility.parseQuery(request.body.readUtf8())
+//
+//        assertEquals("POST", request.method)
+//        assertEquals(Constants.POST_PHOTO_PATH, request.requestUrl.encodedPath())
+//        assertEquals(images, params[Constants.IMAGE_URL_LIST])
+//        assertEquals(content, params[Constants.CONTENT])
+//        assertEquals(permission.value, params[Constants.PERMISSION])
+//        assertEquals(enableShare.toString(), params[Constants.ENABLE_SHARE])
+//        assertEquals(androidExecParams, params[Constants.ANDROID_EXEC_PARAM])
+//        assertEquals(iosExecParams, params[Constants.IOS_EXEC_PARAM])
+//    }
 
     @Disabled
     @ParameterizedTest fun postLink() {
