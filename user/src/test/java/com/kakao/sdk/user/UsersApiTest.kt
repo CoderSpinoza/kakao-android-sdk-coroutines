@@ -2,7 +2,7 @@ package com.kakao.sdk.user
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.kakao.sdk.login.Constants
+import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.KakaoConverterFactory
 import com.kakao.sdk.user.data.AccessTokenInfo

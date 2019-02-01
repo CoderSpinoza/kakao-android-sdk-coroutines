@@ -1,6 +1,6 @@
 package com.kakao.sdk.user.data
 
-import com.kakao.sdk.login.Constants
+import com.kakao.sdk.auth.Constants
 import io.reactivex.Single
 import retrofit2.http.*
 

@@ -1,11 +1,10 @@
 package com.kakao.sdk.kakaostory.data
 
 import com.google.gson.Gson
-import com.kakao.sdk.login.data.ApiErrorInterceptor
+import com.kakao.sdk.auth.data.ApiErrorInterceptor
 import com.kakao.sdk.network.Utility
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

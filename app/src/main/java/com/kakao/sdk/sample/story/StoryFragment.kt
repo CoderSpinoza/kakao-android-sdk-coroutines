@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.kakao.sdk.kakaostory.data.Story
 import com.kakao.sdk.kakaostory.data.StoryImage
-import com.kakao.sdk.login.data.AuthApiClient
-import com.kakao.sdk.login.presentation.AuthCodeService
+import com.kakao.sdk.auth.data.AuthApiClient
+import com.kakao.sdk.auth.presentation.AuthCodeService
 import com.kakao.sdk.sample.*
 import com.kakao.sdk.sample.databinding.FragmentStoryBinding
 import dagger.android.support.AndroidSupportInjection

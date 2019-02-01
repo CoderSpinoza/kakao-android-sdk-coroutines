@@ -4,7 +4,7 @@ import android.util.Log
 import com.kakao.sdk.friends.data.FriendsApiClient
 import com.kakao.sdk.kakaostory.data.StoryApiClient
 import com.kakao.sdk.kakaotalk.data.TalkApiClient
-import com.kakao.sdk.login.data.AccessTokenRepo
+import com.kakao.sdk.auth.data.AccessTokenRepo
 import com.kakao.sdk.user.data.UserApiClient
 import dagger.Module
 import dagger.Provides

@@ -1,11 +1,7 @@
 package com.kakao.sdk.push
 
-import com.kakao.sdk.login.data.ApiService
 import com.kakao.sdk.network.data.KakaoConverterFactory
-import com.kakao.sdk.push.data.FcmMessage
 import com.kakao.sdk.push.data.PushApi
-import com.kakao.sdk.push.data.PushMessage
-import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Before

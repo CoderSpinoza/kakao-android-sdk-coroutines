@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.kakao.sdk.login">
+          package="com.kakao.sdk.auth">
 
     <application>
-        <activity android:name=".presentation.AuthCodeCustomTabsActivity"/>
-        <activity android:name=".presentation.ScopeUpdateWebViewActivity"
+        <activity android:name="com.kakao.sdk.com.kakao.sdk.auth.presentation.AuthCodeCustomTabsActivity"/>
+        <activity android:name="com.kakao.sdk.com.kakao.sdk.auth.presentation.ScopeUpdateWebViewActivity"
                   android:launchMode="singleTop"
                   android:configChanges="orientation|screenSize"
                   android:windowSoftInputMode="adjustResize">

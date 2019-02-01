@@ -1,6 +1,6 @@
 package com.kakao.sdk.user.data
 
-import com.kakao.sdk.login.data.ApiService
+import com.kakao.sdk.auth.data.ApiService
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 

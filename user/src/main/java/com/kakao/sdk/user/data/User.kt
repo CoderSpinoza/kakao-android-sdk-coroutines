@@ -2,7 +2,7 @@ package com.kakao.sdk.user.data
 
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
-import com.kakao.sdk.login.Constants
+import com.kakao.sdk.auth.Constants
 
 /**
  * @author kevin.kang. Created on 2018. 3. 24..

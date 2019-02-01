@@ -1,8 +1,8 @@
 package com.kakao.sdk.user.data
 
-import com.kakao.sdk.login.data.ApiErrorInterceptor
-import com.kakao.sdk.login.data.ApiService
-import com.kakao.sdk.login.data.AccessTokenRepo
+import com.kakao.sdk.auth.data.ApiErrorInterceptor
+import com.kakao.sdk.auth.data.ApiService
+import com.kakao.sdk.auth.data.AccessTokenRepo
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 

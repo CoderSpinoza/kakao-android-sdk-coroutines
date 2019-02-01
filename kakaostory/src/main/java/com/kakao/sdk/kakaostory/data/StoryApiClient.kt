@@ -1,7 +1,7 @@
 package com.kakao.sdk.kakaostory.data
 
-import com.kakao.sdk.login.data.ApiErrorInterceptor
-import com.kakao.sdk.login.data.ApiService
+import com.kakao.sdk.auth.data.ApiErrorInterceptor
+import com.kakao.sdk.auth.data.ApiService
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.io.File

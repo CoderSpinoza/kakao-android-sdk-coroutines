@@ -2,11 +2,10 @@ package com.kakao.sdk.kakaotalk.data
 
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
 import com.kakao.sdk.kakaotalk.entity.ChatOrder
-import com.kakao.sdk.login.data.ApiService
-import com.kakao.sdk.login.data.ApiErrorInterceptor
+import com.kakao.sdk.auth.data.ApiService
+import com.kakao.sdk.auth.data.ApiErrorInterceptor
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 
 /**
  * @author kevin.kang. Created on 2018. 3. 30..

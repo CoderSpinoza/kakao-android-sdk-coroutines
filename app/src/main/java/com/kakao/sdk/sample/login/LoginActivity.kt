@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.kakao.sdk.login.data.AuthApiClient
-import com.kakao.sdk.login.presentation.AuthCodeService
+import com.kakao.sdk.auth.data.AuthApiClient
+import com.kakao.sdk.auth.presentation.AuthCodeService
 import com.kakao.sdk.sample.MainActivity
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.ActivityLoginBinding

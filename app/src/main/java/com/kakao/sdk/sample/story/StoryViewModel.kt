@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kakao.sdk.kakaostory.data.StoryApiClient
 import com.kakao.sdk.kakaostory.data.Story
-import com.kakao.sdk.login.data.exception.InvalidScopeException
+import com.kakao.sdk.auth.data.exception.InvalidScopeException
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
