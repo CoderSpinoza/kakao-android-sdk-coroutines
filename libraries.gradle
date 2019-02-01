@@ -1,6 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
 android {
     compileSdkVersion project.ext.compileSdkVersion
 
@@ -15,8 +21,12 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            testCoverageEnabled true
             minifyEnabled false
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -24,6 +34,11 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+        }
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
         }
     }
 
@@ -38,9 +53,6 @@ android {
 }
 
 dependencies {
-//    implementation 'com.android.support:appcompat-v7:27.1.1'
-//    implementation 'com.android.support:support-annotations:27.1.1'
-
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.annotation:annotation:1.0.1"
 
@@ -65,4 +77,29 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:2.9.0'
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
     testImplementation "androidx.test:core:1.1.0"
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    group "Reporting"
+    description "Generate Jacoco coverage reports."
+
+    reports {
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def execution = fileTree(dir: project.buildDir,
+            includes: ['jacoco/testDebugUnitTest.exec',
+                       'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'])
+
+    afterEvaluate {
+        def javaClasses = fileTree(dir: compileDebugJavaWithJavac.destinationDir, excludes: fileFilter)
+        def kotlinClasses = fileTree(dir: compileDebugKotlin.destinationDir, excludes: fileFilter)
+        classDirectories.setFrom(files(javaClasses, kotlinClasses))
+    }
+    executionData.setFrom(files(execution))
+
+    doLast() {
+        print "file://${reports.html.destination}/index.html"
+    }
 }

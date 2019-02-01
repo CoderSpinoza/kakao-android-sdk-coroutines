@@ -1,0 +1,44 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+task jacocoTestReport(type: JacocoReport) {
+    subprojects.each {
+        if (it.name == "app") return
+        dependsOn("${it.name}:jacocoTestReport")
+    }
+    group "Reporting"
+    description "Generate Jacoco coverage reports."
+
+    reports {
+        html.enabled = true
+        html.destination file("${rootProject.buildDir}/coverage-report")
+    }
+
+    def javaClasses = []
+    def kotlinClasses = []
+    def javaSrc = []
+    def execution = []
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+
+    subprojects.each { proj ->
+        if (proj.name == "app") return
+        javaClasses   << fileTree(dir: "$proj.buildDir/intermediates/javac/debug", excludes: fileFilter)
+        kotlinClasses << fileTree(dir: "$proj.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
+        javaSrc       << "${proj.projectDir}/src/main/java"
+        execution     << fileTree(dir: proj.buildDir,
+                includes: ['jacoco/testDebugUnitTest.exec',
+                           'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'])
+    }
+
+    sourceDirectories.setFrom(files([javaSrc]))
+    classDirectories.setFrom(files([javaClasses, kotlinClasses]))
+    executionData.setFrom(files(execution))
+
+    doLast() {
+        print "file://${reports.html.destination}/index.html"
+    }
+}

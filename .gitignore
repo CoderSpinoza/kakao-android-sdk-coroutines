@@ -12,3 +12,5 @@ gradle/gradle/wrapper/gradle-wrapper.properties
 gradle/gradlew
 gradle/gradlew.bat
 *.apk
+
+jacoco.exec
