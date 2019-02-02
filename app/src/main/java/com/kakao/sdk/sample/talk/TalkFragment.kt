@@ -15,10 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import com.kakao.sdk.kakaotalk.data.Chat
+import com.kakao.sdk.kakaotalk.entity.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
-import com.kakao.sdk.auth.data.AuthApiClient
-import com.kakao.sdk.auth.presentation.AuthCodeService
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.auth.AuthCodeService
 import com.kakao.sdk.sample.*
 import com.kakao.sdk.sample.databinding.FragmentTalkBinding
 import dagger.android.support.AndroidSupportInjection

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="story"
-            type="com.kakao.sdk.kakaostory.data.Story" />
+            type="com.kakao.sdk.kakaostory.entity.Story" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

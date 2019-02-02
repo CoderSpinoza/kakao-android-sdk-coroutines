@@ -17,10 +17,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
-import com.kakao.sdk.kakaostory.data.Story
-import com.kakao.sdk.kakaostory.data.StoryImage
-import com.kakao.sdk.auth.data.AuthApiClient
-import com.kakao.sdk.auth.presentation.AuthCodeService
+import com.kakao.sdk.kakaostory.entity.Story
+import com.kakao.sdk.kakaostory.entity.StoryImage
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.auth.AuthCodeService
 import com.kakao.sdk.sample.*
 import com.kakao.sdk.sample.databinding.FragmentStoryBinding
 import dagger.android.support.AndroidSupportInjection

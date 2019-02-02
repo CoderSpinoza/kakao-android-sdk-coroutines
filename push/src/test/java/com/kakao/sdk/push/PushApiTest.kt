@@ -1,7 +1,6 @@
 package com.kakao.sdk.push
 
 import com.kakao.sdk.network.data.KakaoConverterFactory
-import com.kakao.sdk.push.data.PushApi
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Before

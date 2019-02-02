@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.network.Utility
-import com.kakao.sdk.user.data.AccessTokenInfo
+import com.kakao.sdk.user.entity.AccessTokenInfo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.junit.jupiter.api.Assertions.*

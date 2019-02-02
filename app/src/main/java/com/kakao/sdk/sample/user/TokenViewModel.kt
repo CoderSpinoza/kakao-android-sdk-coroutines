@@ -2,8 +2,8 @@ package com.kakao.sdk.sample.user
 
 import androidx.lifecycle.ViewModel
 import androidx.databinding.ObservableField
-import com.kakao.sdk.auth.data.AccessTokenRepo
-import com.kakao.sdk.auth.data.AccessToken
+import com.kakao.sdk.auth.AccessTokenRepo
+import com.kakao.sdk.auth.model.AccessToken
 import javax.inject.Inject
 
 /**

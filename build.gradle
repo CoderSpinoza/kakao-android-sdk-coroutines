@@ -32,7 +32,7 @@ apply from: rootProject.file("jacoco.gradle")
 
 apply plugin: 'org.jetbrains.dokka-android'
 
-task aggregateDokka(overwrite: true, type: org.jetbrains.dokka.gradle.DokkaAndroidTask) {
+task dokka(overwrite: true, type: org.jetbrains.dokka.gradle.DokkaAndroidTask) {
     outputFormat = 'html'
 
     kotlinTasks {

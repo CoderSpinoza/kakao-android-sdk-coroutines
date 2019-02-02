@@ -1,8 +1,8 @@
 package com.kakao.sdk.kakaostory.domain
 
-import com.kakao.sdk.kakaostory.data.Constants
-import com.kakao.sdk.kakaostory.data.StoryApi
-import com.kakao.sdk.kakaostory.data.*
+import com.kakao.sdk.kakaostory.Constants
+import com.kakao.sdk.kakaostory.StoryApi
+import com.kakao.sdk.kakaostory.entity.*
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.ApiService
 import io.reactivex.observers.TestObserver

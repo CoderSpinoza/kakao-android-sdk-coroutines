@@ -1,11 +1,11 @@
 package com.kakao.sdk.sample
 
 import android.util.Log
-import com.kakao.sdk.friends.data.FriendsApiClient
-import com.kakao.sdk.kakaostory.data.StoryApiClient
-import com.kakao.sdk.kakaotalk.data.TalkApiClient
-import com.kakao.sdk.auth.data.AccessTokenRepo
-import com.kakao.sdk.user.data.UserApiClient
+import com.kakao.sdk.friends.FriendsApiClient
+import com.kakao.sdk.kakaostory.StoryApiClient
+import com.kakao.sdk.kakaotalk.TalkApiClient
+import com.kakao.sdk.auth.AccessTokenRepo
+import com.kakao.sdk.user.UserApiClient
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

@@ -1,5 +1,7 @@
 package com.kakao.sdk.auth.data
 
+import com.kakao.sdk.auth.model.AccessToken
+import com.kakao.sdk.auth.network.AccessTokenInterceptor
 import com.kakao.sdk.network.Constants
 import io.reactivex.Observable
 import okhttp3.OkHttpClient

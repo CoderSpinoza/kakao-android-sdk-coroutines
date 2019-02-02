@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.kakao.sdk.kakaostory.data.Story
+import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.sample.HostFragment
 import com.kakao.sdk.sample.MainActivity
 

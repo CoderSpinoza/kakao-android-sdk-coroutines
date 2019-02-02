@@ -3,7 +3,7 @@
     <data>
         <variable
             name="friend"
-            type="com.kakao.sdk.friends.data.Friend" />
+            type="com.kakao.sdk.friends.entity.Friend" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

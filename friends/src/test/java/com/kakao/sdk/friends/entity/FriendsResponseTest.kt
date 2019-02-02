@@ -2,7 +2,6 @@ package com.kakao.sdk.friends.entity
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.kakao.sdk.friends.data.FriendsResponse
 import com.kakao.sdk.network.Utility
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest

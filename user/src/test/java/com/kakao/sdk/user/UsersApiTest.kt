@@ -5,10 +5,9 @@ import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.KakaoConverterFactory
-import com.kakao.sdk.user.data.AccessTokenInfo
-import com.kakao.sdk.user.data.User
-import com.kakao.sdk.user.data.UserApi
-import com.kakao.sdk.user.data.UserIdResponse
+import com.kakao.sdk.user.entity.AccessTokenInfo
+import com.kakao.sdk.user.entity.User
+import com.kakao.sdk.user.entity.UserIdResponse
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse

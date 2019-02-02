@@ -2,10 +2,10 @@ package com.kakao.sdk.sample.talk
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kakao.sdk.kakaotalk.data.TalkApiClient
-import com.kakao.sdk.kakaotalk.data.Chat
+import com.kakao.sdk.kakaotalk.TalkApiClient
+import com.kakao.sdk.kakaotalk.entity.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
-import com.kakao.sdk.auth.data.exception.InvalidScopeException
+import com.kakao.sdk.auth.exception.InvalidScopeException
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 

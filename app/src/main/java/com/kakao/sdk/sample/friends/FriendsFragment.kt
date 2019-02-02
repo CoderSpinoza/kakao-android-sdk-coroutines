@@ -12,8 +12,8 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.kakao.sdk.auth.data.AuthApiClient
-import com.kakao.sdk.auth.presentation.AuthCodeService
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.auth.AuthCodeService
 import com.kakao.sdk.sample.HostFragment
 
 import com.kakao.sdk.sample.R

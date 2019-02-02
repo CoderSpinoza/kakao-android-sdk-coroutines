@@ -3,7 +3,7 @@
     <data>
         <variable
             name="chat"
-            type="com.kakao.sdk.kakaotalk.data.Chat" />
+            type="com.kakao.sdk.kakaotalk.entity.Chat" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

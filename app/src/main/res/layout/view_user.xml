@@ -5,7 +5,7 @@
     <data>
         <variable
             name="user"
-            type="com.kakao.sdk.user.data.User" />
+            type="com.kakao.sdk.user.entity.User" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

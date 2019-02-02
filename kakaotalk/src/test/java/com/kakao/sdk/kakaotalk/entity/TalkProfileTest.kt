@@ -3,7 +3,6 @@ package com.kakao.sdk.kakaotalk.entity
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.kakaotalk.Constants
-import com.kakao.sdk.kakaotalk.data.TalkProfile
 import com.kakao.sdk.network.Utility
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

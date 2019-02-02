@@ -2,9 +2,9 @@ package com.kakao.sdk.kakaolink.domain
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.kakao.sdk.kakaolink.data.Constants
-import com.kakao.sdk.kakaolink.data.KakaoLinkApi
-import com.kakao.sdk.kakaolink.data.KakaoLinkResponse
+import com.kakao.sdk.kakaolink.Constants
+import com.kakao.sdk.kakaolink.KakaoLinkApi
+import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.ApiService
 import io.reactivex.observers.TestObserver

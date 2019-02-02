@@ -2,7 +2,7 @@ package com.kakao.sdk.sample.story
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kakao.sdk.kakaostory.data.StoryApiClient
+import com.kakao.sdk.kakaostory.StoryApiClient
 import javax.inject.Inject
 
 /**

@@ -1,10 +1,9 @@
 package com.kakao.sdk.sample.user
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kakao.sdk.user.data.User
-import com.kakao.sdk.user.data.UserApiClient
+import com.kakao.sdk.user.entity.User
+import com.kakao.sdk.user.UserApiClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject

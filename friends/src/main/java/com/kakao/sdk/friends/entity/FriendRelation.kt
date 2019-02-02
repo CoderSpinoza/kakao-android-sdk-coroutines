@@ -1,7 +1,5 @@
 package com.kakao.sdk.friends.entity
 
-import com.kakao.sdk.friends.data.Friend
-
 /**
  * @author kevin.kang. Created on 2018. 3. 23..
  */
