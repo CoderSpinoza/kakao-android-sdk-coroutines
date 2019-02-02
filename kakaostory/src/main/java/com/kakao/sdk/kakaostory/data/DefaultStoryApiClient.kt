@@ -11,6 +11,7 @@ import okhttp3.RequestBody
 import java.io.File
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 class DefaultStoryApiClient(val api: StoryApi,

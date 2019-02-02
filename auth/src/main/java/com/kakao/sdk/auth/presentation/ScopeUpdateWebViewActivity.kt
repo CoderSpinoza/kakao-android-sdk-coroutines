@@ -11,6 +11,9 @@ import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
 import com.kakao.sdk.auth.R
 
+/**
+ * @suppress
+ */
 class ScopeUpdateWebViewActivity : Activity() {
 
     lateinit var webview: WebView

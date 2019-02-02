@@ -8,6 +8,7 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 21..
  */
 class KakaoConverterFactory : Converter.Factory() {

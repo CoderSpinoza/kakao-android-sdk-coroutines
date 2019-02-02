@@ -14,6 +14,7 @@ import com.kakao.sdk.network.Utility
 import java.util.*
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 24..
  */
 class AuthCodeCustomTabsActivity : Activity() {

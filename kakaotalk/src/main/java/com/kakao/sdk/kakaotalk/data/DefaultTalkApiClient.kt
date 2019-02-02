@@ -8,6 +8,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 30..
  */
 class DefaultTalkApiClient(val api: TalkApi = ApiService.kapi.create(TalkApi::class.java),

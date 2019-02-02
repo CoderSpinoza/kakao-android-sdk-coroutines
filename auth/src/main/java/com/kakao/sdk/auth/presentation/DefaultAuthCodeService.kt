@@ -15,6 +15,7 @@ import io.reactivex.Single
 import io.reactivex.SingleEmitter
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 class DefaultAuthCodeService(private val tokenObservable: Observable<AccessToken>) : AuthCodeService {

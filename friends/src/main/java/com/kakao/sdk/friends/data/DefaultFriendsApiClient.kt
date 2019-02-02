@@ -6,6 +6,7 @@ import com.kakao.sdk.auth.data.ApiErrorInterceptor
 import io.reactivex.Single
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 30..
  */
 class DefaultFriendsApiClient(val api: FriendsApi = ApiService.kapi.create(FriendsApi::class.java),

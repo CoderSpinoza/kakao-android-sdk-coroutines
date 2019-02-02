@@ -6,6 +6,7 @@ import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 27..
  */
 class DefaultAccessTokenRepo(val appCache: SharedPreferences) : AccessTokenRepo {

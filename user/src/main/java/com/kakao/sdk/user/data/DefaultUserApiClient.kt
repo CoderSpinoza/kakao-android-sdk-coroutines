@@ -7,6 +7,7 @@ import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 4. 2..
  */
 class DefaultUserApiClient(val userApi: UserApi = ApiService.kapi.create(UserApi::class.java),

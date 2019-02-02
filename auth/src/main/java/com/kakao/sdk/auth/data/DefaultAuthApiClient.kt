@@ -9,6 +9,7 @@ import io.reactivex.subjects.PublishSubject
 import retrofit2.HttpException
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 28..
  */
 class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::class.java),
@@ -60,7 +61,7 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
         }
     }
 
-    private fun translateError(t: Throwable): Throwable {
+    fun translateError(t: Throwable): Throwable {
         if (t is HttpException) {
             val errorString = t.response().errorBody()?.string()
             val response = Gson().fromJson(errorString, AuthErrorResponse::class.java)
