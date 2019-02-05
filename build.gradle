@@ -41,6 +41,7 @@ task dokka(overwrite: true, type: org.jetbrains.dokka.gradle.DokkaAndroidTask) {
 
     outputDirectory = "${rootProject.buildDir}/dokka"
 
+    includes = [ 'kdoc.md' ]
     includeNonPublic = false
     skipEmptyPackages = true
 
