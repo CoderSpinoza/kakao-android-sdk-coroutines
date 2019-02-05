@@ -20,9 +20,7 @@ interface UserApiClient {
     fun unlink(): Single<UserIdResponse>
 
     companion object {
-        val instance by lazy {
-            return@lazy DefaultUserApiClient()
-        }
+        val instance: UserApiClient by lazy { DefaultUserApiClient() }
 
         fun withClient(clientBuilder: OkHttpClient.Builder): UserApiClient {
             return DefaultUserApiClient(userApi = ApiService.kapiWithClient(clientBuilder).create(UserApi::class.java))
