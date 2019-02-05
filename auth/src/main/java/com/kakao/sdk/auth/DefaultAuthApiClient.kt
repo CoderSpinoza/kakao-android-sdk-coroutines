@@ -17,15 +17,12 @@ import retrofit2.HttpException
  */
 class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::class.java),
                            val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance): AuthApiClient {
-    private val responseSubject = PublishSubject.create<AccessTokenResponse>()
-    val responseUpdates: Observable<AccessTokenResponse> = responseSubject.hide()
-
-    override fun issueAccessToken(clientId: String,
+    override fun issueAccessToken(authCode: String,
+                                  clientId: String,
                                   redirectUri: String,
                                   approvalType: String,
                                   androidKeyHash: String,
-                                  clientSecret: String?,
-                                  authCode: String
+                                  clientSecret: String?
     ): Single<AccessTokenResponse> {
         return authApi.issueAccessToken(
                 clientId = clientId,
@@ -39,12 +36,12 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
             responseSubject.onNext(it) }
     }
 
-    override fun refreshAccessToken(clientId: String,
+    override fun refreshAccessToken(refreshToken: String,
+                                    clientId: String,
                                     redirectUri: String,
                                     approvalType: String,
                                     androidKeyHash: String,
-                                    clientSecret: String?,
-                                    refreshToken: String
+                                    clientSecret: String?
     ): Single<AccessTokenResponse> {
         return authApi.issueAccessToken(
                 clientId = clientId,
