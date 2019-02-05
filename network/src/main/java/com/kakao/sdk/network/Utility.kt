@@ -76,8 +76,8 @@ object Utility {
         return map
     }
 
-    fun buildQuery(params: Map<String, String>?): String? {
-        if (params == null || params.isEmpty()) return null
+    fun buildQuery(params: Map<String, String>?): String {
+        if (params == null || params.isEmpty()) return ""
         return params.map { (k, v) -> "$k=$v" }.reduce { acc, s -> "$acc&$s" }
     }
 
