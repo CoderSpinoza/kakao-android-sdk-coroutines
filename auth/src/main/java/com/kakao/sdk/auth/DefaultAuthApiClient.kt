@@ -5,10 +5,8 @@ import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.network.ApiService
 import com.kakao.sdk.auth.model.AuthErrorResponse
 import com.kakao.sdk.auth.exception.AuthException
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleTransformer
-import io.reactivex.subjects.PublishSubject
 import retrofit2.HttpException
 
 /**
@@ -31,9 +29,7 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
                 authCode = authCode,
                 approvalType = approvalType,
                 clientSecret = clientSecret
-        ).compose(handleAuthError()).doOnSuccess {
-            accessTokenRepo.toCache(it)
-            responseSubject.onNext(it) }
+        ).compose(handleAuthError()).doOnSuccess { accessTokenRepo.toCache(it) }
     }
 
     override fun refreshAccessToken(refreshToken: String,
@@ -51,9 +47,7 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
                 refreshToken = refreshToken,
                 clientSecret = clientSecret,
                 grantType = Constants.REFRESH_TOKEN
-        ).compose(handleAuthError()).doOnSuccess {
-            accessTokenRepo.toCache(it)
-            responseSubject.onNext(it) }
+        ).compose(handleAuthError()).doOnSuccess { accessTokenRepo.toCache(it) }
     }
 
     fun <T> handleAuthError(): SingleTransformer<T ,T> {

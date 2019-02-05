@@ -14,7 +14,6 @@ import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
 import io.reactivex.*
 import io.reactivex.functions.BiFunction
-import io.reactivex.subjects.PublishSubject
 import org.reactivestreams.Publisher
 import retrofit2.HttpException
 
@@ -22,15 +21,12 @@ import retrofit2.HttpException
  * @author kevin.kang. Created on 2018. 5. 2..
  */
 class ApiErrorInterceptor(private val authApiClient: AuthApiClient = AuthApiClient.instance,
-                          private val recentToken: Observable<AccessToken> = AccessTokenRepo.instance.observe()) {
-
-    val shouldCloseSubject = PublishSubject.create<Boolean>()
-    val shouldClose = shouldCloseSubject.hide()
+                          private val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance) {
 
     private fun refreshAccessToken(throwableFlowable: Flowable<Throwable>): Publisher<AccessTokenResponse> {
         return throwableFlowable
                 .withLatestFrom(
-                        recentToken.toFlowable(BackpressureStrategy.LATEST),
+                        accessTokenRepo.observe().toFlowable(BackpressureStrategy.LATEST),
                         BiFunction { t1: Throwable, t2: AccessToken ->
                             if (t2.refreshToken != null && t1 is InvalidTokenException) {
                                 return@BiFunction authApiClient.refreshAccessToken(refreshToken = t2.refreshToken)
@@ -64,24 +60,20 @@ class ApiErrorInterceptor(private val authApiClient: AuthApiClient = AuthApiClie
     fun <T> handleApiError(): SingleTransformer<T, T> {
         return SingleTransformer { it.onErrorResumeNext { Single.error(translateError(it)) }
                 .retryWhen { refreshAccessToken(it) }
-                .doOnError { if (it is InvalidTokenException) shouldCloseSubject.onNext(true) }
+                .doOnError { if (it is InvalidTokenException) accessTokenRepo.clearCache() }
         }
     }
 
     fun handleCompletableError(): CompletableTransformer {
         return CompletableTransformer { it.onErrorResumeNext { Completable.error(translateError(it)) }
                 .retryWhen { refreshAccessToken(it) }
-                .doOnError { if (it is InvalidTokenException) shouldCloseSubject.onNext(true) }
+                .doOnError { if (it is InvalidTokenException) accessTokenRepo.clearCache() }
         }
     }
 
     companion object {
         val instance by lazy {
-            val temp = ApiErrorInterceptor()
-            temp.shouldClose.subscribe {
-                AccessTokenRepo.instance.clearCache()
-            }
-            return@lazy temp
+            ApiErrorInterceptor()
         }
     }
 }

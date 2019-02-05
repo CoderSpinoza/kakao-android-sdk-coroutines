@@ -9,8 +9,7 @@ import java.util.*
 /**
  * @author kevin.kang. Created on 2018. 5. 10..
  */
-class TestAccessTokenRepo: AccessTokenRepo {
-    var token: AccessToken = AccessToken()
+class TestAccessTokenRepo(var token: AccessToken): AccessTokenRepo {
     override fun fromCache(): AccessToken {
         return token
     }

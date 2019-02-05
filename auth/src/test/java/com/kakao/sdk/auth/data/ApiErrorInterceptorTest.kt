@@ -1,5 +1,6 @@
 package com.kakao.sdk.auth.data
 
+import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.exception.AgeVerificationException
 import com.kakao.sdk.auth.exception.InvalidScopeException
@@ -30,12 +31,13 @@ class ApiErrorInterceptorTest {
 
     private lateinit var interceptor: ApiErrorInterceptor
     private lateinit var authApiClient: AuthApiClient
+    private lateinit var accessTokenRepo: AccessTokenRepo
 
     @BeforeEach fun setup() {
         val testToken = AccessToken(accessToken = "test_access_token", refreshToken = "test_refresh_token")
-        val testTokenObservable = Observable.just(testToken)
         authApiClient = spy(TestAuthApiClient())
-        interceptor = ApiErrorInterceptor(authApiClient, testTokenObservable)
+        accessTokenRepo = TestAccessTokenRepo(testToken)
+        interceptor = ApiErrorInterceptor(authApiClient, accessTokenRepo)
     }
 
     @MethodSource("httpErrorProvider")

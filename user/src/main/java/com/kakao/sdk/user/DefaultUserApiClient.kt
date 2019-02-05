@@ -7,7 +7,6 @@ import com.kakao.sdk.user.entity.AccessTokenInfo
 import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.entity.UserIdResponse
 import io.reactivex.Single
-import io.reactivex.subjects.PublishSubject
 
 /**
  * @suppress
@@ -16,8 +15,6 @@ import io.reactivex.subjects.PublishSubject
 class DefaultUserApiClient(val userApi: UserApi = ApiService.kapi.create(UserApi::class.java),
                            private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance,
                            private val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance): UserApiClient {
-    private val shouldCloseSubject = PublishSubject.create<Boolean>()
-    val shouldClose = shouldCloseSubject.hide()
 
     override fun me(secureReSource: Boolean): Single<User> {
         return userApi.me(secureReSource)
@@ -34,7 +31,6 @@ class DefaultUserApiClient(val userApi: UserApi = ApiService.kapi.create(UserApi
                 .compose(apiErrorInterceptor.handleApiError())
                 .doOnEvent { _, _ ->
                     accessTokenRepo.clearCache()
-                    shouldCloseSubject.onNext(true)
                 }
     }
 
@@ -43,7 +39,6 @@ class DefaultUserApiClient(val userApi: UserApi = ApiService.kapi.create(UserApi
                 .compose(apiErrorInterceptor.handleApiError())
                 .doOnEvent { _, _ ->
                     accessTokenRepo.clearCache()
-                    shouldCloseSubject.onNext(true)
                 }
     }
 }
