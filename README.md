@@ -3,23 +3,25 @@
 1. 개별 클래스가 비대하다.
     1. Session 클래스가 가장 큰 예.
     1. 유저가 하나의 클래스만 알면 되기 떄문에 편리한 장점은 있다.
-    1. Single Responsibility Principle에 위배.
+    1. Single Responsibility Principle 에 위배.
     1. SDK를 사용하게 되면 API와 OAuth flow를 전혀 알지 못하게 된다.
     1. 개발자 또한 유지 보수가 쉽지 않음.
 1. 완벽하게 해줄 수 없는 것들을 해주고 있다.
     1. 토큰 리프레시 또는 스콮 업데이트 등을 SDK가 자동으로 처리해준다.
     각 flow들 사이에 클라 로깅을 지금 넣을래야 넣을수가 없는 구조이다.
     1. Scope update는 개인적인 생각으로는 절대 자동으로 처리해주면 안된다고 생각한다.
-1. 추상적인 개념의 클래스, 인터페이스, 메소드 들이 많다.
+1. 추상적인 개념의 클래스, 인터페이스, 메소드 들이 있다.
     1. Session#hasValidAccessToken()
         1. 위 메소드의 경우 절대 시맨틱을 지킬 수 없다.
         절대 클라 쪽에서는 valid한 액세스 토큰인지 확신할 수 없기 때문.
         실제로 혼란스럽다는 의견들이 있었고 가이드하기 쉽지 않다.
+        1. 편의를 위해서 정확하지 않은 메소드를 제공하지 않고 SDK는 최소한의 코드양을 유지하는게 어떨까.
 1. Minor한 클라 쪽 최적화 때문에 복잡하고 불필요한 로직들이 많이 들어가게 된다.
     1. 위의 Session#hasValidAccessToken() 같은 예가 대표적.
     1. SharedPreferencesCache 같은 경우 캐싱 로직을 SharedPreferences가 가지고 있을텐데 굳이 별도로 메모리 레이어를 둘 필요가 없다.
     Data type conversion 같은 부분만 처리하면 될 듯.
 1.  모바일 환경과 SDK의 특성상 테스팅이 고려되지 않은 설계이다.
+    1. DI와 Mockito를 이용하여
 
 # 세부 개선 사항
 1. 암호화는 필수 옵션. 단방향 마이그레이션만 제공하면 된다. V1에 있는 불필요한 옵션들 다 제거.
@@ -40,14 +42,13 @@ Uncle Bob의 Clean Architecture 를 기반으로 설계한다. 아래 두가지 
     - Domain layer 의 엔티티 모델등과 Data layer 와 SDK 가 아니라 앱 쪽에서 직접 구현.
 1. Domain layer 와 Presentation layer 에도 모델들과 매퍼를 제공한다.
     - 순수 코틀린으로 짜여진 데이터 모델과 Parcelable 을 구현하는 데이터 모델이 필요할 수도 있다.
-    - V1 에서는 Parcelable 구현을 제공하낟.
+    - V1 에서는 Parcelable 구현을 제공한다.
 
 ## 네트워크
 
 1. Retrofit 을 사용하여 네트워크 boilerplate 코드를 줄이려고 한다.
-현재 Request 객체들은 상속을 기반으로 구현되어 있다.
-Composition over Inheritance Principle 에 따라
-1. 파라미터 개수에 따라 엄격하게 파라미터 클래스를 만든다.
+    1. 현재 Request 객체들은 상속을 기반으로 구현되어 있다.
+1. 파라미터 개수에 따라 (파라미터 3 ~ 4개 이상 시) 파라미터 클래스를 만든다.
 1. 코틀린의 optional, default  파라미터를 사용할 수 있기 때문에 빌더 패턴은 더이상 사용하지 않는다.
 
 ## 로그인
@@ -98,6 +99,12 @@ AccessTokenRepo -> ApplicationProvider.application -> UserApiClient -> ApiServic
 
 ### 테스팅
 
+크게 두가지의 테스팅 프레임워크를 사용한다.
+
+1. JUnit 5 Jupiter
+1. Robolectric + JUnit 4 (Android Mocking)
+    1. Robolectric의 경우 실제 안드로이드 프레임워크가 아니라 JVM 위에서 돌아가는 mocking framework 이기 떄문에 
+
 크게 로그인 쪽 모듈과 네트워크 모듈, 개별 API 모듈, 그리고 통합 테스트 정도로 나눌 수 있다.
 
 더 간단한 API 모듈부터 먼저 얘기해보면,
@@ -132,17 +139,31 @@ API 모듈과 네트워크 모듈의 플로우를 살펴 보면
 
 1. AccessTokenRepo
 1.
+
+
+#### Jacoco Code Coverage Report
+
+#### KDoc generation with Dokka
+
+1. 코드 주석의 @suppress annotation을 통해 구현 클래스나 유저 인터페이스에 속하지 않는 부분들을 exclude 한다.
+1. Custom dokka task를 통하여 multi module에서 하나의 문서를 생성한다.
+1. 필요한 부분에서 Retrofit과 RxJava의 외부 문서로 링킹을 건다.
+ 
+ 
 ## Questions
-1. DI 시에 Observable 을 constructor injection 해도 되나?
-1. 인터페이스 굳이 필요한가? 필요하다면 어느 경우에 필요한가? 인터페이스는 메소드가 최대한 적게 설계.
-1. RxJava 와 Retrofit 외부 라이브러리 쓸 때 주의해야할 점?
+1. 인터페이스 굳이 필요한가? 필요하다면 어느 경우에 필요한가?
 1. 파라미터 클래스화?
-1. Blocking interface가 필요할까?
+1. Robolectric vs Instrumentation test?
+    1. Robolectric의 단점은 명확하다. 실제 안드로이드 코드가 아니라는 것. 동작이 다를 수 있다...! CI에서 유리.
+    1. Instrumentation test는 에뮬레이터나 디바이스가 반드시 필요하다. 당연히 느림. Flanky 한 경우도 있음.
+1. RxJava 와 Retrofit 외부 라이브러리 쓸 때 주의해야할 점?
 
 
-AccessTokenRepo 를 업데이트 하는 Client들
-- AuthApiClient
-    - 토큰 업데이트
-- ApiErrorInterceptor
-    - InvalidTokenException 시
-- UserApiClient
+### Questions to Kino
+1. Constructor에 default 파라미터를 사용하
+    1. 아니면 어떤 대안이?
+1. 파라미터 클래스화
+1. 인터페이스 굳이 필요한가? 필요하다면 어느 경우에 필요한가?
+    1. 대부분의 ApiClient 들의 경우 선언적인 composition들이라 코드가 길지 않다.
+   
+1. DI 시에 Observable 을 constructor injection 해도 되나?
