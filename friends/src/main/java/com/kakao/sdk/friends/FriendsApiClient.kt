@@ -16,16 +16,6 @@ interface FriendsApiClient {
                 limit: Int? = null,
                 order: String? = null,
                 url: String? = null): Single<FriendsResponse>
-
-//    fun friendsSet(firstId: String,
-//                   secondId: String,
-//                   operator: FriendsOperator,
-//                   secureResource: Boolean? = null,
-//                   offset: Int? = null,
-//                   limit: Int? = null,
-//                   order: String? = null,
-//                   url: String? = null): Single<FriendsResponse>
-
     companion object {
         val instance by lazy { DefaultFriendsApiClient() as FriendsApiClient }
     }
