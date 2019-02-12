@@ -1,6 +1,7 @@
 package com.kakao.sdk.auth
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 4. 24..
  */
 object Constants {

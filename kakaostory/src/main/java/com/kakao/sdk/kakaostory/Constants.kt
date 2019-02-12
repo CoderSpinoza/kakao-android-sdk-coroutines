@@ -1,6 +1,7 @@
 package com.kakao.sdk.kakaostory
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 4. 24..
  */
 object Constants {

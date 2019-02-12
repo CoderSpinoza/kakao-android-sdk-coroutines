@@ -1,6 +1,7 @@
 package com.kakao.sdk.kakaotalk
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 4. 28..
  */
 object Constants {

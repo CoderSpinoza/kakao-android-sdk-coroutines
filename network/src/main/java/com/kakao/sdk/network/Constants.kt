@@ -1,11 +1,13 @@
 package com.kakao.sdk.network
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 3. 30..
  */
 object Constants {
     const val META_APP_KEY = "com.kakao.sdk.AppKey"
     const val META_CLIENT_SECRET = "com.kakao.sdk.ClientSecret"
+    const val META_APPROVAL_TYPE = "com.kakao.sdk.ApprovalType"
 
     const val SCHEME = "https"
 

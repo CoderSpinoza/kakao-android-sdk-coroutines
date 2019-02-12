@@ -1,6 +1,7 @@
 package com.kakao.sdk.kakaolink
 
 /**
+ * @suppress
  * @author kevin.kang. Created on 2018. 4. 30..
  */
 object Constants {
