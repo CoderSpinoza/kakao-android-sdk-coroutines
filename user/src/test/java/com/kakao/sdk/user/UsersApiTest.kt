@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.network.Utility
+import com.kakao.sdk.network.data.ApiFactory
 import com.kakao.sdk.network.data.KakaoConverterFactory
 import com.kakao.sdk.user.entity.AccessTokenInfo
 import com.kakao.sdk.user.entity.User
@@ -37,13 +38,7 @@ class UsersApiTest {
     fun setup() {
         server = MockWebServer()
         server.start()
-        val client = OkHttpClient.Builder().build()
-        retrofit = Retrofit.Builder().baseUrl(server.url("/"))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(KakaoConverterFactory())
-                .client(client)
-                .build()
+        retrofit = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
         api = retrofit.create(UserApi::class.java)
     }
 

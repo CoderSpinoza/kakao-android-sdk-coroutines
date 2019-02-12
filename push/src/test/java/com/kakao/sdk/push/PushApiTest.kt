@@ -1,5 +1,6 @@
 package com.kakao.sdk.push
 
+import com.kakao.sdk.network.data.ApiFactory
 import com.kakao.sdk.network.data.KakaoConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
@@ -23,13 +24,7 @@ class PushApiTest {
         server = MockWebServer()
         server.start()
         ShadowLog.stream = System.out
-        val client = OkHttpClient.Builder().build()
-        retrofit = Retrofit.Builder().baseUrl(server.url("/"))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(KakaoConverterFactory())
-                .client(client)
-                .build()
+        retrofit = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
         api = retrofit.create(PushApi::class.java)
     }
 

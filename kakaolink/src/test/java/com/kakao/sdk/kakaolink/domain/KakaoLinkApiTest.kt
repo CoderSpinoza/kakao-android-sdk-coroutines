@@ -6,8 +6,9 @@ import com.kakao.sdk.kakaolink.Constants
 import com.kakao.sdk.kakaolink.KakaoLinkApi
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
 import com.kakao.sdk.network.Utility
-import com.kakao.sdk.network.data.ApiService
+import com.kakao.sdk.network.data.ApiFactory
 import io.reactivex.observers.TestObserver
+import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
@@ -28,7 +29,8 @@ class KakaoLinkApiTest {
     @BeforeEach fun setup() {
         server = MockWebServer()
         server.start()
-        api = ApiService.createApi(server.url("/"), KakaoLinkApi::class.java)
+        api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
+                .create(KakaoLinkApi::class.java)
 
         val response = MockResponse().setResponseCode(200)
         server.enqueue(response)

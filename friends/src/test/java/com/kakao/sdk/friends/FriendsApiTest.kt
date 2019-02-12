@@ -3,6 +3,7 @@ package com.kakao.sdk.friends
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.friends.entity.FriendsResponse
+import com.kakao.sdk.network.data.ApiFactory
 import com.kakao.sdk.network.data.KakaoConverterFactory
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient
@@ -30,12 +31,7 @@ class FriendsApiTest {
         server = MockWebServer()
         server.start()
         val client = OkHttpClient.Builder().build()
-        retrofit = Retrofit.Builder().baseUrl(server.url("/"))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addConverterFactory(KakaoConverterFactory())
-                .client(client)
-                .build()
+        retrofit = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
         api = retrofit.create(FriendsApi::class.java)
     }
 

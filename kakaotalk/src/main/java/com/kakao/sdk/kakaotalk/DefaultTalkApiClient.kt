@@ -2,7 +2,7 @@ package com.kakao.sdk.kakaotalk
 
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
 import com.kakao.sdk.kakaotalk.entity.ChatOrder
-import com.kakao.sdk.auth.network.ApiService
+import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
 import com.kakao.sdk.kakaotalk.entity.ChatListResponse
 import com.kakao.sdk.kakaotalk.entity.TalkProfile
@@ -13,7 +13,7 @@ import io.reactivex.Single
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 30..
  */
-class DefaultTalkApiClient(val api: TalkApi = ApiService.kapi.create(TalkApi::class.java),
+class DefaultTalkApiClient(val api: TalkApi = OAuthApiFactory.kapi.create(TalkApi::class.java),
                            private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance): TalkApiClient {
     override fun sendMemo(): Completable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

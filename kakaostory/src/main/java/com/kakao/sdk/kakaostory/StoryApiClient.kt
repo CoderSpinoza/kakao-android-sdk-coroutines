@@ -1,7 +1,5 @@
 package com.kakao.sdk.kakaostory
 
-import com.kakao.sdk.auth.network.ApiErrorInterceptor
-import com.kakao.sdk.auth.network.ApiService
 import com.kakao.sdk.kakaostory.entity.*
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -79,10 +77,7 @@ interface StoryApiClient {
 
     companion object {
         val instance by lazy {
-            DefaultStoryApiClient(
-                    ApiService.kapi.create(StoryApi::class.java),
-                    ApiErrorInterceptor.instance
-            ) as StoryApiClient
+            DefaultStoryApiClient() as StoryApiClient
         }
     }
 }

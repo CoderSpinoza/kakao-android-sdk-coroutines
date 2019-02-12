@@ -9,15 +9,11 @@ import java.util.*
  * @author kevin.kang. Created on 2018. 5. 10..
  */
 open class TestAuthApiClient : AuthApiClient {
-    override fun issueAccessToken(authCode: String, clientId: String, redirectUri: String,
-                                  approvalType: String, androidKeyHash: String,
-                                  clientSecret: String?): Single<AccessTokenResponse> {
+    override fun issueAccessToken(authCode: String, clientId: String, redirectUri: String, approvalType: String, androidKeyHash: String, clientSecret: String?): Single<AccessTokenResponse> {
         return success()
     }
 
-    override fun refreshAccessToken(refreshToken: String, clientId: String, redirectUri: String,
-                                    approvalType: String, androidKeyHash: String,
-                                    clientSecret: String?): Single<AccessTokenResponse> {
+    override fun refreshAccessToken(refreshToken: String, clientId: String, approvalType: String, androidKeyHash: String, clientSecret: String?): Single<AccessTokenResponse> {
         return success()
     }
 

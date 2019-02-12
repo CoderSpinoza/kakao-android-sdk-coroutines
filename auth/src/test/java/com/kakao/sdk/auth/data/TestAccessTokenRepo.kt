@@ -30,6 +30,6 @@ class TestAccessTokenRepo(var token: AccessToken): AccessTokenRepo {
     }
 
     override fun observe(): Observable<AccessToken> {
-        return Observable.just(AccessToken())
+        return Observable.just(token)
     }
 }

@@ -28,8 +28,8 @@ class DefaultAccessTokenRepoTest {
     @Test
     fun toCache() {
         accessTokenRepo = DefaultAccessTokenRepo(getEmptyPreferences())
-        var response = AccessTokenResponse(accessToken = "new_test_access_token", refreshToken = "new_test_refresh_token",
-                accessTokenExpiresIn = 60 * 60, refreshTokenExpiresIn = 60 * 60 * 12, tokenType = "bearer")
+        var response = AccessTokenResponse("new_test_access_token", "new_test_refresh_token",
+                60 * 60, 60 * 60 * 12, "bearer")
         accessTokenRepo.toCache(response)
         response = AccessTokenResponse(accessToken = "new_test_access_token_2", accessTokenExpiresIn = 60 * 60 * 2,
                 tokenType = "bearer", refreshTokenExpiresIn = 60L * 60 * 24 * 30)

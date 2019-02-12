@@ -2,7 +2,7 @@ package com.kakao.sdk.auth
 
 import com.google.gson.Gson
 import com.kakao.sdk.auth.model.AccessTokenResponse
-import com.kakao.sdk.auth.network.ApiService
+import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.model.AuthErrorResponse
 import com.kakao.sdk.auth.exception.AuthException
 import io.reactivex.Single
@@ -13,8 +13,11 @@ import retrofit2.HttpException
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 28..
  */
-class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthApi::class.java),
-                           val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance): AuthApiClient {
+class DefaultAuthApiClient(
+        val authApi: AuthApi = OAuthApiFactory.kauth.create(AuthApi::class.java),
+        val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance
+): AuthApiClient {
+
     override fun issueAccessToken(authCode: String,
                                   clientId: String,
                                   redirectUri: String,
@@ -34,14 +37,13 @@ class DefaultAuthApiClient(val authApi: AuthApi = ApiService.kauth.create(AuthAp
 
     override fun refreshAccessToken(refreshToken: String,
                                     clientId: String,
-                                    redirectUri: String,
                                     approvalType: String,
                                     androidKeyHash: String,
                                     clientSecret: String?
     ): Single<AccessTokenResponse> {
         return authApi.issueAccessToken(
                 clientId = clientId,
-                redirectUri = redirectUri,
+                redirectUri = null,
                 approvalType = approvalType,
                 androidKeyHash = androidKeyHash,
                 refreshToken = refreshToken,

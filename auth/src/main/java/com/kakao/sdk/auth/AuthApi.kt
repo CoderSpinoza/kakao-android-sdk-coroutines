@@ -13,7 +13,7 @@ interface AuthApi {
     @POST(Constants.TOKEN_PATH)
     @FormUrlEncoded
     fun issueAccessToken(@Field(Constants.CLIENT_ID) clientId: String,
-                         @Field(Constants.REDIRECT_URI) redirectUri: String,
+                         @Field(Constants.REDIRECT_URI) redirectUri: String?,
                          @Field(Constants.APPROVAL_TYPE) approvalType: String = Constants.INDIVIDUAL,
                          @Field(Constants.ANDROID_KEY_HASH) androidKeyHash: String,
                          @Field(Constants.CODE) authCode: String? = null,

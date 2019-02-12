@@ -7,9 +7,9 @@ import com.kakao.sdk.auth.exception.InvalidScopeException
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
 import com.kakao.sdk.network.ApiErrorCode
+import com.kakao.sdk.network.ApplicationInfo
 import com.kakao.sdk.network.Utility
 import com.kakao.sdk.network.data.ApiException
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import okhttp3.*
@@ -23,6 +23,7 @@ import java.util.stream.Stream
 import org.mockito.Mockito.*
 import retrofit2.HttpException
 import retrofit2.Response
+import java.util.concurrent.Callable
 
 /**
  * @author kevin.kang. Created on 2018. 5. 2..
@@ -35,14 +36,14 @@ class ApiErrorInterceptorTest {
 
     @BeforeEach fun setup() {
         val testToken = AccessToken(accessToken = "test_access_token", refreshToken = "test_refresh_token")
+        accessTokenRepo = spy(TestAccessTokenRepo(testToken))
         authApiClient = spy(TestAuthApiClient())
-        accessTokenRepo = TestAccessTokenRepo(testToken)
-        interceptor = ApiErrorInterceptor(authApiClient, accessTokenRepo)
+        interceptor = ApiErrorInterceptor(authApiClient, accessTokenRepo, ApplicationInfo("client_id", "individual", "key_hash", "client_secret"))
     }
 
     @MethodSource("httpErrorProvider")
     @ParameterizedTest fun httpErrors(httpStatus: Int, body: String, errorCode: Int, exceptionType: Class<in ApiException>) {
-        val retrofitResponse = Response.error<Void>(httpStatus,
+        val retrofitResponse =Response.error<Void>(httpStatus,
                 ResponseBody.create(MediaType.parse("application/json"), body))
         val exception = HttpException(retrofitResponse)
         val observer = TestObserver<Void>()
@@ -64,25 +65,35 @@ class ApiErrorInterceptorTest {
     }
 
     @Test fun refreshTokenSucceeds() {
-//        doReturn(Observable.just(AccessTokenResponse())).`when`(authApiClient)
-//                .refreshAccessToken(ArgumentMatchers)
-        val retrofitResponse = Response.error<Void>(HttpURLConnection.HTTP_UNAUTHORIZED,
+        val expectedValue = "success"
+        val retrofitResponse = Response.error<Void>(
+                HttpURLConnection.HTTP_UNAUTHORIZED,
                 ResponseBody.create(MediaType.parse("application/json"), Utility.getJson("json/api_errors/invalid_token.json")))
         val exception = HttpException(retrofitResponse)
-        val observer = TestObserver<Void>()
-        Single.error<Void>(exception).compose(interceptor.handleApiError())
-                .subscribe(observer)
+        val observer = TestObserver<Any>()
 
+        val callable = object: Callable<String> {
+            var subscribedBefore = false
+            override fun call(): String {
+                if (subscribedBefore) {
+                    return expectedValue
+                }
+                subscribedBefore = true
+                throw exception
+            }
+        }
+
+        Single.fromCallable(callable).compose(interceptor.handleApiError())
+                .subscribe(observer)
+        observer.assertNoErrors()
+        observer.assertComplete()
+        observer.assertValueCount(1)
+        observer.assertValue(expectedValue)
     }
 
     @Test fun refreshTokenFails() {
 
     }
-
-//
-//    @Test fun uriLengthTooLong() {
-//
-//    }
 
     companion object {
         @Suppress("unused")

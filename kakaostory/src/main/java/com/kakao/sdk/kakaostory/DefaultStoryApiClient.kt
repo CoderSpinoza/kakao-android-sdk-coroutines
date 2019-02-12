@@ -2,6 +2,7 @@ package com.kakao.sdk.kakaostory
 
 import com.google.gson.Gson
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
+import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.kakaostory.entity.*
 import com.kakao.sdk.network.Utility
 import io.reactivex.Completable
@@ -15,8 +16,8 @@ import java.io.File
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 20..
  */
-class DefaultStoryApiClient(val api: StoryApi,
-                            private val apiErrorInterceptor: ApiErrorInterceptor): StoryApiClient {
+class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(StoryApi::class.java),
+                            private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance): StoryApiClient {
     override fun isStoryUser(): Single<IsStoryUserResponse> {
         return api.isStoryUser()
                 .compose(apiErrorInterceptor.handleApiError())

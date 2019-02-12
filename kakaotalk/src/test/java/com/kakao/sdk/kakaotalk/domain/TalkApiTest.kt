@@ -7,8 +7,9 @@ import com.kakao.sdk.kakaotalk.TalkApi
 import com.kakao.sdk.kakaotalk.entity.ChatListResponse
 import com.kakao.sdk.kakaotalk.entity.TalkProfile
 import com.kakao.sdk.network.Utility
-import com.kakao.sdk.network.data.ApiService
+import com.kakao.sdk.network.data.ApiFactory
 import io.reactivex.observers.TestObserver
+import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
@@ -31,7 +32,8 @@ class TalkApiTest {
     @BeforeEach fun setup() {
         server = MockWebServer()
         server.start()
-        api = ApiService.createApi(server.url("/"), TalkApi::class.java)
+        api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
+                .create(TalkApi::class.java)
         val response = MockResponse().setResponseCode(200)
         server.enqueue(response)
     }

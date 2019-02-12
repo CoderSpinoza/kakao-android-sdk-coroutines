@@ -1,11 +1,7 @@
 package com.kakao.sdk.auth
 
-import android.content.Context
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
-import com.kakao.sdk.network.ApplicationProvider
-import com.kakao.sdk.network.Constants
-import com.kakao.sdk.network.Utility
 import io.reactivex.Observable
 
 /**
@@ -19,12 +15,7 @@ interface AccessTokenRepo {
 
     companion object {
         val instance by lazy {
-            DefaultAccessTokenRepo(
-                    ApplicationProvider.application.getSharedPreferences(
-                            Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
-                            Context.MODE_PRIVATE
-                    )
-            ) as AccessTokenRepo
+            DefaultAccessTokenRepo() as AccessTokenRepo
         }
     }
 }

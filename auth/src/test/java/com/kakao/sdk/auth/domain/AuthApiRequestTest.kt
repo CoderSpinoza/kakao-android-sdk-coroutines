@@ -4,8 +4,9 @@ import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.AuthApi
 import com.kakao.sdk.network.Utility
-import com.kakao.sdk.network.data.ApiService
+import com.kakao.sdk.network.data.ApiFactory
 import io.reactivex.observers.TestObserver
+import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
@@ -24,7 +25,7 @@ class AuthApiRequestTest {
     @BeforeEach fun setup() {
         server = MockWebServer()
         server.start()
-        api = ApiService.createApi(server.url("/"), AuthApi::class.java)
+        api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder()).create(AuthApi::class.java)
         val response = MockResponse().setResponseCode(200)
         server.enqueue(response)
     }

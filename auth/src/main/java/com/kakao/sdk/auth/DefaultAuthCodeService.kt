@@ -11,6 +11,7 @@ import android.os.ResultReceiver
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.presentation.AuthCodeCustomTabsActivity
 import com.kakao.sdk.auth.presentation.ScopeUpdateWebViewActivity
+import com.kakao.sdk.auth.presentation.UriUtility
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
@@ -36,7 +37,7 @@ class DefaultAuthCodeService(private val tokenObservable: Observable<AccessToken
                                  kaHeader: String
     ): Single<String> {
         return Single.create<String> { emitter ->
-            val uri = updateScopeUri(clientId, redirectUri, approvalType, scopes)
+            val uri = UriUtility.updateScopeUri(clientId, redirectUri, approvalType, scopes)
 
             val headers = Bundle()
             headers.putString(Constants.RT, tokenObservable.blockingFirst().refreshToken)
@@ -72,15 +73,5 @@ class DefaultAuthCodeService(private val tokenObservable: Observable<AccessToken
         } else {
             emitter.onError(Throwable("hihi"))
         }
-    }
-
-    fun updateScopeUri(clientId: String, redirectUri: String, approvalType: String, scopes: List<String>): String {
-        val builder = Uri.Builder().scheme(com.kakao.sdk.network.Constants.SCHEME).authority(com.kakao.sdk.network.Constants.KAUTH).path(Constants.AUTHORIZE_PATH)
-                .appendQueryParameter(Constants.CLIENT_ID, clientId)
-                .appendQueryParameter(Constants.REDIRECT_URI, redirectUri)
-                .appendQueryParameter(Constants.RESPONSE_TYPE, Constants.CODE)
-                .appendQueryParameter(Constants.APPROVAL_TYPE, approvalType)
-                .appendQueryParameter(Constants.SCOPE, scopes.joinToString(","))
-        return builder.build().toString()
     }
 }
