@@ -1,5 +1,6 @@
 package com.kakao.sdk.sample.friends
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -92,6 +93,7 @@ class FriendsFragment : Fragment() {
         super.setUserVisibleHint(isVisibleToUser)
     }
 
+    @SuppressLint("CheckResult")
     fun requestFriendPermission(scopes: List<String>) {
         AuthCodeService.instance.requestAuthCode(context!!, scopes)
                 .observeOn(Schedulers.io())

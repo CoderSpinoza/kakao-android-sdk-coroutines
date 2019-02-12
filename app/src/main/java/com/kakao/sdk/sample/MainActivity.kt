@@ -2,7 +2,6 @@ package com.kakao.sdk.sample
 
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View

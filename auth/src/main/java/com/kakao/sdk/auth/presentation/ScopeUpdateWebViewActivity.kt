@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.os.ResultReceiver
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
+import androidx.webkit.WebViewClientCompat
 import com.kakao.sdk.auth.R
 
 /**
@@ -16,8 +16,9 @@ import com.kakao.sdk.auth.R
  */
 class ScopeUpdateWebViewActivity : Activity() {
 
-    lateinit var webview: WebView
-    lateinit var resultReeiver: ResultReceiver
+    internal lateinit var webView: WebView
+    internal lateinit var webViewClient: WebViewClientCompat
+    private lateinit var resultReceiver: ResultReceiver
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,12 +33,12 @@ class ScopeUpdateWebViewActivity : Activity() {
             headersMap[key] = headers[key] as String
         }
 
-        resultReeiver = intent.getParcelableExtra(KEY_RESULT_RECEIVER)
-        webview = findViewById(R.id.webview)
-        webview.settings.javaScriptEnabled = true
-        webview.webViewClient = ScopeUpdateWebViewClient()
-
-        webview.loadUrl(url, headersMap)
+        resultReceiver = intent.getParcelableExtra(KEY_RESULT_RECEIVER)
+        webView = findViewById(R.id.webview)
+        webView.settings.javaScriptEnabled = true
+        webViewClient = ScopeUpdateWebViewClient()
+        webView.webViewClient = webViewClient
+        webView.loadUrl(url, headersMap)
     }
 
     companion object {
@@ -46,28 +47,20 @@ class ScopeUpdateWebViewActivity : Activity() {
         const val KEY_RESULT_RECEIVER = "key.result.receiver"
     }
 
-    inner class ScopeUpdateWebViewClient: WebViewClient() {
-        @Suppress("OverridingDeprecatedMember")
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            return super.shouldOverrideUrlLoading(view, url)
-        }
-
+    inner class ScopeUpdateWebViewClient: WebViewClientCompat() {
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            if (request == null) {
-                return false
-            }
+        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val uri = request.url
             val scheme = uri.scheme ?: return true
             val host = uri.host ?: return true
             if (scheme.startsWith("kakao")  && host.startsWith("oauth")) {
                 val bundle = Bundle()
                 bundle.putString(KEY_URL, uri.toString())
-                resultReeiver.send(Activity.RESULT_OK, bundle)
+                resultReceiver.send(Activity.RESULT_OK, bundle)
                 finish()
+                return true
             }
-            return true
+            return false
         }
-
     }
 }
