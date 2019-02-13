@@ -11,7 +11,7 @@ import io.reactivex.Single
  */
 interface AuthApiClient {
     fun issueAccessToken(authCode: String,
-                         clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
+                         clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)!!,
                          redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)),
                          approvalType: String = "individual",
                          androidKeyHash: String = Utility.getKeyHash(ApplicationProvider.application),
@@ -19,7 +19,7 @@ interface AuthApiClient {
     ): Single<AccessTokenResponse>
 
     fun refreshAccessToken(refreshToken: String,
-                           clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
+                           clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)!!,
                            approvalType: String = "individual",
                            androidKeyHash: String = Utility.getKeyHash(ApplicationProvider.application),
                            clientSecret: String? = Utility.getMetadata(ApplicationProvider.application, Constants.META_CLIENT_SECRET)

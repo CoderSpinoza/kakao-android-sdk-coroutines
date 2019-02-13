@@ -11,9 +11,11 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 object ApiFactory {
-    val kapi: Retrofit = withKakaoAgent("${Constants.SCHEME}://${Constants.KAPI}",
-            OkHttpClient.Builder()
-                    .addInterceptor(AppKeyInterceptor()))
+    fun kapi(): Retrofit {
+        return withKakaoAgent("${Constants.SCHEME}://${Constants.KAPI}",
+                OkHttpClient.Builder()
+                        .addInterceptor(AppKeyInterceptor()))
+    }
 
     fun withKakaoAgent(url: String, clientBuilder: OkHttpClient.Builder): Retrofit {
         clientBuilder.interceptors().add(0, KakaoAgentInterceptor())

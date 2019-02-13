@@ -57,10 +57,10 @@ object Utility {
         )
     }
 
-    fun getMetadata(context: Context, key: String): String {
+    fun getMetadata(context: Context, key: String): String? {
         val ai = context.packageManager.getApplicationInfo(
                 context.packageName, PackageManager.GET_META_DATA)
-        return ai.metaData.getString(key) ?: throw RuntimeException()
+        return ai.metaData.getString(key)
     }
 
     /**

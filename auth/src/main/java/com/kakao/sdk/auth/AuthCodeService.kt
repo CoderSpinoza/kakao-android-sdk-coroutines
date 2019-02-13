@@ -11,14 +11,14 @@ import io.reactivex.Single
  */
 interface AuthCodeService {
     fun requestAuthCode(context: Context,
-                        clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
+                        clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)!!,
                         redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)),
                         approvalType: String = "individual",
                         kaHeader: String = Utility.getKAHeader(ApplicationProvider.application)
     )
     fun requestAuthCode(context: Context,
                         scopes: List<String>,
-                        clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
+                        clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)!!,
                         redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)),
                         approvalType: String = "individual",
                         kaHeader: String = Utility.getKAHeader(ApplicationProvider.application)
