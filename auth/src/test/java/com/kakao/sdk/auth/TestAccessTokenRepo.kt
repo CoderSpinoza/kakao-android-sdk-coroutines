@@ -1,6 +1,5 @@
-package com.kakao.sdk.auth.data
+package com.kakao.sdk.auth
 
-import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import io.reactivex.Observable

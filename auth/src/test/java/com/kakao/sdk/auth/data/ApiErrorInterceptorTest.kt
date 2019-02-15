@@ -2,6 +2,8 @@ package com.kakao.sdk.auth.data
 
 import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.auth.TestAccessTokenRepo
+import com.kakao.sdk.auth.TestAuthApiClient
 import com.kakao.sdk.auth.exception.AgeVerificationException
 import com.kakao.sdk.auth.exception.InvalidScopeException
 import com.kakao.sdk.auth.model.AccessToken

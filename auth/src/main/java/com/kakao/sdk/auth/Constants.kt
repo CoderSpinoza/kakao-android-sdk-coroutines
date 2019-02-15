@@ -26,6 +26,8 @@ object Constants {
     const val APPROVAL_TYPE = "approval_type"
     const val ANDROID_KEY_HASH = "android_key_hash"
     const val CODE = "code"
+    const val ERROR = "error"
+    const val ERROR_DESCRIPTION = "error_description"
     const val REFRESH_TOKEN = "refresh_token"
     const val CLIENT_SECRET = "client_secret"
     const val GRANT_TYPE = "grant_type"

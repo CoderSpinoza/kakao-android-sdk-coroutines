@@ -1,10 +1,15 @@
 package com.kakao.sdk.auth.presentation
 
+import android.net.Uri
 import android.webkit.WebResourceRequest
 
-abstract class MockWebResourceRequest : WebResourceRequest {
+class MockWebResourceRequest(private val uri: Uri) : WebResourceRequest {
     override fun isRedirect(): Boolean {
         return true
+    }
+
+    override fun getUrl(): Uri {
+        return uri
     }
 
     override fun getRequestHeaders(): MutableMap<String, String> {

@@ -1,4 +1,4 @@
-package com.kakao.sdk.auth.data
+package com.kakao.sdk.auth
 
 import android.app.Application
 import android.content.Context

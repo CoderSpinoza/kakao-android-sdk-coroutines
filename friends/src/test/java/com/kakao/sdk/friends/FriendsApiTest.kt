@@ -30,7 +30,6 @@ class FriendsApiTest {
     @BeforeEach fun setup() {
         server = MockWebServer()
         server.start()
-        val client = OkHttpClient.Builder().build()
         retrofit = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
         api = retrofit.create(FriendsApi::class.java)
     }
@@ -62,51 +61,4 @@ class FriendsApiTest {
             }
         }
     }
-
-//    @Nested
-//    @DisplayName("/v1/friends/operation")
-//    inner class FriendsOperation {
-//        @Test fun success() {
-//            val uri = javaClass.classLoader.getResource("json/friends/friends1.json")
-//            val file = File(uri.path)
-//            val body = String(file.readBytes())
-//            val expected = Gson().fromJson(body, JsonObject::class.java)
-//            val response = MockResponse().setResponseCode(200).setBody(body)
-//            server.enqueue(response)
-//            val observer = TestObserver<FriendsResponse>()
-//
-//            api.friendsOperation("first_id", "second_id", FriendsOperator.INTERSECTION)
-//                    .subscribe(observer)
-//
-//            observer.awaitTerminalEvent(1, TimeUnit.SECONDS)
-//            observer.assertNoErrors()
-//            observer.assertValueCount(1)
-//            observer.assertValue {
-//                expected["total_count"].asInt == it.totalCount
-//                        && expected["elements"].asJsonArray.size() == it.friends.size
-//                        && expected["result_id"].asString == it.resultId
-//                        && it.beforeUrl == null
-//                        && expected["after_url"].asString == it.afterUrl
-//            }
-//
-//
-//        }
-//
-//        @Test fun error() {
-//            val uri = javaClass.classLoader.getResource("json/friends/invalid_result_id.json")
-//            val file = File(uri.path)
-//            val body = String(file.readBytes())
-//            val expected = Gson().fromJson(body, JsonObject::class.java)
-//            val response = MockResponse().setResponseCode(400).setBody(body)
-//            server.enqueue(response)
-//
-//            val observer = TestObserver<FriendsResponse>()
-//            api.friendsOperation("first_id", "second_id", FriendsOperator.INTERSECTION)
-//                    .subscribe(observer)
-//
-//            observer.assertError {
-//                it is HttpException && it.code() == 400
-//            }
-//        }
-//    }
 }

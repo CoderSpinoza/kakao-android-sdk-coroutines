@@ -1,9 +1,8 @@
 package com.kakao.sdk.auth.exception
 
-import com.kakao.sdk.auth.model.AuthErrorResponse
+import java.lang.RuntimeException
 
-/**
- * @author kevin.kang. Created on 2018. 5. 5..
- */
-class AuthException(httpStatus: Int, response: AuthErrorResponse) : RuntimeException(response.errorDescription) {
+open class AuthException : RuntimeException {
+    constructor(): super()
+    constructor(errorMessage: String) : super(errorMessage)
 }
