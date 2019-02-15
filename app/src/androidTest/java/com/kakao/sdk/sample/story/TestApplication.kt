@@ -2,8 +2,7 @@ package com.kakao.sdk.sample.story
 
 import android.app.Activity
 import android.app.Application
-import android.support.v4.app.Fragment
-import android.util.Log
+import androidx.fragment.app.Fragment
 import com.kakao.sdk.network.ApplicationProvider
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector

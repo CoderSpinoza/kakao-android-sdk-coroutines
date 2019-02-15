@@ -8,7 +8,6 @@ import com.kakao.sdk.sample.talk.TalkViewModel
 import com.kakao.sdk.sample.user.UserViewModel
 import javax.inject.Singleton
 
-import org.mockito.Mockito.*
 import javax.inject.Inject
 
 /**

@@ -1,28 +1,23 @@
 package com.kakao.sdk.sample.story
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.os.SystemClock
-import android.support.test.InstrumentationRegistry
-import android.support.test.rule.ActivityTestRule
 import org.junit.Rule
 import org.junit.Test
 
-import android.support.test.espresso.Espresso.*
-import android.support.test.espresso.matcher.ViewMatchers.*
-import android.support.test.espresso.action.ViewActions.*
-import android.support.test.espresso.assertion.ViewAssertions.*
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.espresso.Espresso.*
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.*
+import androidx.test.runner.AndroidJUnit4
 import android.util.Log
+import androidx.test.InstrumentationRegistry
+import androidx.test.rule.ActivityTestRule
 import com.kakao.sdk.sample.R
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
-import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
 
 import org.mockito.Mockito.*

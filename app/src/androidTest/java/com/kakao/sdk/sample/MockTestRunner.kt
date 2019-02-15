@@ -2,8 +2,7 @@ package com.kakao.sdk.sample
 
 import android.app.Application
 import android.content.Context
-import android.support.test.runner.AndroidJUnitRunner
-import android.util.Log
+import androidx.test.runner.AndroidJUnitRunner
 import com.kakao.sdk.sample.story.TestApplication
 
 /**
