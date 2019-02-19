@@ -10,6 +10,6 @@ data class LocationTemplate(@SerializedName(Constants.ADDRESS) val  address: Str
                             @SerializedName(Constants.ADDRESS_TITLE) val addressTitle: String? = null,
                             @SerializedName(Constants.SOCIAL) val social: SocialObject? = null,
                             @SerializedName(Constants.BUTTONS) val buttons: MutableList<ButtonObject> = mutableListOf()
-) {
+): DefaultTemplate {
     @SerializedName(Constants.OBJECT_TYPE) val objectType = Constants.TYPE_LOCATION
 }
