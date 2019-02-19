@@ -1,5 +1,6 @@
 package com.kakao.sdk.network.data
 
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.network.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,7 +28,7 @@ object ApiFactory {
     fun withClient(url: String, clientBuilder: OkHttpClient.Builder): Retrofit {
         return Retrofit.Builder().baseUrl(url)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(KakaoGsonFactory.inherited))
                 .addConverterFactory(KakaoConverterFactory())
                 .client(clientBuilder.build())
                 .build()

@@ -1,8 +1,8 @@
 package com.kakao.sdk.network.data
 
-import com.kakao.sdk.network.ApplicationProvider
-import com.kakao.sdk.network.Constants
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.ApplicationProvider
+import com.kakao.sdk.common.Constants
+import com.kakao.sdk.common.Utility
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

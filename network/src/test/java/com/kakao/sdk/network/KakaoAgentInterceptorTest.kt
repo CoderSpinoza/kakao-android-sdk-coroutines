@@ -3,7 +3,10 @@ package com.kakao.sdk.network
 import android.app.Application
 import android.content.pm.PackageInfo
 import android.content.pm.Signature
+import android.content.pm.SigningInfo
 import android.os.Build
+import androidx.test.core.app.ApplicationProvider
+import com.kakao.sdk.common.Constants
 import com.kakao.sdk.network.data.KakaoAgentInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -18,6 +21,7 @@ import org.robolectric.shadows.ShadowPackageManager
 
 import org.robolectric.Shadows.*
 import org.junit.jupiter.api.Assertions.*
+import org.robolectric.shadows.ShadowPackageParser
 import java.util.*
 
 /**
@@ -29,11 +33,11 @@ class KakaoAgentInterceptorTest {
     lateinit var interceptor: KakaoAgentInterceptor
     lateinit var shadowPackageManger: ShadowPackageManager
     lateinit var application: Application
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION") // Robolectric 이 API level 28 을 지원하면 ShadowSigningInfo 로 변경
     @Before
     fun setup() {
         ShadowLog.stream = System.out
-        application = androidx.test.core.app.ApplicationProvider.getApplicationContext()
+        application = ApplicationProvider.getApplicationContext()
         val packageManager = application.packageManager
         shadowPackageManger = shadowOf(packageManager)
 
@@ -43,7 +47,7 @@ class KakaoAgentInterceptorTest {
         info.signatures = arrayOf(Signature("00000000"))
         shadowPackageManger.addPackage(info)
 
-        ApplicationProvider.application = application
+        com.kakao.sdk.common.ApplicationProvider.application = application
         interceptor = KakaoAgentInterceptor()
     }
 

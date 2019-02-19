@@ -3,9 +3,8 @@ package com.kakao.sdk.user
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.data.ApiFactory
-import com.kakao.sdk.network.data.KakaoConverterFactory
 import com.kakao.sdk.user.entity.AccessTokenInfo
 import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.entity.UserIdResponse
@@ -16,8 +15,6 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.net.URLDecoder
 import java.util.concurrent.TimeUnit

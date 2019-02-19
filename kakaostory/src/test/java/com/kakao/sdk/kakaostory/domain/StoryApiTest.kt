@@ -3,7 +3,7 @@ package com.kakao.sdk.kakaostory.domain
 import com.kakao.sdk.kakaostory.Constants
 import com.kakao.sdk.kakaostory.StoryApi
 import com.kakao.sdk.kakaostory.entity.*
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.data.ApiFactory
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient

@@ -1,6 +1,7 @@
 apply from: "$rootDir/libraries.gradle"
 
 dependencies {
+    api project(":common")
     api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 }
 

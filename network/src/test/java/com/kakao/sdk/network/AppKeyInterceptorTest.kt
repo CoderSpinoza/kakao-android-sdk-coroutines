@@ -2,6 +2,7 @@ package com.kakao.sdk.network
 
 import android.app.Application
 import android.os.Bundle
+import androidx.test.core.app.ApplicationProvider
 import com.kakao.sdk.network.data.AppKeyInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -11,7 +12,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadows.ShadowLog
 
 import org.junit.jupiter.api.Assertions.*
@@ -27,10 +27,10 @@ class AppKeyInterceptorTest {
         ShadowLog.stream = System.out
 
         val bundle = Bundle()
-        bundle.putString(Constants.META_APP_KEY, "test_app_key")
-        val application = androidx.test.core.app.ApplicationProvider.getApplicationContext<Application>()
+        bundle.putString(com.kakao.sdk.common.Constants.META_APP_KEY, "test_app_key")
+        val application = ApplicationProvider.getApplicationContext<Application>()
         application.applicationInfo.metaData = bundle
-        ApplicationProvider.application = application
+        com.kakao.sdk.common.ApplicationProvider.application = application
         interceptor = AppKeyInterceptor()
     }
 
@@ -44,7 +44,7 @@ class AppKeyInterceptorTest {
         client.newCall(Request.Builder().url(server.url("/")).build()).execute()
         val request = server.takeRequest()
 
-        assertEquals(String.format("%s %s", Constants.KAKAO_AK, "test_app_key"), request.getHeader(Constants.AUTHORIZATION))
+        assertEquals(String.format("%s %s", com.kakao.sdk.common.Constants.KAKAO_AK, "test_app_key"), request.getHeader(Constants.AUTHORIZATION))
         server.shutdown()
     }
 }

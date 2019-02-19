@@ -14,28 +14,28 @@ import java.util.stream.Stream
 class UtilityTest {
     @MethodSource("paramsProvider")
     @ParameterizedTest fun buildQuery(params: Map<String, String>) {
-        val query = Utility.buildQuery(params)
+        val query = com.kakao.sdk.common.Utility.buildQuery(params)
         assertNotNull(query)
     }
 
     @Nested
     inner class ParseQuery {
         @Test fun withNull() {
-            val params = Utility.parseQuery(null)
+            val params = com.kakao.sdk.common.Utility.parseQuery(null)
             assertEquals(0, params.size)
         }
 
         @Test fun withEmpty() {
-            val params = Utility.parseQuery("")
+            val params = com.kakao.sdk.common.Utility.parseQuery("")
         }
 
         @Test fun withOneParam() {
-            val params = Utility.parseQuery("key1=value1")
+            val params = com.kakao.sdk.common.Utility.parseQuery("key1=value1")
             assertEquals(1, params.size)
         }
 
         @Test fun withTwoParams() {
-            val params = Utility.parseQuery("key1=value1&key2=value2")
+            val params = com.kakao.sdk.common.Utility.parseQuery("key1=value1&key2=value2")
             assertEquals(2, params.size)
             assertEquals("value1", params["key1"])
             assertEquals("value2", params["key2"])

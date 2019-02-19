@@ -3,7 +3,7 @@ package com.kakao.sdk.user
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.Utility
 import com.kakao.sdk.user.entity.User
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

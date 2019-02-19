@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
 import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.kakaostory.entity.*
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.Utility
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MediaType
