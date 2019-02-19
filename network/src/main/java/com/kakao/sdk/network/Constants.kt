@@ -11,5 +11,6 @@ object Constants {
     const val KAPI = "kapi.kakao.com"
     const val ACCOUNT = "auth.kakao.com"
 
+    const val BEARER = "Bearer"
     const val AUTHORIZATION = "Authorization"
 }

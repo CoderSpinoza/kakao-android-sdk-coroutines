@@ -1,3 +1,7 @@
 apply plugin: 'com.android.library'
 
 apply from: "$rootDir/libraries.gradle"
+
+dependencies {
+    api project(":common")
+}
