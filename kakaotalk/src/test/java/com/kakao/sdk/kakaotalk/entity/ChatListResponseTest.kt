@@ -3,6 +3,7 @@ package com.kakao.sdk.kakaotalk.entity
 import com.google.gson.Gson
 import com.google.gson.JsonNull
 import com.google.gson.JsonObject
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.kakaotalk.Constants
 import com.kakao.sdk.common.Utility
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,8 +17,8 @@ class ChatListResponseTest {
     @ValueSource(strings = ["chat_list/list"])
     @ParameterizedTest fun parse(path: String) {
         val body = Utility.getJson("json/$path.json")
-        val expected = Gson().fromJson(body, JsonObject::class.java)
-        val response = Gson().fromJson(body, ChatListResponse::class.java)
+        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
+        val response = KakaoGsonFactory.base.fromJson(body, ChatListResponse::class.java)
 
         assertEquals(expected[Constants.TOTAL_COUNT].asInt, response.totalCount)
 

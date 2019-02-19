@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.ageauth.entity.AgeAuthResponse
+import com.kakao.sdk.common.KakaoGsonFactory
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.junit.jupiter.api.Assertions.*
@@ -15,8 +16,8 @@ class AgeAuthResponseTest {
     @ValueSource(strings = ["1st_19", "2nd", "2nd_19", "ci_2nd", "ci_2nd_19", "no_auth"])
     @ParameterizedTest fun parse(path: String) {
         val body = Utility.getJson("json/age_auth/$path.json")
-        val expected = Gson().fromJson(body, JsonObject::class.java)
-        val response = Gson().fromJson(body, AgeAuthResponse::class.java)
+        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
+        val response = KakaoGsonFactory.base.fromJson(body, AgeAuthResponse::class.java)
 
         assertEquals(expected["id"].asLong, response.id)
         if (expected.has("auth_level")) {

@@ -19,19 +19,14 @@ object KakaoGsonFactory {
         }
     }
 
-    val normal = Gson()
-
-    val pretty = GsonBuilder().setPrettyPrinting().create()
-
-    val inherited = GsonBuilder().addSerializationExclusionStrategy(kakaoExclusionStrategy)
+    val base = GsonBuilder()
             .registerTypeHierarchyAdapter(IntEnum::class.java, object : JsonSerializer<IntEnum> {
                 override fun serialize(src: IntEnum?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
                     return JsonPrimitive(src?.getValue())
                 }
             })
-            .addDeserializationExclusionStrategy(kakaoExclusionStrategy).create()
-
-    val prettyInherited = GsonBuilder().addSerializationExclusionStrategy(kakaoExclusionStrategy)
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .addSerializationExclusionStrategy(kakaoExclusionStrategy)
             .addDeserializationExclusionStrategy(kakaoExclusionStrategy)
-            .setPrettyPrinting().create()
+            .create()
 }

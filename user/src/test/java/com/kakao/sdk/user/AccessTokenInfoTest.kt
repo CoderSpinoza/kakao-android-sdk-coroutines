@@ -3,6 +3,7 @@ package com.kakao.sdk.user
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.user.entity.AccessTokenInfo
 import org.junit.jupiter.params.ParameterizedTest
@@ -17,8 +18,8 @@ class AccessTokenInfoTest {
     @ValueSource(strings = ["internal", "external"])
     @ParameterizedTest fun parse(path: String) {
         val body = Utility.getJson("json/token_info/$path.json")
-        val expected = Gson().fromJson(body, JsonObject::class.java)
-        val response = Gson().fromJson(body, AccessTokenInfo::class.java)
+        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
+        val response = KakaoGsonFactory.base.fromJson(body, AccessTokenInfo::class.java)
 
         assertEquals(expected[Constants.APPID].asLong, response.appId)
         assertEquals(expected[Constants.EXPIRESINMILLIS].asLong, response.expiresInMillis)

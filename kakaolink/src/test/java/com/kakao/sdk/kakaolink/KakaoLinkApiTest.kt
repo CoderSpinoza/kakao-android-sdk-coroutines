@@ -2,6 +2,7 @@ package com.kakao.sdk.kakaolink
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
 import com.kakao.sdk.message.template.FeedTemplate
 import com.kakao.sdk.message.template.entity.ContentObject
@@ -52,7 +53,7 @@ class KakaoLinkApiTest {
         }
 
         val decoded = URLDecoder.decode(params[Constants.TEMPLATE_ARGS], "UTF-8")
-        val decodedJson = Gson().fromJson(decoded, JsonObject::class.java)
+        val decodedJson = KakaoGsonFactory.base.fromJson(decoded, JsonObject::class.java)
         assertEquals(templateArgs.size, decodedJson.size())
 
         for ((k, v) in templateArgs) {
@@ -89,7 +90,7 @@ class KakaoLinkApiTest {
         }
 
         val decoded = URLDecoder.decode(params[Constants.TEMPLATE_ARGS], "UTF-8")
-        val decodedJson = Gson().fromJson(decoded, JsonObject::class.java)
+        val decodedJson = KakaoGsonFactory.base.fromJson(decoded, JsonObject::class.java)
         assertEquals(templateArgs.size, decodedJson.size())
 
         for ((k, v) in templateArgs) {

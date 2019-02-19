@@ -3,6 +3,7 @@ package com.kakao.sdk.user
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.data.ApiFactory
 import com.kakao.sdk.user.entity.AccessTokenInfo
@@ -42,7 +43,7 @@ class UsersApiTest {
     @Test fun me() {
         val body = Utility.getJson("json/users/deprecated.json")
 
-//        val expected = Gson().fromJson(body, JsonObject::class.java)
+//        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
 
         val response = MockResponse().setResponseCode(200).setBody(body)
         server.enqueue(response)
@@ -79,7 +80,7 @@ class UsersApiTest {
             val uri = classloader.getResource("json/token_info/internal.json")
             val file = File(uri.path)
             body = String(file.readBytes())
-            expected = Gson().fromJson<JsonObject>(body, JsonObject::class.java)
+            expected = KakaoGsonFactory.base.fromJson<JsonObject>(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
         }
@@ -107,7 +108,7 @@ class UsersApiTest {
             val uri = classloader.getResource("json/user_id.json")
             val file = File(uri.path)
             body = String(file.readBytes())
-            expected = Gson().fromJson<JsonObject>(body, JsonObject::class.java)
+            expected = KakaoGsonFactory.base.fromJson<JsonObject>(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
         }
@@ -124,7 +125,7 @@ class UsersApiTest {
             val requestBody = Utility.parseQuery(request.body.readUtf8())
 
             assertEquals("POST", request.method)
-            val requestProperties = Gson().fromJson<JsonObject>(URLDecoder.decode(requestBody["properties"], "UTF-8"), JsonObject::class.java)
+            val requestProperties = KakaoGsonFactory.base.fromJson<JsonObject>(URLDecoder.decode(requestBody["properties"], "UTF-8"), JsonObject::class.java)
             assertEquals("value1", requestProperties["key1"].asString)
             assertEquals("value2", requestProperties["key2"].asString)
             observer.assertValue {
@@ -141,7 +142,7 @@ class UsersApiTest {
             val uri = classloader.getResource("json/user_id.json")
             val file = File(uri.path)
             body = String(file.readBytes())
-            expected = Gson().fromJson(body, JsonObject::class.java)
+            expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
         }

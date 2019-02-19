@@ -28,7 +28,7 @@ object ApiFactory {
     fun withClient(url: String, clientBuilder: OkHttpClient.Builder): Retrofit {
         return Retrofit.Builder().baseUrl(url)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(KakaoGsonFactory.inherited))
+                .addConverterFactory(GsonConverterFactory.create(KakaoGsonFactory.base))
                 .addConverterFactory(KakaoConverterFactory())
                 .client(clientBuilder.build())
                 .build()

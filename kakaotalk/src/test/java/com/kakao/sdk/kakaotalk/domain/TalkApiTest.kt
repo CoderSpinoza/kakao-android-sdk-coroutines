@@ -2,6 +2,7 @@ package com.kakao.sdk.kakaotalk.domain
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.kakaotalk.Constants
 import com.kakao.sdk.kakaotalk.TalkApi
 import com.kakao.sdk.kakaotalk.entity.ChatListResponse
@@ -81,7 +82,7 @@ class TalkApiTest {
         }
 
         val decoded = URLDecoder.decode(params[Constants.TEMPLATE_ARGS], "UTF-8")
-        val decodedJson = Gson().fromJson(decoded, JsonObject::class.java)
+        val decodedJson = KakaoGsonFactory.base.fromJson(decoded, JsonObject::class.java)
         assertEquals(templateArgs.size, decodedJson.size())
 
         for ((k, v) in templateArgs) {
@@ -109,7 +110,7 @@ class TalkApiTest {
         }
 
         val decoded = URLDecoder.decode(params[Constants.TEMPLATE_ARGS], "UTF-8")
-        val decodedJson = Gson().fromJson(decoded, JsonObject::class.java)
+        val decodedJson = KakaoGsonFactory.base.fromJson(decoded, JsonObject::class.java)
         assertEquals(templateArgs.size, decodedJson.size())
 
         for ((k, v) in templateArgs) {

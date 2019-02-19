@@ -3,6 +3,7 @@ package com.kakao.sdk.user
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.user.entity.User
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,8 +17,8 @@ class UserTest {
     @ValueSource(strings = ["only_email", "only_phone", "preregi"])
     @ParameterizedTest fun parse(path: String) {
         val body = Utility.getJson("json/users/$path.json")
-        val expected = Gson().fromJson(body, JsonObject::class.java)
-        val response = Gson().fromJson(body, User::class.java)
+        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
+        val response = KakaoGsonFactory.base.fromJson(body, User::class.java)
 
         assertEquals(expected[Constants.ID].asLong, response.id)
         if (expected.has(Constants.HAS_SIGNED_UP)) {

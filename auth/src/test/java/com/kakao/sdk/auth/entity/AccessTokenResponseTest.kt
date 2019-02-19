@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.auth.model.AccessTokenResponse
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -16,8 +17,8 @@ class AccessTokenResponseTest {
     @ValueSource(strings = ["has_rt", "has_rt_and_scopes", "no_rt"])
     @ParameterizedTest fun parse(path: String) {
         val body = Utility.getJson("json/token/$path.json")
-        val expected = Gson().fromJson(body, JsonObject::class.java)
-        val response = Gson().fromJson(body, AccessTokenResponse::class.java)
+        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
+        val response = KakaoGsonFactory.base.fromJson(body, AccessTokenResponse::class.java)
 
         if (expected.has(Constants.ACCESS_TOKEN)) {
             assertEquals(expected[Constants.ACCESS_TOKEN].asString, response.accessToken)

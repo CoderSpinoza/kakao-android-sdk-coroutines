@@ -2,6 +2,7 @@ package com.kakao.sdk.network.data
 
 import android.net.Uri
 import com.google.gson.Gson
+import com.kakao.sdk.common.KakaoGsonFactory
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
@@ -16,7 +17,7 @@ class KakaoConverterFactory : Converter.Factory() {
         if (type is ParameterizedType) {
             if (type.rawType == Map::class.java) {
                 return Converter { value: Map<String, String> ->
-                    Gson().toJson(value)
+                    KakaoGsonFactory.base.toJson(value)
                 }
             }
         }

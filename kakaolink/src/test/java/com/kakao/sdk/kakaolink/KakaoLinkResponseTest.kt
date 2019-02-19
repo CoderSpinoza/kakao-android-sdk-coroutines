@@ -2,6 +2,7 @@ package com.kakao.sdk.kakaolink
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
 import com.kakao.sdk.common.Utility
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,7 +17,7 @@ import java.util.stream.Stream
 class KakaoLinkResponseTest {
     @MethodSource("responseProvider")
     @ParameterizedTest fun parse(jsonString: String, jsonObject: JsonObject) {
-        val response = Gson().fromJson(jsonString, KakaoLinkResponse::class.java)
+        val response = KakaoGsonFactory.base.fromJson(jsonString, KakaoLinkResponse::class.java)
         assertEquals(jsonObject[Constants.TEMPLATE_ID].asString, response.templateId)
     }
 
@@ -28,7 +29,7 @@ class KakaoLinkResponseTest {
             return paths
                     .map { "json/$it.json" }
                     .map { com.kakao.sdk.common.Utility.getJson(it) }
-                    .map { it to Gson().fromJson(it, JsonObject::class.java) }
+                    .map { it to KakaoGsonFactory.base.fromJson(it, JsonObject::class.java) }
                     .map { Arguments.of(it.first, it.second) }
                     .stream()
         }

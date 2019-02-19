@@ -22,7 +22,7 @@ class DefaultKakaoNaviClient(private val applicationInfo: ApplicationInfo = Appl
     private fun baseUriBuilder(context: Context, params: KakaoNaviParams): Uri.Builder = Uri.Builder()
             .scheme(Constants.NAVI_WEB_SCHEME)
             .authority("kakaonavi-wguide.kakao.com")
-            .appendQueryParameter(Constants.PARAM, KakaoGsonFactory.inherited.toJson(params))
+            .appendQueryParameter(Constants.PARAM, KakaoGsonFactory.base.toJson(params))
             .appendQueryParameter(Constants.APIVER, "1.0")
             .appendQueryParameter(Constants.APPKEY, applicationInfo.clientId)
             .appendQueryParameter(Constants.EXTRAS, Utility.getExtras(context).toString())

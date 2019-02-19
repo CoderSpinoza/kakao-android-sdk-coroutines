@@ -5,6 +5,7 @@ import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.model.AuthErrorResponse
 import com.kakao.sdk.auth.exception.AuthResponseException
+import com.kakao.sdk.common.KakaoGsonFactory
 import io.reactivex.Single
 import io.reactivex.SingleTransformer
 import retrofit2.HttpException
@@ -60,7 +61,7 @@ class DefaultAuthApiClient(
     fun translateError(t: Throwable): Throwable {
         if (t is HttpException) {
             val errorString = t.response().errorBody()?.string()
-            val response = Gson().fromJson(errorString, AuthErrorResponse::class.java)
+            val response = KakaoGsonFactory.base.fromJson(errorString, AuthErrorResponse::class.java)
             return AuthResponseException(t.code(), response)
         }
         return t

@@ -3,6 +3,7 @@ package com.kakao.sdk.kakaostory
 import com.google.gson.Gson
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
 import com.kakao.sdk.auth.network.OAuthApiFactory
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.kakaostory.entity.*
 import com.kakao.sdk.common.Utility
 import io.reactivex.Completable
@@ -78,7 +79,7 @@ class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(Stor
                            iosExecParams: Map<String, String>?,
                            androidMarketParams: Map<String, String>?,
                            iosMarketParams: Map<String, String>?): Single<StoryPostResponse> {
-        return api.postPhoto(Gson().toJson(images), content, permission, enableShare,
+        return api.postPhoto(KakaoGsonFactory.base.toJson(images), content, permission, enableShare,
                 Utility.buildQuery(androidExecParams),
                 Utility.buildQuery(iosExecParams),
                 Utility.buildQuery(androidMarketParams),
@@ -107,7 +108,7 @@ class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(Stor
                            iosExecParams: String?,
                            androidMarketParams: String?,
                            iosMarketParams: String?): Single<StoryPostResponse> {
-        return api.postPhoto(Gson().toJson(images), content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
+        return api.postPhoto(KakaoGsonFactory.base.toJson(images), content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
                 .compose(apiErrorInterceptor.handleApiError())
     }
 

@@ -2,6 +2,7 @@ package com.kakao.sdk.kakaostory.entity
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.kakaostory.Constants
 import com.kakao.sdk.common.Utility
 import org.junit.jupiter.params.ParameterizedTest
@@ -15,8 +16,8 @@ class LinkInfoTest {
     @ValueSource(strings = ["linkinfo1", "linkinfo2"])
     @ParameterizedTest fun parse(path: String) {
         val body = Utility.getJson("json/linkinfo/$path.json")
-        val expected = Gson().fromJson(body, JsonObject::class.java)
-        val response = Gson().fromJson(body, LinkInfo::class.java)
+        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
+        val response = KakaoGsonFactory.base.fromJson(body, LinkInfo::class.java)
 
         assertEquals(expected[Constants.URL].asString, response.url)
         assertEquals(expected[Constants.REQUESTED_URL].asString, response.requestedUrl)

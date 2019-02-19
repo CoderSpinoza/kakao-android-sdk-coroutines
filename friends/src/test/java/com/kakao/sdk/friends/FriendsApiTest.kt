@@ -2,6 +2,7 @@ package com.kakao.sdk.friends
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.friends.entity.FriendsResponse
 import com.kakao.sdk.network.data.ApiFactory
 import com.kakao.sdk.network.data.KakaoConverterFactory
@@ -42,7 +43,7 @@ class FriendsApiTest {
             val file = File(uri.path)
             val body = String(file.readBytes())
 
-            val expected = Gson().fromJson(body, JsonObject::class.java)
+            val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
             val observer = TestObserver<FriendsResponse>()

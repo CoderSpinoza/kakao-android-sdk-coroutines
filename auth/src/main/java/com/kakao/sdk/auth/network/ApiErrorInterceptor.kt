@@ -10,6 +10,7 @@ import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.model.MissingScopesErrorResponse
 import com.kakao.sdk.common.ApplicationInfo
+import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.network.ApiErrorCode
 import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
@@ -58,11 +59,11 @@ class ApiErrorInterceptor(private val authApiClient: AuthApiClient = AuthApiClie
         try {
             if (t is HttpException) {
                 val errorString = t.response().errorBody()?.string()
-                val response = Gson().fromJson(errorString, ApiErrorResponse::class.java)
+                val response = KakaoGsonFactory.base.fromJson(errorString, ApiErrorResponse::class.java)
                 when (response.code) {
                     ApiErrorCode.INVALID_TOKEN_CODE -> return InvalidTokenException(t.code(), response)
                     ApiErrorCode.INVALID_SCOPE_CODE -> {
-                        val scopeErrorResponse = Gson().fromJson(errorString, MissingScopesErrorResponse::class.java)
+                        val scopeErrorResponse = KakaoGsonFactory.base.fromJson(errorString, MissingScopesErrorResponse::class.java)
                         return InvalidScopeException(t.code(), scopeErrorResponse)
                     }
                     ApiErrorCode.AGE_VERIFICATION_NEEDED -> return AgeVerificationException(t.code(), response)
