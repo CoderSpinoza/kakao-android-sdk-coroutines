@@ -1,4 +1,4 @@
-package com.kakao.sdk.network
+package com.kakao.sdk.common
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,6 +12,10 @@ import java.lang.NullPointerException
 import java.net.URLDecoder
 import java.security.MessageDigest
 import java.util.*
+import org.json.JSONException
+import org.json.JSONObject
+
+
 
 /**
  * @author kevin.kang. Created on 2018. 3. 30..
@@ -30,7 +34,7 @@ object Utility {
 //        } else {
 //            return  getKeyHashDeprecated(context)
 //        }
-        return  getKeyHashDeprecated(context)
+        return getKeyHashDeprecated(context)
     }
 
     @Suppress("DEPRECATION")
@@ -50,11 +54,25 @@ object Utility {
                 Constants.SDK, BuildConfig.VERSION_NAME,
                 Constants.OS, Build.VERSION.SDK_INT,
                 Constants.LANG, Locale.getDefault().language.toLowerCase(), Locale.getDefault().country.toUpperCase(),
-                Constants.ORIGIN, Utility.getKeyHash(context),
+                Constants.ORIGIN, getKeyHash(context),
                 Constants.DEVICE, Build.MODEL.replace("\\s".toRegex(), "-").toUpperCase(),
                 Constants.ANDROID_PKG, context.packageName,
                 Constants.APP_VER, context.packageManager.getPackageInfo(context.packageName, 0).versionName
         )
+    }
+
+    fun getExtras(context: Context): JSONObject {
+        System.out.println(Utility.getKAHeader(context))
+        try {
+            val json = JSONObject()
+                    .put(Constants.APP_PACKAGE, context.packageName)
+                    .put(Constants.APP_KEY_HASH, Utility.getKeyHash(context))
+                    .put(Constants.KA, Utility.getKAHeader(context))
+            System.out.println(json.toString())
+            return json
+        } catch (e: JSONException) {
+            throw IllegalArgumentException("JSON parsing error while constructing extras string: $e")
+        }
     }
 
     fun getMetadata(context: Context, key: String): String? {

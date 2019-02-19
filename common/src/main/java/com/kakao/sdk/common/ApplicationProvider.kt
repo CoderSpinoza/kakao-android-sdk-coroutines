@@ -1,4 +1,4 @@
-package com.kakao.sdk.network
+package com.kakao.sdk.common
 
 import android.app.Application
 

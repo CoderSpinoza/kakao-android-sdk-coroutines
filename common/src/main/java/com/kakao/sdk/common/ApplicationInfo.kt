@@ -1,4 +1,4 @@
-package com.kakao.sdk.network
+package com.kakao.sdk.common
 
 data class ApplicationInfo(
         val clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)!!,
