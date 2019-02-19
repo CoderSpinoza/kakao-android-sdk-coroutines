@@ -20,7 +20,7 @@ class DefaultAccessTokenRepo(val appCache: SharedPreferences = ApplicationProvid
         Context.MODE_PRIVATE
 )) : AccessTokenRepo {
     private val tokenSubject = BehaviorSubject.create<AccessToken>()
-    val tokenUpdates = tokenSubject.hide()
+    val tokenUpdates: Observable<AccessToken> = tokenSubject.hide()
 
     init {
         tokenSubject.onNext(fromCache())

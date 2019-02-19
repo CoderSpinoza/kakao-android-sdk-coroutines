@@ -7,13 +7,13 @@ import com.kakao.sdk.common.Utility
 import io.reactivex.Single
 
 /**
- * Kakao OAuth API를 호출할 수 있는 클라이언트.
+ * Kakao OAuth API 를 호출할 수 있는 클라이언트.
  *
  * @author kevin.kang. Created on 2018. 5. 9..
  */
 interface AuthApiClient {
     /**
-     * [AuthCodeService] 를 이용하여 발급 받은 authorization code를 사용하여 액세스 토큰을 발급한다.
+     * [AuthCodeService] 를 이용하여 발급 받은 authorization code 를 사용하여 액세스 토큰을 발급한다.
      *
      * @param authCode authorization code
      *

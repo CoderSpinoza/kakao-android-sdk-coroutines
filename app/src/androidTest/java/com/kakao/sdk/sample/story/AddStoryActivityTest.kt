@@ -1,5 +1,6 @@
 package com.kakao.sdk.sample.story
 
+import android.app.Instrumentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import android.os.SystemClock
@@ -22,6 +23,7 @@ import org.mockito.junit.MockitoJUnit
 
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoRule
 import javax.inject.Inject
 
 /**
@@ -29,11 +31,11 @@ import javax.inject.Inject
  */
 @RunWith(AndroidJUnit4::class)
 class AddStoryActivityTest {
-    val instrumentation = InstrumentationRegistry.getInstrumentation()
+    private val instrumentation: Instrumentation = InstrumentationRegistry.getInstrumentation()
 
     @Rule @JvmField
     val rule = ActivityTestRule(AddStoryActivity::class.java, false, false)
-    @Rule @JvmField val mockitoRule = MockitoJUnit.rule()
+    @Rule @JvmField val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var viewModel: AddStoryViewModel
@@ -46,7 +48,7 @@ class AddStoryActivityTest {
         application.component().inject(this)
         viewModel = viewModelFactory.create(AddStoryViewModel::class.java)
         Log.e("Test", "after create")
-//        Log.e("Test", "creat viewModel: ${viewModel2.toString()}")
+//        Log.e("Test", "create viewModel: ${viewModel2.toString()}")
         doNothing().`when`(viewModel).setContent(anyString())
         doReturn(mockCanPost).`when`(viewModel).canPost()
 //        viewModelFactory = ViewModelUtil.createFor(viewModel)

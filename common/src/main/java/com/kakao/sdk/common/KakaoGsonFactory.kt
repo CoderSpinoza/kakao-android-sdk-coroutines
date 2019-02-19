@@ -19,7 +19,7 @@ object KakaoGsonFactory {
         }
     }
 
-    val base = GsonBuilder()
+    val base: Gson = GsonBuilder()
             .registerTypeHierarchyAdapter(IntEnum::class.java, object : JsonSerializer<IntEnum> {
                 override fun serialize(src: IntEnum?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
                     return JsonPrimitive(src?.getValue())

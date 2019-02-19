@@ -1,6 +1,5 @@
 package com.kakao.sdk.user
 
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.common.KakaoGsonFactory
@@ -14,7 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import retrofit2.Retrofit
 import java.io.File
 import java.net.URLDecoder

@@ -20,28 +20,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:user="@{userViewModel.user}" />
-    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/token_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--android:text="@{tokenViewModel.accessToken}"/>-->
-
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/token_view"-->
-            <!--android:text="@{userViewModel.email}"/>-->
-
-        <!--&lt;!&ndash;<android.support.v7.widget.RecyclerView&ndash;&gt;-->
-            <!--&lt;!&ndash;android:id="@+id/talk_friends_list"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:layoutManager="LinearLayoutManager"/>&ndash;&gt;-->
-    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
     </ScrollView>
 </layout>

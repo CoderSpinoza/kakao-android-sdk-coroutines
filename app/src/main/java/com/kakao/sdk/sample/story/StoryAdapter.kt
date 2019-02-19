@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.sample.databinding.ItemStoryBinding
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 /**
@@ -12,7 +13,7 @@ import io.reactivex.subjects.PublishSubject
  */
 class StoryAdapter(var stories: List<Story>): RecyclerView.Adapter<StoryHolder>() {
     private val clickSubject = PublishSubject.create<Story>()
-    val clickEvents = clickSubject.hide()
+    val clickEvents: Observable<Story> = clickSubject.hide()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryHolder {
         val inflater = LayoutInflater.from(parent.context)

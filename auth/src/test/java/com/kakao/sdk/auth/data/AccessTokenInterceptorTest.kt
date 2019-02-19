@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
  * @author kevin.kang. Created on 2018. 3. 30..
  */
 class AccessTokenInterceptorTest {
-    lateinit var interceptor: AccessTokenInterceptor
+    private lateinit var interceptor: AccessTokenInterceptor
 
     @BeforeEach
     fun setup() {

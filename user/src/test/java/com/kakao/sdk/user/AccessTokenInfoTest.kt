@@ -1,14 +1,14 @@
 package com.kakao.sdk.user
 
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.user.entity.AccessTokenInfo
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.junit.jupiter.api.Assertions.*
 
 /**
  * @author kevin.kang. Created on 2018. 4. 25..

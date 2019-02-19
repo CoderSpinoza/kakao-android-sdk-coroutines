@@ -1,25 +1,23 @@
 package com.kakao.sdk.kakaolink
 
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
 import com.kakao.sdk.message.template.FeedTemplate
 import com.kakao.sdk.message.template.entity.ContentObject
 import com.kakao.sdk.message.template.entity.LinkObject
-import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.data.ApiFactory
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import java.net.URLDecoder
 import java.util.stream.Stream
 

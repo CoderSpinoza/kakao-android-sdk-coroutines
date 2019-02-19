@@ -43,7 +43,7 @@ class DefaultAuthApiClientTest {
             val jsonElement = JsonParser().parse(json).asJsonObject
             server.enqueue(MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody(json))
 
-            authApiClient.issueAccessToken(authCode = "auth_code", clientId = "client_id", redirectUri = "rediect_uri",
+            authApiClient.issueAccessToken(authCode = "auth_code", clientId = "client_id", redirectUri = "redirect_uri",
                     approvalType = Constants.INDIVIDUAL, androidKeyHash = "android_key_hash", clientSecret = "client_secret")
                     .subscribe(observer)
 
@@ -70,7 +70,7 @@ class DefaultAuthApiClientTest {
             val jsonElement = JsonParser().parse(json).asJsonObject
             server.enqueue(MockResponse().setResponseCode(HttpURLConnection.HTTP_UNAUTHORIZED).setBody(json))
 
-            authApiClient.issueAccessToken(authCode = "auth_code", clientId = "client_id", redirectUri = "rediect_uri",
+            authApiClient.issueAccessToken(authCode = "auth_code", clientId = "client_id", redirectUri = "redirect_uri",
                     approvalType = Constants.INDIVIDUAL, androidKeyHash = "android_key_hash", clientSecret = "client_secret")
                     .subscribe(observer)
 

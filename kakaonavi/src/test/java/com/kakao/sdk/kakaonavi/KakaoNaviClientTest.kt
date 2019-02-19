@@ -5,11 +5,11 @@ import android.content.Intent
 import android.content.pm.*
 import androidx.test.core.app.ApplicationProvider
 import com.kakao.sdk.common.ApplicationInfo
-import com.kakao.sdk.common.Utility
 import com.kakao.sdk.kakaonavi.entity.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows

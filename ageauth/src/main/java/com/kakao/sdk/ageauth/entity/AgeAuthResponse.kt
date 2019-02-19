@@ -10,5 +10,4 @@ data class AgeAuthResponse(val id: Long,
                            @SerializedName("auth_level_code") val authLevelCode: Int?,
                            @SerializedName("bypass_age_limit") val bypassAgeLimit: Boolean?,
                            @SerializedName("authenticated_at") val authenticatedAt: String?,
-                           val ci: String) {
-}
+                           val ci: String)

@@ -1,6 +1,5 @@
 package com.kakao.sdk.auth
 
-import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import io.reactivex.Single
 import java.util.*

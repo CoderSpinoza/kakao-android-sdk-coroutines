@@ -14,7 +14,7 @@ class AppKeyInterceptor(private val appKey: String = Utility.getMetadata(Applica
     override fun intercept(chain: Interceptor.Chain?): Response {
         var request = chain?.request() as Request
         request = request.newBuilder()
-                .addHeader(Constants.AUTHORIZATION, "KakaoAK ${appKey}")
+                .addHeader(Constants.AUTHORIZATION, "KakaoAK $appKey")
                 .build()
         return chain.proceed(request)
     }

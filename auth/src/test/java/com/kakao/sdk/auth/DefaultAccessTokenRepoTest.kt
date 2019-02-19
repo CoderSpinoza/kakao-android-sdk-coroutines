@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
-import com.kakao.sdk.auth.DefaultAccessTokenRepo
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import org.junit.Before
 import org.junit.Test

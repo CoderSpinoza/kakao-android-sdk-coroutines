@@ -3,7 +3,6 @@ package com.kakao.sdk.network
 import android.app.Application
 import android.content.pm.PackageInfo
 import android.content.pm.Signature
-import android.content.pm.SigningInfo
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import com.kakao.sdk.common.Constants
@@ -14,14 +13,13 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowPackageManager
-
-import org.robolectric.Shadows.*
-import org.junit.jupiter.api.Assertions.*
-import org.robolectric.shadows.ShadowPackageParser
 import java.util.*
 
 /**

@@ -44,7 +44,7 @@ class ChatDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_detail, container, false)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(TalkViewModel::class.java)
         binding.talkViewModel = viewModel
         return binding.root
@@ -56,7 +56,7 @@ class ChatDetailFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 

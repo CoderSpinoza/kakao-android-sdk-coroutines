@@ -1,15 +1,12 @@
 package com.kakao.sdk.push
 
 import com.kakao.sdk.network.data.ApiFactory
-import com.kakao.sdk.network.data.KakaoConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.shadows.ShadowLog
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * @author kevin.kang. Created on 2018. 3. 23..

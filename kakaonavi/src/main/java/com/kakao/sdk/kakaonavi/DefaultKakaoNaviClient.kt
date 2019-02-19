@@ -3,7 +3,6 @@ package com.kakao.sdk.kakaonavi
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import com.kakao.sdk.common.ApplicationInfo
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility

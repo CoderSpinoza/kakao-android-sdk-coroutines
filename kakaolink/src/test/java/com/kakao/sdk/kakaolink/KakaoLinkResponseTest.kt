@@ -1,14 +1,12 @@
 package com.kakao.sdk.kakaolink
 
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
-import com.kakao.sdk.common.Utility
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Assertions.*
 import java.util.stream.Stream
 
 /**

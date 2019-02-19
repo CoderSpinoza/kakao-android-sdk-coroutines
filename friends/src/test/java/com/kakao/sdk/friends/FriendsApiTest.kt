@@ -1,11 +1,9 @@
 package com.kakao.sdk.friends
 
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.friends.entity.FriendsResponse
 import com.kakao.sdk.network.data.ApiFactory
-import com.kakao.sdk.network.data.KakaoConverterFactory
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -15,8 +13,6 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 

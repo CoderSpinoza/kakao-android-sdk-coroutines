@@ -2,7 +2,6 @@ package com.kakao.sdk.friends.entity
 
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
-import com.kakao.sdk.friends.entity.FriendRelation
 
 /**
  * @author kevin.kang. Created on 2018. 3. 22..

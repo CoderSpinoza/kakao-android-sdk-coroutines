@@ -3,8 +3,8 @@
           package="com.kakao.sdk.auth">
 
     <application>
-        <activity android:name="com.kakao.sdk.com.kakao.sdk.auth.presentation.AuthCodeCustomTabsActivity"/>
-        <activity android:name="com.kakao.sdk.com.kakao.sdk.auth.presentation.ScopeUpdateWebViewActivity"
+        <activity android:name="com.kakao.sdk.auth.presentation.AuthCodeCustomTabsActivity"/>
+        <activity android:name="com.kakao.sdk.auth.presentation.ScopeUpdateWebViewActivity"
                   android:launchMode="singleTop"
                   android:configChanges="orientation|screenSize"
                   android:windowSoftInputMode="adjustResize">

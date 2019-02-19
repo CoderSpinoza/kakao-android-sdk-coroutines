@@ -2,8 +2,6 @@ package com.kakao.sdk.kakaolink.entity
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import com.google.gson.annotations.SerializedName
-import com.kakao.sdk.kakaolink.Constants
 
 /**
  * @author kevin.kang. Created on 2018. 3. 22..

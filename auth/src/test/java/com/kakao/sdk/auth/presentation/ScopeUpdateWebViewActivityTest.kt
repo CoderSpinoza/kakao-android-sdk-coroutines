@@ -1,10 +1,8 @@
 package com.kakao.sdk.auth.presentation
 
 import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import android.os.*
-import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.test.core.app.ApplicationProvider
 import androidx.webkit.WebResourceErrorCompat
@@ -14,7 +12,6 @@ import com.kakao.sdk.auth.exception.AuthWebViewException
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kakao.sdk.kakaotalk.entity.Chat
 import com.kakao.sdk.sample.databinding.ItemChatBinding
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 /**
@@ -12,7 +13,7 @@ import io.reactivex.subjects.PublishSubject
  */
 class ChatAdapter(var chats: List<Chat>) : RecyclerView.Adapter<ChatHolder>() {
     private val clickSubject = PublishSubject.create<Chat>()
-    val clickEvents = clickSubject.hide()
+    val clickEvents: Observable<Chat> = clickSubject.hide()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
         val inflater = LayoutInflater.from(parent.context)

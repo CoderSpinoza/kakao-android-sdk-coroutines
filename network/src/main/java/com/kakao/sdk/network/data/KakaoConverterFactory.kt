@@ -1,7 +1,6 @@
 package com.kakao.sdk.network.data
 
 import android.net.Uri
-import com.google.gson.Gson
 import com.kakao.sdk.common.KakaoGsonFactory
 import retrofit2.Converter
 import retrofit2.Retrofit

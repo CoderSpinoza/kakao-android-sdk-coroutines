@@ -44,7 +44,7 @@ class UserFragment : Fragment() {
         val view = binding.root
         DataBindingUtil.inflate(inflater, R.layout.view_user, container, false) as ViewUserBinding
 
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         navigator = Navigator.instance
 

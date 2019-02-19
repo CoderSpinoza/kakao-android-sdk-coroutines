@@ -45,7 +45,7 @@ class FriendsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.friends_fragment, container, false)
                 as FriendsFragmentBinding
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         friendsAdapter = FriendsAdapter(listOf())
 
@@ -80,10 +80,6 @@ class FriendsFragment : Fragment() {
             (parentFragment as HostFragment).title = getString(R.string.friends)
         }
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

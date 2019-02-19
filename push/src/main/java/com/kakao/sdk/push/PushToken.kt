@@ -1,7 +1,6 @@
 package com.kakao.sdk.push
 
 import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
 
 /**
  * @author kevin.kang. Created on 2018. 3. 23..
