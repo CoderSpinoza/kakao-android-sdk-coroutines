@@ -1,15 +1,12 @@
 package com.kakao.sdk.auth.data
 
-import com.kakao.sdk.auth.AccessTokenRepo
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.auth.TestAccessTokenRepo
-import com.kakao.sdk.auth.TestAuthApiClient
+import com.google.gson.JsonObject
+import com.kakao.sdk.auth.*
 import com.kakao.sdk.auth.exception.AgeVerificationException
 import com.kakao.sdk.auth.exception.InvalidScopeException
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
 import com.kakao.sdk.network.ApiErrorCode
-import com.kakao.sdk.common.ApplicationInfo
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.data.ApiException
 import io.reactivex.Single
@@ -40,7 +37,9 @@ class ApiErrorInterceptorTest {
         val testToken = AccessToken(accessToken = "test_access_token", refreshToken = "test_refresh_token")
         accessTokenRepo = spy(TestAccessTokenRepo(testToken))
         authApiClient = spy(TestAuthApiClient())
-        interceptor = ApiErrorInterceptor(authApiClient, accessTokenRepo, ApplicationInfo("client_id", "individual", "key_hash", "client_secret"))
+        interceptor = ApiErrorInterceptor(authApiClient, accessTokenRepo,
+                TestApplicationInfo("client_id", "individual", "client_secret"),
+                TestContextInfo(kaHeader = "kaHeader", signingKeyHash = "key_hash", extras = JsonObject()))
     }
 
     @MethodSource("httpErrorProvider")

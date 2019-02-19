@@ -35,7 +35,6 @@ object Constants {
     const val PARAM = "param"
     const val APIVER = "apiver"
     const val APPKEY = "appkey"
-    const val EXTRAS = "extras"
 
     const val APIVER_10 = "1.0"
 

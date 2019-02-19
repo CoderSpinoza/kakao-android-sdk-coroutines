@@ -5,7 +5,10 @@ import android.content.pm.PackageInfo
 import android.content.pm.Signature
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
+import com.google.gson.JsonObject
 import com.kakao.sdk.common.Constants
+import com.kakao.sdk.common.ContextInfo
+import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.data.KakaoAgentInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -45,8 +48,15 @@ class KakaoAgentInterceptorTest {
         info.signatures = arrayOf(Signature("00000000"))
         shadowPackageManger.addPackage(info)
 
-        com.kakao.sdk.common.ApplicationProvider.application = application
-        interceptor = KakaoAgentInterceptor()
+        interceptor = KakaoAgentInterceptor(object : ContextInfo {
+            override val kaHeader: String
+                get() = Utility.getKAHeader(application)
+            override val signingKeyHash: String
+                get() = Utility.getKeyHash(application)
+            override val extras: JsonObject
+                get() = Utility.getExtras(application)
+
+        })
     }
 
     @Test

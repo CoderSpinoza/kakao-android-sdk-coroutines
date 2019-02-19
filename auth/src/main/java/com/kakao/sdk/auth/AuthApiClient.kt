@@ -1,7 +1,7 @@
 package com.kakao.sdk.auth
 
 import com.kakao.sdk.auth.model.AccessTokenResponse
-import com.kakao.sdk.common.ApplicationProvider
+import com.kakao.sdk.common.KakaoSdkProvider
 import com.kakao.sdk.common.Constants
 import com.kakao.sdk.common.Utility
 import io.reactivex.Single
@@ -20,11 +20,11 @@ interface AuthApiClient {
      * @return [Single] instance that will emit [AccessTokenResponse].
      */
     fun issueAccessToken(authCode: String,
-                         clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)!!,
-                         redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)),
+                         clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
+                         redirectUri: String = String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
                          approvalType: String = "individual",
-                         androidKeyHash: String = Utility.getKeyHash(ApplicationProvider.application),
-                         clientSecret: String? = Utility.getMetadata(ApplicationProvider.application, Constants.META_CLIENT_SECRET)
+                         androidKeyHash: String = KakaoSdkProvider.applicationContextInfo.signingKeyHash,
+                         clientSecret: String? = KakaoSdkProvider.applicationContextInfo.clientSecret
     ): Single<AccessTokenResponse>
 
     /**
@@ -35,10 +35,10 @@ interface AuthApiClient {
      * @return [Single] instance that will emit [AccessTokenResponse]
      */
     fun refreshAccessToken(refreshToken: String,
-                           clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)!!,
+                           clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
                            approvalType: String = "individual",
-                           androidKeyHash: String = Utility.getKeyHash(ApplicationProvider.application),
-                           clientSecret: String? = Utility.getMetadata(ApplicationProvider.application, Constants.META_CLIENT_SECRET)
+                           androidKeyHash: String = KakaoSdkProvider.applicationContextInfo.signingKeyHash,
+                           clientSecret: String? = KakaoSdkProvider.applicationContextInfo.clientSecret
     ): Single<AccessTokenResponse>
 
     companion object {

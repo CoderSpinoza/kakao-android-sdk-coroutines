@@ -8,8 +8,7 @@ import com.kakao.sdk.auth.exception.InvalidTokenException
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.model.MissingScopesErrorResponse
-import com.kakao.sdk.common.ApplicationInfo
-import com.kakao.sdk.common.KakaoGsonFactory
+import com.kakao.sdk.common.*
 import com.kakao.sdk.network.ApiErrorCode
 import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
@@ -24,7 +23,8 @@ import retrofit2.HttpException
  */
 class ApiErrorInterceptor(private val authApiClient: AuthApiClient = AuthApiClient.instance,
                           private val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance,
-                          private val appInfo: ApplicationInfo = ApplicationInfo()
+                          private val appInfo: ApplicationInfo = KakaoSdkProvider.applicationContextInfo,
+                          private val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo
 ) {
     fun <T> handleApiError(): SingleTransformer<T, T> {
         return SingleTransformer { it.onErrorResumeNext { Single.error(translateError(it)) }
@@ -47,7 +47,7 @@ class ApiErrorInterceptor(private val authApiClient: AuthApiClient = AuthApiClie
                         accessTokenRepo.observe().toFlowable(BackpressureStrategy.LATEST),
                         BiFunction { t1: Throwable, t2: AccessToken ->
                             if (t2.refreshToken != null && t1 is InvalidTokenException) {
-                                return@BiFunction authApiClient.refreshAccessToken(t2.refreshToken, appInfo.clientId, appInfo.approvalType, appInfo.androidKeyHash, appInfo.clientSecret)
+                                return@BiFunction authApiClient.refreshAccessToken(t2.refreshToken, appInfo.clientId, appInfo.approvalType, contextInfo.signingKeyHash, appInfo.clientSecret)
                             }
                             throw t1
                         })

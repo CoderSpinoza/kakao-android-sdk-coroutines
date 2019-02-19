@@ -16,13 +16,13 @@ interface KakaoNaviClient {
      */
     fun isKakaoNaviInstalled(context: Context): Boolean
 
-    fun shareDestinationIntent(context: Context, params: KakaoNaviParams): Intent
+    fun shareDestinationIntent(params: KakaoNaviParams): Intent
 
-    fun navigateIntent(context: Context, params: KakaoNaviParams): Intent
+    fun navigateIntent(params: KakaoNaviParams): Intent
 
-    fun shareDestinationUri(context: Context, params: KakaoNaviParams): Uri
+    fun shareDestinationUri(params: KakaoNaviParams): Uri
 
-    fun navigateUri(context: Context, params: KakaoNaviParams): Uri
+    fun navigateUri(params: KakaoNaviParams): Uri
 
     companion object {
         val instance: KakaoNaviClient by lazy { DefaultKakaoNaviClient() }

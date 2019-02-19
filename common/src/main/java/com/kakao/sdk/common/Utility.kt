@@ -61,18 +61,20 @@ object Utility {
         )
     }
 
-    fun getExtras(context: Context): JSONObject {
-        System.out.println(Utility.getKAHeader(context))
-        try {
-            val json = JSONObject()
-                    .put(Constants.APP_PACKAGE, context.packageName)
-                    .put(Constants.APP_KEY_HASH, Utility.getKeyHash(context))
-                    .put(Constants.KA, Utility.getKAHeader(context))
-            System.out.println(json.toString())
-            return json
-        } catch (e: JSONException) {
-            throw IllegalArgumentException("JSON parsing error while constructing extras string: $e")
-        }
+    fun getExtras(context: Context): JsonObject {
+        val jsonObject = JsonObject()
+        jsonObject.addProperty(Constants.APP_PACKAGE, context.packageName)
+        jsonObject.addProperty(Constants.APP_KEY_HASH, getKeyHash(context))
+        jsonObject.addProperty(Constants.KA, getKAHeader(context))
+        return jsonObject
+//        try {
+//            return JSONObject()
+//                    .put(Constants.APP_PACKAGE, context.packageName)
+//                    .put(Constants.APP_KEY_HASH, getKeyHash(context))
+//                    .put(Constants.KA, getKAHeader(context))
+//        } catch (e: JSONException) {
+//            throw IllegalArgumentException("JSON parsing error while constructing extras string: $e")
+//        }
     }
 
     fun getMetadata(context: Context, key: String): String? {

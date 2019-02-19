@@ -1,12 +1,9 @@
 package com.kakao.sdk.auth
 
-import android.content.Context
 import android.content.SharedPreferences
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
-import com.kakao.sdk.common.ApplicationProvider
-import com.kakao.sdk.common.Constants
-import com.kakao.sdk.common.Utility
+import com.kakao.sdk.common.KakaoSdkProvider
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
@@ -15,10 +12,9 @@ import java.util.*
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 27..
  */
-class DefaultAccessTokenRepo(val appCache: SharedPreferences = ApplicationProvider.application.getSharedPreferences(
-        Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY),
-        Context.MODE_PRIVATE
-)) : AccessTokenRepo {
+class DefaultAccessTokenRepo(val appCache: SharedPreferences =
+                                     KakaoSdkProvider.applicationContextInfo.sharedPreferences
+) : AccessTokenRepo {
     private val tokenSubject = BehaviorSubject.create<AccessToken>()
     val tokenUpdates: Observable<AccessToken> = tokenSubject.hide()
 

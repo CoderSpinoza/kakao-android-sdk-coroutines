@@ -30,8 +30,7 @@ class AppKeyInterceptorTest {
         bundle.putString(com.kakao.sdk.common.Constants.META_APP_KEY, "test_app_key")
         val application = ApplicationProvider.getApplicationContext<Application>()
         application.applicationInfo.metaData = bundle
-        com.kakao.sdk.common.ApplicationProvider.application = application
-        interceptor = AppKeyInterceptor()
+        interceptor = AppKeyInterceptor("test_app_key")
     }
 
     @Test

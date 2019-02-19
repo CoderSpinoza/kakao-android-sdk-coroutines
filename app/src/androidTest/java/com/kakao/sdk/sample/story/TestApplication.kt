@@ -3,7 +3,8 @@ package com.kakao.sdk.sample.story
 import android.app.Activity
 import android.app.Application
 import androidx.fragment.app.Fragment
-import com.kakao.sdk.common.ApplicationProvider
+import com.kakao.sdk.common.ApplicationContextInfo
+import com.kakao.sdk.common.KakaoSdkProvider
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -27,7 +28,9 @@ class TestApplication : Application(), HasActivityInjector, HasSupportFragmentIn
     }
     override fun onCreate() {
         super.onCreate()
-        ApplicationProvider.application = this
+        KakaoSdkProvider.applicationContextInfo =
+                ApplicationContextInfo(context = this, clientId = "dd4e9cb75815cbdf7d87ed721a659baf",
+                        clientSecret = "50LxgHsF3Q3ayNa3nJpTTMEfBR8KkY7X")
         component = DaggerTestApplicationComponent.create()
         component.inject(this)
     }

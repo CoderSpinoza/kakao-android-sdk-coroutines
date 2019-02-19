@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.*
 import androidx.test.core.app.ApplicationProvider
+import com.google.gson.JsonObject
 import com.kakao.sdk.common.ApplicationInfo
 import com.kakao.sdk.kakaonavi.entity.*
 import org.junit.Before
@@ -30,7 +31,9 @@ class KakaoNaviClientTest {
         context = ApplicationProvider.getApplicationContext<Context>()
         packageManager = context.packageManager
         shadow = Shadows.shadowOf(packageManager)
-        client = DefaultKakaoNaviClient(ApplicationInfo("client_id", "individual", "key_hash", "client_secret"))
+        client = DefaultKakaoNaviClient(
+                TestApplicationInfo("client_id", "individual", "client_secret"),
+                TestContextInfo("ka_header", "key_hash", JsonObject()))
     }
     @Test fun isKakaoNaviInstalled() {
         val intent = Intent(Intent.ACTION_MAIN).setPackage(Constants.NAVI_PACKAGE)
@@ -54,11 +57,11 @@ class KakaoNaviClientTest {
         info.signatures = arrayOf(Signature("00000000"))
         shadow.installPackage(info)
 
-        val uri = client.shareDestinationUri(context, KakaoNaviParams(
+        val uri = client.shareDestinationUri(KakaoNaviParams(
                 Destination("name", 30, 30),
                 NaviOptions(CoordType.WGS84, vehicleType = VehicleType.SECOND, rpOption = RpOption.FREE)
         ))
-        System.out.println(uri.getQueryParameter(Constants.EXTRAS))
+        System.out.println(uri.getQueryParameter(com.kakao.sdk.common.Constants.EXTRAS))
         System.out.println(uri.getQueryParameter(Constants.PARAM))
     }
 }
