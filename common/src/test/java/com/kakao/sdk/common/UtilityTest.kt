@@ -1,4 +1,4 @@
-package com.kakao.sdk.network
+package com.kakao.sdk.common
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
@@ -14,28 +14,28 @@ import java.util.stream.Stream
 class UtilityTest {
     @MethodSource("paramsProvider")
     @ParameterizedTest fun buildQuery(params: Map<String, String>) {
-        val query = com.kakao.sdk.common.Utility.buildQuery(params)
+        val query = Utility.buildQuery(params)
         assertNotNull(query)
     }
 
     @Nested
     inner class ParseQuery {
         @Test fun withNull() {
-            val params = com.kakao.sdk.common.Utility.parseQuery(null)
+            val params = Utility.parseQuery(null)
             assertEquals(0, params.size)
         }
 
         @Test fun withEmpty() {
-            val params = com.kakao.sdk.common.Utility.parseQuery("")
+            val params = Utility.parseQuery("")
         }
 
         @Test fun withOneParam() {
-            val params = com.kakao.sdk.common.Utility.parseQuery("key1=value1")
+            val params = Utility.parseQuery("key1=value1")
             assertEquals(1, params.size)
         }
 
         @Test fun withTwoParams() {
-            val params = com.kakao.sdk.common.Utility.parseQuery("key1=value1&key2=value2")
+            val params = Utility.parseQuery("key1=value1&key2=value2")
             assertEquals(2, params.size)
             assertEquals("value1", params["key1"])
             assertEquals("value2", params["key2"])

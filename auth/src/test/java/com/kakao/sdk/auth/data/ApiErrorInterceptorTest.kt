@@ -9,8 +9,8 @@ import com.kakao.sdk.auth.exception.InvalidScopeException
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
 import com.kakao.sdk.network.ApiErrorCode
-import com.kakao.sdk.network.ApplicationInfo
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.ApplicationInfo
+import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.data.ApiException
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver

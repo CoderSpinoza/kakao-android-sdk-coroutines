@@ -9,8 +9,8 @@ import com.kakao.sdk.auth.exception.InvalidTokenException
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.model.MissingScopesErrorResponse
+import com.kakao.sdk.common.ApplicationInfo
 import com.kakao.sdk.network.ApiErrorCode
-import com.kakao.sdk.network.ApplicationInfo
 import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
 import io.reactivex.*

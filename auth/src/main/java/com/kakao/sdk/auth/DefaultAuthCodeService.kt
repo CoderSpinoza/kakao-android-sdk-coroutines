@@ -66,7 +66,7 @@ class DefaultAuthCodeService(private val tokenObservable: Observable<AccessToken
         if (refreshToken != null) {
             headers.putString(Constants.RT, refreshToken)
         }
-        headers.putString(com.kakao.sdk.network.Constants.KA, kaHeader)
+        headers.putString(com.kakao.sdk.common.Constants.KA, kaHeader)
         return headers
     }
 

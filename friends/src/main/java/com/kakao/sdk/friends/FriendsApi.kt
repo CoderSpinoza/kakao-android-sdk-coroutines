@@ -10,13 +10,13 @@ import retrofit2.http.Query
  * @author kevin.kang. Created on 2018. 3. 22..
  */
 interface FriendsApi {
-    @GET("v1/friends")
-    fun friends(@Query("friend_type") friendType: FriendType? = null,
-                @Query("friend_filter") friendFilter: FriendFilter? = null,
-                @Query("friend_order") friendOrder: FriendOrder? = null,
-                @Query("secure_resource") secureResource: Boolean? = null,
-                @Query("offset") offset: Int? = null,
-                @Query("limit") limit: Int? = null,
-                @Query("order") order: String? = null,
-                @Query("url") url: String? = null): Single<FriendsResponse>
+@GET(Constants.FRIENDS_V1_PATH)
+    fun friends(@Query(Constants.FRIEND_TYPE) friendType: FriendType? = null,
+                @Query(Constants.FRIEND_FILTER) friendFilter: FriendFilter? = null,
+                @Query(Constants.FRIEND_ORDER) friendOrder: FriendOrder? = null,
+                @Query(com.kakao.sdk.auth.Constants.SECURE_RESOURCE) secureResource: Boolean? = null,
+                @Query(Constants.OFFSET) offset: Int? = null,
+                @Query(Constants.LIMIT) limit: Int? = null,
+                @Query(Constants.ORDER) order: String? = null,
+                @Query(Constants.URL) url: String? = null): Single<FriendsResponse>
 }

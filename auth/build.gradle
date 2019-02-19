@@ -2,8 +2,6 @@ apply from: "$rootDir/libraries.gradle"
 
 dependencies {
     api project(':network')
-    implementation "androidx.browser:browser:1.0.0"
-    implementation "androidx.webkit:webkit:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
 }
 

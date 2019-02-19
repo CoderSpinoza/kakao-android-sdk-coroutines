@@ -1,9 +1,9 @@
 package com.kakao.sdk.auth
 
 import com.kakao.sdk.auth.model.AccessTokenResponse
-import com.kakao.sdk.network.ApplicationProvider
-import com.kakao.sdk.network.Constants
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.ApplicationProvider
+import com.kakao.sdk.common.Constants
+import com.kakao.sdk.common.Utility
 import io.reactivex.Single
 
 /**

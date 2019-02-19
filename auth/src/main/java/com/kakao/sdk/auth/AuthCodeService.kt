@@ -1,9 +1,9 @@
 package com.kakao.sdk.auth
 
 import android.content.Context
-import com.kakao.sdk.network.ApplicationProvider
-import com.kakao.sdk.network.Constants
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.ApplicationProvider
+import com.kakao.sdk.common.Constants
+import com.kakao.sdk.common.Utility
 import io.reactivex.Single
 
 /**
@@ -21,7 +21,7 @@ interface AuthCodeService {
                         clientId: String = Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)!!,
                         redirectUri: String = String.format("kakao%s://oauth", Utility.getMetadata(ApplicationProvider.application, Constants.META_APP_KEY)),
                         approvalType: String = "individual",
-                        kaHeader: String = Utility.getKAHeader(ApplicationProvider.application)
+                        kaHeader: String = Utility.getKAHeader(com.kakao.sdk.common.ApplicationProvider.application)
     )
 
     /**

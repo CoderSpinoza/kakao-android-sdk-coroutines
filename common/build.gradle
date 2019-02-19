@@ -6,3 +6,9 @@ dependencies {
     api "androidx.browser:browser:1.0.0"
     api "androidx.webkit:webkit:1.0.0"
 }
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}

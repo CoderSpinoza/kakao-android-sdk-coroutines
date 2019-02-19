@@ -3,7 +3,7 @@ package com.kakao.sdk.sample
 import android.app.Activity
 import android.app.Application
 import androidx.fragment.app.Fragment
-import com.kakao.sdk.network.ApplicationProvider
+import com.kakao.sdk.common.ApplicationProvider
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector

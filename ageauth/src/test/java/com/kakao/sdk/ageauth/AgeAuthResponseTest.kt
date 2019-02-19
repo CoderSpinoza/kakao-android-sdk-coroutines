@@ -2,7 +2,7 @@ package com.kakao.sdk.ageauth
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.Utility
 import com.kakao.sdk.ageauth.entity.AgeAuthResponse
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

@@ -16,7 +16,6 @@ object Constants {
     const val ANDROID_PKG = "android_pkg"
     const val APP_VER = "app_ver"
     const val KAKAO_AK = "KakaoAK"
-    const val BEARER = "Bearer"
 
     const val APP_PACKAGE = "appPkg"
     const val KA = "KA"
