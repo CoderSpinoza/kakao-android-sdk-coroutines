@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName
 /**
  * @author kevin.kang. Created on 2018. 3. 22..
  */
-data class FriendsResponse(@SerializedName("total_count") val totalCount: Int,
+data class FriendsResponse(val totalCount: Int,
                            @SerializedName("elements") val friends: List<Friend>,
-                           @SerializedName("before_url") val beforeUrl: String?,
-                           @SerializedName("after_url") val afterUrl: String?,
-                           @SerializedName("result_id") val resultId: String) {
+                           val beforeUrl: String?,
+                           val afterUrl: String?,
+                           val resultId: String) {
     override fun toString(): String {
         return GsonBuilder().setPrettyPrinting().create().toJson(this)
     }

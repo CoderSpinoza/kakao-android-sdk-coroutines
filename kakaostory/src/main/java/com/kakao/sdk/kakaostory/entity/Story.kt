@@ -8,9 +8,9 @@ import com.google.gson.annotations.SerializedName
  */
 data class Story(val id: String,
                  val url: String,
-                 @SerializedName("media_type") val mediaType: String,
-                 @SerializedName("created_at") val createdAt: String,
-                 @SerializedName("comment_count") val commentCount: String,
+                 val mediaType: String,
+                 val createdAt: String,
+                 val commentCount: String,
                  @SerializedName("like_count") val likeCount: String,
                  val content: String,
                  val permission: String,

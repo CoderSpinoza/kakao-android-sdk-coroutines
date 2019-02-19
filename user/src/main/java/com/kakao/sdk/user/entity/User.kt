@@ -8,10 +8,10 @@ import com.kakao.sdk.auth.Constants
  * @author kevin.kang. Created on 2018. 3. 24..
  */
 data class User(val id: Long,
-                @SerializedName(Constants.HAS_SIGNED_UP)  val hasSignedUp: Boolean = true,
+                val hasSignedUp: Boolean = true,
                 val properties: Map<String, String>,
                 @SerializedName(Constants.FOR_PARTNER) val forPartners: Map<String, String>,
-                @SerializedName(Constants.KAKAO_ACCOUNT) val kakaoAccount: UserAccount) {
+                val kakaoAccount: UserAccount) {
     override fun toString(): String {
         return GsonBuilder().setPrettyPrinting().create().toJson(this)
     }

@@ -1,4 +1,4 @@
-package com.kakao.sdk.auth.domain
+package com.kakao.sdk.auth.entity
 
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.auth.model.AccessTokenResponse

@@ -9,11 +9,11 @@ import com.kakao.sdk.friends.entity.FriendRelation
  */
 data class Friend(val uuid: String,
                   @SerializedName("id") val userId: Long,
-                  @SerializedName("service_user_id") val serviceUserId: Long,
+                  val serviceUserId: Long,
                   @SerializedName("app_registered") val isAppRegistered: Boolean,
-                  @SerializedName("profile_nickname") val profileNickname: String,
-                  @SerializedName("profile_thumbnail_image") val profileThumbnailImage: String,
-                  @SerializedName("talk_os") val talkOs: String,
+                  val profileNickname: String,
+                  val profileThumbnailImage: String,
+                  val talkOs: String,
                   @SerializedName("allowed_msg") val isAllowedMsg: Boolean,
                   val relation: FriendRelation) {
 
