@@ -1,6 +1,5 @@
 package com.kakao.sdk.auth
 
-import com.google.gson.Gson
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.model.AuthErrorResponse

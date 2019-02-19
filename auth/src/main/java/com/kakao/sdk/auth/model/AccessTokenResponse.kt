@@ -7,11 +7,11 @@ import com.kakao.sdk.auth.Constants
 /**
  * @author kevin.kang. Created on 2018. 3. 24..
  */
-data class AccessTokenResponse(@SerializedName(Constants.ACCESS_TOKEN) val accessToken: String,
-                               @SerializedName(Constants.REFRESH_TOKEN) val refreshToken: String? = null,
+data class AccessTokenResponse(val accessToken: String,
+                               val refreshToken: String? = null,
                                @SerializedName(Constants.EXPIRES_IN) val accessTokenExpiresIn: Long,
-                               @SerializedName(Constants.REFRESH_TOKEN_EXPIRES_IN) val refreshTokenExpiresIn: Long?,
-                               @SerializedName(Constants.TOKEN_TYPE) val tokenType: String,
+                               val refreshTokenExpiresIn: Long?,
+                               val tokenType: String,
                                @SerializedName(Constants.SCOPE) val scopes: String? = null) {
     override fun toString(): String {
         return GsonBuilder().setPrettyPrinting().create().toJson(this)

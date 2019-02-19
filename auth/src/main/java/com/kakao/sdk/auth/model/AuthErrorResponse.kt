@@ -1,7 +1,6 @@
 package com.kakao.sdk.auth.model
 
 import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
 
 /**
  * 카카오 OAuth API 호출 시 에러 응답
@@ -13,8 +12,7 @@ import com.google.gson.annotations.SerializedName
  *
  * @author kevin.kang. Created on 2018. 5. 5..
  */
-data class AuthErrorResponse(@SerializedName("error") val error: String?,
-                        @SerializedName("error_description") val errorDescription: String?) {
+data class AuthErrorResponse(val error: String?, val errorDescription: String?) {
     override fun toString(): String {
         return GsonBuilder().setPrettyPrinting().create().toJson(this)
     }

@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName
 /**
  * @author kevin.kang. Created on 2018. 4. 3..
  */
-class MissingScopesErrorResponse(@SerializedName("code") val code: Int,
+class MissingScopesErrorResponse(val code: Int,
                                  @SerializedName("msg") val message: String,
-                                 @SerializedName("api_type") val apiType: String,
-                                 @SerializedName("required_scopes") val requiredScopes: List<String>,
-                                 @SerializedName("allowed_scopes") val allowedScopes: List<String>) {
+                                 val apiType: String,
+                                 val requiredScopes: List<String>,
+                                 val allowedScopes: List<String>) {
     override fun toString(): String {
         return GsonBuilder().setPrettyPrinting().create().toJson(this)
     }

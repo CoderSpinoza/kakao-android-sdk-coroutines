@@ -1,6 +1,5 @@
 package com.kakao.sdk.auth.network
 
-import com.google.gson.Gson
 import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.exception.AgeVerificationException
