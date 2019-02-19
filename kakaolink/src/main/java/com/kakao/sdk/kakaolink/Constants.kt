@@ -19,4 +19,13 @@ object Constants {
     const val TEMPLATE_MSG = "template_msg"
     const val WARNING_MSG = "warning_msg"
     const val ARGUMENT_MSG = "argument_msg"
+
+    const val LINK_SCHEME = "kakaolink"
+    const val LINK_AUTHORITY = "send"
+    const val LINKVER = "linkver"
+    const val TEMPLATE_JSON = "template_json"
+    const val APP_KEY = "appkey"
+    const val APP_VER = "appver"
+
+    const val LINKVER_40 = "4.0"
 }
