@@ -22,7 +22,7 @@
     "${LIKE_COUNT}": "100",
     "${FIRST_BUTTON_WEB_URL}": "http://dev.kakao.com"
   },
-  "template_json": {
+  "template_msg": {
     "P": {
       "TP": "Feed",
       "ME": "${ME}",

@@ -27,7 +27,7 @@
     "${FIRST_BUTTON_WEB_URL}": "http://dev.kakao.com",
     "${SECOND_BUTTON_ANDROID_EXECUTION_URL}": "kakaotalk://map?lat=37.4020952991&lng=127.1086369463&t=카카오&a=경기 성남시 분당구 판교역로 235 에이치스퀘어 N동 7층"
   },
-  "template_json": {
+  "template_msg": {
     "P": {
       "TP": "Feed",
       "ME": "${ME}",

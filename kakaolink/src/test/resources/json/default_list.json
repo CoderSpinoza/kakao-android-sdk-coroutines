@@ -33,7 +33,7 @@
     "${THIRD_WEB_URL}": "https://devtalk.kakao.com",
     "${HEADER_TITLE}": "카카오 디벨로퍼"
   },
-  "template_json": {
+  "template_msg": {
     "P": {
       "TP": "List",
       "ME": "${ME}",
