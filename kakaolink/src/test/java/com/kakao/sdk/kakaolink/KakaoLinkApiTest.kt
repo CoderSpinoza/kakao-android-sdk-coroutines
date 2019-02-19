@@ -1,11 +1,12 @@
-package com.kakao.sdk.kakaolink.domain
+package com.kakao.sdk.kakaolink
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.kakao.sdk.kakaolink.Constants
-import com.kakao.sdk.kakaolink.KakaoLinkApi
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.message.template.FeedTemplate
+import com.kakao.sdk.message.template.entity.ContentObject
+import com.kakao.sdk.message.template.entity.LinkObject
+import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.data.ApiFactory
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient
@@ -17,6 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import java.net.URLDecoder
 import java.util.stream.Stream
 
@@ -40,7 +42,7 @@ class KakaoLinkApiTest {
     @ParameterizedTest fun validate(templateId: String, templateArgs: Map<String, String>?) {
         api.validateCustom(templateId, templateArgs).subscribe(TestObserver<KakaoLinkResponse>())
         val request = server.takeRequest()
-        val params = Utility.parseQuery(request.requestUrl.query())
+        val params = com.kakao.sdk.common.Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("4.0", params[Constants.LINK_VER])
         assertEquals(templateId, params[Constants.TEMPLATE_ID])
@@ -58,11 +60,24 @@ class KakaoLinkApiTest {
         }
     }
 
+    @Test fun default() {
+        val template = FeedTemplate(
+                ContentObject("title", "imageUrl", LinkObject("webUrl"))
+        )
+        api.validateDefault(template).subscribe(TestObserver<KakaoLinkResponse>())
+        val request = server.takeRequest()
+        val params = com.kakao.sdk.common.Utility.parseQuery(request.requestUrl.query())
+
+        assertEquals("4.0", params[Constants.LINK_VER])
+        assertNotNull(params[Constants.TEMPLATE_OBJECT])
+        System.out.println(params)
+    }
+
     @MethodSource("scrapProvider")
     @ParameterizedTest fun scrap(url: String, templateId: String, templateArgs: Map<String, String>?) {
         api.validateScrap(url, templateId, templateArgs).subscribe(TestObserver<KakaoLinkResponse>())
         val request = server.takeRequest()
-        val params = Utility.parseQuery(request.requestUrl.query())
+        val params = com.kakao.sdk.common.Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("4.0", params[Constants.LINK_VER])
         assertEquals(url, params[Constants.REQUEST_URL])

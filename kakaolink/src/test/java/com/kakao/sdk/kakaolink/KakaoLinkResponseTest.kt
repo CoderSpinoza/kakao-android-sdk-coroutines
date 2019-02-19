@@ -1,10 +1,9 @@
-package com.kakao.sdk.kakaolink.data
+package com.kakao.sdk.kakaolink
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.kakao.sdk.kakaolink.Constants
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
-import com.kakao.sdk.network.Utility
+import com.kakao.sdk.common.Utility
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -28,7 +27,7 @@ class KakaoLinkResponseTest {
         @JvmStatic fun responseProvider(): Stream<Arguments> {
             return paths
                     .map { "json/$it.json" }
-                    .map { Utility.getJson(it) }
+                    .map { com.kakao.sdk.common.Utility.getJson(it) }
                     .map { it to Gson().fromJson(it, JsonObject::class.java) }
                     .map { Arguments.of(it.first, it.second) }
                     .stream()

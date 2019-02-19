@@ -13,6 +13,7 @@ object Constants {
 
     const val TEMPLATE_ID = "template_id"
     const val TEMPLATE_ARGS = "template_args"
+    const val TEMPLATE_OBJECT = "template_object"
     const val REQUEST_URL = "request_url"
 
     const val TEMPLATE_MSG = "template_msg"

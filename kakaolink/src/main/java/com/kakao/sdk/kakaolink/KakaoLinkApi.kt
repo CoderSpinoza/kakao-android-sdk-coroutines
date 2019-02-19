@@ -1,6 +1,7 @@
 package com.kakao.sdk.kakaolink
 
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
+import com.kakao.sdk.message.template.DefaultTemplate
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,7 +15,7 @@ interface KakaoLinkApi {
                        @Query(Constants.TEMPLATE_ARGS) templateArgs: Map<String, String>? = null): Single<KakaoLinkResponse>
 
     @GET("${Constants.VALIDATE_DEFAULT_PATH}?link_ver=4.0")
-    fun validateDefault(): Single<KakaoLinkResponse>
+    fun validateDefault(@Query(Constants.TEMPLATE_OBJECT) templateObject: DefaultTemplate): Single<KakaoLinkResponse>
 
     @GET("${Constants.VALIDATE_SCRAP_PATH}?link_ver=4.0")
     fun validateScrap(@Query(Constants.REQUEST_URL) url: String,
