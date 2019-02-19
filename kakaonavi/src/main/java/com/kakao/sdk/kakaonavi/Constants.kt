@@ -36,4 +36,10 @@ object Constants {
     const val APIVER = "apiver"
     const val APPKEY = "appkey"
     const val EXTRAS = "extras"
+
+    const val APIVER_10 = "1.0"
+
+    const val SHARE_POI = "sharePoi"
+    const val NAVIGATE = "navigate"
+    const val NAVI_WEB_HOST = "kakaonavi-wguide.kakao.com"
 }

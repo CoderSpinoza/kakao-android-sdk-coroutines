@@ -14,16 +14,16 @@ import com.kakao.sdk.kakaonavi.entity.KakaoNaviParams
  */
 class DefaultKakaoNaviClient(private val applicationInfo: ApplicationInfo = ApplicationInfo()): KakaoNaviClient {
     override fun shareDestinationUri(context: Context, params: KakaoNaviParams): Uri =
-            baseUriBuilder(context, params).path("sharePoi.html").build()
+            baseUriBuilder(context, params).path("${Constants.SHARE_POI}.html").build()
 
     override fun navigateUri(context: Context, params: KakaoNaviParams): Uri =
-            baseUriBuilder(context, params).path("navigate.html").build()
+            baseUriBuilder(context, params).path("${Constants.NAVIGATE}.html").build()
 
     private fun baseUriBuilder(context: Context, params: KakaoNaviParams): Uri.Builder = Uri.Builder()
             .scheme(Constants.NAVI_WEB_SCHEME)
-            .authority("kakaonavi-wguide.kakao.com")
+            .authority(Constants.NAVI_WEB_HOST)
             .appendQueryParameter(Constants.PARAM, KakaoGsonFactory.base.toJson(params))
-            .appendQueryParameter(Constants.APIVER, "1.0")
+            .appendQueryParameter(Constants.APIVER, Constants.APIVER_10)
             .appendQueryParameter(Constants.APPKEY, applicationInfo.clientId)
             .appendQueryParameter(Constants.EXTRAS, Utility.getExtras(context).toString())
 
@@ -33,15 +33,13 @@ class DefaultKakaoNaviClient(private val applicationInfo: ApplicationInfo = Appl
 
     override fun shareDestinationIntent(context: Context, params: KakaoNaviParams): Intent {
         val uri = baseUriBuilder(context, params).scheme(Constants.NAVI_SCHEME)
-                .authority("sharePoi").build()
-        Log.e("uri", uri.toString())
+                .authority(Constants.SHARE_POI).build()
         return Intent(Intent.ACTION_VIEW, uri)
     }
 
     override fun navigateIntent(context: Context, params: KakaoNaviParams): Intent {
         val uri = baseUriBuilder(context, params).scheme(Constants.NAVI_SCHEME)
-                .authority("navigate").build()
-        Log.e("uri", uri.toString())
+                .authority(Constants.NAVIGATE).build()
         return Intent(Intent.ACTION_VIEW, uri)
     }
 }

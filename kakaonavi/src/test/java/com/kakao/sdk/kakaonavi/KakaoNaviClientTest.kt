@@ -55,10 +55,9 @@ class KakaoNaviClientTest {
         shadow.installPackage(info)
 
         val uri = client.shareDestinationUri(context, KakaoNaviParams(
-                Destination("name", 30.0, 30.0),
-                NaviOptions(CoordType.WGS84, vehicleType = VehicleType.SECOND)
+                Destination("name", 30, 30),
+                NaviOptions(CoordType.WGS84, vehicleType = VehicleType.SECOND, rpOption = RpOption.FREE)
         ))
-
         System.out.println(uri.getQueryParameter(Constants.EXTRAS))
         System.out.println(uri.getQueryParameter(Constants.PARAM))
     }
