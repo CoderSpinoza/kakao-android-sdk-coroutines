@@ -6,7 +6,7 @@ import com.kakao.sdk.common.Utility
 import com.kakao.sdk.message.template.FeedTemplate
 import com.kakao.sdk.message.template.entity.ContentObject
 import com.kakao.sdk.message.template.entity.LinkObject
-import com.kakao.sdk.network.data.ApiFactory
+import com.kakao.sdk.network.ApiFactory
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

@@ -4,7 +4,7 @@ import com.google.gson.JsonObject
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
-import com.kakao.sdk.network.data.ApiFactory
+import com.kakao.sdk.network.ApiFactory
 import com.kakao.sdk.user.entity.AccessTokenInfo
 import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.entity.UserIdResponse

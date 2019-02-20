@@ -1,7 +1,9 @@
-package com.kakao.sdk.network.data
+package com.kakao.sdk.network
 
 import com.kakao.sdk.common.KakaoGsonFactory
-import com.kakao.sdk.network.Constants
+import com.kakao.sdk.network.data.AppKeyInterceptor
+import com.kakao.sdk.network.data.KakaoAgentInterceptor
+import com.kakao.sdk.network.data.KakaoConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

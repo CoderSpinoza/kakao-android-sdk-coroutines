@@ -5,7 +5,7 @@ import android.net.Uri
 import com.kakao.sdk.common.ContextInfo
 import com.kakao.sdk.common.KakaoSdkProvider
 import com.kakao.sdk.message.template.DefaultTemplate
-import com.kakao.sdk.network.data.ApiSingleton
+import com.kakao.sdk.network.ApiSingleton
 import io.reactivex.Single
 
 /**

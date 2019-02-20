@@ -4,7 +4,7 @@ import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.AuthApi
 import com.kakao.sdk.common.Utility
-import com.kakao.sdk.network.data.ApiFactory
+import com.kakao.sdk.network.ApiFactory
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse

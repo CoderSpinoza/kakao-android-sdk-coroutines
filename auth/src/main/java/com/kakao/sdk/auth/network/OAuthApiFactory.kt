@@ -1,7 +1,7 @@
 package com.kakao.sdk.auth.network
 
 import com.kakao.sdk.network.Constants
-import com.kakao.sdk.network.data.ApiFactory
+import com.kakao.sdk.network.ApiFactory
 import com.kakao.sdk.network.data.AppKeyInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

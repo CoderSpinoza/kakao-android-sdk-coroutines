@@ -7,7 +7,7 @@ import com.kakao.sdk.kakaotalk.Constants
 import com.kakao.sdk.kakaotalk.TalkApi
 import com.kakao.sdk.kakaotalk.entity.ChatListResponse
 import com.kakao.sdk.kakaotalk.entity.TalkProfile
-import com.kakao.sdk.network.data.ApiFactory
+import com.kakao.sdk.network.ApiFactory
 import io.reactivex.observers.TestObserver
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
