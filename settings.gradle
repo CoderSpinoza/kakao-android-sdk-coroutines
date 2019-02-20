@@ -1,1 +1,1 @@
-include ':app', ':auth', ':network', ':kakaotalk', ':kakaostory', ':kakaolink', ':message-template', ':friends', ':push', ':kakaonavi', ':ageauth', ':user', ':common'
+include ':app', ':auth', ':network', ':kakaotalk', ':kakaostory', ':kakaolink', ':message-template', ':friends', ':kakaonavi', ':user', ':common'
