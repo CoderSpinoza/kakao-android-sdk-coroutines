@@ -7,6 +7,10 @@ import com.kakao.sdk.message.template.entity.ContentObject
 import com.kakao.sdk.message.template.entity.SocialObject
 
 /**
+ * 피드 기본 템플릿.
+ *
+ * Feed default template.
+ *
  * @author kevin.kang. Created on 2018. 3. 22..
  */
 open class FeedTemplate(@SerializedName(Constants.CONTENT) open val content: ContentObject,

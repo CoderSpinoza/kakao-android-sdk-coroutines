@@ -28,8 +28,7 @@ class ApiErrorInterceptor(private val authApiClient: AuthApiClient = AuthApiClie
 ) {
     fun <T> handleApiError(): SingleTransformer<T, T> {
         return SingleTransformer { it.onErrorResumeNext { Single.error(translateError(it)) }
-                .retryWhen {
-                    refreshAccessToken(it) }
+                .retryWhen { refreshAccessToken(it) }
                 .doOnError { if (it is InvalidTokenException) accessTokenRepo.clearCache() }
         }
     }

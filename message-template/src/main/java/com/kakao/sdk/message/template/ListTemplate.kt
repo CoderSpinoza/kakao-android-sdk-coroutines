@@ -5,6 +5,13 @@ import com.kakao.sdk.message.template.entity.ButtonObject
 import com.kakao.sdk.message.template.entity.ContentObject
 import com.kakao.sdk.message.template.entity.LinkObject
 
+/**
+ * 리스트 기본 템플릿.
+ *
+ * List default template.
+ *
+ * @author kevin.kang.
+ */
 data class ListTemplate(@SerializedName(Constants.HEADER_TITLE) val headerTitle: String,
                         @SerializedName(Constants.HEADER_LINK) val headerLink: LinkObject,
                         @SerializedName(Constants.CONTENTS) val contents: List<ContentObject>? = mutableListOf(),
