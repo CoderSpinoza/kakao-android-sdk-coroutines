@@ -9,17 +9,17 @@ import io.reactivex.Single
  */
 interface KakaoLinkClient {
 
-    fun isKakaoLinkAvailable(): Boolean
+    suspend fun isKakaoLinkAvailable(): Boolean
 
-    fun customTemplateIntent(templateId: String,
+    suspend fun customTemplateIntent(templateId: String,
                              templateArgs: Map<String, String>? = null,
-                             serverCallbackArgs: Map<String, String> = mapOf()): Single<Intent>
+                             serverCallbackArgs: Map<String, String> = mapOf()): Intent
 
-    fun defaultTemplateIntent(defaultTemplate: DefaultTemplate,
-                              serverCallbackArgs: Map<String, String>? = null): Single<Intent>
+    suspend fun defaultTemplateIntent(defaultTemplate: DefaultTemplate,
+                              serverCallbackArgs: Map<String, String>? = null): Intent
 
-    fun scrapTemplateIntent(url: String,
+    suspend fun scrapTemplateIntent(url: String,
                             templateId: String? = null,
                             templateArgs: Map<String, String>? = null,
-                            serverCallbackArgs: Map<String, String>? = null): Single<Intent>
+                            serverCallbackArgs: Map<String, String>? = null): Intent
 }

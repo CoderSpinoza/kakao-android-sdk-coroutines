@@ -2,19 +2,15 @@ package com.kakao.sdk.friends
 
 import com.google.gson.JsonObject
 import com.kakao.sdk.common.KakaoGsonFactory
-import com.kakao.sdk.friends.entity.FriendsResponse
 import com.kakao.sdk.network.ApiFactory
-import io.reactivex.observers.TestObserver
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.*
 import retrofit2.Retrofit
 import java.io.File
-import java.util.concurrent.TimeUnit
 
 /**
  * @author kevin.kang. Created on 2018. 3. 23..
@@ -42,19 +38,15 @@ class FriendsApiTest {
             val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
-            val observer = TestObserver<FriendsResponse>()
 
-            api.friends().subscribe(observer)
-            observer.awaitTerminalEvent(1, TimeUnit.SECONDS)
-            observer.assertNoErrors()
-            observer.assertValueCount(1)
 
-            observer.assertValue {
-                expected["total_count"].asInt == it.totalCount
-                        && expected["elements"].asJsonArray.size() == it.friends.size
-                        && expected["result_id"].asString == it.resultId
-                        && it.beforeUrl == null
-                        && expected["after_url"].asString == it.afterUrl
+            runBlocking {
+                val friendsResponse = api.friends().await()
+                assertEquals(expected["total_count"].asInt, friendsResponse.totalCount)
+                assertEquals(expected["elements"].asJsonArray.size(), friendsResponse.friends.size)
+                assertEquals(expected["result_id"].asString, friendsResponse.resultId)
+                assertNull(friendsResponse.beforeUrl)
+                assertEquals(expected["after_url"].asString, friendsResponse.afterUrl)
             }
         }
     }

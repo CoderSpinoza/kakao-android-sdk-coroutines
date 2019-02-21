@@ -131,16 +131,16 @@ class StoryFragment : Fragment(), LifecycleOwner {
     }
 
     fun requestStoryPermission(scopes: List<String>) {
-        val disposable = AuthCodeService.instance.requestAuthCode(activity!!, scopes, "individual")
-                .observeOn(Schedulers.io())
-                .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            binding.storyViewModel?.clearRequiredScopes()
-                            binding.storyViewModel?.getMyStories()
-                        },
-                        { Log.e("update scope", "failed")})
+//        val disposable = AuthCodeService.instance.requestAuthCode(activity!!, scopes, "individual")
+//                .observeOn(Schedulers.io())
+//                .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(
+//                        {
+//                            binding.storyViewModel?.clearRequiredScopes()
+//                            binding.storyViewModel?.getMyStories()
+//                        },
+//                        { Log.e("update scope", "failed")})
     }
 
     fun goToAddStory() {

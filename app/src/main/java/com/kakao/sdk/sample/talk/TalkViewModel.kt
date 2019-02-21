@@ -6,7 +6,10 @@ import com.kakao.sdk.kakaotalk.TalkApiClient
 import com.kakao.sdk.kakaotalk.entity.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
 import com.kakao.sdk.auth.exception.InvalidScopeException
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 /**
@@ -24,18 +27,17 @@ open class TalkViewModel @Inject constructor(private val apiClient: TalkApiClien
     fun onDestroy() {}
 
     fun loadChats(filter: ChatFilter) {
-        val disposable = apiClient.chatList(filter = filter)
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { response -> chats.postValue(response.chatList)},
-                        {
-                            if (it is InvalidScopeException) {
-                                requiredScopes.postValue(it.errorResponse.requiredScopes)
-                            } else {
-                                chatsError.postValue(it)
-                            }
-                        }
-                )
+        GlobalScope.launch {
+            try {
+                val response = apiClient.chatList(filter = filter)
+                chats.postValue(response.chatList)
+            } catch (e: InvalidScopeException) {
+                requiredScopes.postValue(e.errorResponse.requiredScopes)
+            } catch (e: RuntimeException) {
+                chatsError.postValue(e)
+            }
+
+        }
     }
 
     fun selectChat(chat: Chat) {

@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.kakao.sdk.kakaostory.StoryApiClient
 import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.auth.exception.InvalidScopeException
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 /**
@@ -20,34 +21,31 @@ open class StoryViewModel @Inject constructor(private val storyApiClient: StoryA
     val selectedStory = MutableLiveData<Story>()
 
     fun getMyStories() {
-        val disposable = storyApiClient.isStoryUser()
-                .doOnSuccess { isStoryUser.postValue(it.isStoryUser) }
-                .map { response ->
-                    if (response.isStoryUser) {
-                        return@map response
-                    } else {
-                        return@map Single.error<Boolean>(RuntimeException("Not a story user"))
-                    }
+
+        GlobalScope.launch {
+            try {
+                val response = storyApiClient.isStoryUser()
+                isStoryUser.postValue(response.isStoryUser)
+                if (response.isStoryUser) {
+                    val storiesResponse = storyApiClient.myStories()
+                    stories.postValue(storiesResponse)
                 }
-                .flatMap { storyApiClient.myStories() }
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { response ->
-                            stories.postValue(response)
-                        },
-                        { t ->
-                            if (t is InvalidScopeException) {
-                                requiredScopes.postValue(t.errorResponse.requiredScopes)
-                            }
-                        }
-                )
+            } catch (e: InvalidScopeException) {
+                requiredScopes.postValue(e.errorResponse.requiredScopes)
+            }
+
+        }
     }
 
     fun getStory(storyId: String) {
-        val disposable = storyApiClient.myStory(storyId)
-                .subscribeOn(Schedulers.io())
-                .subscribe({ story -> selectedStory.postValue(story) },
-                        { error -> Log.e("getStory", error.toString())})
+        GlobalScope.launch {
+            try {
+                val story = storyApiClient.myStory(storyId)
+                selectedStory.postValue(story)
+            } catch (e: RuntimeException) {
+                Log.e("getStory", e.toString())
+            }
+        }
     }
 
     fun selectStory(story: Story) {

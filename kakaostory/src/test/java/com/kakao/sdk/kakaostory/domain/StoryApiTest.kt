@@ -6,6 +6,7 @@ import com.kakao.sdk.kakaostory.entity.*
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
 import io.reactivex.observers.TestObserver
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -39,7 +40,9 @@ class StoryApiTest {
     }
 
     @Test fun isStoryUser() {
-        api.isStoryUser().subscribe(TestObserver<IsStoryUserResponse>())
+        runBlocking {
+            api.isStoryUser()
+        }
         val request = server.takeRequest()
 
         assertEquals("GET", request.method)
@@ -48,7 +51,9 @@ class StoryApiTest {
 
     @MethodSource("booleanProvider")
     @ParameterizedTest fun profile(secureResource: Boolean?) {
-        api.profile(secureResource).subscribe(TestObserver<StoryProfile>())
+        runBlocking {
+            api.profile(secureResource)
+        }
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
 
@@ -63,7 +68,9 @@ class StoryApiTest {
 
     @ValueSource(strings = ["", "last_id"])
     @ParameterizedTest fun myStory(id: String) {
-        api.myStory(id).subscribe(TestObserver<Story>())
+        runBlocking {
+            api.myStory(id)
+        }
         val request = server.takeRequest()
 
         val params = Utility.parseQuery(request.requestUrl.query())
@@ -75,7 +82,9 @@ class StoryApiTest {
 
     @MethodSource("stringProvider")
     @ParameterizedTest fun myStories(id: String?) {
-        api.myStories(id).subscribe(TestObserver<List<Story>>())
+        runBlocking {
+            api.myStories(id)
+        }
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
 
@@ -92,8 +101,9 @@ class StoryApiTest {
                                     params2: String?,
                                     params3: String?,
                                     params4: String?) {
-        api.postNote(content, permission, enableShare, params1, params2, params3, params4)
-                .subscribe(TestObserver<StoryPostResponse>())
+        runBlocking {
+            api.postNote(content, permission, enableShare, params1, params2, params3, params4)
+        }
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())
 
@@ -140,7 +150,9 @@ class StoryApiTest {
 
     @ValueSource(strings = ["", "last_id"])
     @ParameterizedTest fun deleteStory(id: String) {
-        api.deleteStory(id).subscribe(TestObserver<Void>())
+        runBlocking {
+            api.deleteStory(id)
+        }
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
 
@@ -151,7 +163,9 @@ class StoryApiTest {
 
     @ValueSource(strings = ["", "scrap_url"])
     @ParameterizedTest fun scrapLink(url: String) {
-        api.scrapLink(url).subscribe(TestObserver<LinkInfo>())
+        runBlocking {
+            api.scrapLink(url)
+        }
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
 

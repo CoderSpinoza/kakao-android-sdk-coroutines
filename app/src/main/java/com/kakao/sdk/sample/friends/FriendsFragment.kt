@@ -91,10 +91,10 @@ class FriendsFragment : Fragment() {
 
     @SuppressLint("CheckResult")
     fun requestFriendPermission(scopes: List<String>) {
-        AuthCodeService.instance.requestAuthCode(context!!, scopes)
-                .observeOn(Schedulers.io())
-                .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
-                .subscribe({ viewModel.loadFriends() }, { Log.e("FriendsFragment", "No agree")})
+//        AuthCodeService.instance.requestAuthCode(context!!, scopes)
+//                .observeOn(Schedulers.io())
+//                .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
+//                .subscribe({ viewModel.loadFriends() }, { Log.e("FriendsFragment", "No agree")})
     }
 }
 

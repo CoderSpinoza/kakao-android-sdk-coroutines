@@ -1,5 +1,6 @@
 package com.kakao.sdk.network
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.network.data.AppKeyInterceptor
 import com.kakao.sdk.network.data.KakaoAgentInterceptor
@@ -28,6 +29,15 @@ object ApiFactory {
     }
 
     fun withClient(url: String, clientBuilder: OkHttpClient.Builder): Retrofit {
+        return Retrofit.Builder().baseUrl(url)
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .addConverterFactory(GsonConverterFactory.create(KakaoGsonFactory.base))
+                .addConverterFactory(KakaoConverterFactory())
+                .client(clientBuilder.build())
+                .build()
+
+    }
+    fun withRx(url: String, clientBuilder: OkHttpClient.Builder): Retrofit {
         return Retrofit.Builder().baseUrl(url)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(KakaoGsonFactory.base))

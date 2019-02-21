@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.kakao.sdk.friends.FriendsApiClient
 import com.kakao.sdk.friends.entity.Friend
 import com.kakao.sdk.auth.exception.InvalidScopeException
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 open class FriendsViewModel @Inject constructor(private val apiClient: FriendsApiClient) : ViewModel() {
@@ -15,17 +16,15 @@ open class FriendsViewModel @Inject constructor(private val apiClient: FriendsAp
     val friendsError = MutableLiveData<Throwable>()
 
     fun loadFriends() {
-        val disposable = apiClient.friends(limit = 100)
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { friends.postValue(it.friends) },
-                        {
-                            if (it is InvalidScopeException) {
-                                missingScopes.postValue(it.errorResponse.requiredScopes)
-                            } else {
-                                friendsError.postValue(it)
-                            }
-                        }
-                )
+        val deferred = GlobalScope.launch {
+            try {
+                val response = apiClient.friends(limit = 100, secureResource = true)
+                friends.postValue(response.friends)
+            } catch (e: InvalidScopeException) {
+                missingScopes.postValue(e.errorResponse.requiredScopes)
+            } catch (e: RuntimeException) {
+                friendsError.postValue(e)
+            }
+        }
     }
 }

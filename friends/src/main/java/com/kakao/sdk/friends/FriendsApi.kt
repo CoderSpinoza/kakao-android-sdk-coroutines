@@ -3,6 +3,7 @@ package com.kakao.sdk.friends
 import com.kakao.sdk.friends.entity.FriendsResponse
 import com.kakao.sdk.friends.entity.*
 import io.reactivex.Single
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -18,5 +19,5 @@ interface FriendsApi {
                 @Query(Constants.OFFSET) offset: Int? = null,
                 @Query(Constants.LIMIT) limit: Int? = null,
                 @Query(Constants.ORDER) order: String? = null,
-                @Query(Constants.URL) url: String? = null): Single<FriendsResponse>
+                @Query(Constants.URL) url: String? = null): Deferred<FriendsResponse>
 }

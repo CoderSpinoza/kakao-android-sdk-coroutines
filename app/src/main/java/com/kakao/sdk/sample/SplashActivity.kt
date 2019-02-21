@@ -7,8 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.sample.login.LoginActivity
 import com.kakao.sdk.user.UserApiClient
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +23,12 @@ class SplashActivity : AppCompatActivity() {
             goToLogin()
             return
         }
-        val disposable = UserApiClient.instance.accessTokenInfo().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ goToMain() },{ goToLogin() })
+
+        GlobalScope.launch {
+            val tokenInfo = UserApiClient.instance.accessTokenInfo()
+            goToMain()
+
+        }
     }
 
     fun goToMain() {

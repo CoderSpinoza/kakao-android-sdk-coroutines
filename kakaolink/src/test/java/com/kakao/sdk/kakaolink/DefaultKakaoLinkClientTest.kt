@@ -7,6 +7,7 @@ import com.kakao.sdk.message.template.FeedTemplate
 import com.kakao.sdk.message.template.entity.ContentObject
 import com.kakao.sdk.message.template.entity.LinkObject
 import com.kakao.sdk.network.ApiFactory
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -42,13 +43,16 @@ class DefaultKakaoLinkClientTest {
         val json = Utility.getJson("json/default_feed.json")
         val jsonObject = JsonParser().parse(json).asJsonObject
         server.enqueue(MockResponse().setResponseCode(200).setBody(json))
-        val intent = client.defaultTemplateIntent(
-                FeedTemplate(
-                        ContentObject("title", "imageUrl", LinkObject())
-                )
-        ).blockingGet()
-        assertNotNull(intent?.data)
-        val uri = intent.data
-        assertEquals(jsonObject[Constants.TEMPLATE_ID].asString, uri!!.getQueryParameter(Constants.TEMPLATE_ID))
+
+        runBlocking {
+            val intent = client.defaultTemplateIntent(
+                    FeedTemplate(
+                            ContentObject("title", "imageUrl", LinkObject())
+                    )
+            )
+            assertNotNull(intent?.data)
+            val uri = intent.data
+            assertEquals(jsonObject[Constants.TEMPLATE_ID].asString, uri!!.getQueryParameter(Constants.TEMPLATE_ID))
+        }
     }
 }

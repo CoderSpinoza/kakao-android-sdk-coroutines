@@ -7,7 +7,7 @@ import com.kakao.sdk.auth.Constants
 /**
  * @author kevin.kang. Created on 2018. 3. 24..
  */
-data class AccessTokenResponse(val accessToken: String,
+class AccessTokenResponse(val accessToken: String,
                                val refreshToken: String? = null,
                                @SerializedName(Constants.EXPIRES_IN) val accessTokenExpiresIn: Long,
                                val refreshTokenExpiresIn: Long?,

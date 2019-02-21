@@ -16,29 +16,19 @@ class DefaultUserApiClient(val userApi: UserApi = OAuthApiFactory.kapi.create(Us
                            private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance,
                            private val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance): UserApiClient {
 
-    override fun me(secureReSource: Boolean): Single<User> {
-        return userApi.me(secureReSource)
-                .compose(apiErrorInterceptor.handleApiError())
+    override suspend fun me(secureReSource: Boolean): User {
+        return userApi.me(secureReSource).await()
     }
 
-    override fun accessTokenInfo(): Single<AccessTokenInfo> {
-        return userApi.accessTokenInfo()
-                .compose(apiErrorInterceptor.handleApiError())
+    override suspend fun accessTokenInfo(): AccessTokenInfo {
+        return userApi.accessTokenInfo().await()
     }
 
-    override fun logout(): Single<UserIdResponse> {
-        return userApi.logout()
-                .compose(apiErrorInterceptor.handleApiError())
-                .doOnEvent { _, _ ->
-                    accessTokenRepo.clearCache()
-                }
+    override suspend fun logout(): UserIdResponse {
+        return userApi.logout().await()
     }
 
-    override fun unlink(): Single<UserIdResponse> {
-        return userApi.unlink()
-                .compose(apiErrorInterceptor.handleApiError())
-                .doOnEvent { _, _ ->
-                    accessTokenRepo.clearCache()
-                }
+    override suspend fun unlink(): UserIdResponse {
+        return userApi.unlink().await()
     }
 }

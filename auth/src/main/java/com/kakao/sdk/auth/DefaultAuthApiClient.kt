@@ -18,30 +18,32 @@ class DefaultAuthApiClient(
         val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance
 ): AuthApiClient {
 
-    override fun issueAccessToken(authCode: String,
+    override suspend fun issueAccessToken(authCode: String,
                                   clientId: String,
                                   redirectUri: String,
                                   approvalType: String,
                                   androidKeyHash: String,
                                   clientSecret: String?
-    ): Single<AccessTokenResponse> {
-        return authApi.issueAccessToken(
+    ): AccessTokenResponse {
+        val response = authApi.issueAccessToken(
                 clientId = clientId,
                 redirectUri = redirectUri,
                 androidKeyHash = androidKeyHash,
                 authCode = authCode,
                 approvalType = approvalType,
                 clientSecret = clientSecret
-        ).compose(handleAuthError()).doOnSuccess { accessTokenRepo.toCache(it) }
+        ).await()
+        accessTokenRepo.toCache(response)
+        return response
     }
 
-    override fun refreshAccessToken(refreshToken: String,
+    override suspend fun refreshAccessToken(refreshToken: String,
                                     clientId: String,
                                     approvalType: String,
                                     androidKeyHash: String,
                                     clientSecret: String?
-    ): Single<AccessTokenResponse> {
-        return authApi.issueAccessToken(
+    ): AccessTokenResponse {
+        val response = authApi.issueAccessToken(
                 clientId = clientId,
                 redirectUri = null,
                 approvalType = approvalType,
@@ -49,7 +51,10 @@ class DefaultAuthApiClient(
                 refreshToken = refreshToken,
                 clientSecret = clientSecret,
                 grantType = Constants.REFRESH_TOKEN
-        ).compose(handleAuthError()).doOnSuccess { accessTokenRepo.toCache(it) }
+        ).await()
+        accessTokenRepo.toCache(response)
+        return response
+//                .compose(handleAuthError()).doOnSuccess { accessTokenRepo.toCache(it) }
     }
 
     fun <T> handleAuthError(): SingleTransformer<T ,T> {

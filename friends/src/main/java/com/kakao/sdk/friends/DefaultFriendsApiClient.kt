@@ -12,15 +12,15 @@ import io.reactivex.Single
  */
 class DefaultFriendsApiClient(val api: FriendsApi = OAuthApiFactory.kapi.create(FriendsApi::class.java),
                               private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance): FriendsApiClient {
-    override fun friends(friendType: FriendType?,
+    override suspend fun friends(friendType: FriendType?,
                          friendFilter: FriendFilter?,
                          friendOrder: FriendOrder?,
                          secureResource: Boolean?,
                          offset: Int?,
                          limit: Int?,
                          order: String?,
-                         url: String?): Single<FriendsResponse> {
-        return api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url)
-                .compose(apiErrorInterceptor.handleApiError())
+                         url: String?): FriendsResponse {
+        return api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url).await()
+//                .compose(apiErrorInterceptor.handleApiError())
     }
 }

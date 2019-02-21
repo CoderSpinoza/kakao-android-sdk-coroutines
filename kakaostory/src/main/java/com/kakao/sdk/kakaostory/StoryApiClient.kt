@@ -3,77 +3,78 @@ package com.kakao.sdk.kakaostory
 import com.kakao.sdk.kakaostory.entity.*
 import io.reactivex.Completable
 import io.reactivex.Single
+import kotlinx.coroutines.Deferred
 import java.io.File
 
 /**
  * @author kevin.kang. Created on 2018. 5. 9..
  */
 interface StoryApiClient {
-    fun isStoryUser(): Single<IsStoryUserResponse>
+    suspend fun isStoryUser(): IsStoryUserResponse
 
-    fun profile(secureResource: Boolean? = null): Single<StoryProfile>
+    suspend fun profile(secureResource: Boolean? = null): StoryProfile
 
-    fun myStory(id: String): Single<Story>
+    suspend fun myStory(id: String): Story
 
-    fun myStories(lastId: String? = null): Single<List<Story>>
+    suspend fun myStories(lastId: String? = null): List<Story>
 
-    fun postNote(content: String,
+    suspend fun postNote(content: String,
                  permission: Story.Permission,
                  enableShare: Boolean,
                  androidExecParams: Map<String, String>? = null,
                  iosExecParams: Map<String, String>? = null,
                  androidMarketParams: Map<String, String>? = null,
-                 iosMarketParams: Map<String, String>? = null): Single<StoryPostResponse>
+                 iosMarketParams: Map<String, String>? = null): StoryPostResponse
 
-    fun postLink(linkInfo: LinkInfo,
+    suspend fun postLink(linkInfo: LinkInfo,
                  content: String,
                  permission: Story.Permission,
                  enableShare: Boolean,
                  androidExecParams: Map<String, String>? = null,
                  iosExecParams: Map<String, String>? = null,
                  androidMarketParams: Map<String, String>? = null,
-                 iosMarketParams: Map<String, String>? = null): Single<StoryPostResponse>
+                 iosMarketParams: Map<String, String>? = null): StoryPostResponse
 
-    fun postPhoto(images: List<String>,
+    suspend fun postPhoto(images: List<String>,
                   content: String,
                   permission: Story.Permission,
                   enableShare: Boolean,
                   androidExecParams: Map<String, String>? = null,
                   iosExecParams: Map<String, String>? = null,
                   androidMarketParams: Map<String, String>? = null,
-                  iosMarketParams: Map<String, String>? = null): Single<StoryPostResponse>
+                  iosMarketParams: Map<String, String>? = null): StoryPostResponse
 
-    fun postNote(content: String,
+    suspend fun postNote(content: String,
                  permission: Story.Permission,
                  enableShare: Boolean,
                  androidExecParams: String? = null,
                  iosExecParams: String? = null,
                  androidMarketParams: String? = null,
-                 iosMarketParams: String? = null): Single<StoryPostResponse>
+                 iosMarketParams: String? = null): StoryPostResponse
 
-    fun postPhoto(images: List<String>,
+    suspend fun postPhoto(images: List<String>,
                   content: String,
                   permission: Story.Permission,
                   enableShare: Boolean,
                   androidExecParams: String? = null,
                   iosExecParams: String? = null,
                   androidMarketParams: String? = null,
-                  iosMarketParams: String? = null): Single<StoryPostResponse>
+                  iosMarketParams: String? = null): StoryPostResponse
 
-    fun postLink(linkInfo: LinkInfo,
+    suspend fun postLink(linkInfo: LinkInfo,
                  content: String,
                  permission: Story.Permission,
                  enableShare: Boolean,
                  androidExecParams: String? = null,
                  iosExecParams: String? = null,
                  androidMarketParams: String? = null,
-                 iosMarketParams: String? = null): Single<StoryPostResponse>
+                 iosMarketParams: String? = null): StoryPostResponse
 
-    fun deleteStory(id: String): Completable
+    suspend fun deleteStory(id: String): Unit
 
-    fun scrapLink(url: String): Single<LinkInfo>
+    suspend fun scrapLink(url: String): LinkInfo
 
-    fun scrapImages(images: List<File>): Single<List<String>>
+    suspend fun scrapImages(images: List<File>): List<String>
 
     companion object {
         val instance by lazy {

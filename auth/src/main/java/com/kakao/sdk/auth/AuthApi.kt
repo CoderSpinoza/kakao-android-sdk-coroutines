@@ -1,7 +1,7 @@
 package com.kakao.sdk.auth
 
 import com.kakao.sdk.auth.model.AccessTokenResponse
-import io.reactivex.Single
+import kotlinx.coroutines.Deferred
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -19,6 +19,5 @@ interface AuthApi {
                          @Field(Constants.CODE) authCode: String? = null,
                          @Field(Constants.REFRESH_TOKEN) refreshToken: String? = null,
                          @Field(Constants.CLIENT_SECRET) clientSecret: String? = null,
-                         @Field(Constants.GRANT_TYPE) grantType: String = Constants.AUTHORIZATION_CODE
-                         ): Single<AccessTokenResponse>
+                         @Field(Constants.GRANT_TYPE) grantType: String = Constants.AUTHORIZATION_CODE): Deferred<AccessTokenResponse>
 }

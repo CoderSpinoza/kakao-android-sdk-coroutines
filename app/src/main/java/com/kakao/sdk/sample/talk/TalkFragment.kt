@@ -100,11 +100,11 @@ class TalkFragment : Fragment(), AdapterView.OnItemSelectedListener, LifecycleOw
     }
 
     fun requestChatPermission(scopes: List<String>) {
-        val disposable = AuthCodeService.instance.requestAuthCode(context!!, scopes)
-                .observeOn(Schedulers.io())
-                .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ binding.talkViewModel?.loadChats(ChatFilter.REGULAR) }, { Log.e("TalkFragment", "No agree")})
+//        val disposable = AuthCodeService.instance.requestAuthCode(context!!, scopes)
+//                .observeOn(Schedulers.io())
+//                .flatMap { AuthApiClient.instance.issueAccessToken(authCode = it) }
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ binding.talkViewModel?.loadChats(ChatFilter.REGULAR) }, { Log.e("TalkFragment", "No agree")})
     }
 
     fun goToChatDetail(chat: Chat) {

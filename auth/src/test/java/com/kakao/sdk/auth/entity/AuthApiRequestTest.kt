@@ -6,6 +6,7 @@ import com.kakao.sdk.auth.AuthApi
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
 import io.reactivex.observers.TestObserver
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -40,9 +41,12 @@ class AuthApiRequestTest {
                                   clientSecret: String?,
                                   grantType: String
                                   ) {
-        api.issueAccessToken(clientId, redirectUri, approvalType, androidKeyHash,
-                authCode = code, refreshToken = refreshToken, clientSecret = clientSecret, grantType = grantType)
-                .subscribe(TestObserver<AccessTokenResponse>())
+
+        runBlocking {
+            api.issueAccessToken(clientId, redirectUri, approvalType, androidKeyHash,
+                    authCode = code, refreshToken = refreshToken, clientSecret = clientSecret, grantType = grantType)
+//                .subscribe(TestObserver<AccessTokenResponse>())
+        }
 
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())

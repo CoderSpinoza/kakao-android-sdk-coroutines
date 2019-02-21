@@ -9,6 +9,7 @@ import com.kakao.sdk.kakaotalk.entity.ChatListResponse
 import com.kakao.sdk.kakaotalk.entity.TalkProfile
 import com.kakao.sdk.network.ApiFactory
 import io.reactivex.observers.TestObserver
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -40,15 +41,14 @@ class TalkApiTest {
     }
 
     @CsvFileSource(resources = ["/csv/profile.csv"], numLinesToSkip = 1)
-    @ParameterizedTest fun profile(secureResource: Boolean?) {
+    @ParameterizedTest fun profile(secureResource: Boolean?) = runBlocking {
         api.profile(secureResource = secureResource)
-                .subscribe(TestObserver<TalkProfile>())
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
 
         if (secureResource == null) {
             assertFalse(params.containsKey(Constants.SECURE_RESOURCE))
-            return
+            return@runBlocking
         }
         assertEquals(secureResource.toString(), params[Constants.SECURE_RESOURCE])
     }
@@ -57,9 +57,8 @@ class TalkApiTest {
     @ParameterizedTest fun chatList(fromId: Int? = null,
                                     limit: Int? = null,
                                     order: String? = null,
-                                    filter: String? = null) {
+                                    filter: String? = null) = runBlocking {
         api.chatList(fromId, limit, order, filter)
-                .subscribe(TestObserver<ChatListResponse>())
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
 
@@ -70,15 +69,15 @@ class TalkApiTest {
     }
 
     @MethodSource("sendMemoProvider")
-    @ParameterizedTest fun sendMemo(templateId: String, templateArgs: Map<String, String>?) {
-        api.sendMemo(templateId, templateArgs).subscribe(TestObserver<Void>())
+    @ParameterizedTest fun sendMemo(templateId: String, templateArgs: Map<String, String>?) = runBlocking {
+        api.sendMemo(templateId, templateArgs)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())
 
         assertEquals(templateId, params[Constants.TEMPLATE_ID])
         if (templateArgs == null) {
             assertFalse(params.containsKey(Constants.TEMPLATE_ARGS))
-            return
+            return@runBlocking
         }
 
         val decoded = URLDecoder.decode(params[Constants.TEMPLATE_ARGS], "UTF-8")
@@ -94,9 +93,8 @@ class TalkApiTest {
     @ParameterizedTest fun sendMessage(receiverIdType: String,
                                        receiverId: String,
                                        templateId: String,
-                                       templateArgs: Map<String, String>?) {
+                                       templateArgs: Map<String, String>?) = runBlocking {
         api.sendMessage(receiverIdType, receiverId, templateId, templateArgs)
-                .subscribe(TestObserver<Void>())
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())
 
@@ -106,7 +104,7 @@ class TalkApiTest {
 
         if (templateArgs == null) {
             assertFalse(params.containsKey(Constants.TEMPLATE_ARGS))
-            return
+            return@runBlocking
         }
 
         val decoded = URLDecoder.decode(params[Constants.TEMPLATE_ARGS], "UTF-8")

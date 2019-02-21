@@ -28,30 +28,30 @@ class ApiErrorInterceptor(private val authApiClient: AuthApiClient = AuthApiClie
 ) {
     fun <T> handleApiError(): SingleTransformer<T, T> {
         return SingleTransformer { it.onErrorResumeNext { Single.error(translateError(it)) }
-                .retryWhen { refreshAccessToken(it) }
+//                .retryWhen { refreshAccessToken(it) }
                 .doOnError { if (it is InvalidTokenException) accessTokenRepo.clearCache() }
         }
     }
 
     fun handleCompletableError(): CompletableTransformer {
         return CompletableTransformer { it.onErrorResumeNext { Completable.error(translateError(it)) }
-                .retryWhen { refreshAccessToken(it) }
+//                .retryWhen { refreshAccessToken(it) }
                 .doOnError { if (it is InvalidTokenException) accessTokenRepo.clearCache() }
         }
     }
 
-    internal fun refreshAccessToken(throwableFlowable: Flowable<Throwable>): Publisher<AccessTokenResponse> {
-        return throwableFlowable
-                .withLatestFrom(
-                        accessTokenRepo.observe().toFlowable(BackpressureStrategy.LATEST),
-                        BiFunction { t1: Throwable, t2: AccessToken ->
-                            if (t2.refreshToken != null && t1 is InvalidTokenException) {
-                                return@BiFunction authApiClient.refreshAccessToken(t2.refreshToken, appInfo.clientId, appInfo.approvalType, contextInfo.signingKeyHash, appInfo.clientSecret)
-                            }
-                            throw t1
-                        })
-                .flatMap { it.toFlowable() }
-    }
+//    internal fun refreshAccessToken(throwableFlowable: Flowable<Throwable>): Publisher<AccessTokenResponse> {
+//        return throwableFlowable
+//                .withLatestFrom(
+//                        accessTokenRepo.observe().toFlowable(BackpressureStrategy.LATEST),
+//                        BiFunction { t1: Throwable, t2: AccessToken ->
+//                            if (t2.refreshToken != null && t1 is InvalidTokenException) {
+//                                val result = authApiClient.refreshAccessToken(t2.refreshToken, appInfo.clientId, appInfo.approvalType, contextInfo.signingKeyHash, appInfo.clientSecret)
+//                            }
+//                            throw t1
+//                        })
+//                .flatMap { it.toFlowable() }
+//    }
 
     internal fun translateError(t: Throwable): Throwable {
         try {

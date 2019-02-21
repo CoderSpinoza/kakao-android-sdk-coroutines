@@ -11,13 +11,13 @@ import okhttp3.OkHttpClient
  * @author kevin.kang. Created on 2018. 5. 10..
  */
 interface UserApiClient {
-    fun me(secureReSource: Boolean = true): Single<User>
+    suspend fun me(secureReSource: Boolean = true): User
 
-    fun accessTokenInfo(): Single<AccessTokenInfo>
+    suspend fun accessTokenInfo(): AccessTokenInfo
 
-    fun logout(): Single<UserIdResponse>
+    suspend fun logout(): UserIdResponse
 
-    fun unlink(): Single<UserIdResponse>
+    suspend fun unlink(): UserIdResponse
 
     companion object {
         val instance: UserApiClient by lazy { DefaultUserApiClient() }

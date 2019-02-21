@@ -3,6 +3,7 @@ package com.kakao.sdk.kakaostory
 import com.kakao.sdk.kakaostory.entity.*
 import io.reactivex.Completable
 import io.reactivex.Single
+import kotlinx.coroutines.Deferred
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
@@ -11,16 +12,16 @@ import retrofit2.http.*
  */
 interface StoryApi {
     @GET(Constants.IS_STORY_USER_PATH)
-    fun isStoryUser(): Single<IsStoryUserResponse>
+    fun isStoryUser(): Deferred<IsStoryUserResponse>
 
     @GET(Constants.STORY_PROFILE_PATH)
-    fun profile(@Query(Constants.SECURE_RESOURCE) secureResource: Boolean? = null): Single<StoryProfile>
+    fun profile(@Query(Constants.SECURE_RESOURCE) secureResource: Boolean? = null): Deferred<StoryProfile>
 
     @GET(Constants.GET_STORY_PATH)
-    fun myStory(@Query(Constants.ID) id: String): Single<Story>
+    fun myStory(@Query(Constants.ID) id: String): Deferred<Story>
 
     @GET(Constants.GET_STORIES_PATH)
-    fun myStories(@Query(Constants.LAST_ID) lastId: String? = null): Single<List<Story>>
+    fun myStories(@Query(Constants.LAST_ID) lastId: String? = null): Deferred<List<Story>>
 
     @FormUrlEncoded
     @POST(Constants.POST_NOTE_PATH)
@@ -30,7 +31,7 @@ interface StoryApi {
                  @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
                  @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
                  @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
-                 @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Single<StoryPostResponse>
+                 @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Deferred<StoryPostResponse>
 
     @FormUrlEncoded
     @POST(Constants.POST_PHOTO_PATH)
@@ -41,7 +42,7 @@ interface StoryApi {
                   @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
                   @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
                   @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
-                  @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Single<StoryPostResponse>
+                  @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Deferred<StoryPostResponse>
 
     @FormUrlEncoded
     @POST(Constants.POST_LINK_PATH)
@@ -52,15 +53,15 @@ interface StoryApi {
                  @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
                  @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
                  @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
-                 @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Single<StoryPostResponse>
+                 @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null): Deferred<StoryPostResponse>
 
     @DELETE(Constants.DELETE_STORY_PATH)
-    fun deleteStory(@Query(Constants.ID) id: String): Completable
+    fun deleteStory(@Query(Constants.ID) id: String): Deferred<Unit>
 
     @GET(Constants.SCRAP_LINK_PATH)
-    fun scrapLink(@Query(Constants.URL) url: String): Single<LinkInfo>
+    fun scrapLink(@Query(Constants.URL) url: String): Deferred<LinkInfo>
 
     @Multipart
     @POST(Constants.SCRAP_IMAGES_PATH)
-    fun scrapImages(@Part images: List<MultipartBody.Part>): Single<List<String>>
+    fun scrapImages(@Part images: List<MultipartBody.Part>): Deferred<List<String>>
 }
