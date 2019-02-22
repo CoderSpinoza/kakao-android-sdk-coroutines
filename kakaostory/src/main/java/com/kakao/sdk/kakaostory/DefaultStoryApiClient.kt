@@ -17,23 +17,27 @@ import java.io.File
 class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(StoryApi::class.java),
                             private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance): StoryApiClient {
     override suspend fun isStoryUser(): IsStoryUserResponse {
-        return api.isStoryUser().await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.isStoryUser().await()
+        }
     }
 
     override suspend fun profile(secureResource: Boolean?): StoryProfile {
-        return api.profile(secureResource).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.profile(secureResource).await()
+        }
     }
 
     override suspend fun myStory(id: String): Story {
-        return api.myStory(id).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.myStory(id).await()
+        }
     }
 
     override suspend fun myStories(lastId: String?): List<Story> {
-        return api.myStories().await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.myStories().await()
+        }
     }
 
     override suspend fun postNote(content: String,
@@ -43,12 +47,13 @@ class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(Stor
                                   iosExecParams: Map<String, String>?,
                                   androidMarketParams: Map<String, String>?,
                                   iosMarketParams: Map<String, String>?): StoryPostResponse {
-        return api.postNote(content, permission, enableShare,
-                Utility.buildQuery(androidExecParams),
-                Utility.buildQuery(iosExecParams),
-                Utility.buildQuery(androidMarketParams),
-                Utility.buildQuery(iosMarketParams)).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.postNote(content, permission, enableShare,
+                    Utility.buildQuery(androidExecParams),
+                    Utility.buildQuery(iosExecParams),
+                    Utility.buildQuery(androidMarketParams),
+                    Utility.buildQuery(iosMarketParams)).await()
+        }
     }
 
     override suspend fun postLink(linkInfo: LinkInfo,
@@ -60,12 +65,13 @@ class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(Stor
                                   androidMarketParams: Map<String, String>?,
                                   iosMarketParams: Map<String, String>?): StoryPostResponse {
 
-        return api.postLink(linkInfo, content, permission, enableShare,
-                Utility.buildQuery(androidExecParams),
-                Utility.buildQuery(iosExecParams),
-                Utility.buildQuery(androidMarketParams),
-                Utility.buildQuery(iosMarketParams)).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.postLink(linkInfo, content, permission, enableShare,
+                    Utility.buildQuery(androidExecParams),
+                    Utility.buildQuery(iosExecParams),
+                    Utility.buildQuery(androidMarketParams),
+                    Utility.buildQuery(iosMarketParams)).await()
+        }
     }
 
     override suspend fun postPhoto(images: List<String>,
@@ -76,12 +82,13 @@ class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(Stor
                                    iosExecParams: Map<String, String>?,
                                    androidMarketParams: Map<String, String>?,
                                    iosMarketParams: Map<String, String>?): StoryPostResponse {
-        return api.postPhoto(KakaoGsonFactory.base.toJson(images), content, permission, enableShare,
-                Utility.buildQuery(androidExecParams),
-                Utility.buildQuery(iosExecParams),
-                Utility.buildQuery(androidMarketParams),
-                Utility.buildQuery(iosMarketParams)).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.postPhoto(KakaoGsonFactory.base.toJson(images), content, permission, enableShare,
+                    Utility.buildQuery(androidExecParams),
+                    Utility.buildQuery(iosExecParams),
+                    Utility.buildQuery(androidMarketParams),
+                    Utility.buildQuery(iosMarketParams)).await()
+        }
     }
 
 
@@ -93,8 +100,10 @@ class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(Stor
                                   iosExecParams: String?,
                                   androidMarketParams: String?,
                                   iosMarketParams: String?): StoryPostResponse {
-        return api.postNote(content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.postNote(content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams).await()
+
+        }
     }
 
     override suspend fun postPhoto(images: List<String>,

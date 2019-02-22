@@ -5,7 +5,6 @@ import com.kakao.sdk.kakaostory.StoryApi
 import com.kakao.sdk.kakaostory.entity.*
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
-import io.reactivex.observers.TestObserver
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse

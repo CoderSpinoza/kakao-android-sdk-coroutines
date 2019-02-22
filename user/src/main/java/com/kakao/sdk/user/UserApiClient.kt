@@ -4,7 +4,6 @@ import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.user.entity.AccessTokenInfo
 import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.entity.UserIdResponse
-import io.reactivex.Single
 import okhttp3.OkHttpClient
 
 /**

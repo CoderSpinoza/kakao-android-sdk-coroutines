@@ -2,7 +2,6 @@ package com.kakao.sdk.friends
 
 import com.kakao.sdk.friends.entity.FriendsResponse
 import com.kakao.sdk.friends.entity.*
-import io.reactivex.Single
 
 /**
  * @author kevin.kang. Created on 2018. 5. 10..

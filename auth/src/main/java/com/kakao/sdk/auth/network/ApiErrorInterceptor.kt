@@ -5,17 +5,17 @@ import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.exception.AgeVerificationException
 import com.kakao.sdk.auth.exception.InvalidScopeException
 import com.kakao.sdk.auth.exception.InvalidTokenException
-import com.kakao.sdk.auth.model.AccessToken
-import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.model.MissingScopesErrorResponse
 import com.kakao.sdk.common.*
 import com.kakao.sdk.network.ApiErrorCode
 import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
-import io.reactivex.*
-import io.reactivex.functions.BiFunction
-import org.reactivestreams.Publisher
+import kotlinx.coroutines.Deferred
 import retrofit2.HttpException
+
+suspend fun <T> Deferred<T>.handleApiError(interceptor: ApiErrorInterceptor): T {
+    return interceptor.handleApiError { this.await() }
+}
 
 /**
  * @suppress
@@ -26,51 +26,48 @@ class ApiErrorInterceptor(private val authApiClient: AuthApiClient = AuthApiClie
                           private val appInfo: ApplicationInfo = KakaoSdkProvider.applicationContextInfo,
                           private val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo
 ) {
-    fun <T> handleApiError(): SingleTransformer<T, T> {
-        return SingleTransformer { it.onErrorResumeNext { Single.error(translateError(it)) }
-//                .retryWhen { refreshAccessToken(it) }
-                .doOnError { if (it is InvalidTokenException) accessTokenRepo.clearCache() }
-        }
+
+    suspend fun <T> handleApiError(block: suspend () -> T): T {
+        return errorOnRefresh { refreshAccessToken { translateError {
+            block()
+        } } }
     }
 
-    fun handleCompletableError(): CompletableTransformer {
-        return CompletableTransformer { it.onErrorResumeNext { Completable.error(translateError(it)) }
-//                .retryWhen { refreshAccessToken(it) }
-                .doOnError { if (it is InvalidTokenException) accessTokenRepo.clearCache() }
-        }
-    }
-
-//    internal fun refreshAccessToken(throwableFlowable: Flowable<Throwable>): Publisher<AccessTokenResponse> {
-//        return throwableFlowable
-//                .withLatestFrom(
-//                        accessTokenRepo.observe().toFlowable(BackpressureStrategy.LATEST),
-//                        BiFunction { t1: Throwable, t2: AccessToken ->
-//                            if (t2.refreshToken != null && t1 is InvalidTokenException) {
-//                                val result = authApiClient.refreshAccessToken(t2.refreshToken, appInfo.clientId, appInfo.approvalType, contextInfo.signingKeyHash, appInfo.clientSecret)
-//                            }
-//                            throw t1
-//                        })
-//                .flatMap { it.toFlowable() }
-//    }
-
-    internal fun translateError(t: Throwable): Throwable {
+    suspend fun <T> errorOnRefresh(block: suspend () -> T): T {
         try {
-            if (t is HttpException) {
-                val errorString = t.response().errorBody()?.string()
-                val response = KakaoGsonFactory.base.fromJson(errorString, ApiErrorResponse::class.java)
-                when (response.code) {
-                    ApiErrorCode.INVALID_TOKEN_CODE -> return InvalidTokenException(t.code(), response)
-                    ApiErrorCode.INVALID_SCOPE_CODE -> {
-                        val scopeErrorResponse = KakaoGsonFactory.base.fromJson(errorString, MissingScopesErrorResponse::class.java)
-                        return InvalidScopeException(t.code(), scopeErrorResponse)
-                    }
-                    ApiErrorCode.AGE_VERIFICATION_NEEDED -> return AgeVerificationException(t.code(), response)
+            return block()
+        } catch (e: InvalidTokenException) {
+            accessTokenRepo.clearCache()
+            throw e
+        }
+    }
+    suspend fun <T> refreshAccessToken(block: suspend () -> T): T {
+        return try {
+            block()
+        } catch (t: InvalidTokenException) {
+            val token = accessTokenRepo.observe().openSubscription().receive()
+            if (token.refreshToken == null) throw t
+            val result = authApiClient.refreshAccessToken(token.refreshToken,
+                    appInfo.clientId, appInfo.approvalType, contextInfo.signingKeyHash, appInfo.clientSecret)
+            block()
+        }
+    }
+
+    suspend fun <T> translateError(block: suspend () -> T): T {
+        try {
+            return block()
+        } catch (t: HttpException) {
+            val errorString = t.response().errorBody()?.string()
+            val response = KakaoGsonFactory.base.fromJson(errorString, ApiErrorResponse::class.java)
+            when (response.code) {
+                ApiErrorCode.INVALID_TOKEN_CODE -> throw InvalidTokenException(t.code(), response)
+                ApiErrorCode.INVALID_SCOPE_CODE -> {
+                    val scopeErrorResponse = KakaoGsonFactory.base.fromJson(errorString, MissingScopesErrorResponse::class.java)
+                    throw InvalidScopeException(t.code(), scopeErrorResponse)
                 }
-                return ApiException(t.code(), response.code, response.message)
+                ApiErrorCode.AGE_VERIFICATION_NEEDED -> throw AgeVerificationException(t.code(), response)
             }
-            return t
-        } catch (unexpected: Throwable) {
-            return unexpected
+            throw ApiException(t.code(), response.code, response.message)
         }
     }
 

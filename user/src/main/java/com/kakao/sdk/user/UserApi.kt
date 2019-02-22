@@ -4,7 +4,6 @@ import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.user.entity.AccessTokenInfo
 import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.entity.UserIdResponse
-import io.reactivex.Single
 import kotlinx.coroutines.Deferred
 import retrofit2.http.*
 
@@ -23,10 +22,6 @@ interface UserApi {
     @FormUrlEncoded
     fun updateProfile(@Field(Constants.SECURE_RESOURCE) secureResource: Boolean = true,
                       @Field(Constants.PROPERTIES) properties: Map<String, String>): Deferred<UserIdResponse>
-
-//    @GET(Constants.V1_AGE_AUTH_INFO_PATH)
-//    fun ageAuthInfo(@Query(Constants.AGE_LIMIT) ageLimit: String? = null,
-//                @Query(Constants.PROPERTY_KEYS) propertyKeys: List<String>? = null): Single<AgeAuth>
 
     @POST(Constants.V1_LOGOUT_PATH)
     fun logout(): Deferred<UserIdResponse>

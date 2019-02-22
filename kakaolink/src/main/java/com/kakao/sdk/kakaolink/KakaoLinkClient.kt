@@ -2,7 +2,6 @@ package com.kakao.sdk.kakaolink
 
 import android.content.Intent
 import com.kakao.sdk.message.template.DefaultTemplate
-import io.reactivex.Single
 
 /**
  * @author kevin.kang. Created on 19/02/2019..

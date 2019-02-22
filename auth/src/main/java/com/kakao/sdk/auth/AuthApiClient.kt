@@ -2,7 +2,6 @@ package com.kakao.sdk.auth
 
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.common.KakaoSdkProvider
-import kotlinx.coroutines.Deferred
 
 /**
  * Kakao OAuth API 를 호출할 수 있는 클라이언트.
@@ -15,7 +14,7 @@ interface AuthApiClient {
      *
      * @param authCode authorization code
      *
-     * @return [Single] instance that will emit [AccessTokenResponse].
+     * @return [AccessTokenResponse].
      */
     suspend fun issueAccessToken(authCode: String,
                          clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
@@ -30,7 +29,7 @@ interface AuthApiClient {
      *
      * @param refreshToken 리프레시 토큰
      *
-     * @return [Single] instance that will emit [AccessTokenResponse]
+     * @return [AccessTokenResponse]
      */
     suspend fun refreshAccessToken(refreshToken: String,
                            clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,

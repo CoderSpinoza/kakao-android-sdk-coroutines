@@ -3,8 +3,8 @@ package com.kakao.sdk.friends
 import com.kakao.sdk.friends.entity.*
 import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
+import com.kakao.sdk.auth.network.handleApiError
 import com.kakao.sdk.friends.entity.FriendsResponse
-import io.reactivex.Single
 
 /**
  * @suppress
@@ -20,7 +20,7 @@ class DefaultFriendsApiClient(val api: FriendsApi = OAuthApiFactory.kapi.create(
                          limit: Int?,
                          order: String?,
                          url: String?): FriendsResponse {
-        return api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit, order, url)
+                .handleApiError(apiErrorInterceptor)
     }
 }

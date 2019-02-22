@@ -1,8 +1,6 @@
 package com.kakao.sdk.kakaostory
 
 import com.kakao.sdk.kakaostory.entity.*
-import io.reactivex.Completable
-import io.reactivex.Single
 import kotlinx.coroutines.Deferred
 import okhttp3.MultipartBody
 import retrofit2.http.*

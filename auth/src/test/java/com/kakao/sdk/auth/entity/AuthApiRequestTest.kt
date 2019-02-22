@@ -1,11 +1,9 @@
 package com.kakao.sdk.auth.entity
 
 import com.kakao.sdk.auth.Constants
-import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.auth.AuthApi
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
-import io.reactivex.observers.TestObserver
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse

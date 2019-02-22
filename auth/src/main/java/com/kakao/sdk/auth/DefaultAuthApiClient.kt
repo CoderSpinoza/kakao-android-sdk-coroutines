@@ -5,8 +5,6 @@ import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.model.AuthErrorResponse
 import com.kakao.sdk.auth.exception.AuthResponseException
 import com.kakao.sdk.common.KakaoGsonFactory
-import io.reactivex.Single
-import io.reactivex.SingleTransformer
 import retrofit2.HttpException
 
 /**
@@ -25,14 +23,16 @@ class DefaultAuthApiClient(
                                   androidKeyHash: String,
                                   clientSecret: String?
     ): AccessTokenResponse {
-        val response = authApi.issueAccessToken(
-                clientId = clientId,
-                redirectUri = redirectUri,
-                androidKeyHash = androidKeyHash,
-                authCode = authCode,
-                approvalType = approvalType,
-                clientSecret = clientSecret
-        ).await()
+        val response = transformError {
+            authApi.issueAccessToken(
+                    clientId = clientId,
+                    redirectUri = redirectUri,
+                    androidKeyHash = androidKeyHash,
+                    authCode = authCode,
+                    approvalType = approvalType,
+                    clientSecret = clientSecret
+            ).await()
+        }
         accessTokenRepo.toCache(response)
         return response
     }
@@ -43,31 +43,28 @@ class DefaultAuthApiClient(
                                     androidKeyHash: String,
                                     clientSecret: String?
     ): AccessTokenResponse {
-        val response = authApi.issueAccessToken(
-                clientId = clientId,
-                redirectUri = null,
-                approvalType = approvalType,
-                androidKeyHash = androidKeyHash,
-                refreshToken = refreshToken,
-                clientSecret = clientSecret,
-                grantType = Constants.REFRESH_TOKEN
-        ).await()
+        val response = transformError {
+            authApi.issueAccessToken(
+                    clientId = clientId,
+                    redirectUri = null,
+                    approvalType = approvalType,
+                    androidKeyHash = androidKeyHash,
+                    refreshToken = refreshToken,
+                    clientSecret = clientSecret,
+                    grantType = Constants.REFRESH_TOKEN
+            ).await()
+        }
         accessTokenRepo.toCache(response)
         return response
-//                .compose(handleAuthError()).doOnSuccess { accessTokenRepo.toCache(it) }
     }
 
-    fun <T> handleAuthError(): SingleTransformer<T ,T> {
-        return SingleTransformer { it.onErrorResumeNext { Single.error(translateError(it)) }
-        }
-    }
-
-    fun translateError(t: Throwable): Throwable {
-        if (t is HttpException) {
-            val errorString = t.response().errorBody()?.string()
+    suspend fun <T> transformError(block: suspend () -> T): T {
+        try {
+            return block()
+        } catch (e: HttpException) {
+            val errorString = e.response().errorBody()?.string()
             val response = KakaoGsonFactory.base.fromJson(errorString, AuthErrorResponse::class.java)
-            return AuthResponseException(t.code(), response)
+            throw AuthResponseException(e.code(), response)
         }
-        return t
     }
 }

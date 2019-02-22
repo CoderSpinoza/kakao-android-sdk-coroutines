@@ -2,9 +2,7 @@ package com.kakao.sdk.auth
 
 import android.content.Context
 import com.kakao.sdk.common.KakaoSdkProvider
-import com.kakao.sdk.common.Constants
-import com.kakao.sdk.common.Utility
-import io.reactivex.Single
+import kotlinx.coroutines.Deferred
 
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
@@ -34,13 +32,13 @@ interface AuthCodeService {
      *
      * @return [Single] that will emit authorization code
      */
-    fun requestAuthCode(context: Context,
+    suspend fun requestAuthCode(context: Context,
                         scopes: List<String>,
                         clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
                         redirectUri: String = String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
                         approvalType: String = "individual",
                         kaHeader: String = KakaoSdkProvider.applicationContextInfo.kaHeader
-    ): Single<String>
+    ): String
 
     companion object {
         val instance by lazy {

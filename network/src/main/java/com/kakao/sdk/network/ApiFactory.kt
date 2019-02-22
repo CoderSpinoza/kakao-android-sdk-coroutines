@@ -8,7 +8,6 @@ import com.kakao.sdk.network.data.KakaoConverterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
@@ -36,13 +35,5 @@ object ApiFactory {
                 .client(clientBuilder.build())
                 .build()
 
-    }
-    fun withRx(url: String, clientBuilder: OkHttpClient.Builder): Retrofit {
-        return Retrofit.Builder().baseUrl(url)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(KakaoGsonFactory.base))
-                .addConverterFactory(KakaoConverterFactory())
-                .client(clientBuilder.build())
-                .build()
     }
 }

@@ -1,13 +1,9 @@
 package com.kakao.sdk.auth
 
 import com.google.gson.JsonParser
-import com.kakao.sdk.auth.exception.AuthResponseException
 import com.kakao.sdk.auth.model.AccessToken
-import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
-import io.reactivex.Single
-import io.reactivex.observers.TestObserver
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -17,7 +13,6 @@ import org.mockito.Mockito
 import org.mockito.Mockito.*
 import java.lang.RuntimeException
 import java.net.HttpURLConnection
-import java.util.concurrent.TimeUnit
 
 class DefaultAuthApiClientTest {
     private lateinit var authApiClient: DefaultAuthApiClient
@@ -51,7 +46,6 @@ class DefaultAuthApiClientTest {
                 val request = server.takeRequest()
                 val requestBody = Utility.parseQuery(request.body.readUtf8())
                 Assertions.assertEquals(Constants.AUTHORIZATION_CODE, requestBody[Constants.GRANT_TYPE])
-//                    .subscribe(observer)
             }
 
 
@@ -84,9 +78,9 @@ class DefaultAuthApiClientTest {
     @DisplayName("Refreshing access token")
     inner class RefreshAccessToken {
         @Test fun with200Response() {
-            val json = Single.just("json/token/no_rt.json")
-                    .map(Utility::getJson)
-            val jsonObject = json.map { JsonParser().parse(it) }.map { it.asJsonObject }.blockingGet()
+//            val json = Single.just("json/token/no_rt.json")
+//                    .map(Utility::getJson)
+//            val jsonObject = json.map { JsonParser().parse(it) }.map { it.asJsonObject }.blockingGet()
 //            json.map { MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody(it) }
 //                    .doOnSuccess { response -> server.enqueue(response) }
 //                    .flatMap { authApiClient.refreshAccessToken(refreshToken = "refresh_token", clientId = "client_id",

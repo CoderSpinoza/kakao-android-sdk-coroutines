@@ -4,25 +4,21 @@ import android.content.SharedPreferences
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.common.KakaoSdkProvider
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.*
+
 import java.util.*
 
 /**
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 27..
  */
-class DefaultAccessTokenRepo(val appCache: SharedPreferences =
-                                     KakaoSdkProvider.applicationContextInfo.sharedPreferences
+@ExperimentalCoroutinesApi
+class DefaultAccessTokenRepo(val appCache: SharedPreferences = KakaoSdkProvider.applicationContextInfo.sharedPreferences
 ) : AccessTokenRepo {
-    private val tokenSubject = BehaviorSubject.create<AccessToken>()
-    val tokenUpdates: Observable<AccessToken> = tokenSubject.hide()
+    val tokenUpdates: BroadcastChannel<AccessToken> = ConflatedBroadcastChannel(fromCache())
 
-    init {
-        tokenSubject.onNext(fromCache())
-    }
-
-    override fun observe(): Observable<AccessToken> {
+    override fun observe(): BroadcastChannel<AccessToken> {
         return tokenUpdates
     }
 
@@ -43,7 +39,7 @@ class DefaultAccessTokenRepo(val appCache: SharedPreferences =
             appCache.edit().putLong(rtExpiresAtKey, Date().time + 1000L * accessTokenResponse.refreshTokenExpiresIn).apply()
         }
         val token = fromCache()
-        tokenSubject.onNext(token)
+        tokenUpdates.sendBlocking(fromCache())
         return token
     }
 

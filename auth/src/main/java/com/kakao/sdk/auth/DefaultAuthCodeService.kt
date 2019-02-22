@@ -15,16 +15,21 @@ import com.kakao.sdk.auth.model.AuthErrorResponse
 import com.kakao.sdk.auth.presentation.AuthCodeCustomTabsActivity
 import com.kakao.sdk.auth.presentation.ScopeUpdateWebViewActivity
 import com.kakao.sdk.auth.presentation.UriUtility
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.SingleEmitter
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.runBlocking
 import java.net.HttpURLConnection
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 20..
  */
-class DefaultAuthCodeService(private val tokenObservable: Observable<AccessToken>) : AuthCodeService {
+@ExperimentalCoroutinesApi
+class DefaultAuthCodeService constructor(private val tokenChannel: BroadcastChannel<AccessToken>) : AuthCodeService {
     override fun requestAuthCode(context: Context,
                                  clientId: String,
                                  redirectUri: String,
@@ -33,32 +38,32 @@ class DefaultAuthCodeService(private val tokenObservable: Observable<AccessToken
         context.startActivity(Intent(context, AuthCodeCustomTabsActivity::class.java))
     }
 
-    override fun requestAuthCode(context: Context,
+    override suspend fun requestAuthCode(context: Context,
                                  scopes: List<String>,
                                  clientId: String,
                                  redirectUri: String,
                                  approvalType: String,
                                  kaHeader: String
-    ): Single<String> {
-        return Single.create<String> { emitter ->
-            val uri = UriUtility.updateScopeUri(clientId, redirectUri, approvalType, scopes)
-            val intent = scopeUpdateIntent(context, uri, redirectUri, kaHeader, emitter)
-            context.startActivity(intent)
-        }
+    ): String = suspendCoroutine { cont ->
+        val uri = UriUtility.updateScopeUri(clientId, redirectUri, approvalType, scopes)
+        val intent = scopeUpdateIntent(context, uri, redirectUri, kaHeader, cont)
+        context.startActivity(intent)
     }
 
     fun scopeUpdateIntent(context: Context,
                           uri: Uri,
                           redirectUri: String,
                           kaHeader: String,
-                          emitter: SingleEmitter<String>): Intent {
-        val headers = scopeUpdateHeaders(tokenObservable.blockingFirst().refreshToken, kaHeader)
-        val resultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
-            override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
-                this@DefaultAuthCodeService.onReceivedResult(resultCode, resultData, emitter)
+                          continuation: Continuation<String>): Intent {
+        return runBlocking {
+            val headers = scopeUpdateHeaders(tokenChannel.openSubscription().receive().refreshToken, kaHeader)
+            val resultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
+                override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+                    this@DefaultAuthCodeService.onReceivedResult(resultCode, resultData, continuation)
+                }
             }
+            UriUtility.scopeUpdateIntent(context, uri, redirectUri, headers, resultReceiver)
         }
-        return UriUtility.scopeUpdateIntent(context, uri, redirectUri, headers, resultReceiver)
     }
 
     fun scopeUpdateHeaders(refreshToken: String?, kaHeader: String): Bundle {
@@ -70,20 +75,20 @@ class DefaultAuthCodeService(private val tokenObservable: Observable<AccessToken
         return headers
     }
 
-    fun onReceivedResult(resultCode: Int, resultData: Bundle?, emitter: SingleEmitter<String>) {
+    fun onReceivedResult(resultCode: Int, resultData: Bundle?, continuation: Continuation<String>) {
         if (resultCode == Activity.RESULT_OK) {
             val uri = resultData?.getParcelable(ScopeUpdateWebViewActivity.KEY_URL) as Uri
             val code = uri.getQueryParameter(Constants.CODE)
             if (code != null) {
-                emitter.onSuccess(code)
+                continuation.resume(code)
             } else {
                 val error = uri.getQueryParameter(Constants.ERROR)
                 val errorDescription = uri.getQueryParameter(Constants.ERROR_DESCRIPTION)
-                emitter.onError(AuthResponseException(HttpURLConnection.HTTP_MOVED_TEMP, AuthErrorResponse(error, errorDescription)))
+                continuation.resumeWithException(AuthResponseException(HttpURLConnection.HTTP_MOVED_TEMP, AuthErrorResponse(error, errorDescription)))
             }
         } else {
             val exception = resultData?.getSerializable(ScopeUpdateWebViewActivity.KEY_EXCEPTION) as AuthException
-            emitter.onError(exception)
+            continuation.resumeWithException(exception)
         }
     }
 }

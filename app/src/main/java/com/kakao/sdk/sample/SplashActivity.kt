@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.auth.AccessTokenRepo
+import com.kakao.sdk.auth.exception.InvalidTokenException
 import com.kakao.sdk.sample.login.LoginActivity
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.GlobalScope
@@ -16,17 +17,24 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val token = AccessTokenRepo.instance.observe().blockingFirst()
-        Log.e("Token at startup", token.toString())
-
-        if (token.refreshToken == null) {
-            goToLogin()
-            return
+        runBlocking {
+            val token = AccessTokenRepo.instance.observe().openSubscription().receive()
+            Log.e("Token at startup", token.toString())
+            if (token.refreshToken == null) {
+                goToLogin()
+                return@runBlocking
+            }
         }
 
         GlobalScope.launch {
-            val tokenInfo = UserApiClient.instance.accessTokenInfo()
-            goToMain()
+            try {
+                val tokenInfo = UserApiClient.instance.accessTokenInfo()
+                goToMain()
+            } catch (e: Throwable) {
+                Log.e("??", e.javaClass.name)
+                goToLogin()
+            }
+
 
         }
     }

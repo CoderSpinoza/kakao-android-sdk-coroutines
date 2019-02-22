@@ -2,7 +2,8 @@ package com.kakao.sdk.auth
 
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
 
 /**
  * 카카오 API 에 사용되는 액세스 토큰, 리프레시 토큰을 관리하는 저장소.
@@ -41,9 +42,10 @@ interface AccessTokenRepo {
      *
      * @return hot [Observable] of [AccessToken]
      */
-    fun observe(): Observable<AccessToken>
+    fun observe(): BroadcastChannel<AccessToken>
 
     companion object {
+        @ExperimentalCoroutinesApi
         val instance by lazy {
             DefaultAccessTokenRepo() as AccessTokenRepo
         }

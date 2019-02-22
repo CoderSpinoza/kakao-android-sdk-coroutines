@@ -3,7 +3,8 @@ package com.kakao.sdk.auth.data
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.network.AccessTokenInterceptor
 import com.kakao.sdk.network.Constants
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.mockwebserver.MockResponse
@@ -16,12 +17,13 @@ import org.junit.jupiter.api.Test
 /**
  * @author kevin.kang. Created on 2018. 3. 30..
  */
+@ExperimentalCoroutinesApi
 class AccessTokenInterceptorTest {
     private lateinit var interceptor: AccessTokenInterceptor
 
     @BeforeEach
     fun setup() {
-        interceptor = AccessTokenInterceptor(Observable.just(AccessToken("access_token")))
+        interceptor = AccessTokenInterceptor(ConflatedBroadcastChannel(AccessToken("access_token")))
     }
 
     @Test

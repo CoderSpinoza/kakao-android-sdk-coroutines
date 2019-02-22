@@ -2,13 +2,18 @@ package com.kakao.sdk.auth
 
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
-import io.reactivex.Observable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import java.util.*
 
 /**
  * @author kevin.kang. Created on 2018. 5. 10..
  */
+@ExperimentalCoroutinesApi
 class TestAccessTokenRepo(var token: AccessToken): AccessTokenRepo {
+    override fun observe(): BroadcastChannel<AccessToken> = ConflatedBroadcastChannel(token)
+
     override fun fromCache(): AccessToken {
         return token
     }
@@ -26,9 +31,5 @@ class TestAccessTokenRepo(var token: AccessToken): AccessTokenRepo {
 
     override fun clearCache() {
         token = AccessToken()
-    }
-
-    override fun observe(): Observable<AccessToken> {
-        return Observable.just(token)
     }
 }
