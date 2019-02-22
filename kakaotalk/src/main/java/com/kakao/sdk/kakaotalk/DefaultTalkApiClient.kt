@@ -19,8 +19,9 @@ class DefaultTalkApiClient(val api: TalkApi = OAuthApiFactory.kapi.create(TalkAp
     }
 
     override suspend fun profile(secureResource: Boolean?): TalkProfile {
-        return api.profile(secureResource).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.profile(secureResource).await()
+        }
     }
 
     override suspend fun chatList(fromId: Int?,
@@ -28,21 +29,24 @@ class DefaultTalkApiClient(val api: TalkApi = OAuthApiFactory.kapi.create(TalkAp
                                   order: ChatOrder?,
                                   filter: ChatFilter?
                  ): ChatListResponse {
-        return api.chatList(fromId, limit, order?.value, filter?.value).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.chatList(fromId, limit, order?.value, filter?.value).await()
+        }
     }
 
     override suspend fun sendMemo(templateId: String,
                                   templateArgs: Map<String, String>?) {
-        return api.sendMemo(templateId, templateArgs).await()
-//                .compose(apiErrorInterceptor.handleCompletableError())
+        return apiErrorInterceptor.handleApiError {
+            api.sendMemo(templateId, templateArgs).await()
+        }
     }
 
     override suspend fun sendMessage(receiverType: String,
                                      receiverId: String,
                                      templateId: String,
                                      templateArgs: Map<String, String>?) {
-        return api.sendMessage(receiverType, receiverId, templateId, templateArgs).await()
-//                .compose(apiErrorInterceptor.handleCompletableError())
+        return apiErrorInterceptor.handleApiError {
+            api.sendMessage(receiverType, receiverId, templateId, templateArgs).await()
+        }
     }
 }

@@ -5,9 +5,6 @@ import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.kakaostory.entity.*
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import java.io.File
 
 /**
@@ -91,55 +88,16 @@ class DefaultStoryApiClient(val api: StoryApi = OAuthApiFactory.kapi.create(Stor
         }
     }
 
-
-
-    override suspend fun postNote(content: String,
-                                  permission: Story.Permission,
-                                  enableShare: Boolean,
-                                  androidExecParams: String?,
-                                  iosExecParams: String?,
-                                  androidMarketParams: String?,
-                                  iosMarketParams: String?): StoryPostResponse {
+    override suspend fun deleteStory(id: String) {
         return apiErrorInterceptor.handleApiError {
-            api.postNote(content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams).await()
-
+            api.deleteStory(id).await()
         }
     }
 
-    override suspend fun postPhoto(images: List<String>,
-                                   content: String,
-                                   permission: Story.Permission,
-                                   enableShare: Boolean,
-                                   androidExecParams: String?,
-                                   iosExecParams: String?,
-                                   androidMarketParams: String?,
-                                   iosMarketParams: String?): StoryPostResponse {
-        return api.postPhoto(KakaoGsonFactory.base.toJson(images), content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
-                .await()
-//                .compose(apiErrorInterceptor.handleApiError())
-    }
-
-    override suspend fun postLink(linkInfo: LinkInfo,
-                                  content: String,
-                                  permission: Story.Permission,
-                                  enableShare: Boolean,
-                                  androidExecParams: String?,
-                                  iosExecParams: String?,
-                                  androidMarketParams: String?,
-                                  iosMarketParams: String?): StoryPostResponse {
-        return api.postLink(linkInfo, content, permission, enableShare, androidExecParams, iosExecParams, androidMarketParams, iosMarketParams)
-                .await()
-//                .compose(apiErrorInterceptor.handleApiError())
-    }
-
-    override suspend fun deleteStory(id: String) {
-        return api.deleteStory(id).await()
-//                .compose(apiErrorInterceptor.handleCompletableError())
-    }
-
     override suspend fun scrapLink(url: String): LinkInfo {
-        return api.scrapLink(url).await()
-//                .compose(apiErrorInterceptor.handleApiError())
+        return apiErrorInterceptor.handleApiError {
+            api.scrapLink(url).await()
+        }
     }
 
     override suspend fun scrapImages(images: List<File>): List<String> {

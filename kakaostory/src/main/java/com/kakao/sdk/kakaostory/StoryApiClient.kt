@@ -41,32 +41,6 @@ interface StoryApiClient {
                   androidMarketParams: Map<String, String>? = null,
                   iosMarketParams: Map<String, String>? = null): StoryPostResponse
 
-    suspend fun postNote(content: String,
-                 permission: Story.Permission,
-                 enableShare: Boolean,
-                 androidExecParams: String? = null,
-                 iosExecParams: String? = null,
-                 androidMarketParams: String? = null,
-                 iosMarketParams: String? = null): StoryPostResponse
-
-    suspend fun postPhoto(images: List<String>,
-                  content: String,
-                  permission: Story.Permission,
-                  enableShare: Boolean,
-                  androidExecParams: String? = null,
-                  iosExecParams: String? = null,
-                  androidMarketParams: String? = null,
-                  iosMarketParams: String? = null): StoryPostResponse
-
-    suspend fun postLink(linkInfo: LinkInfo,
-                 content: String,
-                 permission: Story.Permission,
-                 enableShare: Boolean,
-                 androidExecParams: String? = null,
-                 iosExecParams: String? = null,
-                 androidMarketParams: String? = null,
-                 iosMarketParams: String? = null): StoryPostResponse
-
     suspend fun deleteStory(id: String): Unit
 
     suspend fun scrapLink(url: String): LinkInfo
