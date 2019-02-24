@@ -8,7 +8,6 @@ import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.auth.exception.InvalidScopeException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 /**

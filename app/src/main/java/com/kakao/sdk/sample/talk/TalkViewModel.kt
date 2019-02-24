@@ -8,7 +8,6 @@ import com.kakao.sdk.kakaotalk.entity.ChatFilter
 import com.kakao.sdk.auth.exception.InvalidScopeException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.lang.RuntimeException
 import javax.inject.Inject
 
