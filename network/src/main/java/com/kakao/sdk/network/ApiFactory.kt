@@ -14,8 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 object ApiFactory {
-    fun kapi(): Retrofit {
-        return withKakaoAgent("${Constants.SCHEME}://${Constants.KAPI}",
+    val kapi by lazy {
+        withKakaoAgent("${Constants.SCHEME}://${Constants.KAPI}",
                 OkHttpClient.Builder()
                         .addInterceptor(AppKeyInterceptor()))
     }

@@ -5,13 +5,13 @@ import android.net.Uri
 import com.kakao.sdk.common.ContextInfo
 import com.kakao.sdk.common.KakaoSdkProvider
 import com.kakao.sdk.message.template.DefaultTemplate
-import com.kakao.sdk.network.ApiSingleton
+import com.kakao.sdk.network.ApiFactory
 
 /**
  * @author kevin.kang. Created on 19/02/2019..
  */
 class DefaultKakaoLinkClient(val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo,
-                             val api: KakaoLinkApi = ApiSingleton.instance.create(KakaoLinkApi::class.java)
+                             val api: KakaoLinkApi = ApiFactory.kapi.create(KakaoLinkApi::class.java)
 ): KakaoLinkClient {
     override suspend fun isKakaoLinkAvailable(): Boolean {
         return true
