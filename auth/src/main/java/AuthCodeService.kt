@@ -2,7 +2,6 @@ package com.kakao.sdk.auth
 
 import android.content.Context
 import com.kakao.sdk.common.KakaoSdkProvider
-import kotlinx.coroutines.Deferred
 
 /**
  * @author kevin.kang. Created on 2018. 3. 20..

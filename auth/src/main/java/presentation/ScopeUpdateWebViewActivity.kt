@@ -58,7 +58,7 @@ class ScopeUpdateWebViewActivity : Activity() {
             webView.goBack()
         }
         val bundle = Bundle()
-        bundle.putSerializable(ScopeUpdateWebViewActivity.KEY_EXCEPTION, AuthCancelException())
+        bundle.putSerializable(KEY_EXCEPTION, AuthCancelException())
         resultReceiver.send(Activity.RESULT_CANCELED, bundle)
         super.onBackPressed()
     }
