@@ -6,17 +6,19 @@ import com.google.gson.annotations.SerializedName
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */
-data class Story(val id: String,
-                 val url: String,
-                 val mediaType: String,
-                 val createdAt: String,
-                 val commentCount: String,
-                 @SerializedName("like_count") val likeCount: String,
-                 val content: String,
-                 val permission: String,
-                 @SerializedName("media") val imageInfos: List<StoryImage>?,
-                 val likes: List<StoryLike>,
-                 val comments: List<StoryComment>) {
+data class Story(
+    val id: String,
+    val url: String,
+    val mediaType: String,
+    val createdAt: String,
+    val commentCount: String,
+    @SerializedName("like_count") val likeCount: String,
+    val content: String,
+    val permission: String,
+    @SerializedName("media") val imageInfos: List<StoryImage>?,
+    val likes: List<StoryLike>,
+    val comments: List<StoryComment>
+) {
     override fun toString(): String {
         return GsonBuilder().setPrettyPrinting().create().toJson(this)
     }

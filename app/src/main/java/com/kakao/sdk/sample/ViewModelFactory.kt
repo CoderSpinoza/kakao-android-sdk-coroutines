@@ -10,7 +10,9 @@ import javax.inject.Singleton
  * @author kevin.kang. Created on 2018. 5. 11..
  */
 @Singleton
-class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>): ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory @Inject constructor(
+    private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
+) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         try {
             return viewModels[modelClass]?.get() as T
@@ -18,5 +20,4 @@ class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Cl
             throw IllegalArgumentException("Wrong ViewModel")
         }
     }
-
 }

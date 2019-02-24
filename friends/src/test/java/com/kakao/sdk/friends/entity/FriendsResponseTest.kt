@@ -18,7 +18,7 @@ class FriendsResponseTest {
         val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
         val response = KakaoGsonFactory.base.fromJson(body, FriendsResponse::class.java)
         assertEquals(expected["total_count"].asInt, response.totalCount)
-        assertEquals(expected["result_id"].asString,  response.resultId)
+        assertEquals(expected["result_id"].asString, response.resultId)
         assertEquals(expected["elements"].asJsonArray.size(), response.friends.size)
     }
 }

@@ -14,7 +14,7 @@ import javax.inject.Inject
  * @author kevin.kang. Created on 2018. 5. 24..
  */
 @Singleton
-class TestViewModelFactory: ViewModelProvider.NewInstanceFactory() {
+class TestViewModelFactory : ViewModelProvider.NewInstanceFactory() {
     init {
         DaggerTestApplicationComponent.create().inject(this)
     }

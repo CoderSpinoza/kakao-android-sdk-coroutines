@@ -7,21 +7,24 @@ import android.os.SystemClock
 import org.junit.Rule
 import org.junit.Test
 
+/* ktlint-disable no-wildcard-imports */
 import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
+import org.mockito.Mockito.*
+import org.hamcrest.Matchers.*
+/* ktlint-enable no-wildcard-imports */
+
 import androidx.test.runner.AndroidJUnit4
 import android.util.Log
 import androidx.test.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.kakao.sdk.sample.R
-import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnit
 
-import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoRule
 import javax.inject.Inject

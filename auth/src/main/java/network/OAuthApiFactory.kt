@@ -18,7 +18,7 @@ object OAuthApiFactory {
 
     fun withClient(clientBuilder: OkHttpClient.Builder): Retrofit {
         clientBuilder.interceptors().add(0, AccessTokenInterceptor())
-        return  ApiFactory.withKakaoAgent("${Constants.SCHEME}://${Constants.KAPI}",
+        return ApiFactory.withKakaoAgent("${Constants.SCHEME}://${Constants.KAPI}",
                 clientBuilder)
     }
 
@@ -26,6 +26,7 @@ object OAuthApiFactory {
         clientBuilder.interceptors().add(0, KakaoAgentInterceptor())
         clientBuilder.interceptors().add(0, AppKeyInterceptor())
         return ApiFactory.withClient("${Constants.SCHEME}://${Constants.KAUTH}",
-                clientBuilder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)))
+                clientBuilder.addInterceptor(HttpLoggingInterceptor()
+                        .setLevel(HttpLoggingInterceptor.Level.BODY)))
     }
 }

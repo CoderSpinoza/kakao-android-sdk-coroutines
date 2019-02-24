@@ -13,7 +13,8 @@ import javax.inject.Inject
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-open class StoryViewModel @Inject constructor(private val storyApiClient: StoryApiClient) : ViewModel() {
+open class StoryViewModel @Inject constructor(private val storyApiClient: StoryApiClient)
+    : ViewModel() {
     val isStoryUser = MutableLiveData<Boolean>()
     val stories = MutableLiveData<List<Story>>()
     val requiredScopes = MutableLiveData<List<String>>()
@@ -32,7 +33,6 @@ open class StoryViewModel @Inject constructor(private val storyApiClient: StoryA
             } catch (e: InvalidScopeException) {
                 requiredScopes.postValue(e.errorResponse.requiredScopes)
             }
-
         }
     }
 

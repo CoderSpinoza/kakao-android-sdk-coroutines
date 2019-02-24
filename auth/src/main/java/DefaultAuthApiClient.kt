@@ -12,16 +12,17 @@ import retrofit2.HttpException
  * @author kevin.kang. Created on 2018. 3. 28..
  */
 class DefaultAuthApiClient(
-        val authApi: AuthApi = OAuthApiFactory.kauth.create(AuthApi::class.java),
-        val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance
-): AuthApiClient {
+    val authApi: AuthApi = OAuthApiFactory.kauth.create(AuthApi::class.java),
+    val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance
+) : AuthApiClient {
 
-    override suspend fun issueAccessToken(authCode: String,
-                                  clientId: String,
-                                  redirectUri: String,
-                                  approvalType: String,
-                                  androidKeyHash: String,
-                                  clientSecret: String?
+    override suspend fun issueAccessToken(
+        authCode: String,
+        clientId: String,
+        redirectUri: String,
+        approvalType: String,
+        androidKeyHash: String,
+        clientSecret: String?
     ): AccessTokenResponse {
         val response = transformError {
             authApi.issueAccessToken(
@@ -37,11 +38,12 @@ class DefaultAuthApiClient(
         return response
     }
 
-    override suspend fun refreshAccessToken(refreshToken: String,
-                                    clientId: String,
-                                    approvalType: String,
-                                    androidKeyHash: String,
-                                    clientSecret: String?
+    override suspend fun refreshAccessToken(
+        refreshToken: String,
+        clientId: String,
+        approvalType: String,
+        androidKeyHash: String,
+        clientSecret: String?
     ): AccessTokenResponse {
         val response = transformError {
             authApi.issueAccessToken(
@@ -63,7 +65,8 @@ class DefaultAuthApiClient(
             return block()
         } catch (e: HttpException) {
             val errorString = e.response().errorBody()?.string()
-            val response = KakaoGsonFactory.base.fromJson(errorString, AuthErrorResponse::class.java)
+            val response =
+                    KakaoGsonFactory.base.fromJson(errorString, AuthErrorResponse::class.java)
             throw AuthResponseException(e.code(), response)
         }
     }

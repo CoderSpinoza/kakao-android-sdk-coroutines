@@ -3,14 +3,20 @@ package com.kakao.sdk.kakaonavi
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.kakao.sdk.common.*
+import com.kakao.sdk.common.KakaoSdkProvider
+import com.kakao.sdk.common.KakaoGsonFactory
+import com.kakao.sdk.common.ApplicationInfo
+import com.kakao.sdk.common.ContextInfo
+import com.kakao.sdk.common.Constants as CommonConstants
 import com.kakao.sdk.kakaonavi.entity.KakaoNaviParams
 
 /**
  * @author kevin.kang. Created on 18/02/2019..
  */
-class DefaultKakaoNaviClient(private val applicationInfo: ApplicationInfo = KakaoSdkProvider.applicationContextInfo,
-                             private val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo): KakaoNaviClient {
+class DefaultKakaoNaviClient(
+    private val applicationInfo: ApplicationInfo = KakaoSdkProvider.applicationContextInfo,
+    private val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo
+) : KakaoNaviClient {
     override fun shareDestinationUri(params: KakaoNaviParams): Uri =
             baseUriBuilder(params).path("${Constants.SHARE_POI}.html").build()
 
@@ -23,7 +29,7 @@ class DefaultKakaoNaviClient(private val applicationInfo: ApplicationInfo = Kaka
             .appendQueryParameter(Constants.PARAM, KakaoGsonFactory.base.toJson(params))
             .appendQueryParameter(Constants.APIVER, Constants.APIVER_10)
             .appendQueryParameter(Constants.APPKEY, applicationInfo.clientId)
-            .appendQueryParameter(com.kakao.sdk.common.Constants.EXTRAS, contextInfo.extras.toString())
+            .appendQueryParameter(CommonConstants.EXTRAS, contextInfo.extras.toString())
 
     override fun isKakaoNaviInstalled(context: Context): Boolean {
         return context.packageManager.getLaunchIntentForPackage(Constants.NAVI_PACKAGE) != null

@@ -4,7 +4,7 @@ import androidx.lifecycle.Observer
 import android.content.Context
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.view.*
+import android.view.* // ktlint-disable no-wildcard-imports
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -39,7 +39,6 @@ class StoryDetailFragment : Fragment(), LifecycleOwner {
     private lateinit var binding: FragmentStoryDetailBinding
     private lateinit var viewModel: StoryViewModel
 
-
     private val storyObserver = Observer<Story> {
         updateStoryView(it!!)
     }
@@ -61,13 +60,18 @@ class StoryDetailFragment : Fragment(), LifecycleOwner {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story_detail, container, false)
+        binding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_story_detail, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(StoryViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory)
+                .get(StoryViewModel::class.java)
         binding.storyViewModel = viewModel
 
         viewModel.selectedStory.observe(this, storyObserver)

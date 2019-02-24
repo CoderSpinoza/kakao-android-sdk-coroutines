@@ -17,7 +17,8 @@ import dagger.multibindings.IntoMap
  */
 @Module
 abstract class ViewModelModule {
-    @Binds internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    @Binds internal abstract fun bindViewModelFactory(factory: ViewModelFactory):
+            ViewModelProvider.Factory
 
     @Binds @IntoMap @ViewModelKey(FriendsViewModel::class)
     internal abstract fun friendsViewModel(viewModel: FriendsViewModel): ViewModel
@@ -35,5 +36,5 @@ abstract class ViewModelModule {
     internal abstract fun userViewModel(viewModel: UserViewModel): ViewModel
 
     @Binds @IntoMap @ViewModelKey(TokenViewModel::class)
-    internal abstract fun  tokenViewModel(viewModel: TokenViewModel): ViewModel
+    internal abstract fun tokenViewModel(viewModel: TokenViewModel): ViewModel
 }

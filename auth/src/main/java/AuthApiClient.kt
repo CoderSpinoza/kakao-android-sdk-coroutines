@@ -16,12 +16,14 @@ interface AuthApiClient {
      *
      * @return [AccessTokenResponse].
      */
-    suspend fun issueAccessToken(authCode: String,
-                         clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
-                         redirectUri: String = String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
-                         approvalType: String = "individual",
-                         androidKeyHash: String = KakaoSdkProvider.applicationContextInfo.signingKeyHash,
-                         clientSecret: String? = KakaoSdkProvider.applicationContextInfo.clientSecret
+    suspend fun issueAccessToken(
+        authCode: String,
+        clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
+        redirectUri: String = String.format("kakao%s://oauth",
+                KakaoSdkProvider.applicationContextInfo.clientId),
+        approvalType: String = "individual",
+        androidKeyHash: String = KakaoSdkProvider.applicationContextInfo.signingKeyHash,
+        clientSecret: String? = KakaoSdkProvider.applicationContextInfo.clientSecret
     ): AccessTokenResponse
 
     /**
@@ -31,11 +33,12 @@ interface AuthApiClient {
      *
      * @return [AccessTokenResponse]
      */
-    suspend fun refreshAccessToken(refreshToken: String,
-                           clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
-                           approvalType: String = "individual",
-                           androidKeyHash: String = KakaoSdkProvider.applicationContextInfo.signingKeyHash,
-                           clientSecret: String? = KakaoSdkProvider.applicationContextInfo.clientSecret
+    suspend fun refreshAccessToken(
+        refreshToken: String,
+        clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
+        approvalType: String = "individual",
+        androidKeyHash: String = KakaoSdkProvider.applicationContextInfo.signingKeyHash,
+        clientSecret: String? = KakaoSdkProvider.applicationContextInfo.clientSecret
     ): AccessTokenResponse
 
     companion object {

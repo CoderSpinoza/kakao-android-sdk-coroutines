@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 
 /**
  * @author kevin.kang. Created on 2018. 3. 30..
@@ -34,7 +34,7 @@ class AppKeyInterceptorTest {
     }
 
     @Test
-    fun  interceptor() {
+    fun interceptor() {
         val client = OkHttpClient().newBuilder().addInterceptor(interceptor).build()
         val server = MockWebServer()
         server.start()
@@ -43,7 +43,9 @@ class AppKeyInterceptorTest {
         client.newCall(Request.Builder().url(server.url("/")).build()).execute()
         val request = server.takeRequest()
 
-        assertEquals(String.format("%s %s", com.kakao.sdk.common.Constants.KAKAO_AK, "test_app_key"), request.getHeader(Constants.AUTHORIZATION))
+        assertEquals(
+                String.format("%s %s", com.kakao.sdk.common.Constants.KAKAO_AK, "test_app_key"),
+                request.getHeader(Constants.AUTHORIZATION))
         server.shutdown()
     }
 }

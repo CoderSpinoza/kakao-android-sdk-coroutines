@@ -8,7 +8,8 @@ import javax.inject.Inject
 /**
  * @author kevin.kang. Created on 2018. 5. 24..
  */
-open class AddStoryViewModel @Inject constructor(private val storyApiClient: StoryApiClient) : ViewModel() {
+open class AddStoryViewModel @Inject constructor(private val storyApiClient: StoryApiClient) :
+        ViewModel() {
     val mContent = MutableLiveData<String>()
     open val canPost = MutableLiveData<Boolean>()
 

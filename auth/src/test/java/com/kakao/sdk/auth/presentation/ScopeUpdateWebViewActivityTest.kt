@@ -2,7 +2,11 @@ package com.kakao.sdk.auth.presentation
 
 import android.app.Activity
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.ResultReceiver
+import android.os.Bundle
 import android.webkit.WebViewClient
 import androidx.test.core.app.ApplicationProvider
 import androidx.webkit.WebResourceErrorCompat
@@ -11,6 +15,8 @@ import com.kakao.sdk.auth.TestUriUtility
 import com.kakao.sdk.auth.exception.AuthWebViewException
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.Robolectric
@@ -27,11 +33,13 @@ open class ScopeUpdateWebViewActivityTest {
         val uri = UriUtility.updateScopeUri("client_id", "kakao://oauth",
                 "individual", listOf("scope1", "scope2")).buildUpon()
                 .build()
-        val receiver = Mockito.spy(object: ResultReceiver(Handler(Looper.getMainLooper())) {
+        val receiver = Mockito.spy(object : ResultReceiver(Handler(Looper.getMainLooper())) {
             override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
-                Assertions.assertEquals(Activity.RESULT_OK, resultCode)
-                Assertions.assertNotNull(resultData)
-                Assertions.assertEquals("kakao://oauth", resultData!![ScopeUpdateWebViewActivity.KEY_URL]!!.toString())
+                assertEquals(Activity.RESULT_OK, resultCode)
+                assertNotNull(resultData)
+                assertEquals(
+                        "kakao://oauth",
+                        resultData!![ScopeUpdateWebViewActivity.KEY_URL]!!.toString())
             }
         })
 
@@ -48,7 +56,7 @@ open class ScopeUpdateWebViewActivityTest {
 
     @Test fun onBackPressed() {
         val uri = TestUriUtility.successfulRedirectUri()
-        val receiver = Mockito.spy(object: ResultReceiver(Handler(Looper.getMainLooper())) {
+        val receiver = Mockito.spy(object : ResultReceiver(Handler(Looper.getMainLooper())) {
             override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
                 Assertions.assertEquals(Activity.RESULT_CANCELED, resultCode)
                 Assertions.assertNotNull(resultData)
@@ -65,13 +73,14 @@ open class ScopeUpdateWebViewActivityTest {
 
     @Test fun onReceivedError() {
         val uri = TestUriUtility.successfulRedirectUri()
-        val receiver = Mockito.spy(object: ResultReceiver(Handler(Looper.getMainLooper())) {
+        val receiver = Mockito.spy(object : ResultReceiver(Handler(Looper.getMainLooper())) {
             override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
                 Assertions.assertEquals(Activity.RESULT_CANCELED, resultCode)
                 Assertions.assertNotNull(resultData)
                 Assertions.assertEquals(1, resultData?.size())
 
-                val exception = resultData?.getSerializable(ScopeUpdateWebViewActivity.KEY_EXCEPTION)
+                val exception =
+                        resultData?.getSerializable(ScopeUpdateWebViewActivity.KEY_EXCEPTION)
                 Assertions.assertEquals(AuthWebViewException::class.java, exception?.javaClass)
                 val casted = exception as AuthWebViewException
                 Assertions.assertEquals(WebViewClient.ERROR_FAILED_SSL_HANDSHAKE, casted.errorCode)

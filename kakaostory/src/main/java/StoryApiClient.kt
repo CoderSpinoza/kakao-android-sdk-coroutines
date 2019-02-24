@@ -1,7 +1,11 @@
 package com.kakao.sdk.kakaostory
 
-import com.kakao.sdk.kakaostory.entity.*
 import java.io.File
+import com.kakao.sdk.kakaostory.entity.IsStoryUserResponse
+import com.kakao.sdk.kakaostory.entity.Story
+import com.kakao.sdk.kakaostory.entity.StoryPostResponse
+import com.kakao.sdk.kakaostory.entity.StoryProfile
+import com.kakao.sdk.kakaostory.entity.LinkInfo
 
 /**
  * @author kevin.kang. Created on 2018. 5. 9..
@@ -15,31 +19,37 @@ interface StoryApiClient {
 
     suspend fun myStories(lastId: String? = null): List<Story>
 
-    suspend fun postNote(content: String,
-                 permission: Story.Permission,
-                 enableShare: Boolean,
-                 androidExecParams: Map<String, String>? = null,
-                 iosExecParams: Map<String, String>? = null,
-                 androidMarketParams: Map<String, String>? = null,
-                 iosMarketParams: Map<String, String>? = null): StoryPostResponse
+    suspend fun postNote(
+        content: String,
+        permission: Story.Permission,
+        enableShare: Boolean,
+        androidExecParams: Map<String, String>? = null,
+        iosExecParams: Map<String, String>? = null,
+        androidMarketParams: Map<String, String>? = null,
+        iosMarketParams: Map<String, String>? = null
+    ): StoryPostResponse
 
-    suspend fun postLink(linkInfo: LinkInfo,
-                 content: String,
-                 permission: Story.Permission,
-                 enableShare: Boolean,
-                 androidExecParams: Map<String, String>? = null,
-                 iosExecParams: Map<String, String>? = null,
-                 androidMarketParams: Map<String, String>? = null,
-                 iosMarketParams: Map<String, String>? = null): StoryPostResponse
+    suspend fun postLink(
+        linkInfo: LinkInfo,
+        content: String,
+        permission: Story.Permission,
+        enableShare: Boolean,
+        androidExecParams: Map<String, String>? = null,
+        iosExecParams: Map<String, String>? = null,
+        androidMarketParams: Map<String, String>? = null,
+        iosMarketParams: Map<String, String>? = null
+    ): StoryPostResponse
 
-    suspend fun postPhoto(images: List<String>,
-                  content: String,
-                  permission: Story.Permission,
-                  enableShare: Boolean,
-                  androidExecParams: Map<String, String>? = null,
-                  iosExecParams: Map<String, String>? = null,
-                  androidMarketParams: Map<String, String>? = null,
-                  iosMarketParams: Map<String, String>? = null): StoryPostResponse
+    suspend fun postPhoto(
+        images: List<String>,
+        content: String,
+        permission: Story.Permission,
+        enableShare: Boolean,
+        androidExecParams: Map<String, String>? = null,
+        iosExecParams: Map<String, String>? = null,
+        androidMarketParams: Map<String, String>? = null,
+        iosMarketParams: Map<String, String>? = null
+    ): StoryPostResponse
 
     suspend fun deleteStory(id: String): Unit
 

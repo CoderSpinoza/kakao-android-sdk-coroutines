@@ -8,9 +8,14 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.Mockito.spy
 import java.lang.RuntimeException
 import java.net.HttpURLConnection
 
@@ -23,7 +28,9 @@ class DefaultAuthApiClientTest {
     @BeforeEach fun setup() {
         accessTokenRepo = spy(TestAccessTokenRepo(AccessToken()))
         server = MockWebServer()
-        authApi = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder()).create(AuthApi::class.java)
+        authApi = ApiFactory.withClient(
+                server.url("/").toString(),
+                OkHttpClient.Builder()).create(AuthApi::class.java)
         authApiClient = DefaultAuthApiClient(authApi, accessTokenRepo)
     }
 
@@ -40,28 +47,30 @@ class DefaultAuthApiClientTest {
             server.enqueue(MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody(json))
 
             runBlocking {
-                authApi.issueAccessToken(authCode = "auth_code", clientId = "client_id", redirectUri = "redirect_uri",
-                        approvalType = Constants.INDIVIDUAL, androidKeyHash = "android_key_hash", clientSecret = "client_secret")
+                authApi.issueAccessToken(
+                        authCode = "auth_code", clientId = "client_id",
+                        redirectUri = "redirect_uri", approvalType = Constants.INDIVIDUAL,
+                        androidKeyHash = "android_key_hash", clientSecret = "client_secret")
 
                 val request = server.takeRequest()
                 val requestBody = Utility.parseQuery(request.body.readUtf8())
-                Assertions.assertEquals(Constants.AUTHORIZATION_CODE, requestBody[Constants.GRANT_TYPE])
+                assertEquals(Constants.AUTHORIZATION_CODE, requestBody[Constants.GRANT_TYPE])
             }
-
-
-
         }
 
         @Test fun with401Response() = runBlocking {
             val json = Utility.getJson("json/auth_errors/expired_refresh_token.json")
             val jsonElement = JsonParser().parse(json).asJsonObject
-            server.enqueue(MockResponse().setResponseCode(HttpURLConnection.HTTP_UNAUTHORIZED).setBody(json))
+            server.enqueue(MockResponse()
+                    .setResponseCode(HttpURLConnection.HTTP_UNAUTHORIZED).setBody(json))
 
             try {
-                val result = authApiClient.issueAccessToken(authCode = "auth_code", clientId = "client_id", redirectUri = "redirect_uri",
-                        approvalType = Constants.INDIVIDUAL, androidKeyHash = "android_key_hash", clientSecret = "client_secret")
+                val result =
+                        authApiClient.issueAccessToken(
+                                authCode = "auth_code", clientId = "client_id",
+                                redirectUri = "redirect_uri", approvalType = Constants.INDIVIDUAL,
+                                androidKeyHash = "android_key_hash", clientSecret = "client_secret")
             } catch (e: RuntimeException) {
-
             }
         }
 
@@ -98,7 +107,7 @@ class DefaultAuthApiClientTest {
 
     private fun <T> any(): T {
         Mockito.any<T>()
-        return  uninitialized()
+        return uninitialized()
     }
 
     @Suppress("UNCHECKED_CAST")

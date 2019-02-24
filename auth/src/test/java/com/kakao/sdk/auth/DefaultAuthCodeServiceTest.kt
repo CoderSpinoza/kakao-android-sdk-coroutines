@@ -11,7 +11,10 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.fail
+
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.coroutines.suspendCoroutine
@@ -22,13 +25,17 @@ class DefaultAuthCodeServiceTest {
     lateinit var authCodeService: DefaultAuthCodeService
 
     @Before fun setup() {
-        val testToken = AccessToken(accessToken = "test_access_token", refreshToken = "test_refresh_token")
+        val testToken = AccessToken(
+                accessToken = "test_access_token",
+                refreshToken = "test_refresh_token")
         authCodeService = DefaultAuthCodeService(ConflatedBroadcastChannel(testToken))
     }
 
     @Test fun onReceivedResult() = runBlocking {
         val bundle = Bundle()
-        bundle.putParcelable(ScopeUpdateWebViewActivity.KEY_URL, TestUriUtility.successfulRedirectUri())
+        bundle.putParcelable(
+                ScopeUpdateWebViewActivity.KEY_URL,
+                TestUriUtility.successfulRedirectUri())
 
         val code = suspendCoroutine<String> {
             authCodeService.onReceivedResult(Activity.RESULT_OK, bundle, it)
@@ -39,7 +46,6 @@ class DefaultAuthCodeServiceTest {
     @Test fun onReceivedResultWithFailure() {
         val bundle = Bundle()
         bundle.putParcelable(ScopeUpdateWebViewActivity.KEY_URL, TestUriUtility.failedRedirectUri())
-
 
         assertThrows(AuthResponseException::class.java) {
             runBlocking {

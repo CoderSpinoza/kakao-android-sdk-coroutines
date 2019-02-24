@@ -35,7 +35,6 @@ open class TalkViewModel @Inject constructor(private val apiClient: TalkApiClien
             } catch (e: RuntimeException) {
                 chatsError.postValue(e)
             }
-
         }
     }
 

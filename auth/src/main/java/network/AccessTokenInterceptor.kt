@@ -13,7 +13,9 @@ import okhttp3.Response
  * @author kevin.kang. Created on 2018. 3. 22..
  */
 @ExperimentalCoroutinesApi
-class AccessTokenInterceptor  constructor(private val recentToken: BroadcastChannel<AccessToken> = AccessTokenRepo.instance.observe()) : Interceptor {
+class AccessTokenInterceptor(
+    private val recentToken: BroadcastChannel<AccessToken> = AccessTokenRepo.instance.observe()
+) : Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response {
         var request = chain?.request() as Request
         runBlocking {
@@ -23,6 +25,6 @@ class AccessTokenInterceptor  constructor(private val recentToken: BroadcastChan
                     .build()
 //            recentToken.cancel()
         }
-        return  chain.proceed(request)
+        return chain.proceed(request)
     }
 }

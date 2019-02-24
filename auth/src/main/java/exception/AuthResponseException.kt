@@ -13,7 +13,10 @@ import com.kakao.sdk.auth.model.AuthErrorResponse
  * @since 2.0.0
  * @author kevin.kang. Created on 2018. 5. 5..
  */
-class AuthResponseException(val httpStatus: Int, val response: AuthErrorResponse) : AuthException(response.errorDescription ?: "No error description") {
+class AuthResponseException(
+    val httpStatus: Int,
+    val response: AuthErrorResponse
+) : AuthException(response.errorDescription ?: "No error description") {
     override fun toString(): String {
         return GsonBuilder().setPrettyPrinting().create().toJson(this)
     }

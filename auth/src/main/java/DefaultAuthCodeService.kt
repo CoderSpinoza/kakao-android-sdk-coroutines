@@ -29,40 +29,50 @@ import kotlin.coroutines.suspendCoroutine
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 @ExperimentalCoroutinesApi
-class DefaultAuthCodeService constructor(private val tokenChannel: BroadcastChannel<AccessToken>) : AuthCodeService {
-    override fun requestAuthCode(context: Context,
-                                 clientId: String,
-                                 redirectUri: String,
-                                 approvalType: String,
-                                 kaHeader: String) {
+class DefaultAuthCodeService(private val tokenChannel: BroadcastChannel<AccessToken>)
+    : AuthCodeService {
+    override fun requestAuthCode(
+        context: Context,
+        clientId: String,
+        redirectUri: String,
+        approvalType: String,
+        kaHeader: String
+    ) {
         context.startActivity(Intent(context, AuthCodeCustomTabsActivity::class.java))
     }
 
-    override suspend fun requestAuthCode(context: Context,
-                                 scopes: List<String>,
-                                 clientId: String,
-                                 redirectUri: String,
-                                 approvalType: String,
-                                 kaHeader: String
+    override suspend fun requestAuthCode(
+        context: Context,
+        scopes: List<String>,
+        clientId: String,
+        redirectUri: String,
+        approvalType: String,
+        kaHeader: String
     ): String = suspendCoroutine { cont ->
         val uri = UriUtility.updateScopeUri(clientId, redirectUri, approvalType, scopes)
         val intent = scopeUpdateIntent(context, uri, redirectUri, kaHeader, cont)
         context.startActivity(intent)
     }
 
-    fun scopeUpdateIntent(context: Context,
-                          uri: Uri,
-                          redirectUri: String,
-                          kaHeader: String,
-                          continuation: Continuation<String>): Intent {
+    fun scopeUpdateIntent(
+        context: Context,
+        uri: Uri,
+        redirectUri: String,
+        kaHeader: String,
+        continuation: Continuation<String>
+    ): Intent {
         return runBlocking {
-            val headers = scopeUpdateHeaders(tokenChannel.openSubscription().receive().refreshToken, kaHeader)
+            val headers = scopeUpdateHeaders(
+                    tokenChannel.openSubscription().receive().refreshToken,
+                    kaHeader)
             val resultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
                 override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
-                    this@DefaultAuthCodeService.onReceivedResult(resultCode, resultData, continuation)
+                    this@DefaultAuthCodeService
+                            .onReceivedResult(resultCode, resultData, continuation)
                 }
             }
-            UriUtility.scopeUpdateIntent(context, uri, redirectUri, headers, resultReceiver)
+            UriUtility
+                    .scopeUpdateIntent(context, uri, redirectUri, headers, resultReceiver)
         }
     }
 
@@ -84,10 +94,17 @@ class DefaultAuthCodeService constructor(private val tokenChannel: BroadcastChan
             } else {
                 val error = uri.getQueryParameter(Constants.ERROR)
                 val errorDescription = uri.getQueryParameter(Constants.ERROR_DESCRIPTION)
-                continuation.resumeWithException(AuthResponseException(HttpURLConnection.HTTP_MOVED_TEMP, AuthErrorResponse(error, errorDescription)))
+                continuation.resumeWithException(
+                        AuthResponseException(
+                                HttpURLConnection.HTTP_MOVED_TEMP,
+                                AuthErrorResponse(error, errorDescription)
+                        )
+                )
             }
         } else {
-            val exception = resultData?.getSerializable(ScopeUpdateWebViewActivity.KEY_EXCEPTION) as AuthException
+            val exception =
+                    resultData?.getSerializable(ScopeUpdateWebViewActivity.KEY_EXCEPTION)
+                            as AuthException
             continuation.resumeWithException(exception)
         }
     }

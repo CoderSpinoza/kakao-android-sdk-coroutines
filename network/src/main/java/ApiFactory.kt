@@ -23,7 +23,8 @@ object ApiFactory {
     fun withKakaoAgent(url: String, clientBuilder: OkHttpClient.Builder): Retrofit {
         clientBuilder.interceptors().add(0, KakaoAgentInterceptor())
         return withClient(url,
-                clientBuilder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                clientBuilder.addInterceptor(HttpLoggingInterceptor()
+                        .setLevel(HttpLoggingInterceptor.Level.BODY))
         )
     }
 
@@ -34,6 +35,5 @@ object ApiFactory {
                 .addConverterFactory(KakaoConverterFactory())
                 .client(clientBuilder.build())
                 .build()
-
     }
 }

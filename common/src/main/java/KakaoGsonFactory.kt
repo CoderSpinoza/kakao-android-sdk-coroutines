@@ -1,6 +1,15 @@
 package com.kakao.sdk.common
 
-import com.google.gson.*
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.JsonSerializer
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonElement
+import com.google.gson.JsonPrimitive
+
 import java.lang.reflect.Type
 
 /**
@@ -21,7 +30,11 @@ object KakaoGsonFactory {
 
     val base: Gson = GsonBuilder()
             .registerTypeHierarchyAdapter(IntEnum::class.java, object : JsonSerializer<IntEnum> {
-                override fun serialize(src: IntEnum?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
+                override fun serialize(
+                    src: IntEnum?,
+                    typeOfSrc: Type?,
+                    context: JsonSerializationContext?
+                ): JsonElement {
                     return JsonPrimitive(src?.getValue())
                 }
             })

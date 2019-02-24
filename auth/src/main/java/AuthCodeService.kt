@@ -14,11 +14,13 @@ interface AuthCodeService {
      *
      * @return [Unit]
      */
-    fun requestAuthCode(context: Context,
-                        clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
-                        redirectUri: String = String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
-                        approvalType: String = "individual",
-                        kaHeader: String = KakaoSdkProvider.applicationContextInfo.kaHeader
+    fun requestAuthCode(
+        context: Context,
+        clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
+        redirectUri: String =
+                String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
+        approvalType: String = "individual",
+        kaHeader: String = KakaoSdkProvider.applicationContextInfo.kaHeader
     )
 
     /**
@@ -31,12 +33,14 @@ interface AuthCodeService {
      *
      * @return [Single] that will emit authorization code
      */
-    suspend fun requestAuthCode(context: Context,
-                        scopes: List<String>,
-                        clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
-                        redirectUri: String = String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
-                        approvalType: String = "individual",
-                        kaHeader: String = KakaoSdkProvider.applicationContextInfo.kaHeader
+    suspend fun requestAuthCode(
+        context: Context,
+        scopes: List<String>,
+        clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
+        redirectUri: String =
+                String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
+        approvalType: String = "individual",
+        kaHeader: String = KakaoSdkProvider.applicationContextInfo.kaHeader
     ): String
 
     companion object {

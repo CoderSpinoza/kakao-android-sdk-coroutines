@@ -6,15 +6,17 @@ import com.google.gson.annotations.SerializedName
 /**
  * @author kevin.kang. Created on 2018. 3. 22..
  */
-data class Friend(val uuid: String,
-                  @SerializedName("id") val userId: Long,
-                  val serviceUserId: Long,
-                  @SerializedName("app_registered") val isAppRegistered: Boolean,
-                  val profileNickname: String,
-                  val profileThumbnailImage: String,
-                  val talkOs: String,
-                  @SerializedName("allowed_msg") val isAllowedMsg: Boolean,
-                  val relation: FriendRelation) {
+data class Friend(
+    val uuid: String,
+    @SerializedName("id") val userId: Long,
+    val serviceUserId: Long,
+    @SerializedName("app_registered") val isAppRegistered: Boolean,
+    val profileNickname: String,
+    val profileThumbnailImage: String,
+    val talkOs: String,
+    @SerializedName("allowed_msg") val isAllowedMsg: Boolean,
+    val relation: FriendRelation
+) {
 
     enum class Relation(val value: String) {
         @SerializedName("N/A")

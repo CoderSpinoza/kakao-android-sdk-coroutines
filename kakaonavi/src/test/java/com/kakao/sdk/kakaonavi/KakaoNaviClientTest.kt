@@ -2,11 +2,21 @@ package com.kakao.sdk.kakaonavi
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.*
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageInfo
+import android.content.pm.ResolveInfo
+import android.content.pm.PackageManager
+import android.content.pm.Signature
+
 import androidx.test.core.app.ApplicationProvider
 import com.google.gson.JsonObject
-import com.kakao.sdk.common.ApplicationInfo
-import com.kakao.sdk.kakaonavi.entity.*
+import com.kakao.sdk.kakaonavi.entity.CoordType
+import com.kakao.sdk.kakaonavi.entity.Destination
+import com.kakao.sdk.kakaonavi.entity.KakaoNaviParams
+import com.kakao.sdk.kakaonavi.entity.NaviOptions
+import com.kakao.sdk.kakaonavi.entity.VehicleType
+import com.kakao.sdk.kakaonavi.entity.RpOption
+
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -57,9 +67,14 @@ class KakaoNaviClientTest {
         info.signatures = arrayOf(Signature("00000000"))
         shadow.installPackage(info)
 
-        val uri = client.shareDestinationUri(KakaoNaviParams(
-                Destination("name", 30, 30),
-                NaviOptions(CoordType.WGS84, vehicleType = VehicleType.SECOND, rpOption = RpOption.FREE)
+        val uri = client.shareDestinationUri(
+                KakaoNaviParams(
+                    Destination("name", 30, 30),
+                    NaviOptions(
+                        CoordType.WGS84,
+                        vehicleType = VehicleType.SECOND,
+                        rpOption = RpOption.FREE
+                    )
         ))
         System.out.println(uri.getQueryParameter(com.kakao.sdk.common.Constants.EXTRAS))
         System.out.println(uri.getQueryParameter(Constants.PARAM))

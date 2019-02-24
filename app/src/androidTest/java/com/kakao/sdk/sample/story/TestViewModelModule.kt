@@ -7,8 +7,9 @@ import com.kakao.sdk.sample.talk.TalkViewModel
 import com.kakao.sdk.sample.user.UserViewModel
 import dagger.Module
 import dagger.Provides
-import org.mockito.Mockito.*
 import javax.inject.Singleton
+
+import org.mockito.Mockito.* // ktlint-disable no-wildcard-imports
 
 /**
  * @author kevin.kang. Created on 2018. 5. 24..
@@ -27,14 +28,12 @@ class TestViewModelModule {
     @Provides @Singleton
     fun storyViewModel(): StoryViewModel {
         return mock(StoryViewModel::class.java)
-
     }
 
     @Provides @Singleton
     fun addStoryViewModel(): AddStoryViewModel {
-        Log.e("TestViewModelModule: ${this}", "addStoryViewModel")
+        Log.e("TestViewModelModule: $this", "addStoryViewModel")
         return mock(AddStoryViewModel::class.java)
-
     }
 
     @Provides @Singleton
@@ -43,7 +42,7 @@ class TestViewModelModule {
     }
 
     @Provides @Singleton internal fun viewModelFactory(): ViewModelProvider.Factory {
-        Log.e("TestViewModelModule: ${this}", "viewModelFactory")
+        Log.e("TestViewModelModule: $this", "viewModelFactory")
         return TestViewModelFactory()
     }
 }

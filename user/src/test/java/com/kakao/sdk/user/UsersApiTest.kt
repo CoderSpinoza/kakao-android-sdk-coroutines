@@ -9,8 +9,12 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import retrofit2.Retrofit
 import java.io.File
 import java.net.URLDecoder
@@ -98,7 +102,10 @@ class UsersApiTest {
             val requestBody = Utility.parseQuery(request.body.readUtf8())
 
             assertEquals("POST", request.method)
-            val requestProperties = KakaoGsonFactory.base.fromJson<JsonObject>(URLDecoder.decode(requestBody["properties"], "UTF-8"), JsonObject::class.java)
+            val requestProperties =
+                    KakaoGsonFactory.base.fromJson<JsonObject>(
+                        URLDecoder.decode(requestBody["properties"], "UTF-8"),
+                        JsonObject::class.java)
             assertEquals("value1", requestProperties["key1"].asString)
             assertEquals("value2", requestProperties["key2"].asString)
             expected["id"].asLong == response.id

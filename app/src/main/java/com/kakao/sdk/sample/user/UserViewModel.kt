@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @Suppress("UNUSED_VARIABLE")
@@ -57,8 +55,8 @@ open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) :
 
     fun unlink() {
         GlobalScope.launch {
-             userApiClient.unlink()
-             logoutEvent.postValue(null)
-         }
+            userApiClient.unlink()
+            logoutEvent.postValue(null)
+        }
     }
 }

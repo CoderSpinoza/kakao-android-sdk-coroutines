@@ -5,7 +5,7 @@ import com.kakao.sdk.common.IntEnum
 /**
  * @author kevin.kang. Created on 18/02/2019..
  */
-enum class RpOption(val option: Int): IntEnum {
+enum class RpOption(val option: Int) : IntEnum {
     /**
      * Fastest route
      */

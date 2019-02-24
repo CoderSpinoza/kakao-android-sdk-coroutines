@@ -33,8 +33,6 @@ class SplashActivity : AppCompatActivity() {
                 Log.e("??", e.javaClass.name)
                 goToLogin()
             }
-
-
         }
     }
 
@@ -46,7 +44,10 @@ class SplashActivity : AppCompatActivity() {
 
     fun goToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 }

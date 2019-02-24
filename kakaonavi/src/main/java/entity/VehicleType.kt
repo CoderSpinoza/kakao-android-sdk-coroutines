@@ -5,7 +5,7 @@ import com.kakao.sdk.common.IntEnum
 /**
  * @author kevin.kang. Created on 18/02/2019..
  */
-enum class VehicleType(val intValue: Int): IntEnum {
+enum class VehicleType(val intValue: Int) : IntEnum {
     /**
      * 1종 (승용차/소형승합차/소형화물화)
      */

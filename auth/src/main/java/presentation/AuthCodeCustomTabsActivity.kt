@@ -11,7 +11,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsService
 import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.common.Utility
-import java.util.*
+import java.util.Arrays
 
 /**
  * @suppress
@@ -24,14 +24,22 @@ class AuthCodeCustomTabsActivity : Activity() {
     }
 
     fun openChromeCustomTab() {
-        val continueUri = Uri.Builder().scheme(com.kakao.sdk.network.Constants.SCHEME).authority(com.kakao.sdk.network.Constants.KAUTH)
+        val continueUri = Uri.Builder()
+                .scheme(com.kakao.sdk.network.Constants.SCHEME)
+                .authority(com.kakao.sdk.network.Constants.KAUTH)
                 .path(Constants.AUTHORIZE_PATH)
-                .appendQueryParameter(Constants.CLIENT_ID, Utility.getMetadata(this, com.kakao.sdk.common.Constants.META_APP_KEY))
-                .appendQueryParameter(Constants.REDIRECT_URI, String.format("kakao%s://oauth", Utility.getMetadata(this, com.kakao.sdk.common.Constants.META_APP_KEY)))
+                .appendQueryParameter(Constants.CLIENT_ID,
+                        Utility.getMetadata(this,
+                                com.kakao.sdk.common.Constants.META_APP_KEY))
+                .appendQueryParameter(Constants.REDIRECT_URI,
+                        String.format("kakao%s://oauth",
+                                Utility.getMetadata(this,
+                                        com.kakao.sdk.common.Constants.META_APP_KEY)))
                 .appendQueryParameter(Constants.RESPONSE_TYPE, Constants.CODE)
                 .appendQueryParameter(Constants.APPROVAL_TYPE, "individual")
                 .build()
-        CustomTabsIntent.Builder().enableUrlBarHiding().setShowTitle(true).build().launchUrl(this, continueUri)
+        CustomTabsIntent.Builder().enableUrlBarHiding().setShowTitle(true).build()
+                .launchUrl(this, continueUri)
 //        val packageName = resolveCustomTabsPackageName(this, continueUri)
 //        CustomTabsClient.bindCustomTabsService(this, packageName, object : CustomTabsServiceConnection() {
 //            override fun onCustomTabsServiceConnected(name: ComponentName, client: CustomTabsClient) {
@@ -54,7 +62,8 @@ class AuthCodeCustomTabsActivity : Activity() {
 
         // get ResolveInfo for default browser
         val browserIntent = Intent(Intent.ACTION_VIEW, uri)
-        val resolveInfo = context.packageManager.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
+        val resolveInfo = context.packageManager
+                .resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
 
         // get ResolveInfos for browsers that support custom tabs protocol
         val serviceIntent = Intent()

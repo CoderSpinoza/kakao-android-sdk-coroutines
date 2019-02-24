@@ -11,7 +11,6 @@ import com.kakao.sdk.sample.MainActivity
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.ActivityLoginBinding
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {

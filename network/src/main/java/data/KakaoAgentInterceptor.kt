@@ -10,7 +10,9 @@ import okhttp3.Response
 /**
  * @author kevin.kang. Created on 2018. 3. 22..
  */
-class KakaoAgentInterceptor(val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo): Interceptor {
+class KakaoAgentInterceptor(
+    val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo
+) : Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response {
         var request = chain?.request() as Request
 

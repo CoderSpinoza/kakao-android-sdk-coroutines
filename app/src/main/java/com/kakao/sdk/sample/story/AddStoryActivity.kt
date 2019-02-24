@@ -24,7 +24,7 @@ class AddStoryActivity : AppCompatActivity() {
 //        Log.e("AddStoryActivity", "onCreate")
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_story)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddStoryViewModel::class.java)
-        Log.e("AddStoryActivity", "activity viewModel: ${viewModel}")
+        Log.e("AddStoryActivity", "activity viewModel: $viewModel")
     }
 
     override fun onResume() {

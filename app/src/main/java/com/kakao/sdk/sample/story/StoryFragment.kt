@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,13 +18,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.kakaostory.entity.StoryImage
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.auth.AuthCodeService
-import com.kakao.sdk.sample.*
+import com.kakao.sdk.sample.HostFragment
+import com.kakao.sdk.sample.MainActivity
+import com.kakao.sdk.sample.Navigator
+import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.FragmentStoryBinding
 import dagger.android.support.AndroidSupportInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -71,17 +69,23 @@ class StoryFragment : Fragment(), LifecycleOwner {
         binding.scopeErrorBinding.scopeErrorLayout.visibility = View.VISIBLE
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         storyAdapter = StoryAdapter(listOf())
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story, container, false)
+        binding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_story, container, false)
         binding.setLifecycleOwner(this)
 
-        storyViewModel = ViewModelProviders.of(activity!!, viewModelFactory)[StoryViewModel::class.java]
+        storyViewModel =
+                ViewModelProviders.of(activity!!, viewModelFactory)[StoryViewModel::class.java]
         binding.storyViewModel = storyViewModel
         binding.storiesList.adapter = storyAdapter
-        binding.storiesList.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.storiesList
+                .addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         storyViewModel.clearSelectedStory()
 
@@ -163,4 +167,3 @@ fun loadImage(imageView: ImageView, imageUrls: List<StoryImage>?) {
         imageView.visibility = View.GONE
     }
 }
-

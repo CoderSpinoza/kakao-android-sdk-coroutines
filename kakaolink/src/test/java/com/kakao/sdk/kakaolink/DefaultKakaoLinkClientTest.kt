@@ -14,7 +14,8 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
@@ -29,9 +30,12 @@ class DefaultKakaoLinkClientTest {
     @Before fun setup() {
         server = MockWebServer()
         client = DefaultKakaoLinkClient(
-                contextInfo = TestContextInfo(kaHeader = "ka_header", signingKeyHash = "key_hash", extras = JsonObject()),
-                api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
-                        .create(KakaoLinkApi::class.java)
+                contextInfo = TestContextInfo(
+                        kaHeader = "ka_header", signingKeyHash = "key_hash", extras = JsonObject()),
+                api = ApiFactory.withClient(
+                        server.url("/").toString(),
+                        OkHttpClient.Builder()
+                ).create(KakaoLinkApi::class.java)
         )
     }
 
@@ -52,7 +56,9 @@ class DefaultKakaoLinkClientTest {
             )
             assertNotNull(intent?.data)
             val uri = intent.data
-            assertEquals(jsonObject[Constants.TEMPLATE_ID].asString, uri!!.getQueryParameter(Constants.TEMPLATE_ID))
+            assertEquals(
+                    jsonObject[Constants.TEMPLATE_ID].asString,
+                    uri!!.getQueryParameter(Constants.TEMPLATE_ID))
         }
     }
 }

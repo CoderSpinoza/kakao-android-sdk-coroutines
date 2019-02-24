@@ -18,9 +18,11 @@ class TestApplication : Application(), HasActivityInjector, HasSupportFragmentIn
     @Inject lateinit var dispatchingSupportFragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
-    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
+    override fun activityInjector(): AndroidInjector<Activity> =
+            dispatchingAndroidInjector
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingSupportFragmentInjector
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> =
+            dispatchingSupportFragmentInjector
 
     lateinit var component: TestApplicationComponent
     fun component(): TestApplicationComponent {
@@ -29,7 +31,8 @@ class TestApplication : Application(), HasActivityInjector, HasSupportFragmentIn
     override fun onCreate() {
         super.onCreate()
         KakaoSdkProvider.applicationContextInfo =
-                ApplicationContextInfo(context = this, clientId = "dd4e9cb75815cbdf7d87ed721a659baf",
+                ApplicationContextInfo(
+                        context = this, clientId = "dd4e9cb75815cbdf7d87ed721a659baf",
                         clientSecret = "50LxgHsF3Q3ayNa3nJpTTMEfBR8KkY7X")
         component = DaggerTestApplicationComponent.create()
         component.inject(this)

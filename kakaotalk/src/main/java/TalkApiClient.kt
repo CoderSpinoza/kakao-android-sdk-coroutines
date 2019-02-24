@@ -11,22 +11,29 @@ import com.kakao.sdk.kakaotalk.entity.ChatOrder
 interface TalkApiClient {
     suspend fun profile(secureResource: Boolean? = null): TalkProfile
 
-    suspend fun chatList(fromId: Int? = null,
-                 limit: Int? = null,
-                 order: ChatOrder? = null,
-                 filter: ChatFilter? = null
+    suspend fun chatList(
+        fromId: Int? = null,
+        limit: Int? = null,
+        order: ChatOrder? = null,
+        filter: ChatFilter? = null
     ): ChatListResponse
 
-    suspend fun sendMemo(templateId: String,
-                 templateArgs: Map<String, String>? = null)
+    suspend fun sendMemo(
+        templateId: String,
+        templateArgs: Map<String, String>? = null
+    )
 
-    suspend fun sendMessage(receiverType: String,
-                    receiverId: String,
-                    templateId: String,
-                    templateArgs: Map<String, String>? = null)
+    suspend fun sendMessage(
+        receiverType: String,
+        receiverId: String,
+        templateId: String,
+        templateArgs: Map<String, String>? = null
+    )
 
-    suspend fun sendMessage(receiverType: String,
-                    receiverId: String)
+    suspend fun sendMessage(
+        receiverType: String,
+        receiverId: String
+    )
 
     companion object {
         val instance by lazy { DefaultTalkApiClient() as TalkApiClient }

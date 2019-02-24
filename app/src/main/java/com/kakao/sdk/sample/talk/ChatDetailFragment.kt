@@ -39,13 +39,18 @@ class ChatDetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_detail, container, false)
+        binding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_chat_detail, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(TalkViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory)
+                .get(TalkViewModel::class.java)
         binding.talkViewModel = viewModel
         return binding.root
     }

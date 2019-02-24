@@ -10,7 +10,7 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvFileSource
 
@@ -24,25 +24,29 @@ class AuthApiRequestTest {
     @BeforeEach fun setup() {
         server = MockWebServer()
         server.start()
-        api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder()).create(AuthApi::class.java)
+        api = ApiFactory.withClient(
+                server.url("/").toString(),
+                OkHttpClient.Builder()).create(AuthApi::class.java)
         val response = MockResponse().setResponseCode(200)
         server.enqueue(response)
     }
 
     @CsvFileSource(resources = ["/csv/token_requests.csv"], numLinesToSkip = 1)
-    @ParameterizedTest fun simple(clientId: String,
-                                  redirectUri: String,
-                                  approvalType: String,
-                                  androidKeyHash: String,
-                                  code: String?,
-                                  refreshToken: String?,
-                                  clientSecret: String?,
-                                  grantType: String
-                                  ) {
+    @ParameterizedTest fun simple(
+        clientId: String,
+        redirectUri: String,
+        approvalType: String,
+        androidKeyHash: String,
+        code: String?,
+        refreshToken: String?,
+        clientSecret: String?,
+        grantType: String
+    ) {
 
         runBlocking {
             api.issueAccessToken(clientId, redirectUri, approvalType, androidKeyHash,
-                    authCode = code, refreshToken = refreshToken, clientSecret = clientSecret, grantType = grantType)
+                    authCode = code, refreshToken = refreshToken, clientSecret = clientSecret,
+                    grantType = grantType)
 //                .subscribe(TestObserver<AccessTokenResponse>())
         }
 

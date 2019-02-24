@@ -23,7 +23,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowPackageManager
-import java.util.*
+import java.util.Locale
 
 /**
  * @author kevin.kang. Created on 2018. 3. 30..
@@ -55,7 +55,6 @@ class KakaoAgentInterceptorTest {
                 get() = Utility.getKeyHash(application)
             override val extras: JsonObject
                 get() = Utility.getExtras(application)
-
         })
     }
 
@@ -73,7 +72,12 @@ class KakaoAgentInterceptorTest {
         val headerMap = parseKAHeader(request.getHeader(Constants.KA))
         assertEquals(BuildConfig.VERSION_NAME, headerMap[Constants.SDK])
         assertEquals(String.format("android-%s", Build.VERSION.SDK_INT), headerMap[Constants.OS])
-        assertEquals(String.format("%s-%s", Locale.getDefault().language.toLowerCase(), Locale.getDefault().country.toUpperCase()), headerMap[Constants.LANG])
+        assertEquals(
+                String.format(
+                        "%s-%s",
+                        Locale.getDefault().language.toLowerCase(),
+                        Locale.getDefault().country.toUpperCase()),
+                headerMap[Constants.LANG])
         assertTrue(headerMap.containsKey(Constants.ORIGIN))
         assertTrue(headerMap.containsKey(Constants.DEVICE))
         assertEquals(application.packageName, headerMap[Constants.ANDROID_PKG])
@@ -82,7 +86,8 @@ class KakaoAgentInterceptorTest {
 
     fun parseKAHeader(header: String): Map<String, String> {
         val map = hashMapOf<String, String>()
-        header.split(" ").map { kv -> kv.split("/") }.forEach { map[it[0]] = it[1] }
+        header.split(" ").map { kv -> kv.split("/") }
+                .forEach { map[it[0]] = it[1] }
         return map
     }
 }

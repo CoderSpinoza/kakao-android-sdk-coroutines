@@ -7,7 +7,8 @@ import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 
 /**
  * @author kevin.kang. Created on 2018. 4. 25..
@@ -31,7 +32,9 @@ class AccessTokenResponseTest {
             assertNull(response.refreshToken)
         }
         if (expected.has(Constants.REFRESH_TOKEN_EXPIRES_IN)) {
-            assertEquals(expected[Constants.REFRESH_TOKEN_EXPIRES_IN].asLong, response.refreshTokenExpiresIn)
+            assertEquals(
+                    expected[Constants.REFRESH_TOKEN_EXPIRES_IN].asLong,
+                    response.refreshTokenExpiresIn)
         } else {
             assertNull(response.refreshTokenExpiresIn)
         }

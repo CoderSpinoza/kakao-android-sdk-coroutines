@@ -10,7 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowLog
-import java.util.*
+import java.util.Date
 
 /**
  * @author kevin.kang. Created on 2018. 3. 28..
@@ -27,11 +27,18 @@ class DefaultAccessTokenRepoTest {
     @Test
     fun toCache() {
         accessTokenRepo = DefaultAccessTokenRepo(getEmptyPreferences())
-        var response = AccessTokenResponse("new_test_access_token", "new_test_refresh_token",
-                60 * 60, 60 * 60 * 12, "bearer")
+        var response = AccessTokenResponse(
+                "new_test_access_token",
+                "new_test_refresh_token",
+                60 * 60,
+                60 * 60 * 12,
+                "bearer")
         accessTokenRepo.toCache(response)
-        response = AccessTokenResponse(accessToken = "new_test_access_token_2", accessTokenExpiresIn = 60 * 60 * 2,
-                tokenType = "bearer", refreshTokenExpiresIn = 60L * 60 * 24 * 30)
+        response = AccessTokenResponse(
+                accessToken = "new_test_access_token_2",
+                accessTokenExpiresIn = 60 * 60 * 2,
+                tokenType = "bearer", refreshTokenExpiresIn = 60L * 60 * 24 * 30
+        )
         accessTokenRepo.toCache(response)
 //        val token = accessTokenRepo.toCache(response).subscribe()
     }
@@ -47,15 +54,22 @@ class DefaultAccessTokenRepoTest {
     }
 
     fun getEmptyPreferences(): SharedPreferences {
-        return ApplicationProvider.getApplicationContext<Application>().getSharedPreferences("test_app_key", Context.MODE_PRIVATE)
+        return ApplicationProvider.getApplicationContext<Application>()
+                .getSharedPreferences("test_app_key", Context.MODE_PRIVATE)
     }
 
     fun getFullPreferences(): SharedPreferences {
-        val preferences = ApplicationProvider.getApplicationContext<Application>().getSharedPreferences("test_app_key", Context.MODE_PRIVATE)
+        val preferences =
+                ApplicationProvider.getApplicationContext<Application>()
+                        .getSharedPreferences("test_app_key", Context.MODE_PRIVATE)
         preferences.edit().putString(DefaultAccessTokenRepo.atKey, "test_access_token").commit()
         preferences.edit().putString(DefaultAccessTokenRepo.rtKey, "test_refresh_token").commit()
-        preferences.edit().putLong(DefaultAccessTokenRepo.atExpiresAtKey, Date().time + 1000L * 60 * 60 * 12).commit()
-        preferences.edit().putLong(DefaultAccessTokenRepo.rtExpiresAtKey, Date().time + 1000L * 60 * 60 * 24 * 30).commit()
+        preferences.edit().putLong(
+                DefaultAccessTokenRepo.atExpiresAtKey,
+                Date().time + 1000L * 60 * 60 * 12).commit()
+        preferences.edit().putLong(
+                DefaultAccessTokenRepo.rtExpiresAtKey,
+                Date().time + 1000L * 60 * 60 * 24 * 30).commit()
         return preferences
     }
 }

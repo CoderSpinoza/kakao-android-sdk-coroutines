@@ -23,4 +23,3 @@ object Constants {
 
     const val EXTRAS = "extras"
 }
-

@@ -2,7 +2,7 @@ package com.kakao.sdk.kakaostory.domain
 
 import com.kakao.sdk.kakaostory.Constants
 import com.kakao.sdk.kakaostory.StoryApi
-import com.kakao.sdk.kakaostory.entity.*
+import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
 import kotlinx.coroutines.runBlocking
@@ -12,7 +12,9 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -93,13 +95,15 @@ class StoryApiTest {
     }
 
     @MethodSource("postNoteProvider")
-    @ParameterizedTest fun postNote(content: String,
-                                    permission: Story.Permission,
-                                    enableShare: Boolean,
-                                    params1: String?,
-                                    params2: String?,
-                                    params3: String?,
-                                    params4: String?) {
+    @ParameterizedTest fun postNote(
+        content: String,
+        permission: Story.Permission,
+        enableShare: Boolean,
+        params1: String?,
+        params2: String?,
+        params3: String?,
+        params4: String?
+    ) {
         runBlocking {
             api.postNote(content, permission, enableShare, params1, params2, params3, params4)
         }
@@ -145,7 +149,6 @@ class StoryApiTest {
     @Disabled
     @ParameterizedTest fun postLink() {
     }
-
 
     @ValueSource(strings = ["", "last_id"])
     @ParameterizedTest fun deleteStory(id: String) {

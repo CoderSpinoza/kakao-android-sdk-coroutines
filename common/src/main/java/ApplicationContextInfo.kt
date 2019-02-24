@@ -7,10 +7,11 @@ import com.google.gson.JsonObject
 /**
  * @author kevin.kang. Created on 20/02/2019..
  */
-class ApplicationContextInfo(context: Context,
-                             clientId: String,
-                             approvalType: String = "individual",
-                             clientSecret: String? = null
+class ApplicationContextInfo(
+    context: Context,
+    clientId: String,
+    approvalType: String = "individual",
+    clientSecret: String? = null
 ) : ApplicationInfo, ContextInfo {
     private val mClientId: String = clientId
     private val mApprovalType: String = approvalType
@@ -18,7 +19,8 @@ class ApplicationContextInfo(context: Context,
     private val mKaHeader: String = Utility.getKAHeader(context)
     private val mKeyHash: String = Utility.getKeyHash(context)
     private val mExtras: JsonObject = Utility.getExtras(context)
-    private val mSharedPreferences: SharedPreferences = context.getSharedPreferences(clientId, Context.MODE_PRIVATE)
+    private val mSharedPreferences: SharedPreferences =
+            context.getSharedPreferences(clientId, Context.MODE_PRIVATE)
 
     override val clientId: String
         get() = mClientId

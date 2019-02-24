@@ -22,7 +22,8 @@ interface UserApiClient {
         val instance: UserApiClient by lazy { DefaultUserApiClient() }
 
         fun withClient(clientBuilder: OkHttpClient.Builder): UserApiClient {
-            return DefaultUserApiClient(userApi = OAuthApiFactory.withClient(clientBuilder).create(UserApi::class.java))
+            return DefaultUserApiClient(userApi =
+            OAuthApiFactory.withClient(clientBuilder).create(UserApi::class.java))
         }
     }
 }

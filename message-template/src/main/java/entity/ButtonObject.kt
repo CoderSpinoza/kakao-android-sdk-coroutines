@@ -11,5 +11,7 @@ import com.kakao.sdk.message.template.Constants
  *
  * @author kevin.kang.
  */
-data class ButtonObject(@SerializedName(Constants.TITLE) val title: String,
-                        @SerializedName(Constants.LINK) val link: LinkObject)
+data class ButtonObject(
+    @SerializedName(Constants.TITLE) val title: String,
+    @SerializedName(Constants.LINK) val link: LinkObject
+)

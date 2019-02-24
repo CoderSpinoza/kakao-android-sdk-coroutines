@@ -4,7 +4,8 @@ import com.kakao.sdk.message.template.entity.ButtonObject
 import com.kakao.sdk.message.template.entity.ContentObject
 import com.kakao.sdk.message.template.entity.LinkObject
 import com.kakao.sdk.message.template.entity.SocialObject
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 
 class FeedTemplateTest {

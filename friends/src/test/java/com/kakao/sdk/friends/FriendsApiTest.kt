@@ -7,8 +7,12 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import retrofit2.Retrofit
 import java.io.File
 
@@ -20,7 +24,8 @@ class FriendsApiTest {
     private lateinit var retrofit: Retrofit
     private lateinit var server: MockWebServer
 
-    @BeforeEach fun setup() {
+    @BeforeEach
+    fun setup() {
         server = MockWebServer()
         server.start()
         retrofit = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
@@ -30,7 +35,8 @@ class FriendsApiTest {
     @Nested
     @DisplayName("/v1/friends")
     inner class GetFriends {
-        @Test fun success() {
+        @Test
+        fun success() {
             val uri = javaClass.classLoader.getResource("json/friends/friends1.json")
             val file = File(uri.path)
             val body = String(file.readBytes())
@@ -38,7 +44,6 @@ class FriendsApiTest {
             val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
-
 
             runBlocking {
                 val friendsResponse = api.friends().await()

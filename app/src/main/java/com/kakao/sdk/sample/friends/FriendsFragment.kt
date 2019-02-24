@@ -9,18 +9,17 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.auth.AuthCodeService
 import com.kakao.sdk.sample.HostFragment
 
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.FriendsFragmentBinding
 import dagger.android.support.AndroidSupportInjection
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class FriendsFragment : Fragment() {
@@ -29,7 +28,6 @@ class FriendsFragment : Fragment() {
     private lateinit var binding: FriendsFragmentBinding
     private lateinit var viewModel: FriendsViewModel
     private lateinit var friendsAdapter: FriendsAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +39,19 @@ class FriendsFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.friends_fragment, container, false)
                 as FriendsFragmentBinding
         binding.lifecycleOwner = this
 
         friendsAdapter = FriendsAdapter(listOf())
 
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(FriendsViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory)
+                .get(FriendsViewModel::class.java)
         binding.friendsViewModel = viewModel
         binding.friendsList.adapter = friendsAdapter
         viewModel.friends.observe(this, Observer {
@@ -106,5 +108,3 @@ fun loadImage(imageView: ImageView, imageUrl: String?) {
         Glide.with(imageView.context).load(R.drawable.thumb_talk).into(imageView)
     }
 }
-
-

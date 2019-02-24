@@ -12,7 +12,9 @@ import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -68,7 +70,6 @@ class KakaoLinkApiTest {
 
         runBlocking {
             val response = api.validateDefault(template)
-
         }
         val request = server.takeRequest()
         val params = com.kakao.sdk.common.Utility.parseQuery(request.requestUrl.query())
@@ -79,7 +80,11 @@ class KakaoLinkApiTest {
     }
 
     @MethodSource("scrapProvider")
-    @ParameterizedTest fun scrap(url: String, templateId: String, templateArgs: Map<String, String>?) {
+    @ParameterizedTest fun scrap(
+        url: String,
+        templateId: String,
+        templateArgs: Map<String, String>?
+    ) {
         api.validateScrap(url, templateId, templateArgs)
         val request = server.takeRequest()
         val params = com.kakao.sdk.common.Utility.parseQuery(request.requestUrl.query())
@@ -121,7 +126,8 @@ class KakaoLinkApiTest {
             return Stream.of(
                     Arguments.of("request_url", "1234", null),
                     Arguments.of("request_url", "1234", mapOf(Pair("key1", "value1"))),
-                    Arguments.of("request_url", "1234", mapOf(Pair("key1", "value1"), Pair("key2", "\"value2\"")))
+                    Arguments.of("request_url", "1234",
+                            mapOf(Pair("key1", "value1"), Pair("key2", "\"value2\"")))
             )
         }
     }

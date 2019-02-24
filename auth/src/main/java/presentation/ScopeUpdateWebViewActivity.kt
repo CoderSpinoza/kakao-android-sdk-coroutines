@@ -71,7 +71,7 @@ class ScopeUpdateWebViewActivity : Activity() {
         const val KEY_EXCEPTION = "key.exception"
     }
 
-    inner class ScopeUpdateWebViewClient: WebViewClientCompat() {
+    inner class ScopeUpdateWebViewClient : WebViewClientCompat() {
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val uri = request.url
@@ -97,15 +97,29 @@ class ScopeUpdateWebViewActivity : Activity() {
         }
 
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-        override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceErrorCompat) {
+        override fun onReceivedError(
+            view: WebView,
+            request: WebResourceRequest,
+            error: WebResourceErrorCompat
+        ) {
             val bundle = Bundle()
-            bundle.putSerializable(KEY_EXCEPTION, AuthWebViewException(error.errorCode, error.description.toString(), request.url.toString()))
+            bundle.putSerializable(
+                KEY_EXCEPTION,
+                AuthWebViewException(
+                        error.errorCode,
+                        error.description.toString(),
+                        request.url.toString()))
             resultReceiver.send(Activity.RESULT_CANCELED, bundle)
             finish()
         }
 
         @Suppress("OverridingDeprecatedMember", "DEPRECATION")
-        override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+        override fun onReceivedError(
+            view: WebView?,
+            errorCode: Int,
+            description: String?,
+            failingUrl: String?
+        ) {
             super.onReceivedError(view, errorCode, description, failingUrl)
         }
     }

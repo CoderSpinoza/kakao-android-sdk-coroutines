@@ -51,10 +51,12 @@ class TalkApiTest {
     }
 
     @CsvFileSource(resources = ["/csv/chat_list.csv"], numLinesToSkip = 1)
-    @ParameterizedTest fun chatList(fromId: Int? = null,
-                                    limit: Int? = null,
-                                    order: String? = null,
-                                    filter: String? = null) = runBlocking {
+    @ParameterizedTest fun chatList(
+        fromId: Int? = null,
+        limit: Int? = null,
+        order: String? = null,
+        filter: String? = null
+    ) = runBlocking {
         api.chatList(fromId, limit, order, filter)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
@@ -66,7 +68,8 @@ class TalkApiTest {
     }
 
     @MethodSource("sendMemoProvider")
-    @ParameterizedTest fun sendMemo(templateId: String, templateArgs: Map<String, String>?) = runBlocking {
+    @ParameterizedTest
+    fun sendMemo(templateId: String, templateArgs: Map<String, String>?) = runBlocking {
         api.sendMemo(templateId, templateArgs)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())
@@ -87,10 +90,12 @@ class TalkApiTest {
     }
 
     @MethodSource("sendMessageProvider")
-    @ParameterizedTest fun sendMessage(receiverIdType: String,
-                                       receiverId: String,
-                                       templateId: String,
-                                       templateArgs: Map<String, String>?) = runBlocking {
+    @ParameterizedTest fun sendMessage(
+        receiverIdType: String,
+        receiverId: String,
+        templateId: String,
+        templateArgs: Map<String, String>?
+    ) = runBlocking {
         api.sendMessage(receiverIdType, receiverId, templateId, templateArgs)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())
@@ -130,8 +135,8 @@ class TalkApiTest {
         @JvmStatic fun sendMessageProvider(): Stream<Arguments> {
             return Stream.of(
                     Arguments.of("user_id", "1234", "1234", null),
-                    Arguments.of("uuid","1234", "1234", mapOf<String, String>()),
-                    Arguments.of("chat_id","1234", "1234", mapOf(Pair("key1", "value1")))
+                    Arguments.of("uuid", "1234", "1234", mapOf<String, String>()),
+                    Arguments.of("chat_id", "1234", "1234", mapOf(Pair("key1", "value1")))
             )
         }
     }

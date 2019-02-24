@@ -7,7 +7,11 @@ import org.junit.jupiter.api.Test
 
 class LocationTemplateTest {
     @Test fun empty() {
-        val template = LocationTemplate(address = "address", content = ContentObject("title", "imageUrl", LinkObject()))
-        System.out.println(GsonBuilder().setPrettyPrinting().create().toJson(template, LocationTemplate::class.java))
+        val template = LocationTemplate(
+                address = "address",
+                content = ContentObject("title", "imageUrl", LinkObject()))
+        System.out.println(
+                GsonBuilder().setPrettyPrinting().create()
+                        .toJson(template, LocationTemplate::class.java))
     }
 }

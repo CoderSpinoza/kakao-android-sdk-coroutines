@@ -11,7 +11,7 @@ import io.reactivex.subjects.PublishSubject
 /**
  * @author kevin.kang. Created on 2018. 4. 23..
  */
-class StoryAdapter(var stories: List<Story>): RecyclerView.Adapter<StoryHolder>() {
+class StoryAdapter(var stories: List<Story>) : RecyclerView.Adapter<StoryHolder>() {
     private val clickSubject = PublishSubject.create<Story>()
     val clickEvents: Observable<Story> = clickSubject.hide()
 

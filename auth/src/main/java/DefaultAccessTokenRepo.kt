@@ -5,16 +5,18 @@ import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.common.KakaoSdkProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.*
-
-import java.util.*
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.channels.sendBlocking
+import java.util.Date
 
 /**
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 27..
  */
 @ExperimentalCoroutinesApi
-class DefaultAccessTokenRepo(val appCache: SharedPreferences = KakaoSdkProvider.applicationContextInfo.sharedPreferences
+class DefaultAccessTokenRepo(
+    val appCache: SharedPreferences = KakaoSdkProvider.applicationContextInfo.sharedPreferences
 ) : AccessTokenRepo {
     val tokenUpdates: BroadcastChannel<AccessToken> = ConflatedBroadcastChannel(fromCache())
 
@@ -34,9 +36,13 @@ class DefaultAccessTokenRepo(val appCache: SharedPreferences = KakaoSdkProvider.
         if (accessTokenResponse.refreshToken != null) {
             appCache.edit().putString(rtKey, accessTokenResponse.refreshToken).apply()
         }
-        appCache.edit().putLong(atExpiresAtKey, Date().time + 1000L * accessTokenResponse.accessTokenExpiresIn).apply()
+        appCache.edit().putLong(
+                atExpiresAtKey,
+                Date().time + 1000L * accessTokenResponse.accessTokenExpiresIn).apply()
         if (accessTokenResponse.refreshTokenExpiresIn != null) {
-            appCache.edit().putLong(rtExpiresAtKey, Date().time + 1000L * accessTokenResponse.refreshTokenExpiresIn).apply()
+            appCache.edit().putLong(
+                    rtExpiresAtKey,
+                    Date().time + 1000L * accessTokenResponse.refreshTokenExpiresIn).apply()
         }
         val token = fromCache()
         tokenUpdates.sendBlocking(fromCache())

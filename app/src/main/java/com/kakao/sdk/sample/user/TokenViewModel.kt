@@ -9,13 +9,13 @@ import javax.inject.Inject
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-class TokenViewModel @Inject constructor(private val accessTokenRepo: AccessTokenRepo) : ViewModel() {
+class TokenViewModel @Inject constructor(private val accessTokenRepo: AccessTokenRepo)
+    : ViewModel() {
     var tokenInfo: AccessToken = accessTokenRepo.fromCache()
     val accessToken = ObservableField<String>()
     val refreshToken = ObservableField<String>()
     val atExpiresAt = ObservableField<String>()
     val rtExpiresAt = ObservableField<String>()
-
 
     fun onCreate() {}
     fun onResume() {}

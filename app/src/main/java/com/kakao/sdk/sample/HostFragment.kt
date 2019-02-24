@@ -1,17 +1,23 @@
 package com.kakao.sdk.sample
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-open class HostFragment: Fragment() {
+open class HostFragment : Fragment() {
     private lateinit var fragment: Fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_host, container, false)
         replaceFragment(fragment, false)
@@ -28,7 +34,8 @@ open class HostFragment: Fragment() {
     }
 
     fun replaceFragment(fragment: Fragment, addToBackStack: Boolean) {
-        val transaction = childFragmentManager.beginTransaction().replace(R.id.hosted_fragment, fragment)
+        val transaction =
+                childFragmentManager.beginTransaction().replace(R.id.hosted_fragment, fragment)
         if (addToBackStack) {
             transaction.addToBackStack(null)
         }

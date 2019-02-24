@@ -5,13 +5,13 @@ import com.kakao.sdk.auth.model.AccessTokenResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import java.util.*
+import java.util.Date
 
 /**
  * @author kevin.kang. Created on 2018. 5. 10..
  */
 @ExperimentalCoroutinesApi
-class TestAccessTokenRepo(var token: AccessToken): AccessTokenRepo {
+class TestAccessTokenRepo(var token: AccessToken) : AccessTokenRepo {
     override fun observe(): BroadcastChannel<AccessToken> = ConflatedBroadcastChannel(token)
 
     override fun fromCache(): AccessToken {

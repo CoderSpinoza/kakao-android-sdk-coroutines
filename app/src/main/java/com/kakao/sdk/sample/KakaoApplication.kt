@@ -20,12 +20,15 @@ class KakaoApplication : Application(), HasActivityInjector, HasSupportFragmentI
     @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingSupportFragmentInjector
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> =
+            dispatchingSupportFragmentInjector
 
     override fun onCreate() {
         super.onCreate()
         KakaoSdkProvider.applicationContextInfo =
-                ApplicationContextInfo(context = this, clientId = "dd4e9cb75815cbdf7d87ed721a659baf",
+                ApplicationContextInfo(
+                        context = this,
+                        clientId = "dd4e9cb75815cbdf7d87ed721a659baf",
                         clientSecret = "50LxgHsF3Q3ayNa3nJpTTMEfBR8KkY7X")
         DaggerApplicationComponent.create().inject(this)
     }

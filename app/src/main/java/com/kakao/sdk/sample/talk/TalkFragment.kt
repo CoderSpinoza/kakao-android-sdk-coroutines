@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Menu
+import android.view.MenuInflater
 import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.Spinner
@@ -17,13 +20,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.kakao.sdk.kakaotalk.entity.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.auth.AuthCodeService
-import com.kakao.sdk.sample.*
+import com.kakao.sdk.sample.HostFragment
+import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.FragmentTalkBinding
 import dagger.android.support.AndroidSupportInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -47,10 +47,14 @@ class TalkFragment : Fragment(), AdapterView.OnItemSelectedListener, LifecycleOw
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_talk, container, false)
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(TalkViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory)
+                .get(TalkViewModel::class.java)
 
         chatAdapter = ChatAdapter(emptyList())
         binding.chatsList.adapter = chatAdapter
@@ -135,4 +139,3 @@ fun loadImage(imageView: ImageView, chat: Chat) {
     }
     Glide.with(imageView.context).load(R.drawable.thumb_talk).into(imageView)
 }
-

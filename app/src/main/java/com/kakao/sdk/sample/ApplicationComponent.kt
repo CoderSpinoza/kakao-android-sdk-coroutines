@@ -9,5 +9,6 @@ import javax.inject.Singleton
  * @author kevin.kang. Created on 2018. 5. 17..
  */
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, ApplicationModule::class, ViewModelModule::class, ApiClientModule::class])
-interface ApplicationComponent: AndroidInjector<KakaoApplication>
+@Component(modules = [AndroidInjectionModule::class, ApplicationModule::class,
+    ViewModelModule::class, ApiClientModule::class])
+interface ApplicationComponent : AndroidInjector<KakaoApplication>

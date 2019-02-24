@@ -8,7 +8,12 @@ import android.os.ResultReceiver
 import com.kakao.sdk.auth.Constants
 
 object UriUtility {
-    fun updateScopeUri(clientId: String, redirectUri: String, approvalType: String, scopes: List<String>): Uri {
+    fun updateScopeUri(
+        clientId: String,
+        redirectUri: String,
+        approvalType: String,
+        scopes: List<String>
+    ): Uri {
         val builder = Uri.Builder()
                 .scheme(com.kakao.sdk.network.Constants.SCHEME)
                 .authority(com.kakao.sdk.network.Constants.KAUTH).path(Constants.AUTHORIZE_PATH)
@@ -20,12 +25,21 @@ object UriUtility {
         return builder.build()
     }
 
-    fun scopeUpdateIntent(context: Context, uri: Uri, redirectUri: String, headers: Bundle, resultReceiver: ResultReceiver): Intent {
+    fun scopeUpdateIntent(
+        context: Context,
+        uri: Uri,
+        redirectUri: String,
+        headers: Bundle,
+        resultReceiver: ResultReceiver
+    ): Intent {
         return Intent(context, ScopeUpdateWebViewActivity::class.java)
                 .putExtra(ScopeUpdateWebViewActivity.KEY_URL, uri)
                 .putExtra(ScopeUpdateWebViewActivity.KEY_REDIRECT_URI, redirectUri)
                 .putExtra(ScopeUpdateWebViewActivity.KEY_HEADERS, headers)
                 .putExtra(ScopeUpdateWebViewActivity.KEY_RESULT_RECEIVER, resultReceiver)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .addFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+                                or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                or Intent.FLAG_ACTIVITY_CLEAR_TOP)
     }
 }

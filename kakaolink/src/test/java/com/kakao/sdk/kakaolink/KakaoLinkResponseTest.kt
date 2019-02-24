@@ -20,8 +20,14 @@ class KakaoLinkResponseTest {
     }
 
     companion object {
-        val paths = listOf("default_commerce", "default_feed", "default_list", "default_location", "default_text",
-            "validate")
+        val paths = listOf(
+                "default_commerce",
+                "default_feed",
+                "default_list",
+                "default_location",
+                "default_text",
+                "validate"
+        )
         @Suppress("unused")
         @JvmStatic fun responseProvider(): Stream<Arguments> {
             return paths
@@ -32,5 +38,4 @@ class KakaoLinkResponseTest {
                     .stream()
         }
     }
-
 }

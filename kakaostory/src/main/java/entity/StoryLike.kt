@@ -5,8 +5,10 @@ import com.google.gson.annotations.SerializedName
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */
-data class StoryLike(val actor: StoryActor,
-                     val emotion: Emotion) {
+data class StoryLike(
+    val actor: StoryActor,
+    val emotion: Emotion
+) {
     enum class Emotion(val papiEmotion: String) {
         /**
          * 좋아요

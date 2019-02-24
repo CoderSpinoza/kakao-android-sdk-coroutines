@@ -12,7 +12,11 @@ import java.lang.reflect.Type
  * @author kevin.kang. Created on 2018. 3. 21..
  */
 class KakaoConverterFactory : Converter.Factory() {
-    override fun stringConverter(type: Type?, annotations: Array<out Annotation>?, retrofit: Retrofit?): Converter<*, String>? {
+    override fun stringConverter(
+        type: Type?,
+        annotations: Array<out Annotation>?,
+        retrofit: Retrofit?
+    ): Converter<*, String>? {
         if (type is ParameterizedType) {
             if (type.rawType == Map::class.java) {
                 return Converter { value: Map<String, String> ->

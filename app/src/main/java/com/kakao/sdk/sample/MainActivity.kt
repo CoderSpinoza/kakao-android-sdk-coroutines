@@ -18,7 +18,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteractionListener {
 
-    val drawables = listOf(R.drawable.icon_user, R.drawable.icon_talk, R.drawable.icon_story, R.drawable.icon_push, R.drawable.icon_user)
+    val drawables = listOf(
+            R.drawable.icon_user,
+            R.drawable.icon_talk,
+            R.drawable.icon_story,
+            R.drawable.icon_push,
+            R.drawable.icon_user
+    )
 
     lateinit var tabAdapter: TabAdapter
 
@@ -34,15 +40,22 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
         tabAdapter = TabAdapter(this, supportFragmentManager)
         viewPager.adapter = tabAdapter
         val tabViews = Observable.fromIterable(drawables)
-                .map { Pair(it, LayoutInflater.from(this@MainActivity).inflate(R.layout.item_tab, null)) }
-                .doOnNext { it.second.findViewById<ImageView>(R.id.tab_icon).setImageDrawable(resources.getDrawable(it.first)) }
+                .map {
+                    Pair(
+                        it,
+                        LayoutInflater.from(this@MainActivity)
+                                .inflate(R.layout.item_tab, null)
+                    )
+                }
+                .doOnNext {
+                    it.second.findViewById<ImageView>(R.id.tab_icon)
+                            .setImageDrawable(resources.getDrawable(it.first))
+                }
                 .map { it.second }
 
         val tabs = Observable.fromIterable(tabAdapter.hostFragments)
                 .map { bottom_tab.newTab().setContentDescription(it.title) }
                 .doOnNext { bottom_tab.addTab(it) }
-
-
 
         Observable.zip(tabViews, tabs, BiFunction<View, TabLayout.Tab, TabLayout.Tab> { view, tab ->
             tab.customView = view
@@ -59,14 +72,17 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 viewPager.currentItem = tab!!.position
             }
-
         })
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
             }
 
             override fun onPageSelected(position: Int) {
