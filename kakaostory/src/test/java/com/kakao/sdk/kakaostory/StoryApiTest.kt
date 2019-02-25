@@ -1,7 +1,5 @@
-package com.kakao.sdk.kakaostory.domain
+package com.kakao.sdk.kakaostory
 
-import com.kakao.sdk.kakaostory.Constants
-import com.kakao.sdk.kakaostory.StoryApi
 import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
@@ -33,7 +31,6 @@ class StoryApiTest {
         server = MockWebServer()
         api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
                 .create(StoryApi::class.java)
-        server.enqueue(MockResponse().setResponseCode(200))
     }
 
     @AfterEach fun cleanup() {
@@ -41,6 +38,9 @@ class StoryApiTest {
     }
 
     @Test fun isStoryUser() {
+        server.enqueue(
+                MockResponse().setResponseCode(200)
+                        .setBody(Utility.getJson("json/story_user.json")))
         runBlocking {
             api.isStoryUser()
         }
@@ -52,6 +52,8 @@ class StoryApiTest {
 
     @MethodSource("booleanProvider")
     @ParameterizedTest fun profile(secureResource: Boolean?) {
+        server.enqueue(MockResponse().setResponseCode(200)
+                .setBody(Utility.getJson("json/profile/profile.json")))
         runBlocking {
             api.profile(secureResource)
         }
@@ -69,6 +71,8 @@ class StoryApiTest {
 
     @ValueSource(strings = ["", "last_id"])
     @ParameterizedTest fun myStory(id: String) {
+        server.enqueue(MockResponse().setResponseCode(200)
+                .setBody(Utility.getJson("json/story.json")))
         runBlocking {
             api.myStory(id)
         }
@@ -83,6 +87,8 @@ class StoryApiTest {
 
     @MethodSource("stringProvider")
     @ParameterizedTest fun myStories(id: String?) {
+        server.enqueue(MockResponse().setResponseCode(200)
+                .setBody(Utility.getJson("json/stories.json")))
         runBlocking {
             api.myStories(id)
         }
@@ -104,6 +110,8 @@ class StoryApiTest {
         params3: String?,
         params4: String?
     ) {
+        server.enqueue(MockResponse().setResponseCode(200)
+                .setBody(Utility.getJson("json/post.json")))
         runBlocking {
             api.postNote(content, permission, enableShare, params1, params2, params3, params4)
         }
@@ -152,6 +160,7 @@ class StoryApiTest {
 
     @ValueSource(strings = ["", "last_id"])
     @ParameterizedTest fun deleteStory(id: String) {
+        server.enqueue(MockResponse().setResponseCode(200))
         runBlocking {
             api.deleteStory(id)
         }
@@ -165,6 +174,8 @@ class StoryApiTest {
 
     @ValueSource(strings = ["", "scrap_url"])
     @ParameterizedTest fun scrapLink(url: String) {
+        server.enqueue(MockResponse().setResponseCode(200)
+                .setBody(Utility.getJson("json/linkinfo/linkinfo1.json")))
         runBlocking {
             api.scrapLink(url)
         }

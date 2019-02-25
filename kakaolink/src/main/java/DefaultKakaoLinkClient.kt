@@ -23,7 +23,7 @@ class DefaultKakaoLinkClient(
         templateArgs: Map<String, String>?,
         serverCallbackArgs: Map<String, String>
     ): Intent {
-        val response = api.validateCustom(templateId, templateArgs).await()
+        val response = api.validateCustom(templateId, templateArgs)
         return Intent()
 //                .map { response -> Intent() }
     }
@@ -32,7 +32,7 @@ class DefaultKakaoLinkClient(
         defaultTemplate: DefaultTemplate,
         serverCallbackArgs: Map<String, String>?
     ): Intent {
-        val response = api.validateDefault(defaultTemplate).await()
+        val response = api.validateDefault(defaultTemplate)
         val builder = Uri.Builder()
                 .scheme(Constants.LINK_SCHEME)
                 .authority(Constants.LINK_AUTHORITY)

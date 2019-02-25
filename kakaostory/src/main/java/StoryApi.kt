@@ -5,7 +5,6 @@ import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.kakaostory.entity.StoryPostResponse
 import com.kakao.sdk.kakaostory.entity.StoryProfile
 import com.kakao.sdk.kakaostory.entity.LinkInfo
-import kotlinx.coroutines.Deferred
 import okhttp3.MultipartBody
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -21,22 +20,22 @@ import retrofit2.http.Part
  */
 interface StoryApi {
     @GET(Constants.IS_STORY_USER_PATH)
-    fun isStoryUser(): Deferred<IsStoryUserResponse>
+    suspend fun isStoryUser(): IsStoryUserResponse
 
     @GET(Constants.STORY_PROFILE_PATH)
-    fun profile(
+    suspend fun profile(
         @Query(Constants.SECURE_RESOURCE) secureResource: Boolean? = null
-    ): Deferred<StoryProfile>
+    ): StoryProfile
 
     @GET(Constants.GET_STORY_PATH)
-    fun myStory(@Query(Constants.ID) id: String): Deferred<Story>
+    suspend fun myStory(@Query(Constants.ID) id: String): Story
 
     @GET(Constants.GET_STORIES_PATH)
-    fun myStories(@Query(Constants.LAST_ID) lastId: String? = null): Deferred<List<Story>>
+    suspend fun myStories(@Query(Constants.LAST_ID) lastId: String? = null): List<Story>
 
     @FormUrlEncoded
     @POST(Constants.POST_NOTE_PATH)
-    fun postNote(
+    suspend fun postNote(
         @Field(Constants.CONTENT) content: String,
         @Field(Constants.PERMISSION) permission: Story.Permission,
         @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
@@ -44,11 +43,11 @@ interface StoryApi {
         @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
         @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
         @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
-    ): Deferred<StoryPostResponse>
+    ): StoryPostResponse
 
     @FormUrlEncoded
     @POST(Constants.POST_PHOTO_PATH)
-    fun postPhoto(
+    suspend fun postPhoto(
         @Field(Constants.IMAGE_URL_LIST) images: String,
         @Field(Constants.CONTENT) content: String,
         @Field(Constants.PERMISSION) permission: Story.Permission,
@@ -57,11 +56,11 @@ interface StoryApi {
         @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
         @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
         @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
-    ): Deferred<StoryPostResponse>
+    ): StoryPostResponse
 
     @FormUrlEncoded
     @POST(Constants.POST_LINK_PATH)
-    fun postLink(
+    suspend fun postLink(
         @Field(Constants.LINK_INFO) linkInfo: LinkInfo,
         @Field(Constants.CONTENT) content: String,
         @Field(Constants.PERMISSION) permission: Story.Permission,
@@ -70,15 +69,15 @@ interface StoryApi {
         @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
         @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
         @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
-    ): Deferred<StoryPostResponse>
+    ): StoryPostResponse
 
     @DELETE(Constants.DELETE_STORY_PATH)
-    fun deleteStory(@Query(Constants.ID) id: String): Deferred<Unit>
+    suspend fun deleteStory(@Query(Constants.ID) id: String)
 
     @GET(Constants.SCRAP_LINK_PATH)
-    fun scrapLink(@Query(Constants.URL) url: String): Deferred<LinkInfo>
+    suspend fun scrapLink(@Query(Constants.URL) url: String): LinkInfo
 
     @Multipart
     @POST(Constants.SCRAP_IMAGES_PATH)
-    fun scrapImages(@Part images: List<MultipartBody.Part>): Deferred<List<String>>
+    suspend fun scrapImages(@Part images: List<MultipartBody.Part>): List<String>
 }

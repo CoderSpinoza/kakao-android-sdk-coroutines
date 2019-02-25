@@ -32,7 +32,7 @@ class DefaultAuthApiClient(
                     authCode = authCode,
                     approvalType = approvalType,
                     clientSecret = clientSecret
-            ).await()
+            )
         }
         accessTokenRepo.toCache(response)
         return response
@@ -54,7 +54,7 @@ class DefaultAuthApiClient(
                     refreshToken = refreshToken,
                     clientSecret = clientSecret,
                     grantType = Constants.REFRESH_TOKEN
-            ).await()
+            )
         }
         accessTokenRepo.toCache(response)
         return response
@@ -64,7 +64,7 @@ class DefaultAuthApiClient(
         try {
             return block()
         } catch (e: HttpException) {
-            val errorString = e.response().errorBody()?.string()
+            val errorString = e.response()?.errorBody()?.string()
             val response =
                     KakaoGsonFactory.base.fromJson(errorString, AuthErrorResponse::class.java)
             throw AuthResponseException(e.code(), response)

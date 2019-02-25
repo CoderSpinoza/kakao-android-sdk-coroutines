@@ -2,7 +2,6 @@ package com.kakao.sdk.friends
 
 import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
-import com.kakao.sdk.auth.network.handleApiError
 import com.kakao.sdk.friends.entity.FriendFilter
 import com.kakao.sdk.friends.entity.FriendOrder
 import com.kakao.sdk.friends.entity.FriendType
@@ -26,8 +25,9 @@ class DefaultFriendsApiClient(
         order: String?,
         url: String?
     ): FriendsResponse {
-        return api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit,
-                order, url)
-                .handleApiError(apiErrorInterceptor)
+        return apiErrorInterceptor.handleApiError {
+            api.friends(friendType, friendFilter, friendOrder, secureResource, offset, limit,
+                    order, url)
+        }
     }
 }

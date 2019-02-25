@@ -74,7 +74,7 @@ class UsersApiTest {
         }
 
         @Test fun accessTokenInfo() = runBlocking {
-            val response = api.accessTokenInfo().await()
+            val response = api.accessTokenInfo()
             assertEquals(expected["id"].asLong, response.id)
             assertEquals(expected["expiresInMillis"].asLong, response.expiresInMillis)
             assertEquals(expected["kaccount_id"].asLong, response.kaccountId)
@@ -97,7 +97,7 @@ class UsersApiTest {
 
         @Test fun updateProfile() = runBlocking {
             val properties = mapOf(Pair("key1", "value1"), Pair("key2", "value2"))
-            val response = api.updateProfile(properties = properties).await()
+            val response = api.updateProfile(properties = properties)
             val request = server.takeRequest()
             val requestBody = Utility.parseQuery(request.body.readUtf8())
 
@@ -126,12 +126,12 @@ class UsersApiTest {
         }
 
         @Test fun logout() = runBlocking {
-            val response = api.logout().await()
+            val response = api.logout()
             expected["id"].asLong == response.id
         }
 
         @Test fun unlink() = runBlocking {
-            val response = api.unlink().await()
+            val response = api.unlink()
             expected["id"].asLong == response.id
         }
     }

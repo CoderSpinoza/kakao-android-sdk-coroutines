@@ -13,12 +13,7 @@ import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.network.ApiErrorCode
 import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
-import kotlinx.coroutines.Deferred
 import retrofit2.HttpException
-
-suspend fun <T> Deferred<T>.handleApiError(interceptor: ApiErrorInterceptor): T {
-    return interceptor.handleApiError { this.await() }
-}
 
 /**
  * @suppress
@@ -65,7 +60,7 @@ class ApiErrorInterceptor(
         try {
             return block()
         } catch (t: HttpException) {
-            val errorString = t.response().errorBody()?.string()
+            val errorString = t.response()?.errorBody()?.string()
             val response = KakaoGsonFactory.base.fromJson(errorString, ApiErrorResponse::class.java)
             when (response.code) {
                 ApiErrorCode.INVALID_TOKEN_CODE -> throw InvalidTokenException(t.code(), response)

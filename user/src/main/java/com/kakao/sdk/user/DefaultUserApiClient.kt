@@ -3,7 +3,6 @@ package com.kakao.sdk.user
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
 import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.AccessTokenRepo
-import com.kakao.sdk.auth.network.handleApiError
 import com.kakao.sdk.user.entity.AccessTokenInfo
 import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.entity.UserIdResponse
@@ -19,25 +18,30 @@ class DefaultUserApiClient(
 ) : UserApiClient {
 
     override suspend fun me(secureReSource: Boolean): User {
-        return userApi.me(secureReSource)
-                .handleApiError(apiErrorInterceptor)
+
+        return apiErrorInterceptor.handleApiError {
+            userApi.me(secureReSource)
+        }
     }
 
     override suspend fun accessTokenInfo(): AccessTokenInfo {
-        return userApi.accessTokenInfo()
-                .handleApiError(apiErrorInterceptor)
+        return apiErrorInterceptor.handleApiError {
+            userApi.accessTokenInfo()
+        }
     }
 
     override suspend fun logout(): UserIdResponse {
-        val response = userApi.logout()
-                .handleApiError(apiErrorInterceptor)
+        val response = apiErrorInterceptor.handleApiError {
+            userApi.logout()
+        }
         accessTokenRepo.clearCache()
         return response
     }
 
     override suspend fun unlink(): UserIdResponse {
-        val response = userApi.unlink()
-                .handleApiError(apiErrorInterceptor)
+        val response = apiErrorInterceptor.handleApiError {
+            userApi.unlink()
+        }
         accessTokenRepo.clearCache()
         return response
     }

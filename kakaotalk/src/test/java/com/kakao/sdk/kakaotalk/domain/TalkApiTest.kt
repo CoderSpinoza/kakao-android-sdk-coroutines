@@ -27,18 +27,20 @@ import java.util.stream.Stream
 class TalkApiTest {
     private lateinit var server: MockWebServer
     private lateinit var api: TalkApi
+    private lateinit var response: MockResponse
 
     @BeforeEach fun setup() {
         server = MockWebServer()
         server.start()
         api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
                 .create(TalkApi::class.java)
-        val response = MockResponse().setResponseCode(200)
-        server.enqueue(response)
+        response = MockResponse().setResponseCode(200)
     }
 
     @CsvFileSource(resources = ["/csv/profile.csv"], numLinesToSkip = 1)
     @ParameterizedTest fun profile(secureResource: Boolean?) = runBlocking {
+        response.setBody(Utility.getJson("json/profile/full_profile.json"))
+        server.enqueue(response)
         api.profile(secureResource = secureResource)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
@@ -57,6 +59,8 @@ class TalkApiTest {
         order: String? = null,
         filter: String? = null
     ) = runBlocking {
+        response.setBody(Utility.getJson("json/chat_list/list.json"))
+        server.enqueue(response)
         api.chatList(fromId, limit, order, filter)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
@@ -70,6 +74,7 @@ class TalkApiTest {
     @MethodSource("sendMemoProvider")
     @ParameterizedTest
     fun sendMemo(templateId: String, templateArgs: Map<String, String>?) = runBlocking {
+        server.enqueue(response)
         api.sendMemo(templateId, templateArgs)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())
@@ -96,6 +101,7 @@ class TalkApiTest {
         templateId: String,
         templateArgs: Map<String, String>?
     ) = runBlocking {
+        server.enqueue(response)
         api.sendMessage(receiverIdType, receiverId, templateId, templateArgs)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())

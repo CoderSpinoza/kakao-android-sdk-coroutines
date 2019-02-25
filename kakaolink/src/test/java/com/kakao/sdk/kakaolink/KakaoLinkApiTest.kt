@@ -36,6 +36,7 @@ class KakaoLinkApiTest {
                 .create(KakaoLinkApi::class.java)
 
         val response = MockResponse().setResponseCode(200)
+                .setBody(Utility.getJson("json/validate.json"))
         server.enqueue(response)
     }
 
@@ -84,7 +85,7 @@ class KakaoLinkApiTest {
         url: String,
         templateId: String,
         templateArgs: Map<String, String>?
-    ) {
+    ) = runBlocking {
         api.validateScrap(url, templateId, templateArgs)
         val request = server.takeRequest()
         val params = com.kakao.sdk.common.Utility.parseQuery(request.requestUrl.query())
@@ -95,7 +96,7 @@ class KakaoLinkApiTest {
 
         if (templateArgs == null) {
             assertFalse(params.containsKey(Constants.TEMPLATE_ARGS))
-            return
+            return@runBlocking
         }
 
         val decoded = URLDecoder.decode(params[Constants.TEMPLATE_ARGS], "UTF-8")

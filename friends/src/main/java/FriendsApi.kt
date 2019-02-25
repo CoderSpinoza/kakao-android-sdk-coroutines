@@ -13,7 +13,7 @@ import retrofit2.http.Query
  */
 interface FriendsApi {
 @GET(Constants.FRIENDS_V1_PATH)
-    fun friends(
+    suspend fun friends(
         @Query(Constants.FRIEND_TYPE) friendType: FriendType? = null,
         @Query(Constants.FRIEND_FILTER) friendFilter: FriendFilter? = null,
         @Query(Constants.FRIEND_ORDER) friendOrder: FriendOrder? = null,
@@ -22,5 +22,5 @@ interface FriendsApi {
         @Query(Constants.LIMIT) limit: Int? = null,
         @Query(Constants.ORDER) order: String? = null,
         @Query(Constants.URL) url: String? = null
-    ): Deferred<FriendsResponse>
+    ): FriendsResponse
 }

@@ -78,7 +78,7 @@ class DefaultAuthApiClientTest {
 
 //            runBlocking {
 //                val deffered = authApiClient.issueAccessToken(authCode = "auth_code", clientId = "client_id", redirectUri = "redirect_uri",
-//                        approvalType = Constants.INDIVIDUAL, androidKeyHash = "android_key_hash", clientSecret = "client_secret").await()
+//                        approvalType = Constants.INDIVIDUAL, androidKeyHash = "android_key_hash", clientSecret = "client_secret")
 //            }
         }
     }

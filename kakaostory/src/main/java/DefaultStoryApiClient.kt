@@ -22,25 +22,25 @@ class DefaultStoryApiClient(
 ) : StoryApiClient {
     override suspend fun isStoryUser(): IsStoryUserResponse {
         return apiErrorInterceptor.handleApiError {
-            api.isStoryUser().await()
+            api.isStoryUser()
         }
     }
 
     override suspend fun profile(secureResource: Boolean?): StoryProfile {
         return apiErrorInterceptor.handleApiError {
-            api.profile(secureResource).await()
+            api.profile(secureResource)
         }
     }
 
     override suspend fun myStory(id: String): Story {
         return apiErrorInterceptor.handleApiError {
-            api.myStory(id).await()
+            api.myStory(id)
         }
     }
 
     override suspend fun myStories(lastId: String?): List<Story> {
         return apiErrorInterceptor.handleApiError {
-            api.myStories().await()
+            api.myStories()
         }
     }
 
@@ -58,7 +58,7 @@ class DefaultStoryApiClient(
                     Utility.buildQuery(androidExecParams),
                     Utility.buildQuery(iosExecParams),
                     Utility.buildQuery(androidMarketParams),
-                    Utility.buildQuery(iosMarketParams)).await()
+                    Utility.buildQuery(iosMarketParams))
         }
     }
 
@@ -78,7 +78,7 @@ class DefaultStoryApiClient(
                     Utility.buildQuery(androidExecParams),
                     Utility.buildQuery(iosExecParams),
                     Utility.buildQuery(androidMarketParams),
-                    Utility.buildQuery(iosMarketParams)).await()
+                    Utility.buildQuery(iosMarketParams))
         }
     }
 
@@ -97,19 +97,19 @@ class DefaultStoryApiClient(
                     Utility.buildQuery(androidExecParams),
                     Utility.buildQuery(iosExecParams),
                     Utility.buildQuery(androidMarketParams),
-                    Utility.buildQuery(iosMarketParams)).await()
+                    Utility.buildQuery(iosMarketParams))
         }
     }
 
     override suspend fun deleteStory(id: String) {
         return apiErrorInterceptor.handleApiError {
-            api.deleteStory(id).await()
+            api.deleteStory(id)
         }
     }
 
     override suspend fun scrapLink(url: String): LinkInfo {
         return apiErrorInterceptor.handleApiError {
-            api.scrapLink(url).await()
+            api.scrapLink(url)
         }
     }
 

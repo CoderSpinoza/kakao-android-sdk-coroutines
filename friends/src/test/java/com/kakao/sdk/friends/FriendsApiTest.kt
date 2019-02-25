@@ -46,7 +46,7 @@ class FriendsApiTest {
             server.enqueue(response)
 
             runBlocking {
-                val friendsResponse = api.friends().await()
+                val friendsResponse = api.friends()
                 assertEquals(expected["total_count"].asInt, friendsResponse.totalCount)
                 assertEquals(expected["elements"].asJsonArray.size(), friendsResponse.friends.size)
                 assertEquals(expected["result_id"].asString, friendsResponse.resultId)

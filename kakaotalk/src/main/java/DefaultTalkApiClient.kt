@@ -22,7 +22,7 @@ class DefaultTalkApiClient(
 
     override suspend fun profile(secureResource: Boolean?): TalkProfile {
         return apiErrorInterceptor.handleApiError {
-            api.profile(secureResource).await()
+            api.profile(secureResource)
         }
     }
 
@@ -33,7 +33,7 @@ class DefaultTalkApiClient(
         filter: ChatFilter?
     ): ChatListResponse {
         return apiErrorInterceptor.handleApiError {
-            api.chatList(fromId, limit, order?.value, filter?.value).await()
+            api.chatList(fromId, limit, order?.value, filter?.value)
         }
     }
 
@@ -42,7 +42,7 @@ class DefaultTalkApiClient(
         templateArgs: Map<String, String>?
     ) {
         return apiErrorInterceptor.handleApiError {
-            api.sendMemo(templateId, templateArgs).await()
+            api.sendMemo(templateId, templateArgs)
         }
     }
 
@@ -53,7 +53,7 @@ class DefaultTalkApiClient(
         templateArgs: Map<String, String>?
     ) {
         return apiErrorInterceptor.handleApiError {
-            api.sendMessage(receiverType, receiverId, templateId, templateArgs).await()
+            api.sendMessage(receiverType, receiverId, templateId, templateArgs)
         }
     }
 }

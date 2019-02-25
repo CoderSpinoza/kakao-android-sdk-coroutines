@@ -16,24 +16,24 @@ import retrofit2.http.FormUrlEncoded
  */
 interface UserApi {
     @GET(Constants.V2_ME_PATH)
-    fun me(
+    suspend fun me(
         @Query(Constants.SECURE_RESOURCE) secureResource: Boolean = true,
         @Query(Constants.PROPERTYKEYS) properties: String? = null
-    ): Deferred<User>
+    ): User
 
     @GET(Constants.V1_ACCESS_TOKEN_INFO_PATH)
-    fun accessTokenInfo(): Deferred<AccessTokenInfo>
+    suspend fun accessTokenInfo(): AccessTokenInfo
 
     @POST(Constants.V1_UPDATE_PROFILE_PATH)
     @FormUrlEncoded
-    fun updateProfile(
+    suspend fun updateProfile(
         @Field(Constants.SECURE_RESOURCE) secureResource: Boolean = true,
         @Field(Constants.PROPERTIES) properties: Map<String, String>
-    ): Deferred<UserIdResponse>
+    ): UserIdResponse
 
     @POST(Constants.V1_LOGOUT_PATH)
-    fun logout(): Deferred<UserIdResponse>
+    suspend fun logout(): UserIdResponse
 
     @POST(Constants.V1_UNLINK_PATH)
-    fun unlink(): Deferred<UserIdResponse>
+    suspend fun unlink(): UserIdResponse
 }
