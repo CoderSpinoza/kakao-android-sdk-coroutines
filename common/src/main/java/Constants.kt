@@ -16,6 +16,7 @@ object Constants {
     const val APP_VER = "app_ver"
     const val KAKAO_AK = "KakaoAK"
 
+    const val APP_KEY = "app_key"
     const val APP_PACKAGE = "appPkg"
     const val KA = "KA"
     const val APP_KEY_HASH = "keyHash"
