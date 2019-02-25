@@ -10,8 +10,7 @@ import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsService
 import com.kakao.sdk.auth.Constants
-import com.kakao.sdk.common.Constants as CommonConstants
-import com.kakao.sdk.common.Utility
+import com.kakao.sdk.common.KakaoSdkProvider
 import java.util.Arrays
 
 /**
@@ -27,15 +26,13 @@ class AuthCodeCustomTabsActivity : Activity() {
     fun openChromeCustomTab() {
         val continueUri = Uri.Builder()
                 .scheme(com.kakao.sdk.network.Constants.SCHEME)
-                .authority(com.kakao.sdk.network.Constants.KAUTH)
+                .authority(KakaoSdkProvider.serverHosts.kauth)
                 .path(Constants.AUTHORIZE_PATH)
                 .appendQueryParameter(Constants.CLIENT_ID,
-                        Utility.getMetadata(this,
-                                CommonConstants.META_APP_KEY))
+                        KakaoSdkProvider.applicationContextInfo.clientId)
                 .appendQueryParameter(Constants.REDIRECT_URI,
                         String.format("kakao%s://oauth",
-                                Utility.getMetadata(this,
-                                        CommonConstants.META_APP_KEY)))
+                                KakaoSdkProvider.applicationContextInfo.clientId))
                 .appendQueryParameter(Constants.RESPONSE_TYPE, Constants.CODE)
                 .appendQueryParameter(Constants.APPROVAL_TYPE, "individual")
                 .build()

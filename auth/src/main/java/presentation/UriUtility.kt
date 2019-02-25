@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.ResultReceiver
 import com.kakao.sdk.auth.Constants
+import com.kakao.sdk.common.KakaoSdkProvider
 
 object UriUtility {
     fun updateScopeUri(
@@ -16,7 +17,7 @@ object UriUtility {
     ): Uri {
         val builder = Uri.Builder()
                 .scheme(com.kakao.sdk.network.Constants.SCHEME)
-                .authority(com.kakao.sdk.network.Constants.KAUTH).path(Constants.AUTHORIZE_PATH)
+                .authority(KakaoSdkProvider.serverHosts.kauth).path(Constants.AUTHORIZE_PATH)
                 .appendQueryParameter(Constants.CLIENT_ID, clientId)
                 .appendQueryParameter(Constants.REDIRECT_URI, redirectUri)
                 .appendQueryParameter(Constants.RESPONSE_TYPE, Constants.CODE)

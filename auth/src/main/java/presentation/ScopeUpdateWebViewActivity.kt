@@ -17,6 +17,7 @@ import androidx.webkit.WebViewClientCompat
 import com.kakao.sdk.auth.R
 import com.kakao.sdk.auth.exception.AuthCancelException
 import com.kakao.sdk.auth.exception.AuthWebViewException
+import com.kakao.sdk.common.KakaoSdkProvider
 import com.kakao.sdk.network.Constants
 
 /**
@@ -82,9 +83,9 @@ class ScopeUpdateWebViewActivity : Activity() {
                 finish()
                 return true
             }
-            if (uri.authority?.endsWith(Constants.KAUTH) == true ||
-                    uri.authority?.endsWith(Constants.KAPI) == true ||
-                    uri.authority?.endsWith(Constants.ACCOUNT) == true) {
+            if (uri.authority?.endsWith(KakaoSdkProvider.serverHosts.kauth) == true ||
+                    uri.authority?.endsWith(KakaoSdkProvider.serverHosts.kapi) == true ||
+                    uri.authority?.endsWith(KakaoSdkProvider.serverHosts.account) == true) {
                 webView.loadUrl(uri.toString(), headersMap)
                 return true
             }

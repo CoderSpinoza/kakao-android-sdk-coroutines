@@ -1,5 +1,6 @@
 package com.kakao.sdk.auth.network
 
+import com.kakao.sdk.common.KakaoSdkProvider
 import com.kakao.sdk.network.Constants
 import com.kakao.sdk.network.ApiFactory
 import com.kakao.sdk.network.data.AppKeyInterceptor
@@ -18,15 +19,19 @@ object OAuthApiFactory {
 
     fun withClient(clientBuilder: OkHttpClient.Builder): Retrofit {
         clientBuilder.interceptors().add(0, AccessTokenInterceptor())
-        return ApiFactory.withKakaoAgent("${Constants.SCHEME}://${Constants.KAPI}",
-                clientBuilder)
+        return ApiFactory.withKakaoAgent(
+                "${Constants.SCHEME}://${KakaoSdkProvider.serverHosts.kapi}",
+                clientBuilder
+        )
     }
 
     fun kauthWithClient(clientBuilder: OkHttpClient.Builder): Retrofit {
         clientBuilder.interceptors().add(0, KakaoAgentInterceptor())
         clientBuilder.interceptors().add(0, AppKeyInterceptor())
-        return ApiFactory.withClient("${Constants.SCHEME}://${Constants.KAUTH}",
+        return ApiFactory.withClient(
+                "${Constants.SCHEME}://${KakaoSdkProvider.serverHosts.kauth}",
                 clientBuilder.addInterceptor(HttpLoggingInterceptor()
-                        .setLevel(HttpLoggingInterceptor.Level.BODY)))
+                        .setLevel(HttpLoggingInterceptor.Level.BODY))
+        )
     }
 }

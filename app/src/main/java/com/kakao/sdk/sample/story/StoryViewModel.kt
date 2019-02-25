@@ -19,6 +19,7 @@ open class StoryViewModel @Inject constructor(private val storyApiClient: StoryA
     val stories = MutableLiveData<List<Story>>()
     val requiredScopes = MutableLiveData<List<String>>()
     val selectedStory = MutableLiveData<Story>()
+    val apiErrors = MutableLiveData<Throwable>()
 
     fun getMyStories() {
 
@@ -32,6 +33,8 @@ open class StoryViewModel @Inject constructor(private val storyApiClient: StoryA
                 }
             } catch (e: InvalidScopeException) {
                 requiredScopes.postValue(e.errorResponse.requiredScopes)
+            } catch (e: RuntimeException) {
+                apiErrors.postValue(e)
             }
         }
     }

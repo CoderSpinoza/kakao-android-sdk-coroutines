@@ -1,6 +1,7 @@
 package com.kakao.sdk.network
 
 import com.kakao.sdk.common.KakaoGsonFactory
+import com.kakao.sdk.common.KakaoSdkProvider
 import com.kakao.sdk.network.data.AppKeyInterceptor
 import com.kakao.sdk.network.data.KakaoAgentInterceptor
 import com.kakao.sdk.network.data.KakaoConverterFactory
@@ -14,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object ApiFactory {
     val kapi by lazy {
-        withKakaoAgent("${Constants.SCHEME}://${Constants.KAPI}",
+        withKakaoAgent("${Constants.SCHEME}://${KakaoSdkProvider.serverHosts.kapi}",
                 OkHttpClient.Builder()
                         .addInterceptor(AppKeyInterceptor()))
     }

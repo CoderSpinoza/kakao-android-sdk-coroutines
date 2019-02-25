@@ -1,0 +1,5 @@
+apply from: "$rootDir/libraries.gradle"
+
+dependencies {
+    api project(':common')
+}

@@ -5,4 +5,5 @@ package com.kakao.sdk.common
  */
 object KakaoSdkProvider {
     lateinit var applicationContextInfo: ApplicationContextInfo
+    var serverHosts = ServerHosts()
 }

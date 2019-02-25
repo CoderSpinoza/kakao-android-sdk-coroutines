@@ -18,20 +18,18 @@ class SplashActivity : AppCompatActivity() {
 
         runBlocking {
             val token = AccessTokenRepo.instance.observe().openSubscription().receive()
-            Log.e("Token at startup", token.toString())
             if (token.refreshToken == null) {
                 goToLogin()
                 return@runBlocking
             }
-        }
-
-        GlobalScope.launch {
-            try {
-                val tokenInfo = UserApiClient.instance.accessTokenInfo()
-                goToMain()
-            } catch (e: Throwable) {
-                Log.e("??", e.javaClass.name)
-                goToLogin()
+            GlobalScope.launch {
+                try {
+                    val tokenInfo = UserApiClient.instance.accessTokenInfo()
+                    goToMain()
+                } catch (e: Throwable) {
+                    Log.e("login error", e.toString())
+                    goToLogin()
+                }
             }
         }
     }

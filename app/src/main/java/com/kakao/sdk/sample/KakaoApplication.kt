@@ -5,6 +5,8 @@ import android.app.Application
 import androidx.fragment.app.Fragment
 import com.kakao.sdk.common.ApplicationContextInfo
 import com.kakao.sdk.common.KakaoSdkProvider
+import com.kakao.sdk.partner.KakaoPhase
+import com.kakao.sdk.partner.PhasedServerHosts
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -30,6 +32,7 @@ class KakaoApplication : Application(), HasActivityInjector, HasSupportFragmentI
                         context = this,
                         clientId = "dd4e9cb75815cbdf7d87ed721a659baf",
                         clientSecret = "50LxgHsF3Q3ayNa3nJpTTMEfBR8KkY7X")
+        KakaoSdkProvider.serverHosts = PhasedServerHosts(KakaoPhase.PRODUCTION)
         DaggerApplicationComponent.create().inject(this)
     }
 }
