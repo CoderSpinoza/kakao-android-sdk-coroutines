@@ -16,6 +16,7 @@ import com.kakao.sdk.kakaonavi.entity.KakaoNaviParams
 import com.kakao.sdk.kakaonavi.entity.NaviOptions
 import com.kakao.sdk.kakaonavi.entity.VehicleType
 import com.kakao.sdk.kakaonavi.entity.RpOption
+import com.kakao.sdk.common.Constants as CommonConstants
 
 import org.junit.Before
 import org.junit.Test
@@ -76,7 +77,7 @@ class KakaoNaviClientTest {
                         rpOption = RpOption.FREE
                     )
         ))
-        System.out.println(uri.getQueryParameter(com.kakao.sdk.common.Constants.EXTRAS))
+        System.out.println(uri.getQueryParameter(CommonConstants.EXTRAS))
         System.out.println(uri.getQueryParameter(Constants.PARAM))
     }
 }

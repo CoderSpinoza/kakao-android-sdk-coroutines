@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Bundle
 import androidx.test.core.app.ApplicationProvider
 import com.kakao.sdk.network.data.AppKeyInterceptor
+import com.kakao.sdk.common.Constants as CommonConstants
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.mockwebserver.MockResponse
@@ -27,7 +28,7 @@ class AppKeyInterceptorTest {
         ShadowLog.stream = System.out
 
         val bundle = Bundle()
-        bundle.putString(com.kakao.sdk.common.Constants.META_APP_KEY, "test_app_key")
+        bundle.putString(CommonConstants.META_APP_KEY, "test_app_key")
         val application = ApplicationProvider.getApplicationContext<Application>()
         application.applicationInfo.metaData = bundle
         interceptor = AppKeyInterceptor("test_app_key")
@@ -44,7 +45,7 @@ class AppKeyInterceptorTest {
         val request = server.takeRequest()
 
         assertEquals(
-                String.format("%s %s", com.kakao.sdk.common.Constants.KAKAO_AK, "test_app_key"),
+                String.format("%s %s", CommonConstants.KAKAO_AK, "test_app_key"),
                 request.getHeader(Constants.AUTHORIZATION))
         server.shutdown()
     }

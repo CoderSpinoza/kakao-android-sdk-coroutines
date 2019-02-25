@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsService
 import com.kakao.sdk.auth.Constants
+import com.kakao.sdk.common.Constants as CommonConstants
 import com.kakao.sdk.common.Utility
 import java.util.Arrays
 
@@ -30,11 +31,11 @@ class AuthCodeCustomTabsActivity : Activity() {
                 .path(Constants.AUTHORIZE_PATH)
                 .appendQueryParameter(Constants.CLIENT_ID,
                         Utility.getMetadata(this,
-                                com.kakao.sdk.common.Constants.META_APP_KEY))
+                                CommonConstants.META_APP_KEY))
                 .appendQueryParameter(Constants.REDIRECT_URI,
                         String.format("kakao%s://oauth",
                                 Utility.getMetadata(this,
-                                        com.kakao.sdk.common.Constants.META_APP_KEY)))
+                                        CommonConstants.META_APP_KEY)))
                 .appendQueryParameter(Constants.RESPONSE_TYPE, Constants.CODE)
                 .appendQueryParameter(Constants.APPROVAL_TYPE, "individual")
                 .build()

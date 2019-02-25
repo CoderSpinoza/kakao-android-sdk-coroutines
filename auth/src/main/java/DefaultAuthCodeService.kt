@@ -15,6 +15,7 @@ import com.kakao.sdk.auth.model.AuthErrorResponse
 import com.kakao.sdk.auth.presentation.AuthCodeCustomTabsActivity
 import com.kakao.sdk.auth.presentation.ScopeUpdateWebViewActivity
 import com.kakao.sdk.auth.presentation.UriUtility
+import com.kakao.sdk.common.Constants as CommonConstants
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.runBlocking
@@ -81,7 +82,7 @@ class DefaultAuthCodeService(private val tokenChannel: BroadcastChannel<AccessTo
         if (refreshToken != null) {
             headers.putString(Constants.RT, refreshToken)
         }
-        headers.putString(com.kakao.sdk.common.Constants.KA, kaHeader)
+        headers.putString(CommonConstants.KA, kaHeader)
         return headers
     }
 
