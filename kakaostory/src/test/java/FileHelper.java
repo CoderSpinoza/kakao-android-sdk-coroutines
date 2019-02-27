@@ -1,5 +1,3 @@
-package com.kakao.sdk.kakaostory;
-
 import android.content.Context;
 import android.util.Log;
 import android.util.TypedValue;
