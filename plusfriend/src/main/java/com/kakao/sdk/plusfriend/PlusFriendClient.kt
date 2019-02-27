@@ -1,5 +1,6 @@
 package com.kakao.sdk.plusfriend
 
+import android.content.Context
 import android.net.Uri
 
 /**
@@ -8,8 +9,8 @@ import android.net.Uri
 interface PlusFriendClient {
     fun addFriendUrl(plusFriendId: String): Uri
     fun chatUrl(plusFriendId: String): Uri
-    fun openAddFriend(plusFriendId: String)
-    fun openChat(plusFriendId: String)
+    fun openAddFriend(context: Context, plusFriendId: String)
+    fun openChat(context: Context, plusFriendId: String)
 
     companion object {
         val instance: PlusFriendClient by lazy { DefaultPlusFriendClient() }

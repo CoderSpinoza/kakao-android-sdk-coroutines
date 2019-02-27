@@ -1,8 +1,10 @@
 package com.kakao.sdk.plusfriend
 
+import android.content.Context
 import android.net.Uri
 import com.kakao.sdk.common.ApplicationInfo
 import com.kakao.sdk.common.ContextInfo
+import com.kakao.sdk.common.CustomTabsCommonClient
 import com.kakao.sdk.common.KakaoSdkProvider
 import com.kakao.sdk.common.Constants as CommonConstants
 /**
@@ -23,12 +25,12 @@ class DefaultPlusFriendClient(
                 .path("$plusFriendId/${Constants.CHAT}").build()
     }
 
-    override fun openAddFriend(plusFriendId: String) {
-        TODO("not implemented")
+    override fun openAddFriend(context: Context, plusFriendId: String) {
+        CustomTabsCommonClient.open(context, addFriendUrl(plusFriendId))
     }
 
-    override fun openChat(plusFriendId: String) {
-        TODO("not implemented")
+    override fun openChat(context: Context, plusFriendId: String) {
+        CustomTabsCommonClient.open(context, chatUrl(plusFriendId))
     }
 
     private fun baseUri(appKey: String, kaHeader: String): Uri.Builder {

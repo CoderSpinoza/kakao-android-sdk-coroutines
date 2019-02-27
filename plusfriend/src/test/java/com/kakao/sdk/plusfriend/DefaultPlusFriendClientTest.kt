@@ -8,7 +8,6 @@ import com.kakao.sdk.common.ApplicationInfo
 import com.kakao.sdk.common.ContextInfo
 import com.kakao.sdk.common.KakaoSdkProvider
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.runner.RunWith
