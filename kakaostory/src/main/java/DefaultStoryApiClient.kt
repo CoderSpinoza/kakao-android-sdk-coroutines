@@ -9,6 +9,9 @@ import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.kakaostory.entity.StoryPostResponse
 import com.kakao.sdk.kakaostory.entity.StoryProfile
 import com.kakao.sdk.kakaostory.entity.LinkInfo
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 import java.io.File
 
@@ -114,10 +117,13 @@ class DefaultStoryApiClient(
     }
 
     override suspend fun scrapImages(images: List<File>): List<String> {
-        return emptyList()
-//        return Single.just(images.map { Pair(it.name, RequestBody.create(MediaType.parse("image/*"), it)) }
-//                .mapIndexed { index, pair ->  MultipartBody.Part.createFormData("${Constants.FILE}_$index", pair.first, pair.second)})
-//                .flatMap { api.scrapImages(it) }
-//                .compose(apiErrorInterceptor.handleApiError())
+        val result = images
+                .map { Pair(it.name, RequestBody.create(MediaType.parse("image/*"), it)) }
+                .mapIndexed { index, pair ->
+                    MultipartBody.Part.createFormData("${Constants.FILE}_$index", pair.first, pair.second)
+                }
+        return apiErrorInterceptor.handleApiError {
+            api.scrapImages(result)
+        }
     }
 }
