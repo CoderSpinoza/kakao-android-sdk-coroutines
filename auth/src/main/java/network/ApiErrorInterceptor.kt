@@ -44,7 +44,7 @@ class ApiErrorInterceptor(
         return try {
             block()
         } catch (t: InvalidTokenException) {
-            val token = accessTokenRepo.observe().openSubscription().receive()
+            val token = accessTokenRepo.observe().value
             if (token.refreshToken == null) throw t
             val result = authApiClient.refreshAccessToken(
                     token.refreshToken,

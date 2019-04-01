@@ -75,6 +75,11 @@ class DefaultAuthCodeService(private val tokenChannel: BroadcastChannel<AccessTo
             UriUtility
                     .scopeUpdateIntent(context, uri, redirectUri, headers, resultReceiver)
         }
+    ): Intent = runBlocking {
+        val headers = scopeUpdateHeaders(tokenChannel.value.refreshToken, kaHeader)
+        UriUtility
+                .scopeUpdateIntent(context, uri, redirectUri, headers, resultReceiver(continuation))
+    }
     }
 
     fun scopeUpdateHeaders(refreshToken: String?, kaHeader: String): Bundle {

@@ -5,7 +5,6 @@ import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import com.kakao.sdk.common.KakaoSdkProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.sendBlocking
 import java.util.Date
@@ -18,9 +17,9 @@ import java.util.Date
 class DefaultAccessTokenRepo(
     val appCache: SharedPreferences = KakaoSdkProvider.applicationContextInfo.sharedPreferences
 ) : AccessTokenRepo {
-    val tokenUpdates: BroadcastChannel<AccessToken> = ConflatedBroadcastChannel(fromCache())
+    val tokenUpdates: ConflatedBroadcastChannel<AccessToken> = ConflatedBroadcastChannel(fromCache())
 
-    override fun observe(): BroadcastChannel<AccessToken> {
+    override fun observe(): ConflatedBroadcastChannel<AccessToken> {
         return tokenUpdates
     }
 
