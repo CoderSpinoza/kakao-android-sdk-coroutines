@@ -34,10 +34,10 @@ object UriUtility {
         resultReceiver: ResultReceiver
     ): Intent {
         return Intent(context, ScopeUpdateWebViewActivity::class.java)
-                .putExtra(ScopeUpdateWebViewActivity.KEY_URL, uri)
-                .putExtra(ScopeUpdateWebViewActivity.KEY_REDIRECT_URI, redirectUri)
-                .putExtra(ScopeUpdateWebViewActivity.KEY_HEADERS, headers)
-                .putExtra(ScopeUpdateWebViewActivity.KEY_RESULT_RECEIVER, resultReceiver)
+                .putExtra(Constants.KEY_URL, uri)
+                .putExtra(Constants.KEY_REDIRECT_URI, redirectUri)
+                .putExtra(Constants.KEY_HEADERS, headers)
+                .putExtra(Constants.KEY_RESULT_RECEIVER, resultReceiver)
                 .addFlags(
                         Intent.FLAG_ACTIVITY_NEW_TASK
                                 or Intent.FLAG_ACTIVITY_SINGLE_TOP

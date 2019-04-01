@@ -14,14 +14,26 @@ interface AuthCodeService {
      *
      * @return [Unit]
      */
-    fun requestAuthCode(
+    suspend fun requestAuthCode(
         context: Context,
         clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
         redirectUri: String =
                 String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
         approvalType: String = "individual",
         kaHeader: String = KakaoSdkProvider.applicationContextInfo.kaHeader
-    )
+    ): String
+
+    /**
+     * 카카오톡 간편 로그인을 통하여 authorization code 를 발급 받는다.
+     */
+    suspend fun requestAuthCode(
+            context: Context,
+            requestCode: Int,
+            clientId: String = KakaoSdkProvider.applicationContextInfo.clientId,
+            redirectUri: String = String.format("kakao%s://oauth", KakaoSdkProvider.applicationContextInfo.clientId),
+            approvalType: String = "individual",
+            kaHeader: String = KakaoSdkProvider.applicationContextInfo.kaHeader
+    ): String
 
     /**
      * 유저의 scope 들을 업데이트할 수 있는 authorization code 를 발급받는다.

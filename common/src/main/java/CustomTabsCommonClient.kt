@@ -3,6 +3,7 @@ package com.kakao.sdk.common
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
@@ -19,13 +20,13 @@ import java.lang.UnsupportedOperationException
 object CustomTabsCommonClient {
 
     @Throws(UnsupportedOperationException::class)
-    fun open(context: Context, uri: Uri){
+    fun openWithDefault(context: Context, uri: Uri): ServiceConnection? {
         val packageName = resolveCustomTabsPackage(context, uri) ?: throw UnsupportedOperationException()
-        CustomTabsClient.bindCustomTabsService(context, packageName, object : CustomTabsServiceConnection() {
+        Log.d("CustomTabsCommonClient", "Choosing ${packageName} as custom tabs browser")
+        val connection = object : CustomTabsServiceConnection() {
             override fun onCustomTabsServiceConnected(name: ComponentName?, client: CustomTabsClient?) {
                 val builder = CustomTabsIntent.Builder()
-                builder.enableUrlBarHiding()
-                builder.setShowTitle(true)
+                        .enableUrlBarHiding().setShowTitle(true)
                 val customTabsIntent = builder.build()
                 customTabsIntent.intent.data = uri
                 customTabsIntent.intent.setPackage(packageName)
@@ -35,7 +36,14 @@ object CustomTabsCommonClient {
             override fun onServiceDisconnected(name: ComponentName?) {
                 Log.d("CustomTabsCommonClient", "onServiceDisconnected: $name")
             }
-        })
+        }
+        val bound = CustomTabsClient.bindCustomTabsService(context, packageName, connection)
+        return if (bound) connection else null
+    }
+
+    fun open(context: Context, uri: Uri) {
+        CustomTabsIntent.Builder().enableUrlBarHiding().setShowTitle(true).build()
+                .launchUrl(context, uri)
     }
 
     fun resolveCustomTabsPackage(context: Context, uri: Uri): String? {

@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.kakao.sdk.auth">
+    package="com.kakao.sdk.auth">
 
     <application>
-        <activity android:name="com.kakao.sdk.auth.presentation.AuthCodeCustomTabsActivity"/>
-        <activity android:name="com.kakao.sdk.auth.presentation.ScopeUpdateWebViewActivity"
-                  android:launchMode="singleTop"
-                  android:configChanges="orientation|screenSize"
-                  android:windowSoftInputMode="adjustResize">
+        <activity android:name=".presentation.TalkAuthCodeActivity"
+            android:theme="@style/TransparentCompat" />
+        <activity android:name=".presentation.AuthCodeCustomTabsActivity"
+            android:theme="@style/TransparentCompat"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".presentation.ScopeUpdateWebViewActivity"
+            android:configChanges="orientation|screenSize"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

@@ -14,11 +14,11 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.webkit.WebResourceErrorCompat
 import androidx.webkit.WebViewClientCompat
+import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.auth.R
 import com.kakao.sdk.auth.exception.AuthCancelException
 import com.kakao.sdk.auth.exception.AuthWebViewException
 import com.kakao.sdk.common.KakaoSdkProvider
-import com.kakao.sdk.network.Constants
 
 /**
  * 유저의 scope 업데이트는 RT 헤더를 사용하기 떄문에 Chrome Custom Tab 이 아닌 WebView 로 진행해야 함.
@@ -28,7 +28,6 @@ import com.kakao.sdk.network.Constants
 class ScopeUpdateWebViewActivity : Activity() {
 
     internal lateinit var webView: WebView
-    internal lateinit var webViewClient: WebViewClientCompat
     private lateinit var resultReceiver: ResultReceiver
     private lateinit var redirectUri: String
     private val headersMap = mutableMapOf<String, String>()
@@ -38,38 +37,31 @@ class ScopeUpdateWebViewActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scope_update_web_view)
 
-        val uri = intent.getParcelableExtra<Uri>(KEY_URL)
-        val headers = intent.getParcelableExtra(KEY_HEADERS) as Bundle
+        val uri = intent.getParcelableExtra<Uri>(Constants.KEY_URL)
+        val headers = intent.getParcelableExtra(Constants.KEY_HEADERS) as Bundle
 
-        redirectUri = intent.getStringExtra(KEY_REDIRECT_URI)
+        redirectUri = intent.getStringExtra(Constants.KEY_REDIRECT_URI)
         for (key in headers.keySet()) {
             headersMap[key] = headers[key] as String
         }
 
-        resultReceiver = intent.getParcelableExtra(KEY_RESULT_RECEIVER)
+        resultReceiver = intent.getParcelableExtra(Constants.KEY_RESULT_RECEIVER)
         webView = findViewById(R.id.webview)
         webView.settings.javaScriptEnabled = true
-        webViewClient = ScopeUpdateWebViewClient()
-        webView.webViewClient = webViewClient
+        webView.webViewClient = ScopeUpdateWebViewClient()
+
         webView.loadUrl(uri.toString(), headersMap)
     }
 
     override fun onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack()
+            return
         }
         val bundle = Bundle()
-        bundle.putSerializable(KEY_EXCEPTION, AuthCancelException())
+        bundle.putSerializable(Constants.KEY_EXCEPTION, AuthCancelException())
         resultReceiver.send(Activity.RESULT_CANCELED, bundle)
         super.onBackPressed()
-    }
-
-    companion object {
-        const val KEY_URL = "key.url"
-        const val KEY_REDIRECT_URI = "key.redirect_uri"
-        const val KEY_HEADERS = "key.extra.headers"
-        const val KEY_RESULT_RECEIVER = "key.result.receiver"
-        const val KEY_EXCEPTION = "key.exception"
     }
 
     inner class ScopeUpdateWebViewClient : WebViewClientCompat() {
@@ -78,7 +70,7 @@ class ScopeUpdateWebViewActivity : Activity() {
             val uri = request.url
             if (uri.toString().startsWith(redirectUri)) {
                 val bundle = Bundle()
-                bundle.putParcelable(KEY_URL, uri)
+                bundle.putParcelable(Constants.KEY_URL, uri)
                 resultReceiver.send(Activity.RESULT_OK, bundle)
                 finish()
                 return true
@@ -105,7 +97,7 @@ class ScopeUpdateWebViewActivity : Activity() {
         ) {
             val bundle = Bundle()
             bundle.putSerializable(
-                KEY_EXCEPTION,
+                Constants.KEY_EXCEPTION,
                 AuthWebViewException(
                         error.errorCode,
                         error.description.toString(),
@@ -114,6 +106,7 @@ class ScopeUpdateWebViewActivity : Activity() {
             finish()
         }
 
+
         @Suppress("OverridingDeprecatedMember", "DEPRECATION")
         override fun onReceivedError(
             view: WebView?,
@@ -121,7 +114,15 @@ class ScopeUpdateWebViewActivity : Activity() {
             description: String?,
             failingUrl: String?
         ) {
-            super.onReceivedError(view, errorCode, description, failingUrl)
+            val bundle = Bundle()
+            bundle.putSerializable(
+                    Constants.KEY_EXCEPTION,
+                    AuthWebViewException(
+                            errorCode,
+                            description.toString(),
+                            failingUrl.toString()))
+            resultReceiver.send(Activity.RESULT_CANCELED, bundle)
+            finish()
         }
     }
 }

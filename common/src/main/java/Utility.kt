@@ -66,14 +66,6 @@ object Utility {
         jsonObject.addProperty(Constants.APP_KEY_HASH, getKeyHash(context))
         jsonObject.addProperty(Constants.KA, getKAHeader(context))
         return jsonObject
-//        try {
-//            return JSONObject()
-//                    .put(Constants.APP_PACKAGE, context.packageName)
-//                    .put(Constants.APP_KEY_HASH, getKeyHash(context))
-//                    .put(Constants.KA, getKAHeader(context))
-//        } catch (e: JSONException) {
-//            throw IllegalArgumentException("JSON parsing error while constructing extras string: $e")
-//        }
     }
 
     fun getMetadata(context: Context, key: String): String? {

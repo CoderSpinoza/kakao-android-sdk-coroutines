@@ -1,26 +1,53 @@
 package com.kakao.sdk.auth.presentation
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.content.ServiceConnection
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.browser.customtabs.CustomTabsService
+import android.os.ResultReceiver
 import com.kakao.sdk.auth.Constants
+import com.kakao.sdk.common.CustomTabsCommonClient
 import com.kakao.sdk.common.KakaoSdkProvider
-import java.util.Arrays
+import kotlin.IllegalArgumentException
 
 /**
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 24..
  */
 class AuthCodeCustomTabsActivity : Activity() {
+    private lateinit var resultReceiver: ResultReceiver
+    private var customTabsConnection: ServiceConnection? = null
+    private var customTabsOpened = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        openChromeCustomTab()
+        val extras = intent.extras ?: throw IllegalArgumentException()
+        resultReceiver = extras.getParcelable(Constants.KEY_RESULT_RECEIVER) as ResultReceiver
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!customTabsOpened) {
+            openChromeCustomTab()
+            customTabsOpened = true
+        } else {
+            finish()
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val uri = intent?.dataString
+        val bundle = Bundle()
+        if (uri == null) {
+            resultReceiver.send(Activity.RESULT_CANCELED, bundle)
+            finish()
+            return
+        }
+        bundle.putParcelable(Constants.KEY_URL, intent.data)
+        resultReceiver.send(Activity.RESULT_OK, bundle)
+        finish()
     }
 
     fun openChromeCustomTab() {
@@ -36,63 +63,14 @@ class AuthCodeCustomTabsActivity : Activity() {
                 .appendQueryParameter(Constants.RESPONSE_TYPE, Constants.CODE)
                 .appendQueryParameter(Constants.APPROVAL_TYPE, "individual")
                 .build()
-        CustomTabsIntent.Builder().enableUrlBarHiding().setShowTitle(true).build()
-                .launchUrl(this, continueUri)
-//        val packageName = resolveCustomTabsPackageName(this, continueUri)
-//        CustomTabsClient.bindCustomTabsService(this, packageName, object : CustomTabsServiceConnection() {
-//            override fun onCustomTabsServiceConnected(name: ComponentName, client: CustomTabsClient) {
-//                val builder = CustomTabsIntent.Builder()
-//                builder.enableUrlBarHiding()
-//                builder.setShowTitle(true)
-//                val customTabsIntent = builder.build()
-//                customTabsIntent.intent.data = continueUri
-//                customTabsIntent.intent.`package` = packageName
-//                startActivity(customTabsIntent.intent)
-//            }
-//
-//            override fun onServiceDisconnected(name: ComponentName) {}
-//        })
+        customTabsConnection = CustomTabsCommonClient.openWithDefault(this, continueUri)
     }
 
-    internal fun resolveCustomTabsPackageName(context: Context, uri: Uri): String? {
-        var packageName: String? = null
-        var availableChrome: String? = null
-
-        // get ResolveInfo for default browser
-        val browserIntent = Intent(Intent.ACTION_VIEW, uri)
-        val resolveInfo = context.packageManager
-                .resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
-
-        // get ResolveInfos for browsers that support custom tabs protocol
-        val serviceIntent = Intent()
-        serviceIntent.action = CustomTabsService.ACTION_CUSTOM_TABS_CONNECTION
-        val serviceInfos = context.packageManager.queryIntentServices(serviceIntent, 0)
-        for (info in serviceInfos) {
-            // check if chrome is available on this device
-            if (availableChrome == null && isPackageNameChrome(info.serviceInfo.packageName)) {
-                availableChrome = info.serviceInfo.packageName
-            }
-            // check if the browser being looped is the default browser
-            if (info.serviceInfo.packageName == resolveInfo.activityInfo.packageName) {
-                packageName = resolveInfo.activityInfo.packageName
-                break
-            }
+    override fun onDestroy() {
+        super.onDestroy()
+        if (customTabsConnection != null) {
+            unbindService(customTabsConnection)
         }
 
-        // if the default browser does not support custom tabs protocol, use chrome if available.
-        if (packageName == null && availableChrome != null) {
-            packageName = availableChrome
-        }
-        Log.d("selected browser", packageName)
-        return packageName
     }
-
-    internal fun isPackageNameChrome(packageName: String): Boolean {
-        return chromePackageNames.contains(packageName)
-    }
-
-    private val chromePackageNames = Arrays.asList(
-            "com.android.chrome",
-            "com.chrome.beta",
-            "com.chrome.dev")
 }
