@@ -29,7 +29,8 @@ open class ScopeUpdateWebViewActivityTest {
 
     lateinit var activity: ScopeUpdateWebViewActivity
 
-    @Test fun redirectUri() {
+    @Test
+    fun redirectUri() {
         val uri = UriUtility.updateScopeUri("client_id", "kakao://oauth",
                 "individual", listOf("scope1", "scope2")).buildUpon()
                 .build()
@@ -39,7 +40,7 @@ open class ScopeUpdateWebViewActivityTest {
                 assertNotNull(resultData)
                 assertEquals(
                         "kakao://oauth",
-                        resultData!![ScopeUpdateWebViewActivity.KEY_URL]!!.toString())
+                        resultData!![Constants.KEY_URL]!!.toString())
             }
         })
 
@@ -54,7 +55,8 @@ open class ScopeUpdateWebViewActivityTest {
                 MockWebResourceRequest(Uri.parse("kakao://oauth")))
     }
 
-    @Test fun onBackPressed() {
+    @Test
+    fun onBackPressed() {
         val uri = TestUriUtility.successfulRedirectUri()
         val receiver = Mockito.spy(object : ResultReceiver(Handler(Looper.getMainLooper())) {
             override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
@@ -71,7 +73,8 @@ open class ScopeUpdateWebViewActivityTest {
         activity.onBackPressed()
     }
 
-    @Test fun onReceivedError() {
+    @Test
+    fun onReceivedError() {
         val uri = TestUriUtility.successfulRedirectUri()
         val receiver = Mockito.spy(object : ResultReceiver(Handler(Looper.getMainLooper())) {
             override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
@@ -80,7 +83,7 @@ open class ScopeUpdateWebViewActivityTest {
                 Assertions.assertEquals(1, resultData?.size())
 
                 val exception =
-                        resultData?.getSerializable(ScopeUpdateWebViewActivity.KEY_EXCEPTION)
+                        resultData?.getSerializable(Constants.KEY_EXCEPTION)
                 Assertions.assertEquals(AuthWebViewException::class.java, exception?.javaClass)
                 val casted = exception as AuthWebViewException
                 Assertions.assertEquals(WebViewClient.ERROR_FAILED_SSL_HANDSHAKE, casted.errorCode)

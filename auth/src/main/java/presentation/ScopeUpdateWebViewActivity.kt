@@ -28,6 +28,7 @@ import com.kakao.sdk.common.KakaoSdkProvider
 class ScopeUpdateWebViewActivity : Activity() {
 
     internal lateinit var webView: WebView
+    internal lateinit var webViewClient: WebViewClientCompat
     private lateinit var resultReceiver: ResultReceiver
     private lateinit var redirectUri: String
     private val headersMap = mutableMapOf<String, String>()
@@ -48,8 +49,8 @@ class ScopeUpdateWebViewActivity : Activity() {
         resultReceiver = intent.getParcelableExtra(Constants.KEY_RESULT_RECEIVER)
         webView = findViewById(R.id.webview)
         webView.settings.javaScriptEnabled = true
-        webView.webViewClient = ScopeUpdateWebViewClient()
-
+        webViewClient = ScopeUpdateWebViewClient()
+        webView.webViewClient = webViewClient
         webView.loadUrl(uri.toString(), headersMap)
     }
 
@@ -91,17 +92,17 @@ class ScopeUpdateWebViewActivity : Activity() {
 
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         override fun onReceivedError(
-            view: WebView,
-            request: WebResourceRequest,
-            error: WebResourceErrorCompat
+                view: WebView,
+                request: WebResourceRequest,
+                error: WebResourceErrorCompat
         ) {
             val bundle = Bundle()
             bundle.putSerializable(
-                Constants.KEY_EXCEPTION,
-                AuthWebViewException(
-                        error.errorCode,
-                        error.description.toString(),
-                        request.url.toString()))
+                    Constants.KEY_EXCEPTION,
+                    AuthWebViewException(
+                            error.errorCode,
+                            error.description.toString(),
+                            request.url.toString()))
             resultReceiver.send(Activity.RESULT_CANCELED, bundle)
             finish()
         }
@@ -109,10 +110,10 @@ class ScopeUpdateWebViewActivity : Activity() {
 
         @Suppress("OverridingDeprecatedMember", "DEPRECATION")
         override fun onReceivedError(
-            view: WebView?,
-            errorCode: Int,
-            description: String?,
-            failingUrl: String?
+                view: WebView?,
+                errorCode: Int,
+                description: String?,
+                failingUrl: String?
         ) {
             val bundle = Bundle()
             bundle.putSerializable(

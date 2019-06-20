@@ -10,7 +10,9 @@ import com.kakao.sdk.auth.AuthCodeService
 import com.kakao.sdk.sample.MainActivity
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.ActivityLoginBinding
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
@@ -20,7 +22,9 @@ class LoginActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         binding.kakaoLoginButton.setOnClickListener {
-            AuthCodeService.instance.requestAuthCode(this)
+            GlobalScope.launch {
+                AuthCodeService.instance.requestAuthCode(this@LoginActivity)
+            }
         }
     }
 
@@ -37,13 +41,5 @@ class LoginActivity : AppCompatActivity() {
                     Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(mainIntent)
         }
-//                .subscribeOn(Schedulers.io())
-//                .subscribe { _ ->
-//                    val mainIntent = Intent(this, MainActivity::class.java)
-//                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-//                            Intent.FLAG_ACTIVITY_CLEAR_TASK or
-//                            Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                    startActivity(mainIntent)
-//                }
     }
 }

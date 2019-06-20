@@ -3,7 +3,6 @@ package com.kakao.sdk.auth
 import com.kakao.sdk.auth.model.AccessToken
 import com.kakao.sdk.auth.model.AccessTokenResponse
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import java.util.Date
 
@@ -12,7 +11,7 @@ import java.util.Date
  */
 @ExperimentalCoroutinesApi
 class TestAccessTokenRepo(var token: AccessToken) : AccessTokenRepo {
-    override fun observe(): BroadcastChannel<AccessToken> = ConflatedBroadcastChannel(token)
+    override fun observe(): ConflatedBroadcastChannel<AccessToken> = ConflatedBroadcastChannel(token)
 
     override fun fromCache(): AccessToken {
         return token
