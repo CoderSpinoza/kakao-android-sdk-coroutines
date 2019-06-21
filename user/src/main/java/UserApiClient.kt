@@ -1,9 +1,7 @@
 package com.kakao.sdk.user
 
 import com.kakao.sdk.auth.network.OAuthApiFactory
-import com.kakao.sdk.user.entity.AccessTokenInfo
-import com.kakao.sdk.user.entity.User
-import com.kakao.sdk.user.entity.UserIdResponse
+import com.kakao.sdk.user.entity.*
 import okhttp3.OkHttpClient
 
 /**
@@ -14,9 +12,18 @@ interface UserApiClient {
 
     suspend fun accessTokenInfo(): AccessTokenInfo
 
-    suspend fun logout(): UserIdResponse
+    suspend fun logout()
 
-    suspend fun unlink(): UserIdResponse
+    suspend fun unlink()
+
+    suspend fun shippingAddresses(
+            addressId: Long? = null,
+            fromUpdateAt: Int? = null,
+            pageSize: Int? = null
+    ): ShippingAddresses
+
+    suspend fun serviceTerms(): ServiceTermsResponse
+
 
     companion object {
         val instance: UserApiClient by lazy { DefaultUserApiClient() }

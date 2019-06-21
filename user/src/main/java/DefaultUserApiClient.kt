@@ -3,9 +3,7 @@ package com.kakao.sdk.user
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
 import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.AccessTokenRepo
-import com.kakao.sdk.user.entity.AccessTokenInfo
-import com.kakao.sdk.user.entity.User
-import com.kakao.sdk.user.entity.UserIdResponse
+import com.kakao.sdk.user.entity.*
 import kotlinx.coroutines.delay
 
 /**
@@ -30,19 +28,21 @@ class DefaultUserApiClient(
         }
     }
 
-    override suspend fun logout(): UserIdResponse {
-        val response = apiErrorInterceptor.handleApiError {
-            userApi.logout()
-        }
+    override suspend fun logout() {
+        apiErrorInterceptor.handleApiError { userApi.logout() }
         accessTokenRepo.clearCache()
-        return response
     }
 
-    override suspend fun unlink(): UserIdResponse {
-        val response = apiErrorInterceptor.handleApiError {
-            userApi.unlink()
-        }
+    override suspend fun unlink() {
+        apiErrorInterceptor.handleApiError { userApi.unlink() }
         accessTokenRepo.clearCache()
-        return response
+    }
+
+    override suspend fun shippingAddresses(addressId: Long?, fromUpdateAt: Int?, pageSize: Int?): ShippingAddresses {
+        return apiErrorInterceptor.handleApiError { userApi.shippingAddresses(addressId, fromUpdateAt, pageSize) }
+    }
+
+    override suspend fun serviceTerms(): ServiceTermsResponse {
+        return apiErrorInterceptor.handleApiError { userApi.serviceTerms() }
     }
 }
