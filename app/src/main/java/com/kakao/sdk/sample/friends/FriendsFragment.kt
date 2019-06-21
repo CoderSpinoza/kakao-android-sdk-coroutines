@@ -2,9 +2,6 @@ package com.kakao.sdk.sample.friends
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
@@ -19,14 +16,12 @@ import com.kakao.sdk.sample.HostFragment
 
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.FriendsFragmentBinding
-import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FriendsFragment : Fragment() {
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var binding: FriendsFragmentBinding
-    private lateinit var viewModel: FriendsViewModel
+    val friendsViewModel: FriendsViewModel by viewModel()
     private lateinit var friendsAdapter: FriendsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +29,10 @@ class FriendsFragment : Fragment() {
         setHasOptionsMenu(false)
     }
 
-    override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.friends_fragment, container, false)
                 as FriendsFragmentBinding
@@ -50,35 +40,33 @@ class FriendsFragment : Fragment() {
 
         friendsAdapter = FriendsAdapter(listOf())
 
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory)
-                .get(FriendsViewModel::class.java)
-        binding.friendsViewModel = viewModel
+        binding.friendsViewModel = friendsViewModel
         binding.friendsList.adapter = friendsAdapter
-        viewModel.friends.observe(this, Observer {
+        friendsViewModel.friends.observe(this, Observer {
             binding.friendsList.visibility = View.VISIBLE
             binding.scopeErrorBinding.scopeErrorLayout.visibility = View.GONE
             friendsAdapter.friends = it!!
             friendsAdapter.notifyDataSetChanged()
         })
 
-        viewModel.missingScopes.observe(this, Observer {
+        friendsViewModel.missingScopes.observe(this, Observer {
             if (it == null || it.isEmpty()) return@Observer
             binding.friendsList.visibility = View.GONE
             binding.scopeErrorBinding.scopeErrorLayout.visibility = View.VISIBLE
         })
 
         binding.scopeErrorBinding.updateScopeButton.setOnClickListener {
-            val scopes = viewModel.missingScopes.value
+            val scopes = friendsViewModel.missingScopes.value
             if (scopes != null && scopes.isNotEmpty()) {
                 requestFriendPermission(scopes)
             }
         }
-        viewModel.friendsError.observe(this, Observer {
+        friendsViewModel.friendsError.observe(this, Observer {
             Log.e("FriendsFragment", it.toString())
         })
 
         if (userVisibleHint) {
-            viewModel.loadFriends()
+            friendsViewModel.loadFriends()
             (parentFragment as HostFragment).title = getString(R.string.friends)
         }
         return binding.root
@@ -86,7 +74,7 @@ class FriendsFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         if (isVisibleToUser and isResumed) {
-            viewModel.loadFriends()
+            friendsViewModel.loadFriends()
         }
         super.setUserVisibleHint(isVisibleToUser)
     }

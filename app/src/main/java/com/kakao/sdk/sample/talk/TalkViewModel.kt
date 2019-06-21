@@ -9,12 +9,11 @@ import com.kakao.sdk.auth.exception.InvalidScopeException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
-import javax.inject.Inject
 
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-open class TalkViewModel @Inject constructor(private val apiClient: TalkApiClient) : ViewModel() {
+open class TalkViewModel(private val apiClient: TalkApiClient) : ViewModel() {
     val chats = MutableLiveData<List<Chat>>()
     val requiredScopes = MutableLiveData<List<String>>()
     val chatsError = MutableLiveData<Throwable>()

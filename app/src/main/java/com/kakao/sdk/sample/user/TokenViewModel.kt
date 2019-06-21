@@ -4,12 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.databinding.ObservableField
 import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.auth.model.AccessToken
-import javax.inject.Inject
 
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-class TokenViewModel @Inject constructor(private val accessTokenRepo: AccessTokenRepo)
+class TokenViewModel(private val accessTokenRepo: AccessTokenRepo)
     : ViewModel() {
     var tokenInfo: AccessToken = accessTokenRepo.fromCache()
     val accessToken = ObservableField<String>()

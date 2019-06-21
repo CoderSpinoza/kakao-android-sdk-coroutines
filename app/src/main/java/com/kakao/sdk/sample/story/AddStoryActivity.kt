@@ -1,30 +1,24 @@
 package com.kakao.sdk.sample.story
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.ActivityAddStoryBinding
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddStoryActivity : AppCompatActivity() {
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var binding: ActivityAddStoryBinding
-    lateinit var viewModel: AddStoryViewModel
+    val addStoryViewModel: AddStoryViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 //        Log.e("AddStoryActivity", "onCreate")
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_story)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddStoryViewModel::class.java)
-        Log.e("AddStoryActivity", "activity viewModel: $viewModel")
+        Log.e("AddStoryActivity", "activity viewModel: $addStoryViewModel")
     }
 
     override fun onResume() {
@@ -43,7 +37,7 @@ class AddStoryActivity : AppCompatActivity() {
 //        })
 //        Log.e("AddStoryActivity", "" + viewModel)
 //        Log.e("AddStoryActivity", "beforeObserve")
-        viewModel.canPost().observe(this, Observer {
+        addStoryViewModel.canPost().observe(this, Observer {
             binding.post.isEnabled = it ?: false
         })
     }

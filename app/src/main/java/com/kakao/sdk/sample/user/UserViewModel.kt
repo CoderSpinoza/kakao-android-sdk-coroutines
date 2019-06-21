@@ -6,13 +6,12 @@ import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @Suppress("UNUSED_VARIABLE")
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-open class UserViewModel @Inject constructor(val userApiClient: UserApiClient) : ViewModel() {
+open class UserViewModel(val userApiClient: UserApiClient) : ViewModel() {
     var user = MutableLiveData<User>()
 
     val email = MutableLiveData<String>()

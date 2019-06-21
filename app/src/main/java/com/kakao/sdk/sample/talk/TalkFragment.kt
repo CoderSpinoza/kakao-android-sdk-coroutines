@@ -1,6 +1,5 @@
 package com.kakao.sdk.sample.talk
 
-import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import android.os.Bundle
@@ -15,71 +14,60 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.kakao.sdk.kakaotalk.entity.Chat
 import com.kakao.sdk.kakaotalk.entity.ChatFilter
 import com.kakao.sdk.sample.HostFragment
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.FragmentTalkBinding
-import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  *
  */
 class TalkFragment : Fragment(), AdapterView.OnItemSelectedListener, LifecycleOwner {
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var binding: FragmentTalkBinding
     private lateinit var chatAdapter: ChatAdapter
-    private lateinit var viewModel: TalkViewModel
+    val talkViewModel: TalkViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_talk, container, false)
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory)
-                .get(TalkViewModel::class.java)
 
         chatAdapter = ChatAdapter(emptyList())
         binding.chatsList.adapter = chatAdapter
-        binding.talkViewModel = viewModel
+        binding.talkViewModel = talkViewModel
 
-        viewModel.chats.observe(this, Observer { chats ->
+        talkViewModel.chats.observe(this, Observer { chats ->
             binding.chatsList.visibility = View.VISIBLE
             binding.scopeErrorBinding.scopeErrorLayout.visibility = View.GONE
             chatAdapter.chats = chats!!
             chatAdapter.notifyDataSetChanged()
         })
 
-        viewModel.requiredScopes.observe(this, Observer {
+        talkViewModel.requiredScopes.observe(this, Observer {
             if (it != null && it.isNotEmpty()) {
                 binding.chatsList.visibility = View.GONE
                 binding.scopeErrorBinding.scopeErrorLayout.visibility = View.VISIBLE
             }
         })
 
-        viewModel.selectedChat.observe(this, Observer {
+        talkViewModel.selectedChat.observe(this, Observer {
             goToChatDetail(it!!)
         })
 
         binding.scopeErrorBinding.updateScopeButton.setOnClickListener {
-            val scopes = viewModel.requiredScopes.value
+            val scopes = talkViewModel.requiredScopes.value
             if (scopes != null && scopes.isNotEmpty()) {
                 requestChatPermission(scopes)
             }
@@ -119,9 +107,9 @@ class TalkFragment : Fragment(), AdapterView.OnItemSelectedListener, LifecycleOw
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (position) {
-            0 -> if (userVisibleHint) viewModel.loadChats(ChatFilter.REGULAR)
-            1 -> if (userVisibleHint) viewModel.loadChats(ChatFilter.DIRECT)
-            2 -> if (userVisibleHint) viewModel.loadChats(ChatFilter.MULTI)
+            0 -> if (userVisibleHint) talkViewModel.loadChats(ChatFilter.REGULAR)
+            1 -> if (userVisibleHint) talkViewModel.loadChats(ChatFilter.DIRECT)
+            2 -> if (userVisibleHint) talkViewModel.loadChats(ChatFilter.MULTI)
         }
     }
 }

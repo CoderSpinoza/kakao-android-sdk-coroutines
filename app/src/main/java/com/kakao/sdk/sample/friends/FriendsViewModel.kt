@@ -8,9 +8,8 @@ import com.kakao.sdk.auth.exception.InvalidScopeException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
-import javax.inject.Inject
 
-open class FriendsViewModel @Inject constructor(private val apiClient: FriendsApiClient)
+open class FriendsViewModel(private val apiClient: FriendsApiClient)
     : ViewModel() {
 
     val friends = MutableLiveData<List<Friend>>()

@@ -7,16 +7,13 @@ import android.os.Bundle
 import android.view.* // ktlint-disable no-wildcard-imports
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.sample.HostFragment
 import com.kakao.sdk.sample.MainActivity
 
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.FragmentStoryDetailBinding
-import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val STORY_ID = "storyId"
 
@@ -31,17 +28,16 @@ private const val STORY_ID = "storyId"
  */
 class StoryDetailFragment : Fragment(), LifecycleOwner {
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-
     private lateinit var storyId: String
     private var listener: OnFragmentInteractionListener? = null
 
     private lateinit var binding: FragmentStoryDetailBinding
-    private lateinit var viewModel: StoryViewModel
+    val storyViewModel: StoryViewModel by viewModel()
 
     private val storyObserver = Observer<Story> {
         updateStoryView(it!!)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -51,7 +47,6 @@ class StoryDetailFragment : Fragment(), LifecycleOwner {
     }
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
             listener = context
@@ -61,21 +56,21 @@ class StoryDetailFragment : Fragment(), LifecycleOwner {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         binding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_story_detail, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory)
-                .get(StoryViewModel::class.java)
-        binding.storyViewModel = viewModel
+//        viewModel = ViewModelProviders.of(activity!!, viewModelFactory)
+//                .get(StoryViewModel::class.java)
+        binding.storyViewModel = storyViewModel
 
-        viewModel.selectedStory.observe(this, storyObserver)
-        viewModel.getStory(storyId)
+        storyViewModel.selectedStory.observe(this, storyObserver)
+        storyViewModel.getStory(storyId)
         return binding.root
     }
 
@@ -105,7 +100,7 @@ class StoryDetailFragment : Fragment(), LifecycleOwner {
         val activity = activity as MainActivity
         activity.hideUpButton()
 
-        viewModel.selectedStory.removeObserver(storyObserver)
+        storyViewModel.selectedStory.removeObserver(storyObserver)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

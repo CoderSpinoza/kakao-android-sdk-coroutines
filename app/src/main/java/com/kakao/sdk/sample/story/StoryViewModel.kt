@@ -8,12 +8,11 @@ import com.kakao.sdk.kakaostory.entity.Story
 import com.kakao.sdk.auth.exception.InvalidScopeException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-open class StoryViewModel @Inject constructor(private val storyApiClient: StoryApiClient)
+open class StoryViewModel(private val storyApiClient: StoryApiClient)
     : ViewModel() {
     val isStoryUser = MutableLiveData<Boolean>()
     val stories = MutableLiveData<List<Story>>()

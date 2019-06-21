@@ -1,8 +1,6 @@
 package com.kakao.sdk.sample.user
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -21,8 +19,7 @@ import com.kakao.sdk.sample.Navigator
 import com.kakao.sdk.sample.R
 import com.kakao.sdk.sample.databinding.FragmentUserBinding
 import com.kakao.sdk.sample.databinding.ViewUserBinding
-import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  *
@@ -36,16 +33,17 @@ class UserFragment : Fragment() {
 
     private lateinit var binding: FragmentUserBinding
     private lateinit var navigator: Navigator
-
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    val userViewModel: UserViewModel by viewModel()
+    val tokenViewModel: TokenViewModel by viewModel()
 
     val logoutObserver = Observer<Void> {
         navigator.redirectToLogin(context!!)
     }
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, container, false)
@@ -56,18 +54,13 @@ class UserFragment : Fragment() {
         binding.lifecycleOwner = this
 
         navigator = Navigator.instance
-
-        binding.userViewModel =
-                ViewModelProviders.of(activity!!, viewModelFactory).get(UserViewModel::class.java)
-        binding.tokenViewModel =
-                ViewModelProviders.of(activity!!, viewModelFactory).get(TokenViewModel::class.java)
-
+        binding.userViewModel = userViewModel
+        binding.tokenViewModel = tokenViewModel
         binding.userViewModel?.logoutEvent?.observe(this, logoutObserver)
         return view
     }
 
     override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 

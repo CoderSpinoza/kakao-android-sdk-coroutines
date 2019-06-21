@@ -48,7 +48,6 @@ class AddStoryActivityTest {
     @Before fun setupEach() {
         val application = instrumentation.targetContext.applicationContext as TestApplication
         MockitoAnnotations.initMocks(this)
-        application.component().inject(this)
         viewModel = viewModelFactory.create(AddStoryViewModel::class.java)
         Log.e("Test", "after create")
 //        Log.e("Test", "create viewModel: ${viewModel2.toString()}")

@@ -5,6 +5,8 @@ apply plugin: 'kotlin-kapt'
 
 apply from: "$rootDir/constants.gradle"
 
+ext.koin_version = "2.0.1"
+
 android {
     compileSdkVersion project.ext.compileSdkVersion
 
@@ -56,16 +58,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
-    implementation 'com.google.dagger:dagger:2.21'
-    implementation 'com.google.dagger:dagger-android:2.21'
-    implementation "com.google.dagger:dagger-android-support:2.21"
-    kapt 'com.google.dagger:dagger-compiler:2.21'
-    kapt "com.google.dagger:dagger-android-processor:2.21"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -73,12 +69,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
 
-    androidTestImplementation 'org.mockito:mockito-core:2.23.0'
-    androidTestImplementation 'org.mockito:mockito-inline:2.9.0'
+    androidTestImplementation 'org.mockito:mockito-core:2.25.0'
+    androidTestImplementation 'org.mockito:mockito-inline:2.21.0'
     androidTestImplementation 'org.mockito:mockito-android:2.9.0'
-
-    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.21'
-    kaptAndroidTest "com.google.dagger:dagger-android-processor:2.21"
 
     api project(':auth')
     api project(':user')
@@ -88,9 +81,26 @@ dependencies {
     api project(":kakaonavi")
     api project(":partner")
 
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.1-SNAPSHOT'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    // Koin for Kotlin
+    implementation "org.koin:koin-core:$koin_version"
+    // Koin extended & experimental features
+    implementation "org.koin:koin-core-ext:$koin_version"
+    // Koin for Unit tests
+    testImplementation "org.koin:koin-test:$koin_version"
+    // Koin for Android
+    implementation "org.koin:koin-android:$koin_version"
+    // Koin Android Scope features
+    implementation "org.koin:koin-android-scope:$koin_version"
+    // Koin AndroidX Scope features
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    // Koin AndroidX ViewModel features
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    // Koin AndroidX Experimental features
+    implementation "org.koin:koin-androidx-ext:$koin_version"
 }
 
 gradle.projectsEvaluated {

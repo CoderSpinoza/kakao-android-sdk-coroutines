@@ -42,6 +42,7 @@ interface AccessTokenRepo {
      *
      * @return hot [Observable] of [AccessToken]
      */
+    @ExperimentalCoroutinesApi
     fun observe(): ConflatedBroadcastChannel<AccessToken>
 
     companion object {
