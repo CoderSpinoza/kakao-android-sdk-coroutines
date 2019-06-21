@@ -38,7 +38,8 @@ class UsersApiTest {
         api = retrofit.create(UserApi::class.java)
     }
 
-    @Test fun me() = runBlocking {
+    @Test
+    fun me() = runBlocking {
         val body = Utility.getJson("json/users/deprecated.json")
 //        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
         val response = MockResponse().setResponseCode(200).setBody(body)
@@ -63,7 +64,8 @@ class UsersApiTest {
     @Nested
     @DisplayName(Constants.V1_ACCESS_TOKEN_INFO_PATH)
     inner class TokenInfo {
-        @BeforeEach fun setup() {
+        @BeforeEach
+        fun setup() {
             val classloader = javaClass.classLoader ?: throw NullPointerException()
             val uri = classloader.getResource("json/token_info/internal.json")
             val file = File(uri.path)
@@ -73,7 +75,8 @@ class UsersApiTest {
             server.enqueue(response)
         }
 
-        @Test fun accessTokenInfo() = runBlocking {
+        @Test
+        fun accessTokenInfo() = runBlocking {
             val response = api.accessTokenInfo()
             assertEquals(expected["id"].asLong, response.id)
             assertEquals(expected["expiresInMillis"].asLong, response.expiresInMillis)
@@ -85,7 +88,8 @@ class UsersApiTest {
     @Nested
     @DisplayName(Constants.V1_UPDATE_PROFILE_PATH)
     inner class UpdateProfile {
-        @BeforeEach fun setup() {
+        @BeforeEach
+        fun setup() {
             val classloader = javaClass.classLoader ?: throw NullPointerException()
             val uri = classloader.getResource("json/user_id.json")
             val file = File(uri.path)
@@ -95,7 +99,8 @@ class UsersApiTest {
             server.enqueue(response)
         }
 
-        @Test fun updateProfile() = runBlocking {
+        @Test
+        fun updateProfile() = runBlocking {
             val properties = mapOf(Pair("key1", "value1"), Pair("key2", "value2"))
             val response = api.updateProfile(properties = properties)
             val request = server.takeRequest()
@@ -104,8 +109,8 @@ class UsersApiTest {
             assertEquals("POST", request.method)
             val requestProperties =
                     KakaoGsonFactory.base.fromJson<JsonObject>(
-                        URLDecoder.decode(requestBody["properties"], "UTF-8"),
-                        JsonObject::class.java)
+                            URLDecoder.decode(requestBody["properties"], "UTF-8"),
+                            JsonObject::class.java)
             assertEquals("value1", requestProperties["key1"].asString)
             assertEquals("value2", requestProperties["key2"].asString)
             expected["id"].asLong == response.id
@@ -115,28 +120,26 @@ class UsersApiTest {
     @Nested
     @DisplayName("/v1/user/logout and /v1/user/unlink")
     inner class LogoutAndUnlink {
-        @BeforeEach fun setup() {
-            val classloader = javaClass.classLoader ?: throw NullPointerException()
-            val uri = classloader.getResource("json/user_id.json")
-            val file = File(uri.path)
-            body = String(file.readBytes())
-            expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
+        @BeforeEach
+        fun setup() {
+            body = Utility.getJson("json/user_id.json")
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
         }
 
-        @Test fun logout() = runBlocking {
-            val response = api.logout()
-            expected["id"].asLong == response.id
+        @Test
+        fun logout() = runBlocking {
+            api.logout()
         }
 
-        @Test fun unlink() = runBlocking {
-            val response = api.unlink()
-            expected["id"].asLong == response.id
+        @Test
+        fun unlink() = runBlocking {
+            api.unlink()
         }
     }
 
-    @AfterEach fun cleanup() {
+    @AfterEach
+    fun cleanup() {
         server.shutdown()
     }
 }

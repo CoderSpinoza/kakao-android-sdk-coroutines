@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder
  * @author kevin.kang. Created on 2018. 4. 25..
  */
 data class UserAccount(
-        val emailNeedsAgreement: Boolean,
+        val emailNeedsAgreement: Boolean?,
         val isEmailVerified: Boolean?,
         val isEmailValid: Boolean?,
         val email: String?,

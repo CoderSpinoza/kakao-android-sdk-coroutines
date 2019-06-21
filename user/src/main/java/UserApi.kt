@@ -34,12 +34,12 @@ interface UserApi {
     suspend fun unlink()
 
     @GET(Constants.V1_SHIPPING_ADDRESSES_PATH)
-    fun shippingAddresses(
+    suspend fun shippingAddresses(
             @Query(Constants.ADDRESS_ID) addressId: Long? = null,
             @Query(Constants.FROM_UPDATED_AT) fromUpdateAt: Int? = null,
             @Query(Constants.PAGE_SIZE) pageSize: Int? = null
     ): ShippingAddresses
 
     @GET(Constants.V1_SERVICE_TERMS_PATH)
-    fun serviceTerms(): ServiceTermsResponse
+    suspend fun serviceTerms(): ServiceTermsResponse
 }

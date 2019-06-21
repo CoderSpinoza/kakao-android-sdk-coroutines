@@ -18,7 +18,8 @@ import org.junit.jupiter.params.provider.ValueSource
  */
 class UserTest {
     @ValueSource(strings = ["only_email", "only_phone", "preregi"])
-    @ParameterizedTest fun parse(path: String) {
+    @ParameterizedTest
+    fun parse(path: String) {
         val body = Utility.getJson("json/users/$path.json")
         val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
         val response = KakaoGsonFactory.base.fromJson(body, User::class.java)
@@ -32,15 +33,15 @@ class UserTest {
 
         if (expected.has(Constants.PROPERTIES)) {
             assertEquals(
-                expected[Constants.PROPERTIES].asJsonObject.keySet().size,
-                response.properties.size
+                    expected[Constants.PROPERTIES].asJsonObject.keySet().size,
+                    response.properties.size
             )
         }
 
         if (expected.has(Constants.FOR_PARTNER)) {
             assertEquals(
-                expected[Constants.FOR_PARTNER].asJsonObject.keySet().size,
-                response.forPartners.size
+                    expected[Constants.FOR_PARTNER].asJsonObject.keySet().size,
+                    response.forPartners.size
             )
         }
 
@@ -50,15 +51,15 @@ class UserTest {
             val expectedAccount = expected[Constants.KAKAO_ACCOUNT].asJsonObject
             val account = response.kakaoAccount
 
-            if (expectedAccount.has(Constants.HAS_EMAIL)) {
-                assertEquals(expectedAccount[Constants.HAS_EMAIL].asBoolean, account.hasEmail)
+            if (expectedAccount.has(Constants.EMAIL_NEEDS_AGREEMENT)) {
+                assertEquals(expectedAccount[Constants.EMAIL_NEEDS_AGREEMENT].asBoolean, account.emailNeedsAgreement)
             } else {
-                assertNull(account.hasEmail)
+                assertNull(account.emailNeedsAgreement)
             }
             if (expectedAccount.has(Constants.IS_EMAIL_VERIFIED)) {
                 assertEquals(
-                    expectedAccount[Constants.IS_EMAIL_VERIFIED].asBoolean,
-                    account.isEmailVerified
+                        expectedAccount[Constants.IS_EMAIL_VERIFIED].asBoolean,
+                        account.isEmailVerified
                 )
             } else {
                 assertNull(account.isEmailVerified)
@@ -68,23 +69,18 @@ class UserTest {
             } else {
                 assertNull(account.email)
             }
-            if (expectedAccount.has(Constants.HAS_PHONE_NUMBER)) {
+            if (expectedAccount.has(Constants.PHONE_NUMBER_NEEDS_AGREEMENT)) {
                 assertEquals(
-                    expectedAccount[Constants.HAS_PHONE_NUMBER].asBoolean,
-                    account.hasPhoneNumber
+                        expectedAccount[Constants.PHONE_NUMBER_NEEDS_AGREEMENT].asBoolean,
+                        account.phoneNumberNeedsAgreement
                 )
             } else {
-                assertNull(account.hasPhoneNumber)
+                assertNull(account.phoneNumberNeedsAgreement)
             }
             if (expectedAccount.has(Constants.PHONE_NUMBER)) {
                 assertEquals(expectedAccount[Constants.PHONE_NUMBER].asString, account.phoneNumber)
             } else {
                 assertNull(account.phoneNumber)
-            }
-            if (expectedAccount.has(Constants.DISPLAY_ID)) {
-                assertEquals(expectedAccount[Constants.DISPLAY_ID].asString, account.displayId)
-            } else {
-                assertNull(account.displayId)
             }
         }
     }
