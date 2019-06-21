@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 data class StoryLike(
-    val actor: StoryActor,
-    val emotion: Emotion
+        val actor: StoryActor,
+        val emotion: Emotion?
 ) {
     enum class Emotion(val papiEmotion: String) {
         /**
@@ -34,11 +34,6 @@ data class StoryLike(
          * 힘내요
          */
         @SerializedName("CHEER_UP")
-        CHEER_UP("CHEER_UP"),
-        /**
-         * 정의되지 않은 느낌
-         */
-        @SerializedName("NOT_DEFINED")
-        NOT_DEFINED("NOT_DEFINED");
+        CHEER_UP("CHEER_UP");
     }
 }

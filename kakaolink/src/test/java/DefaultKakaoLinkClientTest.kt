@@ -35,7 +35,7 @@ class DefaultKakaoLinkClientTest {
                 api = ApiFactory.withClient(
                         server.url("/").toString(),
                         OkHttpClient.Builder()
-                ).create(KakaoLinkApi::class.java)
+                ).create(LinkApi::class.java)
         )
     }
 

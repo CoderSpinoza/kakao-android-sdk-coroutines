@@ -1,4 +1,4 @@
-package com.kakao.sdk.kakaotalk.domain
+package com.kakao.sdk.kakaotalk
 
 import com.google.gson.JsonObject
 import com.kakao.sdk.common.KakaoGsonFactory
@@ -46,26 +46,6 @@ class TalkApiTest {
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
         assertEquals("true", params[Constants.SECURE_RESOURCE])
-    }
-
-    @CsvFileSource(resources = ["/csv/chat_list.csv"], numLinesToSkip = 1)
-    @ParameterizedTest
-    fun chatList(
-            fromId: Int? = null,
-            limit: Int? = null,
-            order: String? = null,
-            filter: String? = null
-    ) = runBlocking {
-        response.setBody(Utility.getJson("json/chat_list/list.json"))
-        server.enqueue(response)
-        api.chatList(fromId, limit, order, filter)
-        val request = server.takeRequest()
-        val params = Utility.parseQuery(request.requestUrl.query())
-
-        assertEquals(fromId, params[Constants.FROM_ID]?.toInt())
-        assertEquals(limit, params[Constants.LIMIT]?.toInt())
-        assertEquals(order, params[Constants.ORDER])
-        assertEquals(filter, params[Constants.FILTER])
     }
 
     @MethodSource("sendMemoProvider")

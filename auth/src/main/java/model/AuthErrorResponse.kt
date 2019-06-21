@@ -1,6 +1,6 @@
 package com.kakao.sdk.auth.model
 
-import com.google.gson.GsonBuilder
+import com.kakao.sdk.common.KakaoGsonFactory
 
 /**
  * 카카오 OAuth API 호출 시 에러 응답
@@ -14,6 +14,6 @@ import com.google.gson.GsonBuilder
  */
 data class AuthErrorResponse(val error: String?, val errorDescription: String?) {
     override fun toString(): String {
-        return GsonBuilder().setPrettyPrinting().create().toJson(this)
+        return KakaoGsonFactory.pretty.toJson(this)
     }
 }

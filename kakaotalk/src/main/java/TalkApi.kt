@@ -1,6 +1,5 @@
 package com.kakao.sdk.kakaotalk
 
-import com.kakao.sdk.kakaotalk.entity.ChatListResponse
 import com.kakao.sdk.kakaotalk.entity.FriendsResponse
 import com.kakao.sdk.kakaotalk.entity.PlusFriendsResponse
 import com.kakao.sdk.kakaotalk.entity.TalkProfile
@@ -17,14 +16,6 @@ import retrofit2.http.FormUrlEncoded
 interface TalkApi {
     @GET("${Constants.PROFILE_PATH}?secure_resource=true")
     suspend fun profile(): TalkProfile
-
-    @GET("${Constants.CHATS_PATH}?secure_resource=true")
-    suspend fun chatList(
-            @Query(Constants.FROM_ID) fromId: Int? = null,
-            @Query(Constants.LIMIT) limit: Int? = null,
-            @Query(Constants.ORDER) order: String? = null,
-            @Query(Constants.FILTER) filter: String? = null
-    ): ChatListResponse
 
     @POST(Constants.MEMO_PATH)
     @FormUrlEncoded

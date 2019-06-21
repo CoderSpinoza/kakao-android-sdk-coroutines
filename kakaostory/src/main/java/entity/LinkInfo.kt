@@ -8,9 +8,9 @@ import com.kakao.sdk.kakaostory.Constants
  * @author kevin.kang. Created on 2018. 3. 22..
  */
 data class LinkInfo(
-        val url: String?,
-        val requestedUrl: String?,
-        val host: String?,
+        val url: String,
+        val requestedUrl: String,
+        val host: String,
         val title: String?,
         val description: String?,
         val section: String?,

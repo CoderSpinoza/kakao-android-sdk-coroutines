@@ -12,7 +12,7 @@ import com.kakao.sdk.network.ApiFactory
  */
 class DefaultKakaoLinkClient(
     val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo,
-    val api: KakaoLinkApi = ApiFactory.kapi.create(KakaoLinkApi::class.java)
+    val api: LinkApi = ApiFactory.kapi.create(LinkApi::class.java)
 ) : KakaoLinkClient {
     override suspend fun isKakaoLinkAvailable(): Boolean {
         return true

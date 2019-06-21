@@ -13,7 +13,8 @@ import org.junit.jupiter.params.provider.ValueSource
  */
 class TalkProfileTest {
     @ValueSource(strings = ["full_profile"])
-    @ParameterizedTest fun parse(path: String) {
+    @ParameterizedTest
+    fun parse(path: String) {
         val body = Utility.getJson("json/profile/$path.json")
         val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
         val response = KakaoGsonFactory.base.fromJson(body, TalkProfile::class.java)

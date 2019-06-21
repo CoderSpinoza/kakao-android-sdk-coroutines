@@ -12,10 +12,10 @@ data class Story(
         val mediaType: String,
         val createdAt: String,
         val commentCount: String,
-        @SerializedName("like_count") val likeCount: String,
+        val likeCount: String,
         val content: String,
-        val permission: String,
-        @SerializedName("media") val imageInfos: List<StoryImage>?,
+        val permission: Permission?,
+        @SerializedName("media") val images: List<StoryImage>?,
         val likes: List<StoryLike>,
         val comments: List<StoryComment>
 ) {
@@ -24,11 +24,6 @@ data class Story(
     }
 
     enum class Permission(val value: String) {
-        /**
-         * 알수 없는 공개 범위
-         */
-        @SerializedName("UNKNOWN")
-        UNKNOWN("UNKNOWN"),
         /**
          * 전체공개
          */

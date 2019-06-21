@@ -26,14 +26,14 @@ import java.util.stream.Stream
 /**
  * @author kevin.kang. Created on 2018. 4. 30..
  */
-class KakaoLinkApiTest {
+class LinkApiTest {
     private lateinit var server: MockWebServer
-    private lateinit var api: KakaoLinkApi
+    private lateinit var api: LinkApi
     @BeforeEach fun setup() {
         server = MockWebServer()
         server.start()
         api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
-                .create(KakaoLinkApi::class.java)
+                .create(LinkApi::class.java)
 
         val response = MockResponse().setResponseCode(200)
                 .setBody(Utility.getJson("json/validate.json"))
