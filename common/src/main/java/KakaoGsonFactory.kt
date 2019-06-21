@@ -28,18 +28,17 @@ object KakaoGsonFactory {
         }
     }
 
-    val base: Gson = GsonBuilder()
+    private val internalBuilder = GsonBuilder()
             .registerTypeHierarchyAdapter(IntEnum::class.java, object : JsonSerializer<IntEnum> {
-                override fun serialize(
-                    src: IntEnum?,
-                    typeOfSrc: Type?,
-                    context: JsonSerializationContext?
-                ): JsonElement {
+                override fun serialize(src: IntEnum?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
                     return JsonPrimitive(src?.getValue())
                 }
             })
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .addSerializationExclusionStrategy(kakaoExclusionStrategy)
             .addDeserializationExclusionStrategy(kakaoExclusionStrategy)
-            .create()
+
+    val base: Gson = internalBuilder.create()
+
+    val pretty: Gson = internalBuilder.setPrettyPrinting().create()
 }
