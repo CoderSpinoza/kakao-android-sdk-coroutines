@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 /**
  * @author kevin.kang. Created on 2018. 4. 20..
  */
-open class UserViewModel(val userApiClient: UserApiClient) : ViewModel() {
+open class UserViewModel(private val userApiClient: UserApiClient) : ViewModel() {
     var user = MutableLiveData<User>()
 
     val email = MutableLiveData<String>()

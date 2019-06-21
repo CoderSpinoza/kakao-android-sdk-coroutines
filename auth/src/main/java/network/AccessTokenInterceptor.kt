@@ -12,11 +12,11 @@ import okhttp3.Response
 /**
  * @author kevin.kang. Created on 2018. 3. 22..
  */
-@ExperimentalCoroutinesApi
 class AccessTokenInterceptor(
-    private val recentToken: ConflatedBroadcastChannel<AccessToken> =
-            AccessTokenRepo.instance.observe()
+        @Suppress("EXPERIMENTAL_API_USAGE") private val recentToken: ConflatedBroadcastChannel<AccessToken> =
+                AccessTokenRepo.instance.observe()
 ) : Interceptor {
+    @ExperimentalCoroutinesApi
     override fun intercept(chain: Interceptor.Chain?): Response {
         var request = chain?.request() as Request
         runBlocking {

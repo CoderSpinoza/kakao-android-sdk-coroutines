@@ -37,18 +37,17 @@ interface AccessTokenRepo {
     fun clearCache()
 
     /**
-     * [AccessToken] 업데이트 이벤트를 구독할 수 있는 hot [Observable]를 리턴한다.
+     * [AccessToken] 업데이트 이벤트를 구독할 수 있는 hot [ConflatedBroadcastChannel]를 리턴한다.
      * 토큰 발급에 성공하거나 ApiClient 들을 사용하여 API 호출 중 토큰이 자동 갱신 되는 경우에 이벤트를 생성한다.
      *
-     * @return hot [Observable] of [AccessToken]
+     * @return [ConflatedBroadcastChannel] of [AccessToken]
      */
     @ExperimentalCoroutinesApi
     fun observe(): ConflatedBroadcastChannel<AccessToken>
 
     companion object {
-        @ExperimentalCoroutinesApi
-        val instance by lazy {
-            DefaultAccessTokenRepo() as AccessTokenRepo
+        val instance: AccessTokenRepo by lazy {
+            DefaultAccessTokenRepo()
         }
     }
 }

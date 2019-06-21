@@ -18,11 +18,11 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.coroutines.suspendCoroutine
 
-@ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
 class DefaultAuthCodeServiceTest {
     lateinit var authCodeService: DefaultAuthCodeService
 
+    @ExperimentalCoroutinesApi
     @Before
     fun setup() {
         val testToken = AccessToken(

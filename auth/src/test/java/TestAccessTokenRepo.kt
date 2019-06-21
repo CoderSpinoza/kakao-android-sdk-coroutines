@@ -9,8 +9,8 @@ import java.util.Date
 /**
  * @author kevin.kang. Created on 2018. 5. 10..
  */
-@ExperimentalCoroutinesApi
 class TestAccessTokenRepo(var token: AccessToken) : AccessTokenRepo {
+    @ExperimentalCoroutinesApi
     override fun observe(): ConflatedBroadcastChannel<AccessToken> = ConflatedBroadcastChannel(token)
 
     override fun fromCache(): AccessToken {

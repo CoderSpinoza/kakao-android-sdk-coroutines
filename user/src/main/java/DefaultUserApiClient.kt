@@ -6,19 +6,19 @@ import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.user.entity.AccessTokenInfo
 import com.kakao.sdk.user.entity.User
 import com.kakao.sdk.user.entity.UserIdResponse
+import kotlinx.coroutines.delay
 
 /**
  * @suppress
  * @author kevin.kang. Created on 2018. 4. 2..
  */
 class DefaultUserApiClient(
-    val userApi: UserApi = OAuthApiFactory.kapi.create(UserApi::class.java),
-    private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance,
-    private val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance
+        val userApi: UserApi = OAuthApiFactory.kapi.create(UserApi::class.java),
+        private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance,
+        private val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance
 ) : UserApiClient {
 
     override suspend fun me(secureReSource: Boolean): User {
-
         return apiErrorInterceptor.handleApiError {
             userApi.me(secureReSource)
         }

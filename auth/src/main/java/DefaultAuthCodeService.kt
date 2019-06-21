@@ -32,18 +32,16 @@ import kotlin.coroutines.suspendCoroutine
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 20..
  */
-@ExperimentalCoroutinesApi
 class DefaultAuthCodeService(
-        private val tokenChannel: ConflatedBroadcastChannel<AccessToken>,
+        @Suppress("EXPERIMENTAL_API_USAGE") private val tokenChannel: ConflatedBroadcastChannel<AccessToken>,
         private val intentResolveClient: IntentResolveClient = IntentResolveClient()
-)
-    : AuthCodeService {
+) : AuthCodeService {
     override suspend fun requestAuthCode(
-        context: Context,
-        clientId: String,
-        redirectUri: String,
-        approvalType: String,
-        kaHeader: String
+            context: Context,
+            clientId: String,
+            redirectUri: String,
+            approvalType: String,
+            kaHeader: String
     ): String = suspendCoroutine {
         context.startActivity(Intent(context, AuthCodeCustomTabsActivity::class.java)
                 .putExtra(Constants.KEY_RESULT_RECEIVER, resultReceiver(it)))
@@ -82,12 +80,12 @@ class DefaultAuthCodeService(
     }
 
     override suspend fun requestAuthCode(
-        context: Context,
-        scopes: List<String>,
-        clientId: String,
-        redirectUri: String,
-        approvalType: String,
-        kaHeader: String
+            context: Context,
+            scopes: List<String>,
+            clientId: String,
+            redirectUri: String,
+            approvalType: String,
+            kaHeader: String
     ): String = suspendCoroutine { cont ->
         val uri = UriUtility.updateScopeUri(clientId, redirectUri, approvalType, scopes)
         val intent = scopeUpdateIntent(context, uri, redirectUri, kaHeader, cont)
@@ -95,11 +93,11 @@ class DefaultAuthCodeService(
     }
 
     fun scopeUpdateIntent(
-        context: Context,
-        uri: Uri,
-        redirectUri: String,
-        kaHeader: String,
-        continuation: Continuation<String>
+            context: Context,
+            uri: Uri,
+            redirectUri: String,
+            kaHeader: String,
+            continuation: Continuation<String>
     ): Intent = runBlocking {
         val headers = scopeUpdateHeaders(tokenChannel.value.refreshToken, kaHeader)
         UriUtility

@@ -7,17 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.sample.login.LoginActivity
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class SplashActivity : AppCompatActivity() {
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         runBlocking {
-            val token = AccessTokenRepo.instance.observe().openSubscription().receive()
+            val token = AccessTokenRepo.instance.observe().value
             if (token.refreshToken == null) {
                 goToLogin()
                 return@runBlocking

@@ -13,12 +13,13 @@ import java.util.Date
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 27..
  */
-@ExperimentalCoroutinesApi
 class DefaultAccessTokenRepo(
-    val appCache: SharedPreferences = KakaoSdkProvider.applicationContextInfo.sharedPreferences
+        val appCache: SharedPreferences = KakaoSdkProvider.applicationContextInfo.sharedPreferences
 ) : AccessTokenRepo {
+    @ExperimentalCoroutinesApi
     val tokenUpdates: ConflatedBroadcastChannel<AccessToken> = ConflatedBroadcastChannel(fromCache())
 
+    @ExperimentalCoroutinesApi
     override fun observe(): ConflatedBroadcastChannel<AccessToken> {
         return tokenUpdates
     }

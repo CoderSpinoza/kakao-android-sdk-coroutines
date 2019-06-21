@@ -14,7 +14,7 @@ import com.kakao.sdk.sample.user.UserFragment
  * @author kevin.kang. Created on 2018. 5. 15..
  */
 class TabAdapter(context: Context, fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
-    val tabTitles = listOf<String>()
+//    val tabTitles = listOf<String>()
 
     val hostFragments = listOf(
             HostFragment.newInstance(FriendsFragment(), context.getString(R.string.friends)),

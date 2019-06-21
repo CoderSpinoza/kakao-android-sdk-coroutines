@@ -1,7 +1,6 @@
 package com.kakao.sdk.sample
 
 import android.app.Application
-import android.util.Log
 import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.common.ApplicationContextInfo
 import com.kakao.sdk.common.KakaoSdkProvider
@@ -16,8 +15,8 @@ import com.kakao.sdk.sample.talk.TalkViewModel
 import com.kakao.sdk.sample.user.TokenViewModel
 import com.kakao.sdk.sample.user.UserViewModel
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -27,8 +26,6 @@ import org.koin.dsl.module
  */
 @Suppress("Unused")
 class KakaoApplication : Application() {
-
-    @ExperimentalCoroutinesApi
     override fun onCreate() {
         super.onCreate()
 
@@ -51,6 +48,7 @@ class KakaoApplication : Application() {
             viewModel { TokenViewModel(get()) }
         }
         startKoin {
+            androidLogger()
             androidContext(this@KakaoApplication)
             modules(listOf(apiClientModule, viewModelModule, extraModule))
         }

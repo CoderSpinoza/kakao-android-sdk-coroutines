@@ -13,40 +13,47 @@ import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.network.ApiErrorCode
 import com.kakao.sdk.network.data.ApiErrorResponse
 import com.kakao.sdk.network.data.ApiException
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import retrofit2.HttpException
 
 /**
  * @suppress
  * @author kevin.kang. Created on 2018. 5. 2..
  */
-class ApiErrorInterceptor(
-    private val authApiClient: AuthApiClient = AuthApiClient.instance,
-    private val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance,
-    private val appInfo: ApplicationInfo = KakaoSdkProvider.applicationContextInfo,
-    private val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo
+@Suppress("EXPERIMENTAL_API_USAGE")
+class ApiErrorInterceptor constructor(
+        private val authApiClient: AuthApiClient = AuthApiClient.instance,
+        private val accessTokenRepo: AccessTokenRepo = AccessTokenRepo.instance,
+        private val appInfo: ApplicationInfo = KakaoSdkProvider.applicationContextInfo,
+        private val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo
 ) {
 
     suspend fun <T> handleApiError(block: suspend () -> T): T {
-        return errorOnRefresh { refreshAccessToken { translateError {
-            block()
-        } } }
+        return errorOnRefresh {
+            refreshAccessToken {
+                translateError {
+                    block()
+                }
+            }
+        }
     }
 
-    suspend fun <T> errorOnRefresh(block: suspend () -> T): T {
-        try {
-            return block()
+    private suspend fun <T> errorOnRefresh(block: suspend () -> T): T {
+        return try {
+            block()
         } catch (e: InvalidTokenException) {
             accessTokenRepo.clearCache()
             throw e
         }
     }
-    suspend fun <T> refreshAccessToken(block: suspend () -> T): T {
+
+    private suspend fun <T> refreshAccessToken(block: suspend () -> T): T {
         return try {
             block()
         } catch (t: InvalidTokenException) {
             val token = accessTokenRepo.observe().value
             if (token.refreshToken == null) throw t
-            val result = authApiClient.refreshAccessToken(
+            authApiClient.refreshAccessToken(
                     token.refreshToken,
                     appInfo.clientId,
                     appInfo.approvalType,
@@ -56,9 +63,9 @@ class ApiErrorInterceptor(
         }
     }
 
-    suspend fun <T> translateError(block: suspend () -> T): T {
-        try {
-            return block()
+    internal suspend fun <T> translateError(block: suspend () -> T): T {
+        return try {
+            block()
         } catch (t: HttpException) {
             val errorString = t.response()?.errorBody()?.string()
             val response = KakaoGsonFactory.base.fromJson(errorString, ApiErrorResponse::class.java)

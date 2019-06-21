@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
         val tabViews = Observable.fromIterable(drawables)
                 .map {
                     Pair(
-                        it,
-                        LayoutInflater.from(this@MainActivity)
-                                .inflate(R.layout.item_tab, null)
+                            it,
+                            LayoutInflater.from(this@MainActivity)
+                                    .inflate(R.layout.item_tab, null)
                     )
                 }
                 .doOnNext {
@@ -79,9 +79,9 @@ class MainActivity : AppCompatActivity(), StoryDetailFragment.OnFragmentInteract
             }
 
             override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
             ) {
             }
 
