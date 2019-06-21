@@ -14,8 +14,8 @@ import com.kakao.sdk.kakaonavi.entity.KakaoNaviParams
  * @author kevin.kang. Created on 18/02/2019..
  */
 class DefaultKakaoNaviClient(
-    private val applicationInfo: ApplicationInfo = KakaoSdkProvider.applicationContextInfo,
-    private val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo
+        private val applicationInfo: ApplicationInfo = KakaoSdkProvider.applicationContextInfo,
+        private val contextInfo: ContextInfo = KakaoSdkProvider.applicationContextInfo
 ) : KakaoNaviClient {
     override fun shareDestinationUri(params: KakaoNaviParams): Uri =
             baseUriBuilder(params).path("${Constants.SHARE_POI}.html").build()

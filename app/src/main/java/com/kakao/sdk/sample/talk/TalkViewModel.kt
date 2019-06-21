@@ -26,14 +26,14 @@ open class TalkViewModel(private val apiClient: TalkApiClient) : ViewModel() {
 
     fun loadChats(filter: ChatFilter) {
         GlobalScope.launch {
-            try {
-                val response = apiClient.chatList(filter = filter)
-                chats.postValue(response.chatList)
-            } catch (e: InvalidScopeException) {
-                requiredScopes.postValue(e.errorResponse.requiredScopes)
-            } catch (e: RuntimeException) {
-                chatsError.postValue(e)
-            }
+            //            try {
+//                val response = apiClient.chatList(filter = filter)
+//                chats.postValue(response.chatList)
+//            } catch (e: InvalidScopeException) {
+//                requiredScopes.postValue(e.errorResponse.requiredScopes)
+//            } catch (e: RuntimeException) {
+//                chatsError.postValue(e)
+//            }
         }
     }
 

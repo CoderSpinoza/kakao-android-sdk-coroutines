@@ -9,10 +9,12 @@ enum class CoordType(val type: String) {
     /**
      * The World Geodetic System 84
      */
-    @SerializedName("wgs84") WGS84("wgs84"),
+    @SerializedName("wgs84")
+    WGS84("wgs84"),
 
     /**
      * Katech coordinate system
      */
-    @SerializedName("katec") KATEC("katec");
+    @SerializedName("katec")
+    KATEC("katec");
 }

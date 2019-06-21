@@ -2,7 +2,6 @@ package com.kakao.sdk.kakaolink
 
 import com.kakao.sdk.kakaolink.entity.KakaoLinkResponse
 import com.kakao.sdk.message.template.DefaultTemplate
-import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -3,11 +3,13 @@
     package="com.kakao.sdk.auth">
 
     <application>
-        <activity android:name=".presentation.TalkAuthCodeActivity"
+        <activity
+            android:name=".presentation.TalkAuthCodeActivity"
             android:theme="@style/TransparentCompat" />
-        <activity android:name=".presentation.AuthCodeCustomTabsActivity"
-            android:theme="@style/TransparentCompat"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".presentation.AuthCodeCustomTabsActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/TransparentCompat" />
         <activity
             android:name=".presentation.ScopeUpdateWebViewActivity"
             android:configChanges="orientation|screenSize"

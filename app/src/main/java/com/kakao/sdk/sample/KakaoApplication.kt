@@ -55,10 +55,7 @@ class KakaoApplication : Application() {
         KakaoSdkProvider.applicationContextInfo =
                 ApplicationContextInfo(
                         context = this,
-                        clientId = "dd4e9cb75815cbdf7d87ed721a659baf",
-                        clientSecret = "50LxgHsF3Q3ayNa3nJpTTMEfBR8KkY7X")
+                        clientId = "dd4e9cb75815cbdf7d87ed721a659baf")
         KakaoSdkProvider.serverHosts = PhasedServerHosts(KakaoPhase.PRODUCTION)
-
-
     }
 }

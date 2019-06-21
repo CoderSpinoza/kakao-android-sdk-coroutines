@@ -6,11 +6,6 @@ package com.kakao.sdk.network
  */
 object Constants {
     const val SCHEME = "https"
-
-    const val KAUTH = "kauth.kakao.com"
-    const val KAPI = "kapi.kakao.com"
-    const val ACCOUNT = "auth.kakao.com"
-
     const val BEARER = "Bearer"
     const val AUTHORIZATION = "Authorization"
 }

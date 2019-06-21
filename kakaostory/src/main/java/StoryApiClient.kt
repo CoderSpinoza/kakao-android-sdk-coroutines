@@ -20,46 +20,46 @@ interface StoryApiClient {
     suspend fun myStories(lastId: String? = null): List<Story>
 
     suspend fun postNote(
-        content: String,
-        permission: Story.Permission,
-        enableShare: Boolean,
-        androidExecParams: Map<String, String>? = null,
-        iosExecParams: Map<String, String>? = null,
-        androidMarketParams: Map<String, String>? = null,
-        iosMarketParams: Map<String, String>? = null
+            content: String,
+            permission: Story.Permission,
+            enableShare: Boolean,
+            androidExecParams: Map<String, String>? = null,
+            iosExecParams: Map<String, String>? = null,
+            androidMarketParams: Map<String, String>? = null,
+            iosMarketParams: Map<String, String>? = null
     ): StoryPostResponse
 
     suspend fun postLink(
-        linkInfo: LinkInfo,
-        content: String,
-        permission: Story.Permission,
-        enableShare: Boolean,
-        androidExecParams: Map<String, String>? = null,
-        iosExecParams: Map<String, String>? = null,
-        androidMarketParams: Map<String, String>? = null,
-        iosMarketParams: Map<String, String>? = null
+            linkInfo: LinkInfo,
+            content: String,
+            permission: Story.Permission,
+            enableShare: Boolean,
+            androidExecParams: Map<String, String>? = null,
+            iosExecParams: Map<String, String>? = null,
+            androidMarketParams: Map<String, String>? = null,
+            iosMarketParams: Map<String, String>? = null
     ): StoryPostResponse
 
     suspend fun postPhoto(
-        images: List<String>,
-        content: String,
-        permission: Story.Permission,
-        enableShare: Boolean,
-        androidExecParams: Map<String, String>? = null,
-        iosExecParams: Map<String, String>? = null,
-        androidMarketParams: Map<String, String>? = null,
-        iosMarketParams: Map<String, String>? = null
+            images: List<String>,
+            content: String,
+            permission: Story.Permission,
+            enableShare: Boolean,
+            androidExecParams: Map<String, String>? = null,
+            iosExecParams: Map<String, String>? = null,
+            androidMarketParams: Map<String, String>? = null,
+            iosMarketParams: Map<String, String>? = null
     ): StoryPostResponse
 
-    suspend fun deleteStory(id: String): Unit
+    suspend fun deleteStory(id: String)
 
     suspend fun scrapLink(url: String): LinkInfo
 
     suspend fun scrapImages(images: List<File>): List<String>
 
     companion object {
-        val instance by lazy {
-            DefaultStoryApiClient() as StoryApiClient
+        val instance: StoryApiClient by lazy {
+            DefaultStoryApiClient()
         }
     }
 }

@@ -10,16 +10,17 @@ import com.kakao.sdk.friends.entity.FriendsResponse
  */
 interface FriendsApiClient {
     suspend fun friends(
-        friendType: FriendType? = null,
-        friendFilter: FriendFilter? = null,
-        friendOrder: FriendOrder? = null,
-        secureResource: Boolean? = null,
-        offset: Int? = null,
-        limit: Int? = null,
-        order: String? = null,
-        url: String? = null
+            friendType: FriendType? = null,
+            friendFilter: FriendFilter? = null,
+            friendOrder: FriendOrder? = null,
+            secureResource: Boolean? = null,
+            offset: Int? = null,
+            limit: Int? = null,
+            order: String? = null,
+            url: String? = null
     ): FriendsResponse
+
     companion object {
-        val instance by lazy { DefaultFriendsApiClient() as FriendsApiClient }
+        val instance: FriendsApiClient by lazy { DefaultFriendsApiClient() }
     }
 }

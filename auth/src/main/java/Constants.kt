@@ -43,11 +43,12 @@ object Constants {
     const val KAKAO_ACCOUNT = "kakao_account"
     const val FOR_PARTNER = "for_partner"
 
-    const val HAS_EMAIL = "has_email"
+    const val EMAIL_NEEDS_AGREEMENT = "email_needs_agreement"
     const val IS_EMAIL_VERIFIED = "is_email_verified"
     const val EMAIL = "email"
     const val IS_KAKAOTALK_USER = "is_kakaotalk_user"
     const val HAS_PHONE_NUMBER = "has_phone_number"
+    const val PHONE_NUMBER_NEEDS_AGREEMENT = "phone_number_needs_agreement"
     const val PHONE_NUMBER = "phone_number"
     const val DISPLAY_ID = "display_id"
 
