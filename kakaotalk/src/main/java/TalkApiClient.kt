@@ -1,41 +1,29 @@
 package com.kakao.sdk.kakaotalk
 
-import com.kakao.sdk.kakaotalk.entity.ChatListResponse
-import com.kakao.sdk.kakaotalk.entity.TalkProfile
-import com.kakao.sdk.kakaotalk.entity.ChatFilter
-import com.kakao.sdk.kakaotalk.entity.ChatOrder
+import com.kakao.sdk.kakaotalk.entity.*
+import com.kakao.sdk.message.template.DefaultTemplate
 
 /**
  * @author kevin.kang. Created on 2018. 5. 10..
  */
 interface TalkApiClient {
-    suspend fun profile(secureResource: Boolean? = null): TalkProfile
+    suspend fun profile(): TalkProfile
 
-    suspend fun chatList(
-        fromId: Int? = null,
-        limit: Int? = null,
-        order: ChatOrder? = null,
-        filter: ChatFilter? = null
-    ): ChatListResponse
-
-    suspend fun sendMemo(
-        templateId: String,
-        templateArgs: Map<String, String>? = null
+    suspend fun customMemo(
+            templateId: String,
+            templateArgs: Map<String, String>? = null
     )
 
-    suspend fun sendMessage(
-        receiverType: String,
-        receiverId: String,
-        templateId: String,
-        templateArgs: Map<String, String>? = null
-    )
+    suspend fun defaultMemo(templateParams: DefaultTemplate)
 
-    suspend fun sendMessage(
-        receiverType: String,
-        receiverId: String
-    )
+    suspend fun scrapMemo(
+            requestUrl: String,
+            templateId: Long? = null,
+            templateArgs: Map<String, String>? = null)
+
+    suspend fun plusFriends(publicIds: String? = null): PlusFriendsResponse
 
     companion object {
-        val instance by lazy { DefaultTalkApiClient() as TalkApiClient }
+        val instance: TalkApiClient by lazy { DefaultTalkApiClient() }
     }
 }

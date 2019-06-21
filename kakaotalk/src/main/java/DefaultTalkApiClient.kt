@@ -1,59 +1,43 @@
 package com.kakao.sdk.kakaotalk
 
-import com.kakao.sdk.kakaotalk.entity.ChatFilter
-import com.kakao.sdk.kakaotalk.entity.ChatOrder
 import com.kakao.sdk.auth.network.OAuthApiFactory
 import com.kakao.sdk.auth.network.ApiErrorInterceptor
-import com.kakao.sdk.kakaotalk.entity.ChatListResponse
-import com.kakao.sdk.kakaotalk.entity.TalkProfile
+import com.kakao.sdk.kakaotalk.entity.*
+import com.kakao.sdk.message.template.DefaultTemplate
 
 /**
  * @suppress
  * @author kevin.kang. Created on 2018. 3. 30..
  */
 class DefaultTalkApiClient(
-    val api: TalkApi = OAuthApiFactory.kapi.create(TalkApi::class.java),
-    private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance
+        val api: TalkApi = OAuthApiFactory.kapi.create(TalkApi::class.java),
+        private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance
 ) : TalkApiClient {
 
-    override suspend fun sendMessage(receiverType: String, receiverId: String) {
-        TODO("not implemented")
+    override suspend fun profile(): TalkProfile {
+        return apiErrorInterceptor.handleApiError { api.profile() }
     }
 
-    override suspend fun profile(secureResource: Boolean?): TalkProfile {
-        return apiErrorInterceptor.handleApiError {
-            api.profile(secureResource)
-        }
-    }
-
-    override suspend fun chatList(
-        fromId: Int?,
-        limit: Int?,
-        order: ChatOrder?,
-        filter: ChatFilter?
-    ): ChatListResponse {
-        return apiErrorInterceptor.handleApiError {
-            api.chatList(fromId, limit, order?.value, filter?.value)
-        }
-    }
-
-    override suspend fun sendMemo(
-        templateId: String,
-        templateArgs: Map<String, String>?
+    override suspend fun customMemo(
+            templateId: String,
+            templateArgs: Map<String, String>?
     ) {
+        return apiErrorInterceptor.handleApiError { api.customMemo(templateId, templateArgs) }
+    }
+
+    override suspend fun defaultMemo(templateParams: DefaultTemplate) {
+        return apiErrorInterceptor.handleApiError { api.defaultMemo(templateParams) }
+    }
+
+    override suspend fun scrapMemo(requestUrl: String, templateId: Long?, templateArgs: Map<String, String>?) {
         return apiErrorInterceptor.handleApiError {
-            api.sendMemo(templateId, templateArgs)
+            api.scrapMemo(requestUrl, templateId, templateArgs)
         }
     }
 
-    override suspend fun sendMessage(
-        receiverType: String,
-        receiverId: String,
-        templateId: String,
-        templateArgs: Map<String, String>?
-    ) {
+    override suspend fun plusFriends(publicIds: String?): PlusFriendsResponse {
         return apiErrorInterceptor.handleApiError {
-            api.sendMessage(receiverType, receiverId, templateId, templateArgs)
+            api.plusFriends(publicIds)
         }
     }
 }

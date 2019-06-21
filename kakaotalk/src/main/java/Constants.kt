@@ -7,8 +7,12 @@ package com.kakao.sdk.kakaotalk
 object Constants {
     const val PROFILE_PATH = "/v1/api/talk/profile"
     const val MEMO_PATH = "/v2/api/talk/memo/send"
+    const val MEMO_DEFAULT_PATH = "/v2/api/talk/memo/default/send"
+    const val MEMO_SCRAP_PATH = "/v2/api/talk/memo/scrap/send"
     const val MESSAGE_PATH = "/v2/api/talk/message/send"
     const val CHATS_PATH = "/v1/api/talk/chat/list"
+
+    const val V1_PLUS_FRIENDS_PATH = "/v1/api/talk/plusfriends"
 
     const val SECURE_RESOURCE = "secure_resource"
     const val NICKNAME = "nickName"
@@ -37,4 +41,12 @@ object Constants {
     const val RECEIVER_ID = "receiver_id"
     const val TEMPLATE_ID = "template_id"
     const val TEMPLATE_ARGS = "template_args"
+    const val TEMPLATE_OBJECT = "template_object"
+    const val REQUEST_URL = "request_url"
+
+    const val PLUS_FRIEND_UUID = "plus_friend_uuid"
+    const val PLUS_FRIEND_PUBLIC_ID = "plus_friend_public_id"
+    const val PLUS_FRIEND_PUBLIC_IDS = "plus_friend_public_ids"
+    const val RELATION = "relation"
+    const val UPDATED_TIME = "updated_time"
 }

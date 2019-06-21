@@ -11,9 +11,9 @@ import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.CsvFileSource
@@ -29,7 +29,8 @@ class TalkApiTest {
     private lateinit var api: TalkApi
     private lateinit var response: MockResponse
 
-    @BeforeEach fun setup() {
+    @BeforeEach
+    fun setup() {
         server = MockWebServer()
         server.start()
         api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
@@ -37,27 +38,23 @@ class TalkApiTest {
         response = MockResponse().setResponseCode(200)
     }
 
-    @CsvFileSource(resources = ["/csv/profile.csv"], numLinesToSkip = 1)
-    @ParameterizedTest fun profile(secureResource: Boolean?) = runBlocking {
+    @Test
+    fun profile() = runBlocking {
         response.setBody(Utility.getJson("json/profile/full_profile.json"))
         server.enqueue(response)
-        api.profile(secureResource = secureResource)
+        api.profile()
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
-
-        if (secureResource == null) {
-            assertFalse(params.containsKey(Constants.SECURE_RESOURCE))
-            return@runBlocking
-        }
-        assertEquals(secureResource.toString(), params[Constants.SECURE_RESOURCE])
+        assertEquals("true", params[Constants.SECURE_RESOURCE])
     }
 
     @CsvFileSource(resources = ["/csv/chat_list.csv"], numLinesToSkip = 1)
-    @ParameterizedTest fun chatList(
-        fromId: Int? = null,
-        limit: Int? = null,
-        order: String? = null,
-        filter: String? = null
+    @ParameterizedTest
+    fun chatList(
+            fromId: Int? = null,
+            limit: Int? = null,
+            order: String? = null,
+            filter: String? = null
     ) = runBlocking {
         response.setBody(Utility.getJson("json/chat_list/list.json"))
         server.enqueue(response)
@@ -75,7 +72,7 @@ class TalkApiTest {
     @ParameterizedTest
     fun sendMemo(templateId: String, templateArgs: Map<String, String>?) = runBlocking {
         server.enqueue(response)
-        api.sendMemo(templateId, templateArgs)
+        api.customMemo(templateId, templateArgs)
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.body.readUtf8())
 
@@ -94,56 +91,19 @@ class TalkApiTest {
         }
     }
 
-    @MethodSource("sendMessageProvider")
-    @ParameterizedTest fun sendMessage(
-        receiverIdType: String,
-        receiverId: String,
-        templateId: String,
-        templateArgs: Map<String, String>?
-    ) = runBlocking {
-        server.enqueue(response)
-        api.sendMessage(receiverIdType, receiverId, templateId, templateArgs)
-        val request = server.takeRequest()
-        val params = Utility.parseQuery(request.body.readUtf8())
-
-        assertEquals(receiverIdType, params[Constants.RECEIVER_ID_TYPE])
-        assertEquals(receiverId, params[Constants.RECEIVER_ID])
-        assertEquals(templateId, params[Constants.TEMPLATE_ID])
-
-        if (templateArgs == null) {
-            assertFalse(params.containsKey(Constants.TEMPLATE_ARGS))
-            return@runBlocking
-        }
-
-        val decoded = URLDecoder.decode(params[Constants.TEMPLATE_ARGS], "UTF-8")
-        val decodedJson = KakaoGsonFactory.base.fromJson(decoded, JsonObject::class.java)
-        assertEquals(templateArgs.size, decodedJson.size())
-
-        for ((k, v) in templateArgs) {
-            assertEquals(v, decodedJson[k].asString)
-        }
-    }
-
-    @AfterEach fun cleanup() {
+    @AfterEach
+    fun cleanup() {
         server.shutdown()
     }
 
     companion object {
         @Suppress("unused")
-        @JvmStatic fun sendMemoProvider(): Stream<Arguments> {
+        @JvmStatic
+        fun sendMemoProvider(): Stream<Arguments> {
             return Stream.of(
                     Arguments.of("1234", mapOf(Pair("key1", "value1"))),
                     Arguments.of("1234", null),
                     Arguments.of("1234", mapOf<String, String>()))
-        }
-
-        @Suppress("unused")
-        @JvmStatic fun sendMessageProvider(): Stream<Arguments> {
-            return Stream.of(
-                    Arguments.of("user_id", "1234", "1234", null),
-                    Arguments.of("uuid", "1234", "1234", mapOf<String, String>()),
-                    Arguments.of("chat_id", "1234", "1234", mapOf(Pair("key1", "value1")))
-            )
         }
     }
 }
