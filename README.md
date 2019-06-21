@@ -68,15 +68,23 @@ It is conventional to initialize SDK in Application#onCreate() method since it i
 First, users have to get access token in order to call Kakao API. Access tokens are issued according to OAuth 2.0 spec.
 
 1. kakao account authentication
-1. user agreemnet (skip if not necessary)
+1. user agreement (skip if not necessary)
 1. authorization codem (via redirect)
 1. issue access token (via POST API)
 
 Sample login code is pasted below:
 
 ```kotlin
-fun  loginButtonClicked() {
-    
+fun  loginButtonClicked() = launch {
+    val code = AuthCodeService.instance.requestAuthCode(this@LoginActivity)
+    withContext(Dispatchers.IO) {
+        AuthApiClient.instance.issueAccessToken(authCode = code)
+    }
+    val mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
+    mainIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+            Intent.FLAG_ACTIVITY_CLEAR_TASK or
+            Intent.FLAG_ACTIVITY_CLEAR_TOP
+    startActivity(mainIntent)
 }
 ```
 
