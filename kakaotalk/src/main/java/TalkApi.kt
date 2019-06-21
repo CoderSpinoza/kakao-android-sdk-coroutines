@@ -1,6 +1,7 @@
 package com.kakao.sdk.kakaotalk
 
 import com.kakao.sdk.kakaotalk.entity.ChatListResponse
+import com.kakao.sdk.kakaotalk.entity.FriendsResponse
 import com.kakao.sdk.kakaotalk.entity.PlusFriendsResponse
 import com.kakao.sdk.kakaotalk.entity.TalkProfile
 import com.kakao.sdk.message.template.DefaultTemplate
@@ -43,4 +44,7 @@ interface TalkApi {
 
     @GET(Constants.V1_PLUS_FRIENDS_PATH)
     suspend fun plusFriends(@Query(Constants.PLUS_FRIEND_PUBLIC_IDS) publicIds: String? = null): PlusFriendsResponse
+
+    @GET(Constants.V1_FRIENDS_PATH)
+    suspend fun friends(@Query(Constants.OFFSET) offset: Int? = null, @Query(Constants.LIMIT) limit: Int? = null, @Query(Constants.ORDER) order: String? = null): FriendsResponse
 }

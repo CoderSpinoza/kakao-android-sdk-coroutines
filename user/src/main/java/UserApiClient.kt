@@ -8,7 +8,9 @@ import okhttp3.OkHttpClient
  * @author kevin.kang. Created on 2018. 5. 10..
  */
 interface UserApiClient {
-    suspend fun me(secureReSource: Boolean = true): User
+    suspend fun me(): User
+
+    suspend fun updateProfile(properties: Map<String, String>)
 
     suspend fun accessTokenInfo(): AccessTokenInfo
 
@@ -29,7 +31,7 @@ interface UserApiClient {
         val instance: UserApiClient by lazy { DefaultUserApiClient() }
 
         fun withClient(clientBuilder: OkHttpClient.Builder): UserApiClient {
-            return DefaultUserApiClient(userApi =
+            return DefaultUserApiClient(api =
             OAuthApiFactory.withClient(clientBuilder).create(UserApi::class.java))
         }
     }

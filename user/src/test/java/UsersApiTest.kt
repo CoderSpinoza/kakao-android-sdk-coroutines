@@ -44,7 +44,7 @@ class UsersApiTest {
 //        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
         val response = MockResponse().setResponseCode(200).setBody(body)
         server.enqueue(response)
-        api.me(true)
+        api.me()
         val request = server.takeRequest()
         assertEquals("GET", request.method)
 //        observer.assertValue { user ->
@@ -66,10 +66,7 @@ class UsersApiTest {
     inner class TokenInfo {
         @BeforeEach
         fun setup() {
-            val classloader = javaClass.classLoader ?: throw NullPointerException()
-            val uri = classloader.getResource("json/token_info/internal.json")
-            val file = File(uri.path)
-            body = String(file.readBytes())
+            body = Utility.getJson("json/token_info/internal.json")
             expected = KakaoGsonFactory.base.fromJson<JsonObject>(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
@@ -90,10 +87,7 @@ class UsersApiTest {
     inner class UpdateProfile {
         @BeforeEach
         fun setup() {
-            val classloader = javaClass.classLoader ?: throw NullPointerException()
-            val uri = classloader.getResource("json/user_id.json")
-            val file = File(uri.path)
-            body = String(file.readBytes())
+            body = Utility.getJson("json/user_id.json")
             expected = KakaoGsonFactory.base.fromJson<JsonObject>(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)
             server.enqueue(response)
@@ -113,7 +107,6 @@ class UsersApiTest {
                             JsonObject::class.java)
             assertEquals("value1", requestProperties["key1"].asString)
             assertEquals("value2", requestProperties["key2"].asString)
-            expected["id"].asLong == response.id
         }
     }
 

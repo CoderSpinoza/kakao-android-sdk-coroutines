@@ -40,4 +40,8 @@ class DefaultTalkApiClient(
             api.plusFriends(publicIds)
         }
     }
+
+    override suspend fun friends(offset: Int?, limit: Int?, order: String?): FriendsResponse {
+        return apiErrorInterceptor.handleApiError { api.friends(offset, limit, order) }
+    }
 }

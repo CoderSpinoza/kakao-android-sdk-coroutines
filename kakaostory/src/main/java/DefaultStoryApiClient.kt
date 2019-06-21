@@ -20,8 +20,8 @@ import java.io.File
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 class DefaultStoryApiClient(
-    val api: StoryApi = OAuthApiFactory.kapi.create(StoryApi::class.java),
-    private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance
+        val api: StoryApi = OAuthApiFactory.kapi.create(StoryApi::class.java),
+        private val apiErrorInterceptor: ApiErrorInterceptor = ApiErrorInterceptor.instance
 ) : StoryApiClient {
     override suspend fun isStoryUser(): IsStoryUserResponse {
         return apiErrorInterceptor.handleApiError {
@@ -29,10 +29,8 @@ class DefaultStoryApiClient(
         }
     }
 
-    override suspend fun profile(secureResource: Boolean?): StoryProfile {
-        return apiErrorInterceptor.handleApiError {
-            api.profile(secureResource)
-        }
+    override suspend fun profile(): StoryProfile {
+        return apiErrorInterceptor.handleApiError { api.profile() }
     }
 
     override suspend fun myStory(id: String): Story {
@@ -48,13 +46,13 @@ class DefaultStoryApiClient(
     }
 
     override suspend fun postNote(
-        content: String,
-        permission: Story.Permission,
-        enableShare: Boolean,
-        androidExecParams: Map<String, String>?,
-        iosExecParams: Map<String, String>?,
-        androidMarketParams: Map<String, String>?,
-        iosMarketParams: Map<String, String>?
+            content: String,
+            permission: Story.Permission,
+            enableShare: Boolean,
+            androidExecParams: Map<String, String>?,
+            iosExecParams: Map<String, String>?,
+            androidMarketParams: Map<String, String>?,
+            iosMarketParams: Map<String, String>?
     ): StoryPostResponse {
         return apiErrorInterceptor.handleApiError {
             api.postNote(content, permission, enableShare,
@@ -66,14 +64,14 @@ class DefaultStoryApiClient(
     }
 
     override suspend fun postLink(
-        linkInfo: LinkInfo,
-        content: String,
-        permission: Story.Permission,
-        enableShare: Boolean,
-        androidExecParams: Map<String, String>?,
-        iosExecParams: Map<String, String>?,
-        androidMarketParams: Map<String, String>?,
-        iosMarketParams: Map<String, String>?
+            linkInfo: LinkInfo,
+            content: String,
+            permission: Story.Permission,
+            enableShare: Boolean,
+            androidExecParams: Map<String, String>?,
+            iosExecParams: Map<String, String>?,
+            androidMarketParams: Map<String, String>?,
+            iosMarketParams: Map<String, String>?
     ): StoryPostResponse {
 
         return apiErrorInterceptor.handleApiError {
@@ -86,14 +84,14 @@ class DefaultStoryApiClient(
     }
 
     override suspend fun postPhoto(
-        images: List<String>,
-        content: String,
-        permission: Story.Permission,
-        enableShare: Boolean,
-        androidExecParams: Map<String, String>?,
-        iosExecParams: Map<String, String>?,
-        androidMarketParams: Map<String, String>?,
-        iosMarketParams: Map<String, String>?
+            images: List<String>,
+            content: String,
+            permission: Story.Permission,
+            enableShare: Boolean,
+            androidExecParams: Map<String, String>?,
+            iosExecParams: Map<String, String>?,
+            androidMarketParams: Map<String, String>?,
+            iosMarketParams: Map<String, String>?
     ): StoryPostResponse {
         return apiErrorInterceptor.handleApiError {
             api.postPhoto(KakaoGsonFactory.base.toJson(images), content, permission, enableShare,

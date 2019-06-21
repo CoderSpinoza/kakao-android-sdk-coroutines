@@ -1,12 +1,12 @@
 package com.kakao.sdk.kakaostory.entity
 
-import com.google.gson.GsonBuilder
+import com.kakao.sdk.common.KakaoGsonFactory
 
 /**
  * @author kevin.kang. Created on 2018. 3. 21..
  */
 data class StoryPostResponse(val id: String) {
     override fun toString(): String {
-        return GsonBuilder().setPrettyPrinting().create().toJson(this)
+        return KakaoGsonFactory.pretty.toJson(this)
     }
 }

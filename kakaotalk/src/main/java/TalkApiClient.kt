@@ -23,6 +23,8 @@ interface TalkApiClient {
 
     suspend fun plusFriends(publicIds: String? = null): PlusFriendsResponse
 
+    suspend fun friends(offset: Int? = null, limit: Int? = null, order: String? = null): FriendsResponse
+
     companion object {
         val instance: TalkApiClient by lazy { DefaultTalkApiClient() }
     }

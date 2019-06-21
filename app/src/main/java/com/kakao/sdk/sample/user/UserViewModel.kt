@@ -30,7 +30,7 @@ open class UserViewModel(private val userApiClient: UserApiClient) : ViewModel()
 
     fun loadProfile() {
         GlobalScope.launch {
-            val me = userApiClient.me(true)
+            val me = userApiClient.me()
             user.postValue(me)
             email.postValue(me.kakaoAccount.email)
         }

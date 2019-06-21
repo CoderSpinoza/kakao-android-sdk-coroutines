@@ -13,7 +13,7 @@ import com.kakao.sdk.kakaostory.entity.LinkInfo
 interface StoryApiClient {
     suspend fun isStoryUser(): IsStoryUserResponse
 
-    suspend fun profile(secureResource: Boolean? = null): StoryProfile
+    suspend fun profile(): StoryProfile
 
     suspend fun myStory(id: String): Story
 

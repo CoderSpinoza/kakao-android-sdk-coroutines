@@ -1,26 +1,26 @@
 package com.kakao.sdk.kakaostory.entity
 
-import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
+import com.kakao.sdk.common.KakaoGsonFactory
 
 /**
  * @author kevin.kang. Created on 2018. 3. 20..
  */
 data class Story(
-    val id: String,
-    val url: String,
-    val mediaType: String,
-    val createdAt: String,
-    val commentCount: String,
-    @SerializedName("like_count") val likeCount: String,
-    val content: String,
-    val permission: String,
-    @SerializedName("media") val imageInfos: List<StoryImage>?,
-    val likes: List<StoryLike>,
-    val comments: List<StoryComment>
+        val id: String,
+        val url: String,
+        val mediaType: String,
+        val createdAt: String,
+        val commentCount: String,
+        @SerializedName("like_count") val likeCount: String,
+        val content: String,
+        val permission: String,
+        @SerializedName("media") val imageInfos: List<StoryImage>?,
+        val likes: List<StoryLike>,
+        val comments: List<StoryComment>
 ) {
     override fun toString(): String {
-        return GsonBuilder().setPrettyPrinting().create().toJson(this)
+        return KakaoGsonFactory.pretty.toJson(this)
     }
 
     enum class Permission(val value: String) {

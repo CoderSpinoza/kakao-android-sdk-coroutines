@@ -2,6 +2,7 @@ package com.kakao.sdk.friends
 
 import com.google.gson.JsonObject
 import com.kakao.sdk.common.KakaoGsonFactory
+import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -37,9 +38,7 @@ class FriendsApiTest {
     inner class GetFriends {
         @Test
         fun success() {
-            val uri = javaClass.classLoader.getResource("json/friends/friends1.json")
-            val file = File(uri.path)
-            val body = String(file.readBytes())
+            val body = Utility.getJson("json/friends/friends1.json")
 
             val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
             val response = MockResponse().setResponseCode(200).setBody(body)

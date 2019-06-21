@@ -27,17 +27,20 @@ class StoryApiTest {
     private lateinit var server: MockWebServer
     private lateinit var api: StoryApi
 
-    @BeforeEach fun setup() {
+    @BeforeEach
+    fun setup() {
         server = MockWebServer()
         api = ApiFactory.withClient(server.url("/").toString(), OkHttpClient.Builder())
                 .create(StoryApi::class.java)
     }
 
-    @AfterEach fun cleanup() {
+    @AfterEach
+    fun cleanup() {
         server.shutdown()
     }
 
-    @Test fun isStoryUser() {
+    @Test
+    fun isStoryUser() {
         server.enqueue(
                 MockResponse().setResponseCode(200)
                         .setBody(Utility.getJson("json/story_user.json")))
@@ -50,27 +53,24 @@ class StoryApiTest {
         assertEquals(Constants.IS_STORY_USER_PATH, request.requestUrl.encodedPath())
     }
 
-    @MethodSource("booleanProvider")
-    @ParameterizedTest fun profile(secureResource: Boolean?) {
+    @Test
+    fun profile() {
         server.enqueue(MockResponse().setResponseCode(200)
                 .setBody(Utility.getJson("json/profile/profile.json")))
         runBlocking {
-            api.profile(secureResource)
+            api.profile()
         }
         val request = server.takeRequest()
         val params = Utility.parseQuery(request.requestUrl.query())
 
         assertEquals("GET", request.method)
         assertEquals(Constants.STORY_PROFILE_PATH, request.requestUrl.encodedPath())
-        if (secureResource == null) {
-            assertFalse(params.containsKey(Constants.SECURE_RESOURCE))
-            return
-        }
-        assertEquals(secureResource.toString(), params[Constants.SECURE_RESOURCE])
+        assertEquals("true", params[Constants.SECURE_RESOURCE])
     }
 
     @ValueSource(strings = ["", "last_id"])
-    @ParameterizedTest fun myStory(id: String) {
+    @ParameterizedTest
+    fun myStory(id: String) {
         server.enqueue(MockResponse().setResponseCode(200)
                 .setBody(Utility.getJson("json/story.json")))
         runBlocking {
@@ -86,7 +86,8 @@ class StoryApiTest {
     }
 
     @MethodSource("stringProvider")
-    @ParameterizedTest fun myStories(id: String?) {
+    @ParameterizedTest
+    fun myStories(id: String?) {
         server.enqueue(MockResponse().setResponseCode(200)
                 .setBody(Utility.getJson("json/stories.json")))
         runBlocking {
@@ -101,14 +102,15 @@ class StoryApiTest {
     }
 
     @MethodSource("postNoteProvider")
-    @ParameterizedTest fun postNote(
-        content: String,
-        permission: Story.Permission,
-        enableShare: Boolean,
-        params1: String?,
-        params2: String?,
-        params3: String?,
-        params4: String?
+    @ParameterizedTest
+    fun postNote(
+            content: String,
+            permission: Story.Permission,
+            enableShare: Boolean,
+            params1: String?,
+            params2: String?,
+            params3: String?,
+            params4: String?
     ) {
         server.enqueue(MockResponse().setResponseCode(200)
                 .setBody(Utility.getJson("json/post.json")))
@@ -155,11 +157,13 @@ class StoryApiTest {
 //    }
 
     @Disabled
-    @ParameterizedTest fun postLink() {
+    @ParameterizedTest
+    fun postLink() {
     }
 
     @ValueSource(strings = ["", "last_id"])
-    @ParameterizedTest fun deleteStory(id: String) {
+    @ParameterizedTest
+    fun deleteStory(id: String) {
         server.enqueue(MockResponse().setResponseCode(200))
         runBlocking {
             api.deleteStory(id)
@@ -173,7 +177,8 @@ class StoryApiTest {
     }
 
     @ValueSource(strings = ["", "scrap_url"])
-    @ParameterizedTest fun scrapLink(url: String) {
+    @ParameterizedTest
+    fun scrapLink(url: String) {
         server.enqueue(MockResponse().setResponseCode(200)
                 .setBody(Utility.getJson("json/linkinfo/linkinfo1.json")))
         runBlocking {
@@ -189,22 +194,20 @@ class StoryApiTest {
 
     // TODO
     @Disabled
-    @ParameterizedTest fun scrapImages() {
+    @ParameterizedTest
+    fun scrapImages() {
     }
 
     companion object {
         @Suppress("unused")
-        @JvmStatic fun booleanProvider(): Stream<Arguments> {
-            return Stream.of(true, false, null).map { Arguments.of(it) }
-        }
-
-        @Suppress("unused")
-        @JvmStatic fun stringProvider(): Stream<Arguments> {
+        @JvmStatic
+        fun stringProvider(): Stream<Arguments> {
             return Stream.of(null, "", "last_id").map { Arguments.of(it) }
         }
 
         @Suppress("unused")
-        @JvmStatic fun postNoteProvider(): Stream<Arguments> {
+        @JvmStatic
+        fun postNoteProvider(): Stream<Arguments> {
             return Stream.of(
                     Arguments.of(
                             "content",

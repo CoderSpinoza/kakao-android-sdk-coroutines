@@ -1,4 +1,4 @@
-package com.kakao.sdk.friends.entity
+package com.kakao.sdk.kakaotalk.entity
 
 import com.google.gson.annotations.SerializedName
 import com.kakao.sdk.common.KakaoGsonFactory
@@ -6,12 +6,10 @@ import com.kakao.sdk.common.KakaoGsonFactory
 /**
  * @author kevin.kang. Created on 2018. 3. 22..
  */
-data class FriendsResponse(
-        val totalCount: Int,
-        @SerializedName("elements") val friends: List<Friend>,
-        val beforeUrl: String?,
-        val afterUrl: String?,
-        val resultId: String
+data class Friend(
+        @SerializedName("id") val userId: Long,
+        val profileNickname: String,
+        val profileThumbnailImage: String
 ) {
     override fun toString(): String {
         return KakaoGsonFactory.pretty.toJson(this)

@@ -22,10 +22,8 @@ interface StoryApi {
     @GET(Constants.IS_STORY_USER_PATH)
     suspend fun isStoryUser(): IsStoryUserResponse
 
-    @GET(Constants.STORY_PROFILE_PATH)
-    suspend fun profile(
-        @Query(Constants.SECURE_RESOURCE) secureResource: Boolean? = null
-    ): StoryProfile
+    @GET("${Constants.STORY_PROFILE_PATH}?secure_resource=true")
+    suspend fun profile(): StoryProfile
 
     @GET(Constants.GET_STORY_PATH)
     suspend fun myStory(@Query(Constants.ID) id: String): Story
@@ -36,39 +34,39 @@ interface StoryApi {
     @FormUrlEncoded
     @POST(Constants.POST_NOTE_PATH)
     suspend fun postNote(
-        @Field(Constants.CONTENT) content: String,
-        @Field(Constants.PERMISSION) permission: Story.Permission,
-        @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
-        @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
-        @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
-        @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
-        @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
+            @Field(Constants.CONTENT) content: String,
+            @Field(Constants.PERMISSION) permission: Story.Permission,
+            @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
+            @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
+            @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
+            @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
+            @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
     ): StoryPostResponse
 
     @FormUrlEncoded
     @POST(Constants.POST_PHOTO_PATH)
     suspend fun postPhoto(
-        @Field(Constants.IMAGE_URL_LIST) images: String,
-        @Field(Constants.CONTENT) content: String,
-        @Field(Constants.PERMISSION) permission: Story.Permission,
-        @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
-        @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
-        @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
-        @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
-        @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
+            @Field(Constants.IMAGE_URL_LIST) images: String,
+            @Field(Constants.CONTENT) content: String,
+            @Field(Constants.PERMISSION) permission: Story.Permission,
+            @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
+            @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
+            @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
+            @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
+            @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
     ): StoryPostResponse
 
     @FormUrlEncoded
     @POST(Constants.POST_LINK_PATH)
     suspend fun postLink(
-        @Field(Constants.LINK_INFO) linkInfo: LinkInfo,
-        @Field(Constants.CONTENT) content: String,
-        @Field(Constants.PERMISSION) permission: Story.Permission,
-        @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
-        @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
-        @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
-        @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
-        @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
+            @Field(Constants.LINK_INFO) linkInfo: LinkInfo,
+            @Field(Constants.CONTENT) content: String,
+            @Field(Constants.PERMISSION) permission: Story.Permission,
+            @Field(Constants.ENABLE_SHARE) enableShare: Boolean,
+            @Field(Constants.ANDROID_EXEC_PARAM) androidExecParams: String? = null,
+            @Field(Constants.IOS_EXEC_PARAM) iosExecParams: String? = null,
+            @Field(Constants.ANDROID_MARKET_PARAM) androidMarketParams: String? = null,
+            @Field(Constants.IOS_MARKET_PARAM) iosMarketParams: String? = null
     ): StoryPostResponse
 
     @DELETE(Constants.DELETE_STORY_PATH)

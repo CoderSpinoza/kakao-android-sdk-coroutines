@@ -13,6 +13,7 @@ object Constants {
     const val CHATS_PATH = "/v1/api/talk/chat/list"
 
     const val V1_PLUS_FRIENDS_PATH = "/v1/api/talk/plusfriends"
+    const val V1_FRIENDS_PATH = "v1/friends"
 
     const val SECURE_RESOURCE = "secure_resource"
     const val NICKNAME = "nickName"
@@ -26,9 +27,11 @@ object Constants {
     const val AFTER_URL = "after_url"
 
     const val FROM_ID = "from_id"
+    const val OFFSET = "offset"
     const val LIMIT = "limit"
     const val ORDER = "order"
     const val FILTER = "filter"
+
 
     const val ID = "id"
     const val TITLE = "title"

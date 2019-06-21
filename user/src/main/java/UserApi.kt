@@ -11,21 +11,15 @@ import retrofit2.http.FormUrlEncoded
  * @author kevin.kang. Created on 2018. 3. 24..
  */
 interface UserApi {
-    @GET(Constants.V2_ME_PATH)
-    suspend fun me(
-            @Query(Constants.SECURE_RESOURCE) secureResource: Boolean = true,
-            @Query(Constants.PROPERTYKEYS) properties: String? = null
-    ): User
+    @GET("${Constants.V2_ME_PATH}?secure_resource=true")
+    suspend fun me(@Query(Constants.PROPERTYKEYS) properties: String? = null): User
 
     @GET(Constants.V1_ACCESS_TOKEN_INFO_PATH)
     suspend fun accessTokenInfo(): AccessTokenInfo
 
-    @POST(Constants.V1_UPDATE_PROFILE_PATH)
+    @POST("${Constants.V1_UPDATE_PROFILE_PATH}?secure_resource=true")
     @FormUrlEncoded
-    suspend fun updateProfile(
-            @Field(Constants.SECURE_RESOURCE) secureResource: Boolean = true,
-            @Field(Constants.PROPERTIES) properties: Map<String, String>
-    ): UserIdResponse
+    suspend fun updateProfile(@Field(Constants.PROPERTIES) properties: Map<String, String>)
 
     @POST(Constants.V1_LOGOUT_PATH)
     suspend fun logout()
