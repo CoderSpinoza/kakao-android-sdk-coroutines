@@ -19,16 +19,16 @@ package com.kakao.sdk.user.entity
  * @author kevin.kang. Created on 04/04/2019..
  */
 data class ShippingAddress(
-    val id: Long,
-    val name: String,
-    val isDefault: Boolean,
-    val updatedAt: Int,
-    val type: String,
-    val baseAddress: String,
-    val detailAddress: String,
-    val receiverName: String?,
-    val receiverPhoneNumber1: String?,
-    val receiverPhoneNumber2: String?,
-    val zoneNumber: String?,
-    val zipCode: String?
+        val id: Long,
+        val name: String,
+        val isDefault: Boolean,
+        val updatedAt: Int,
+        val type: String,
+        val baseAddress: String,
+        val detailAddress: String,
+        val receiverName: String?,
+        val receiverPhoneNumber1: String?,
+        val receiverPhoneNumber2: String?,
+        val zoneNumber: String?,
+        val zipCode: String?
 )

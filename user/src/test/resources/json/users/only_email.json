@@ -17,6 +17,8 @@
     "email": "kevin.kang@kakaocorp.com",
     "is_kakaotalk_user": true,
     "has_phone_number": false,
-    "display_id": "kevin.kang@kakaocorp.com"
+    "display_id": "kevin.kang@kakaocorp.com",
+    "age_range": "20~29",
+    "gender": "male"
   }
 }

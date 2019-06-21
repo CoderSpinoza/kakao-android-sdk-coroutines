@@ -1,6 +1,6 @@
 package com.kakao.sdk.user.entity
 
-import com.google.gson.GsonBuilder
+import com.kakao.sdk.common.KakaoGsonFactory
 
 /**
  * @author kevin.kang. Created on 2018. 4. 25..
@@ -14,18 +14,18 @@ data class UserAccount(
         val phoneNumberNeedsAgreement: Boolean?,
         val phoneNumber: String?,
         val ageRangeNeedsAgreement: Boolean?,
-        val ageRange: String?,
+        val ageRange: AgeRange?,
         val birthdayNeedsAgreement: Boolean?,
         val birthday: String?,
         val birthyearNeedsAgreement: Boolean?,
         val birthyear: String?,
         val genderNeedsAgreement: Boolean?,
-        val gender: String,
+        val gender: Gender?,
         val ciNeedsAgreement: Boolean?,
         val ci: String?,
         val ciAuthenticatedAt: String?
 ) {
     override fun toString(): String {
-        return GsonBuilder().setPrettyPrinting().create().toJson(this)
+        return KakaoGsonFactory.pretty.toJson(this)
     }
 }

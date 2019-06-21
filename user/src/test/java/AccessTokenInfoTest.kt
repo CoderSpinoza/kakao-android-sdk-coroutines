@@ -16,19 +16,14 @@ import org.junit.jupiter.params.provider.ValueSource
 class AccessTokenInfoTest {
 
     @ValueSource(strings = ["internal", "external"])
-    @ParameterizedTest fun parse(path: String) {
+    @ParameterizedTest
+    fun parse(path: String) {
         val body = Utility.getJson("json/token_info/$path.json")
         val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
         val response = KakaoGsonFactory.base.fromJson(body, AccessTokenInfo::class.java)
 
         assertEquals(expected[Constants.APPID].asLong, response.appId)
         assertEquals(expected[Constants.EXPIRESINMILLIS].asLong, response.expiresInMillis)
-
-        if (expected.has(Constants.KACCOUNT_ID)) {
-            assertEquals(expected[Constants.KACCOUNT_ID].asLong, response.kaccountId)
-        } else {
-            assertNull(response.kaccountId)
-        }
         assertEquals(expected[Constants.ID].asLong, response.id)
     }
 }

@@ -5,6 +5,8 @@ import com.kakao.sdk.auth.Constants
 import com.kakao.sdk.common.KakaoGsonFactory
 import com.kakao.sdk.common.Utility
 import com.kakao.sdk.network.ApiFactory
+import com.kakao.sdk.user.entity.AgeRange
+import com.kakao.sdk.user.entity.Gender
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -40,25 +42,18 @@ class UsersApiTest {
 
     @Test
     fun me() = runBlocking {
-        val body = Utility.getJson("json/users/deprecated.json")
-//        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
+        val body = Utility.getJson("json/users/only_email.json")
+        val expected = KakaoGsonFactory.base.fromJson(body, JsonObject::class.java)
         val response = MockResponse().setResponseCode(200).setBody(body)
         server.enqueue(response)
-        api.me()
+        val user = api.me()
         val request = server.takeRequest()
         assertEquals("GET", request.method)
-//        observer.assertValue { user ->
-//            return@assertValue expected["kaccount_email"].asString == user.email
-//                    && expected["kaccount_email_verified"].asBoolean == user.emailVerified
-//                    && 1376016924426814086 == user.id
-//                    && expected["uuid"].asString == user.uuid
-//                    && expected["service_user_id"].asLong == user.serviceUserId
-//                    && expected["remaining_invite_count"].asInt == user.remainingInviteCount
-//                    && expected["remaining_group_msg_count"].asInt == user.remainingGroupMsgCount
-//                    && user.properties!!.containsKey("nickname")
-//                    && user.properties!!.containsKey("thumbnail_image")
-//                    && user.properties!!.containsKey("profile_image")
-//        }
+        assertEquals(expected["id"].asLong, user.id)
+
+        val account = user.kakaoAccount
+        assertEquals(AgeRange.TWENTIES, account.ageRange)
+        assertEquals(Gender.MALE, account.gender)
     }
 
     @Nested
@@ -77,7 +72,6 @@ class UsersApiTest {
             val response = api.accessTokenInfo()
             assertEquals(expected["id"].asLong, response.id)
             assertEquals(expected["expiresInMillis"].asLong, response.expiresInMillis)
-            assertEquals(expected["kaccount_id"].asLong, response.kaccountId)
             assertEquals(expected["appId"].asLong, response.appId)
         }
     }
