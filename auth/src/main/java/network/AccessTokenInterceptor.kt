@@ -4,7 +4,6 @@ import com.kakao.sdk.auth.AccessTokenRepo
 import com.kakao.sdk.auth.model.AccessToken
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -19,13 +18,10 @@ class AccessTokenInterceptor(
     @ExperimentalCoroutinesApi
     override fun intercept(chain: Interceptor.Chain?): Response {
         var request = chain?.request() as Request
-        runBlocking {
-            val token = recentToken.value
-            request = request.newBuilder()
-                    .addHeader("Authorization", "Bearer ${token.accessToken}")
-                    .build()
-//            recentToken.cancel()
-        }
+        val token = recentToken.value
+        request = request.newBuilder()
+                .addHeader("Authorization", "Bearer ${token.accessToken}")
+                .build()
         return chain.proceed(request)
     }
 }

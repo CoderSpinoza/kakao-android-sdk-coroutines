@@ -10,28 +10,24 @@ import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class SplashActivity : AppCompatActivity() {
     @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        runBlocking {
-            val token = AccessTokenRepo.instance.observe().value
-            if (token.refreshToken == null) {
+        val token = AccessTokenRepo.instance.observe().value
+        if (token.refreshToken == null) {
+            goToLogin()
+            return
+        }
+        GlobalScope.launch {
+            try {
+                val tokenInfo = UserApiClient.instance.accessTokenInfo()
+                goToMain()
+            } catch (e: Throwable) {
+                Log.e("login error", e.toString())
                 goToLogin()
-                return@runBlocking
-            }
-            GlobalScope.launch {
-                try {
-                    val tokenInfo = UserApiClient.instance.accessTokenInfo()
-                    goToMain()
-                } catch (e: Throwable) {
-                    Log.e("login error", e.toString())
-                    goToLogin()
-                }
             }
         }
     }

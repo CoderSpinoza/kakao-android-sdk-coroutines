@@ -18,9 +18,7 @@ import com.kakao.sdk.auth.presentation.UriUtility
 import com.kakao.sdk.common.IntentResolveClient
 import com.kakao.sdk.common.exception.TalkNotInstalledException
 import com.kakao.sdk.common.Constants as CommonConstants
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.runBlocking
 import java.lang.IllegalArgumentException
 import java.net.HttpURLConnection
 import kotlin.coroutines.Continuation
@@ -98,9 +96,9 @@ class DefaultAuthCodeService(
             redirectUri: String,
             kaHeader: String,
             continuation: Continuation<String>
-    ): Intent = runBlocking {
-        val headers = scopeUpdateHeaders(tokenChannel.value.refreshToken, kaHeader)
-        UriUtility
+    ): Intent {
+        @Suppress("EXPERIMENTAL_API_USAGE") val headers = scopeUpdateHeaders(tokenChannel.value.refreshToken, kaHeader)
+        return UriUtility
                 .scopeUpdateIntent(context, uri, redirectUri, headers, resultReceiver(continuation))
     }
 
